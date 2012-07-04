@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704161622) do
+ActiveRecord::Schema.define(:version => 20120704174850) do
+
+  create_table "subscriptions", :force => true do |t|
+    t.date     "start_date",                                    :null => false
+    t.date     "end_date",                                      :null => false
+    t.integer  "subs_type",         :limit => 1, :default => 0
+    t.date     "remind_date_start"
+    t.integer  "user_id"
+    t.date     "renew_date"
+    t.integer  "renew_type",        :limit => 1, :default => 0
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+  end
+
+  add_index "subscriptions", ["end_date"], :name => "index_subscriptions_on_end_date"
+  add_index "subscriptions", ["remind_date_start"], :name => "index_subscriptions_on_remind_date_start"
+  add_index "subscriptions", ["user_id"], :name => "fk_subscriptions_users"
 
   create_table "users", :force => true do |t|
     t.string   "name",                     :limit => 50,                     :null => false

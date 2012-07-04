@@ -16,3 +16,6 @@
 tmp/*
 log/*
 Gemfile.lock
+test/unit/*test.rb
+test/fixtures/*.yml
+doc/*

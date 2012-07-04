@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704174850) do
+ActiveRecord::Schema.define(:version => 20120704181036) do
+
+  create_table "requests", :force => true do |t|
+    t.integer  "from_id",                                   :null => false
+    t.integer  "to_id",                                     :null => false
+    t.integer  "status",        :limit => 1, :default => 0
+    t.datetime "approved_date"
+    t.datetime "rejected_date"
+    t.datetime "asked_date"
+    t.datetime "withdraw_date"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "requests", ["from_id"], :name => "index_requests_on_from_id"
+  add_index "requests", ["to_id"], :name => "index_requests_on_to_id"
 
   create_table "subscriptions", :force => true do |t|
     t.date     "start_date",                                    :null => false

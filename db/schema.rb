@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706192326) do
+ActiveRecord::Schema.define(:version => 20120706201329) do
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20120706192326) do
     t.integer  "renew_type",        :limit => 1, :default => 0
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
+    t.integer  "status",            :limit => 1, :default => 0
   end
 
   add_index "subscriptions", ["end_date"], :name => "index_subscriptions_on_end_date"
@@ -93,6 +94,10 @@ ActiveRecord::Schema.define(:version => 20120706192326) do
     t.date     "hidden_since"
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
+    t.integer  "status",                   :limit => 1,   :default => 0
+    t.date     "locked_since"
+    t.integer  "locked_with"
+    t.boolean  "email_verified",                          :default => false
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

@@ -31,6 +31,9 @@
 #################################################################################
 class User < ActiveRecord::Base
   
+  has_secure_password
+  validates_presence_of :password, :on => :create
+  
   # Enumeration for family preference
   FAMPREF_NUCLEAR = 0
   FAMPREF_JOINT = 1
@@ -201,4 +204,33 @@ class User < ActiveRecord::Base
   
   ### REQUEST SECTION ENDS ###
 
+  ### AUTH SECTION STARTS ### 
+  
+  # Returns whether the user has verified his email
+  # @return [TrueClass|FalseClass]
+  def verified?
+    self.verified == true
+  end
+  
+  # Returns if user is marked for deletion or not.
+  # @return [TrueClass|FalseClass] returns true if flag value relative to marked for deletion found for user , false otherwise.
+  def marked_for_deletion?
+    user.user_flag && user.user_flag.value == UserFlag::MARKED_FOR_DELETION
+  end
+  
+  # Returns if user is suspended.
+  # @return [TrueClass|FalseClass] returns true if flag value is suspended
+  def suspended?
+    user.user_flag && user.user_flag.value == UserFlag::SUSPENDED
+  end
+  
+  # Returns whether the user is in a valid state to be logged in
+  # @return [TrueClass|FalseClass]
+  def is_active_user?
+    self.verified? && !self.marked_for_deletion && !self.suspended?
+  end
+  
+  ### AUTH SECTION ENDS ###
 end
+
+

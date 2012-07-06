@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704181918) do
+ActiveRecord::Schema.define(:version => 20120706192326) do
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(:version => 20120704181918) do
   add_index "subscriptions", ["end_date"], :name => "index_subscriptions_on_end_date"
   add_index "subscriptions", ["remind_date_start"], :name => "index_subscriptions_on_remind_date_start"
   add_index "subscriptions", ["user_id"], :name => "fk_subscriptions_users"
+
+  create_table "user_flags", :force => true do |t|
+    t.integer  "user_id",                 :null => false
+    t.integer  "value",      :limit => 2
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "user_flags", ["user_id"], :name => "fk_user_flags_users"
 
   create_table "users", :force => true do |t|
     t.string   "name",                     :limit => 50,                     :null => false

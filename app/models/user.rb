@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   
   # Enumeration for sexual preference
   SEXPREF_STRAIGHT = 0
-  SEXPREF_HOMOE = 1
+  SEXPREF_HOMO = 1
   SEXPREF_BI = 2
   
   # Enumeration for sex
@@ -53,10 +53,60 @@ class User < ActiveRecord::Base
   AVAILABLE = 0
   LOCKED = 1
   
+  # Enumeration for contacting templates
+  CONTACT_TEMPLATES = {
+    :confirm_locked_success => { :mail => 'confirm_locked_success', :sms => 'confirm_locked_success', :notif => 'confirm_locked_success' },
+    :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' },
+    :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' },
+    :request_declined => { :mail => 'request_declined', :sms => 'request_declined', :notif => 'request_declined' },
+    :request_withdrawn => { :operation => 'remove_request' }
+  }
   # add types for profession
   
   has_many :recommendation, :dependent => destroy
   has_one :subscription
+  
+
+  # Generic method to deliver notifications for a pre-decided event
+  # Delivers the following :-
+  # => 1) Notification to the passed user object
+  # => 2) mail to the passed user object
+  # => 3) SMS alert to the passed user if it is allowed
+  # Also if some special operation is to be carried out after sending notification,
+  # the name of the method is picked up from the `operation` key and called with
+  # the existing plus self parameter.
+  # 
+  # PS: Independent handling within these methods is expected.
+  #
+  # @param [Symbol] event
+  #   Symbol for the event 
+  def deliver_notifications(event, args = [])
+    event = CONTACT_TEMPLATES[event]
+    Notification.send_notification(event[:notif], args << self) if event[:notif]
+    Notifier.deliver_mail(event[:mail], args << self) if event[:mail]
+    SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
+    self.send(event[:operation].to_sym, args << self) if event[:operation]
+  end
+  
+  # Checks if phone notification is allowed for the user
+  # @return [TrueClass|FalseClass]
+  def is_phone_notif_allowed?
+    !self.phone.blank?
+  end
+  
+  # Removes the request from the receiver's dashboard.
+  # @param [Array] args
+  #     An array of receiver id, then sender id for the request.
+  #     The corresponding request is found and destroyed.
+  #     On next view of the receiver's profile, this request will not be present
+  #     Hence not shown to her/him. Silent assassination :-)
+  def remove_request(*args)
+    if args.length
+      receiver_id = args.first.id
+      sender_id = args.last.id
+      Request.find_by_from_id_and_to_id(sender_id, receiver_id).destroy rescue nil
+    end
+  end
   
   ### PAID SECTION STARTS ###
   
@@ -113,7 +163,7 @@ class User < ActiveRecord::Base
     req.asked_date = Time.now.to_date
     req.save!
     
-    Notifier.deliver_request_notification(b)
+    self.deliver_notification(:request_notification, [b])
   end
   
   # Marks the request between self and from_user as accepted
@@ -124,7 +174,9 @@ class User < ActiveRecord::Base
   def accept_request_from(from_user)
     Request.set_as_accepted(self.id, from_user.id)
     self.lock_users(self, from_user)
-    Notifier.deliver_accepted_notification(from_user)
+    
+    # this notification should contain link to see my personal info since I accepted his request.
+    self.deliver_notifications(:request_accepted, [from_user])
     remove_from_searches(self, from_user)
   end
   
@@ -134,7 +186,7 @@ class User < ActiveRecord::Base
   #     The user who had sent the request
   def decline_request_from(from_user)
     Request.set_as_declined(self.id, from_user.id)
-    Notifier.deliver_declined_notification(from_user)
+    self.deliver_notifications(:request_declined, [from_user])
   end
   
   # Marks the request between self and from_user as withdrawn
@@ -143,8 +195,9 @@ class User < ActiveRecord::Base
   #     The user to whom the request was sent
   def withdraw_request_to(to_user)
     Request.set_as_withdrawn(to_user.id, self.id)
-    Notifier.remove_withdrawn_notification(self, from_user)
+    seld.deliver_notifications(:request_withdrawn, [from_user])
   end
+  
   
   ### REQUEST SECTION ENDS ###
 

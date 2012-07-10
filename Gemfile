@@ -10,9 +10,9 @@ gem "unicorn"
 gem "mysql"
 gem 'debugger'
 
-group :production do
-  gem "yui_compressor"
-end
+# group :production do
+#   gem "yui_compressor"
+# end
 
 # Bundle edge Rails instead:
  # gem 'rails', :git => 'git://github.com/rails/rails.git'

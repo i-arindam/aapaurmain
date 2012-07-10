@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706201329) do
+ActiveRecord::Schema.define(:version => 20120710150318) do
+
+  create_table "couples", :force => true do |t|
+    t.integer  "one_id",                         :null => false
+    t.integer  "another_id",                     :null => false
+    t.integer  "deliberation_time", :limit => 2
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false
@@ -69,35 +77,38 @@ ActiveRecord::Schema.define(:version => 20120706201329) do
   add_index "user_flags", ["user_id"], :name => "fk_user_flags_users"
 
   create_table "users", :force => true do |t|
-    t.string   "name",                     :limit => 50,                     :null => false
-    t.date     "dob",                                                        :null => false
-    t.string   "sex",                                                        :null => false
-    t.integer  "family_preference",        :limit => 2
+    t.string   "name",                       :limit => 50,                     :null => false
+    t.date     "dob",                                                          :null => false
+    t.string   "sex",                                                          :null => false
+    t.integer  "family_preference",          :limit => 2
     t.float    "height"
-    t.integer  "spouse_preference",        :limit => 2
-    t.integer  "spouse_salary",            :limit => 8
-    t.string   "further_education_plans",  :limit => 500
-    t.string   "spouse_further_education", :limit => 500
-    t.string   "settle_else",              :limit => 500
-    t.integer  "sexual_preference",        :limit => 2,   :default => 0
-    t.string   "virginity_opinion",        :limit => 500
-    t.string   "ideal_marriage",           :limit => 500
-    t.integer  "salary",                   :limit => 8
-    t.string   "hobbies",                  :limit => 500
-    t.integer  "siblings",                 :limit => 2
-    t.integer  "profession",               :limit => 2
-    t.string   "dream_for_future",         :limit => 500
-    t.string   "interested_in",            :limit => 500
-    t.string   "not_interested_in",        :limit => 500
+    t.integer  "spouse_preference",          :limit => 2
+    t.integer  "spouse_salary",              :limit => 8
+    t.string   "further_education_plans",    :limit => 500
+    t.string   "spouse_further_education",   :limit => 500
+    t.string   "settle_else",                :limit => 500
+    t.integer  "sexual_preference",          :limit => 2,   :default => 0
+    t.string   "virginity_opinion",          :limit => 500
+    t.string   "ideal_marriage",             :limit => 500
+    t.integer  "salary",                     :limit => 8
+    t.string   "hobbies",                    :limit => 500
+    t.integer  "siblings",                   :limit => 2
+    t.integer  "profession",                 :limit => 2
+    t.string   "dream_for_future",           :limit => 500
+    t.string   "interested_in",              :limit => 500
+    t.string   "not_interested_in",          :limit => 500
     t.string   "settled_in"
-    t.boolean  "dont_search",                             :default => false
+    t.boolean  "dont_search",                               :default => false
     t.date     "hidden_since"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
-    t.integer  "status",                   :limit => 1,   :default => 0
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
+    t.integer  "status",                     :limit => 1,   :default => 0
     t.date     "locked_since"
     t.integer  "locked_with"
-    t.boolean  "email_verified",                          :default => false
+    t.boolean  "email_verified",                            :default => false
+    t.date     "notifying_for_success_date"
+    t.date     "marriage_informed_date"
+    t.date     "rejected_on"
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

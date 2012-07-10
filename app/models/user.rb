@@ -154,6 +154,13 @@ class User < ActiveRecord::Base
     self.status == AVAILABLE
   end
   
+  # Updates the number of active locks right now post he withdraws a lock
+  def update_status_post_lock_withdraw
+    self.num_active_locks -= 1
+    self.num_active_locks = 0 if self.num_active_locks < 0
+    self.save!
+  end
+  
   # Locks the two users and saves their states
   # @param [User] a
   #     First User to be locked
@@ -289,14 +296,21 @@ class User < ActiveRecord::Base
   # @param [User] from_user
   #     The user who had sent the request
   def accept_request_from(from_user)
-    Request.set_as_accepted(self.id, from_user.id)
-    self.lock_users(self, from_user)
+    begin
+      Request.set_as_accepted(self.id, from_user.id)
+      lock = Lock.create({
+        :one_id => self.id,
+        :another_id => from_user.id,
+        :creation_date => Time.now.to_date
+      })
+      lock.save!
+    rescue
+      return false
+    end
     
     # this notification should contain link to see my personal info since I accepted his request.
     self.deliver_notifications(:request_accepted, [from_user])
-    self.deliver_notification(:blocked_state, [from_user])
-    remove_from_searches(self)
-    remove_from_searches(from_user)
+    return true
   end
   
   # Marks the request between self and from_user as declined

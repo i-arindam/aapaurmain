@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710150318) do
+ActiveRecord::Schema.define(:version => 20120710181226) do
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -20,6 +20,19 @@ ActiveRecord::Schema.define(:version => 20120710150318) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  create_table "locks", :force => true do |t|
+    t.integer "one_id",                                    :null => false
+    t.integer "another_id",                                :null => false
+    t.date    "creation_date"
+    t.date    "date"
+    t.date    "withdraw_date"
+    t.date    "finalize_date"
+    t.integer "status",        :limit => 1, :default => 0
+  end
+
+  add_index "locks", ["another_id"], :name => "index_locks_on_another_id"
+  add_index "locks", ["one_id"], :name => "index_locks_on_one_id"
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false

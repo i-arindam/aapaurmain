@@ -17,6 +17,8 @@ class UsersController < ApplicationController
     from_user = User.find_by_id(params[:from_id])
     render_404 and return unless from_user and from_user == session[:user]
     to_user = User.find_by_id(params[:to_id])
+    
+    render_404 and return unless to_user
     success = from_user.create_new_request(to_user)
     
     message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
@@ -38,7 +40,14 @@ class UsersController < ApplicationController
     render_404 and return unless to_user and to_user == session[:user] and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
     
-    to_user.accept_request_from(from_user)
+    render_404 and return unless from_user
+    success = to_user.accept_request_from(from_user)
+    message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
+    
+    render :json => {
+      :success => success,
+      :message => message
+    }
   end
   
   # Rejects a request sent to me from another user
@@ -52,12 +61,35 @@ class UsersController < ApplicationController
     render_404 and return unless to_user and to_user == session[:user] and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
     
+    render_404 and return unless from_user
+    
     to_user.decline_request_from(from_user)
   end
   
   ### REQUESTS ACTION ENDS ###
   
   ### POST LOCK STATE STARTS ###
+  
+  # Fired when one Withdraws one of his locks
+  # Inactivates the lock and updates the state of the user
+  # @param [Fixnum(11)] id
+  # => The id of the user who is withdrawing the lock
+  # @param [Fixnum(11)] lock_id
+  # => The id of the lock being withdrawn
+  def withdraw_lock
+    withdrawing_user = User.find_by_id(params[:id])
+    render_404 and return unless withdrawing_user and withdrawing_user == session[:user]
+    
+    lock = Lock.find_by_id(params[:lock_id])
+    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:id] || lock.another_id == params[:id])
+    
+    lock.update_withdrawn
+    withdrawing_user.update_status_post_lock_withdraw
+  end
+  
+  def finalize_lock
+    
+  end
   
   # One of the user in a locked state comes and updates status as successfull Marriage.
   # Notifications and confirmation sent to the other user to verify this.

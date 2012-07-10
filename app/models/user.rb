@@ -55,6 +55,22 @@ class User < ActiveRecord::Base
   # Enumeration for availability `status`
   AVAILABLE = 0
   LOCKED = 1
+  MARK_MARRIED = 2
+  MARRIED = 3
+  
+  # Enumeration for requests sending, accepting etc
+  REQUEST_SENT = $aapaurmain_conf['requests-message']['sent']
+  REQUEST_ACCEPTED = $aapaurmain_conf['requests-message']['accepted']
+  REQUEST_DECLINED = $aapaurmain_conf['requests-message']['declined']
+  REQUEST_FAILED = $aapaurmain_conf['requests-message']['failed']
+  
+  # Enumeration for success/reject message in locked state
+  SUCCESS_REQUEST_SENT = $aapaurmain_conf['locked-message']['success-sent']
+  SUCCESS_REQUEST_ACCEPTED = $aapaurmain_conf['locked-message']['success-accepted']
+  SUCCESS_REQUEST_FAILED_TO_SAVE = $aapaurmain_conf['locked-message']['success-failed']
+  REJECT_REQUEST_SENT = $aapaurmain_conf['locked-message']['reject-sent']
+  REJECT_REQUEST_ACCEPTED = $aapaurmain_conf['locked-message']['reject-accepted']
+  REJECT_REQUEST_FAILED_TO_SAVE = $aapaurmain_conf['locked-message']['reject-failed']
   
   # Enumeration for contacting templates
   CONTACT_TEMPLATES = {
@@ -62,7 +78,10 @@ class User < ActiveRecord::Base
     :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' },
     :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' },
     :request_declined => { :mail => 'request_declined', :sms => 'request_declined', :notif => 'request_declined' },
-    :request_withdrawn => { :operation => 'remove_request' }
+    :request_withdrawn => { :operation => 'remove_request' },
+    :blocked_state => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' },
+    :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' },
+    :confirm_reject => { :mail => 'confirm_reject', :sms => 'confirm_reject', :notif => 'confirm_reject' }
   }
   # add types for profession
   
@@ -151,22 +170,117 @@ class User < ActiveRecord::Base
     b.save!
   end
   
+  # I have notified that my lock was successful
+  # Will save time and status to my profile
+  # @return [TrueClass|FalseClass] denoting the success or failure of the operations    
+  def request_mark_as_married
+    begin
+      self.status = MARK_MARRIED
+      self.notifying_for_success_date = Time.now.to_date
+      self.save!
+    rescue
+      return false
+    end
+    return true
+  end
+  
+  # Sends notification for confirmation to the other person of my lock
+  # when I notify that lock was successful
+  def send_request_for_successful_lock
+    notifying_user = User.find_by_id(self.locked_with) rescue nil
+    notifying_user and self.deliver_notifications(:request_for_successful_lock, notifying_user)
+  end
+  
+  # Class method to mark a couple as successfully married
+  # Creates a new entry in couples table
+  # @param [User] requesting_user
+  # => The user who had requested to mark the success
+  # @param [User] confirming_user
+  # => The user who confirmed it
+  # PS: This distinction is not required, but kept for future uses.
+  # @return [TrueClass|FalseClass] denoting the success or failure of the operations  
+  def self.mark_as_married(requesting_user, confirming_user)
+    begin
+      requesting_user.status = confirming_user.status = User::MARRIED
+      requesting_user.marriage_informed_date = confirming_user.marriage_informed_date = Time.now.to_date
+      requesting_user.save!
+      confirming_user.save!
+      couple = Couple.create({
+        :one_id => confirming_user.id,
+        :other_id => requesting_user.id,
+        :deliberation_time => (Time.now.to_date - requesting_user.locked_since)
+      })
+      couple.save!
+    rescue
+      return false
+    end
+    return true
+  end
+  
+  # I have notified that my lock is over
+  # @return [TrueClass|FalseClass] denoting the success or failure of the operations  
+  def request_mark_as_rejected
+    begin
+      self.status = MARK_REJECTED
+      self.rejected_on = Time.now.to_date
+      self.save!
+    rescue
+      return false
+    end
+    return true
+  end
+  
+  # Sends request to user for confirming that reject actually happened
+  def send_request_for_confirming_reject
+    self.status = MARK_REJECTED
+    self.save!
+    
+    reject_requesting_user = User.find_by_id(self.locked_with)
+    self.deliver_notifications(:confirm_reject, [reject_requesting_user])
+  end
+    
+  
   ### LOCK SECTION ENDS ###
   
   ### REQUEST SECTION STARTS ###
+  
+  # Determines if the user can send a request or not to any other user.
+  # Checks are, he should be
+  # => Not suspended
+  # => Is paid
+  # => Has an active subscription
+  # => And is free, not in a locked state
+  # @return [TrueClass|FalseClass]
+  def can_send_request?
+    !self.suspended? 
+    and self.is_paid? 
+    and self.is_still_paid? 
+    and self.is_available?
+  end
+  
+  # Determines if the user subscription is still valid?
+  # @return [TrueClass|FalseClass]
+  def has_active_subscription?
+    self.is_paid? and self.is_still_paid?
+  end
   
   # Creates a new request object for a & b.
   # Also sends notification to b.
   # @param [User] b
   #     The receiver of the request 
+  # @return [TrueClass|FalseClass] denoting if the request got created or not
   def create_new_request(b)
-    req = Request.create
-    req.from_id = self.id
-    req.to_id = b.id
-    req.asked_date = Time.now.to_date
-    req.save!
-    
+    begin
+      req = Request.create
+      req.from_id = self.id
+      req.to_id = b.id
+      req.asked_date = Time.now.to_date
+      req.save!
+    rescue
+      return false
+    end
     self.deliver_notification(:request_notification, [b])
+    return true
   end
   
   # Marks the request between self and from_user as accepted
@@ -180,7 +294,9 @@ class User < ActiveRecord::Base
     
     # this notification should contain link to see my personal info since I accepted his request.
     self.deliver_notifications(:request_accepted, [from_user])
-    remove_from_searches(self, from_user)
+    self.deliver_notification(:blocked_state, [from_user])
+    remove_from_searches(self)
+    remove_from_searches(from_user)
   end
   
   # Marks the request between self and from_user as declined
@@ -215,13 +331,13 @@ class User < ActiveRecord::Base
   # Returns if user is marked for deletion or not.
   # @return [TrueClass|FalseClass] returns true if flag value relative to marked for deletion found for user , false otherwise.
   def marked_for_deletion?
-    user.user_flag && user.user_flag.value == UserFlag::MARKED_FOR_DELETION
+    self.user_flag && self.user_flag.value == UserFlag::MARKED_FOR_DELETION
   end
   
   # Returns if user is suspended.
   # @return [TrueClass|FalseClass] returns true if flag value is suspended
   def suspended?
-    user.user_flag && user.user_flag.value == UserFlag::SUSPENDED
+    self.user_flag && self.user_flag.value == UserFlag::SUSPENDED
   end
   
   # Returns whether the user is in a valid state to be logged in
@@ -231,6 +347,12 @@ class User < ActiveRecord::Base
   end
   
   ### AUTH SECTION ENDS ###
+  
+  # Removes the two users from search and recommendation results
+  # @param [User] user
+  # => The user to be removed
+  def remove_from_searches(user)
+  end
 end
 
 

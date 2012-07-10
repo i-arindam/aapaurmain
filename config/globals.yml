@@ -1,0 +1,14 @@
+# This is the default application configuration file where global variables are defined
+requests-message:
+  sent: 'Your request to {{user}} has been sent.'
+  accepted: 'Your request from {{user}} has been accepted.'
+  declined: 'Your request to {{user}} has been declined.'
+  failed: 'Sorry the system could not register that request. Can you please try again?'
+  
+locked-message:
+  success-sent: 'Your request to confirm the marriage to {{user}} has been sent.'
+  success-accepted: 'Your successful marriage with {{user}} has been noted.'
+  success-failed: 'Sorry the system could not register that request. Can you please try again?'
+  reject-sent: 'Your request to reject the lock with {{user}} has been sent.'
+  reject-accepted: 'Your rejection of lock with {{user}} has been noted.'
+  reject-failed: 'Sorry the system could not register that request. Can you please try again?'

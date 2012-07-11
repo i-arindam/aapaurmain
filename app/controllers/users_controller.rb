@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  :before_filter :login_required, :except => []
   
   def new
     @user = User.new
@@ -158,7 +157,7 @@ class UsersController < ApplicationController
     render_404 and return unless to_approve_user and to_approve_user.status == User::LOCKED and to_approve_user.locked_with = params[:id]
     
     success = rejecting_user.request_mark_as_rejected
-    message = (success ? User::REQUEST_REJECT_SENT :: User::REQUEST_REJECT_FAILED_TO_SAVE)
+    message = (success ? User::REQUEST_REJECT_SENT : User::REQUEST_REJECT_FAILED_TO_SAVE)
     message.gsub!('{{user}}', to_approve_user.name)
     
     to_approve_user.send_request_for_confirming_reject if success

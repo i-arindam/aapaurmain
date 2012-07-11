@@ -9,6 +9,15 @@ gem "capistrano"
 gem "unicorn"
 gem "mysql"
 gem 'debugger'
+gem "bcrypt-ruby"
+gem "jquery-rails"
+
+group :development, :test do
+  gem "rspec"
+  gem "rspec-rails"
+  gem "parallel"
+  gem "capybara"
+end
 
 # group :production do
 #   gem "yui_compressor"

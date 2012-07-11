@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   }
   # add types for profession
   
-  has_many :recommendation, :dependent => destroy
+  # has_many :recommendation, :dependent => destroy
   has_one :subscription
   
 
@@ -259,10 +259,7 @@ class User < ActiveRecord::Base
   # => And is free, not in a locked state
   # @return [TrueClass|FalseClass]
   def can_send_request?
-    !self.suspended? 
-    and self.is_paid? 
-    and self.is_still_paid? 
-    and self.is_available?
+    !self.suspended? and self.is_paid? and self.is_still_paid? and self.is_available?
   end
   
   # Determines if the user subscription is still valid?

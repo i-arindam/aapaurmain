@@ -34,4 +34,6 @@ Aapaurmain::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  $aapaurmain_conf = YAML.load(File.read("#{Rails.root}/config/globals.yml"))
 end

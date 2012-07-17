@@ -7,7 +7,6 @@ Aapaurmain::Application.routes.draw do
   
   resources :users do
     resources :subscription
-    resources :requests
   end
   
   # Request actions

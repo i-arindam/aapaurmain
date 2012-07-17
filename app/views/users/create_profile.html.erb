@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= stylesheet_link_tag "application-user" %>
+    <title>Create your Profile</title>
+  </head>
+  
+  <body>
+    <div class="container-fluid">
+      
+      <div class="span2">
+        IMAGE HERE
+      </div>
+      
+      <div class="span10">
+        <form class="well form-horizontal">
+          <fieldset>
+            <span class="label label-inverse span9">Your Personal Information</span>
+
+            <div class="control-group">
+              <label class="control-label" for="name">Name</label>
+              <div class="controls">
+                <input type="text" class="span4" id="name" placeholder="Enter your name &hellip;">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="dob">Date of Birth</label>
+              <div class="controls" id="dob">
+                
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Day
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">01</a></li>
+                    <li><a href="#">02</a></li>
+                    <li><a href="#">03</a></li>
+                    <li><a href="#">04</a></li>
+                    <li><a href="#">05</a></li>
+                    <li><a href="#">06</a></li>
+                    <li><a href="#">07</a></li>
+                  </ul>
+                </div>
+                
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Month
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">January</a></li>
+                    <li><a href="#">February</a></li>
+                    <li><a href="#">March</a></li>
+                    <li><a href="#">April</a></li>
+                    <li><a href="#">May</a></li>
+                    <li><a href="#">June</a></li>
+                    <li><a href="#">July</a></li>
+                  </ul>
+                </div>
+                
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Year
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">1991</a></li>
+                    <li><a href="#">1990</a></li>
+                    <li><a href="#">1989</a></li>
+                    <li><a href="#">1988</a></li>
+                    <li><a href="#">1987</a></li>
+                    <li><a href="#">1986</a></li>
+                    <li><a href="#">1985</a></li>
+                  </ul>
+                </div>
+              
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="sex">Sex</label>
+              <div class="controls" id="sex">
+                <input type="radio" name="sex" value="male" /> Male    
+                <input type="radio" name="sex" value="female" /> Female
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="height">Height</label>
+              <div class="controls">
+                <input type="text" class="span4" id="height" placeholder="In centimetres &hellip;">
+              </div>
+            </div>
+
+            <span class="label label-inverse span9">Something important about <em>you</em></span>
+            
+            <div class="control-group">
+              <label class="control-label" for="education">Education</label>
+              <div class="controls">
+                <input type="text" class="span4" id="education" placeholder="Your highest educational qualification">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="further_education">Your plans for Further Education</label>
+              <div class="controls">
+                <textarea class="span4" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;"></textarea>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="profession">Current Profession</label>
+              <div class="controls">
+                <input type="text" class="span4" id="profession" placeholder="What are you doing currently">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="siblings">Siblings?</label>
+              <div class="controls" id="siblings">
+                <input type="radio" name="siblings-answer" value="yes" /> Yes
+                <input type="radio" name="siblings-answer" value="no" /> No
+              </div>
+            </div>
+
+            <div class="control-group hide">
+              <label class="control-label" for="siblings-count">How many siblings do you have</label>
+              <div class="controls">
+                <input type="text" class="span4" id="siblings-count" placeholder="The number of siblings">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="hobbies">Interests/Hobbies</label>
+              <div class="controls" id="hobbies">
+                <input type="text" class="span4" placeholder="Mention a hobby">
+                <div class="moreHobbies">
+                  <button class="btn btn-mini btn-success" type="submit">Add one more?<i class="icon-plus-sign pull-left"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="dream">Dream for Future</label>
+              <div class="controls">
+                <textarea class="span4" id="dream" placeholder="What do you see yourself doing in the coming time"></textarea>
+              </div>
+            </div>
+            
+            <span class="label label-inverse span9">Specifications for the tie-up?</span>
+            
+            <div class="control-group">
+              <label class="control-label" for="familyPref">Family Preferences</label>
+              <div class="controls">
+                <select class="span4" id="familyPref">
+                  <option>Joint will do</option>
+                  <option>Prefer Nuclear</option>
+                  <option>Prefer spouse only</option>
+                  <option>Doesn&apos;t matter</option>
+                </select>
+                <span class="help-inline">The kind of family you would like to be in</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="spousePref">Spouse Preferences</label>
+              <div class="controls">
+                <select class="span4" id="spousePref">
+                  <option>Working</option>
+                  <option>Home-maker</option>
+                  <option>Doesn&apos;t matter</option>
+                </select>
+                <span class="help-inline">The kind of spouse you are comfortable with</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="spouseEducation">Opinion on Spouse&apos;s further education</label>
+              <div class="controls">
+                <select class="span4" id="spouseEducation">
+                  <option>I would not want that</option>
+                  <option>Depends, Don&apos;t mind for a couple of years</option>
+                  <option>Doesn&apos;t matter</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="settled">Your current location</label>
+              <div class="controls">
+                <input type="text" class="span4" id="settled" placeholder="Where are you based out of">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="settleAbroad">Can you settle abroad</label>
+              <div class="controls">
+                <select class="span4" id="settleAbroad">
+                  <option>I would like to stay in my current city</option>
+                  <option>I can try that</option>
+                  <option>Doesn&apos;t matter</option>
+                </select>
+                <span class="help-inline">Can you settle elsewhere after marriage?</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="sexualPref">Sexual Preference</label>
+              <div class="controls">
+                <select class="span4" id="sexualPref">
+                  <option>Straight</option>
+                  <option>Bi-curious</option>
+                  <option>Bi-sexual</option>
+                  <option>Homo-sexual</option>
+                </select>
+                <span class="help-inline">This will be kept private</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="virginity">Opinion on virginity</label>
+              <div class="controls">
+                <textarea class="span4" id="virginity" placeholder="How does your spouse&apos;s virginity matter to you"></textarea>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="idealMarriage">An Ideal Marriage</label>
+              <div class="controls">
+                <textarea class="span4" id="idealMarriage" placeholder="What is your definition of an ideal marriage"></textarea>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="specificInterest">Looking specially for?</label>
+              <div class="controls">
+                <input id="specificInterest" type="text" class="span4" placeholder="You prefer Artists/Journalists/Software">
+                <div class="moreInterests">
+                  <button class="btn btn-mini btn-success" type="submit">Add one more?<i class="icon-plus-sign pull-left"></i></button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="notSpecificInterest">Dont wan&apos;t these people</label>
+              <div class="controls">
+                <input id="notSpecificInterest" type="text" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software">
+                <div class="moreInterests">
+                  <button class="btn btn-mini btn-success" type="submit">Add one more?<i class="icon-plus-sign pull-left"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="salary">Your Salary (per year)</label>
+              <div class="controls">
+                <input type="text" class="span4" id="salary" placeholder="How much do you earn in a year" />
+              </div>
+            </div>
+          
+          </fieldset>
+        </form>
+      </div>
+    </div> <!-- container-fluid -->
+
+  </body>
+  
+</html>

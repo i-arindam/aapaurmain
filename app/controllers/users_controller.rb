@@ -180,4 +180,8 @@ class UsersController < ApplicationController
       render "new"
     end
   end
+  
+  def new
+    render :create_profile
+  end
 end

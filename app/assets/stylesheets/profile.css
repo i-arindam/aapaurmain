@@ -1,15 +1,15 @@
-.profile 			{ background-color:#DCEAF4; width: 60%; height: 100%;}
+.profile 			{ background-color:#F6F5EF; width: 60%; height: 100%;}
 .profileImage		{ float: left;}
 .profileActions		{ padding-top: 12px;}
 
 .profileIntro		{   
-						border: 1px solid #00F5FF;
-						background: lightBlue;
+						border: 1px solid brown;
+						background: rgba(251, 180, 80, 0.66);
 						border-radius: 5px;
 						overflow: hidden;
 					}
 .profileSideNav		{
-						background-color: #DCEAF4;
+						background-color: rgba(251, 180, 80, 0.66);
 						width: 15%;
 						float: left;
 						height: 100%;
@@ -19,7 +19,7 @@
 .span2				{width: 100px;}
 
 .group				{
-						border-bottom: 2px solid #00F5FF;
+						border-bottom: 2px solid rgba(70, 0, 0, 0.67);
 						border-radius: 5px;
 						padding-left: 10px; 
 						margin-top: 2%;

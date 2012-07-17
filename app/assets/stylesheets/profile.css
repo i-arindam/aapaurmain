@@ -1,0 +1,29 @@
+.profile 			{ background-color:#DCEAF4; width: 60%; height: 100%;}
+.profileImage		{ float: left;}
+.profileActions		{ padding-top: 12px;}
+
+.profileIntro		{   
+						border: 1px solid #00F5FF;
+						background: lightBlue;
+						border-radius: 5px;
+						overflow: hidden;
+					}
+.profileSideNav		{
+						background-color: #DCEAF4;
+						width: 15%;
+						float: left;
+						height: 100%;
+						margin-left: 54px;
+					}
+.span4				{width: 245px;}
+.span2				{width: 100px;}
+
+.group				{
+						border-bottom: 2px solid #00F5FF;
+						border-radius: 5px;
+						padding-left: 10px; 
+						margin-top: 2%;
+						padding-bottom: 2%
+	
+					}
+.sideNavButtons		{text-align: center;}

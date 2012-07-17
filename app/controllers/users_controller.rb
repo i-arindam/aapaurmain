@@ -184,4 +184,13 @@ class UsersController < ApplicationController
   def new
     render :create_profile
   end
+  
+  def show
+    if params[:who] == "me"
+      render :dashboard
+    else
+      render :profile
+    end
+  end
+  
 end

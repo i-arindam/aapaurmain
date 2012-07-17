@@ -1,5 +1,6 @@
 /**
  * application-user.css
+ *
  *= require_self
  *= require_tree ./users
  */

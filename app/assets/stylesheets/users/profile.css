@@ -1,0 +1,53 @@
+.name {
+	letter-spacing: 0px;
+	text-align: none;
+}
+.profile {
+	background-color: #F6F5EF;
+	width: 60%;
+	height: 100%;
+}
+.profileImage	{ 
+	float: left;
+}
+.profileActions { 
+	padding-top: 12px;
+}
+
+.profileIntro {
+  border: 1px solid brown;
+  background: rgba(251, 180, 80, 0.66);
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px 5px 10px 10px;
+}
+.profileSideNav {
+  background-color: rgba(251, 180, 80, 0.66);
+  width: 15%;
+  float: left;
+  height: 100%;
+  margin-left: 54px;
+}
+.span4 {width: 245px;}
+.span2 {width: 100px;}
+
+.group {
+  border-bottom: 2px solid rgba(70, 0, 0, 0.67);
+  border-radius: 5px;
+  padding-left: 10px; 
+  margin-top: 2%;
+  padding-bottom: 2%	
+}
+.sideNavButtons		{text-align: center;}
+
+div.profile span.label {
+	margin-left: 20px;
+	position: relative;
+	bottom: 5px;
+}
+
+.row label.span2 {
+	font-size: 14px;
+	font-weight: bold;
+}
+

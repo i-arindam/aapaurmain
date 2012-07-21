@@ -23,7 +23,7 @@
     <div class="container profile">
       <div class="profileIntro">
         <div class="bioSection">
-          <h1 class="name">Arindam Chakraborty</h1>
+          <h1 class="name"><%= @user.name %></h1>
           <h3 class="shortBio">Coder, Death Metal fan, Learner for life</h3>
         </div>
         <div class="profileActions">
@@ -34,9 +34,9 @@
     
       <div class="recoFields row group">
         <label class="span2">Ideal Partner</label>
-        <label class="span4">Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes.</label>
+        <label class="span4"><%= @user.ideal_marriage %></label>
         <label class="span2">Interested In</label>
-        <label class="span4">Vivamus sagittis lacus vel augue natoque penatibus et magnis dis parturient montes natoque penatibuset magnis dis parturient montes</label>
+        <label class="span4"><%= @user.interested_in %></label>
       </div>
     
       <div class="personalDetails group">
@@ -45,22 +45,21 @@
         </div>
         <div class="row">
           <label class="span2">Profession</label>
-          <label class="span4">Software Engineer</label>
+          <label class="span4"><%= @user.profession %></label>
           <label class="span2">Education</label>
           <label class="span4">B.Tech Computer Science</label>
         </div>
         <div class="row">
           <label class="span2">Hobbies</label>
-          <label class="span4">Table Tennis</label>
+          <label class="span4"><%= @user.hobbies %></label>
           <label class="span2">Further Education Plans</label>
-          <label class="span4">Entrepreneurship</label>
+          <label class="span4"><%= @user.further_education_plans %></label>
         </div>	
         <div class="row">
           <label class="span2">Dream For Future</label>
-          <label class="span4">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-          "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</label>	
+          <label class="span4"><%= @user.dream_for_future %></label>	
           <label class="span2">Not Interested In</label>
-          <label class="span4">Dumb Females</label>
+          <label class="span4"><%= @user.not_interested_in %></label>
         </div>	
       </div>
     
@@ -71,9 +70,9 @@
         </div>
         <div class="row">
           <label class="span2">Spouse Preference</label>
-          <label class="span4">Working</label>
+          <label class="span4"><%= @user.spouse_preference %></label>
           <label class="span2">Spouse's Further Education Plans</label>
-          <label class="span4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fermentum risus ut tortor convallis hendrerit.</label>
+          <label class="span4"><%= @user.spouse_further_education %></label>
         </div>
         <br />
       </div>
@@ -84,7 +83,7 @@
           </div>
         <div class="row">
           <label class="span2">Opinion on Virginity</label>
-          <label class="span8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fermentum risus ut tortor convallis hendrerit.</label>
+          <label class="span8"><%= @user.virginity_opinion %></label>
         </div>
       </div>
     
@@ -94,31 +93,31 @@
           </div>
         <div class="row">
           <label class="span2 h4">Sex[y]</label>
-          <label class="span4">Male</label>
+          <label class="span4"><%= @user.sex %></label>
           <label class="span2 h4">I can reach till</label>
-          <label class="span4">5 feet 4 inches</label>
+          <label class="span4"><%= @user.height %></label>
         </div>
         <div class="row">
           <label class="span2 h4">The day earth was blessed</label>
-          <label class="span4">June 03,1987</label>
+          <label class="span4"><%= @user.dob %></label>
           <label class="span2 h4">Max shopping bill that i can afford</label>
-          <label class="span4">Rs60,000</label>
+          <label class="span4"><%= @user.salary %></label>
         </div>
         <div class="row">
           <label class="span2">Settled In</label>
-          <label class="span4">New Delhi</label>
+          <label class="span4"><%= @user.settled_in %></label>
           <label class="span2">Willing to relocate</label>
-          <label class="span4">Hyderabad,Pune</label>
+          <label class="span4"><%= @user.settle_else %></label>
         </div>	
         <div class="row">
           <label class="span2">Sexual Preference</label>
-          <label class="span4">Straight</label>
+          <label class="span4"><%= @user.sexual_preference %></label>
           <label class="span2">Family Preference</label>
-          <label class="span4">Hyderabad,Pune</label>
+          <label class="span4"><%= @user.family_preference %></label>
         </div>
         <div class="row">
           <label class="span2">Siblings</label>
-          <label class="span4">One</label>
+          <label class="span4"><%= @user.siblings %></label>
         </div>
       </div>
     

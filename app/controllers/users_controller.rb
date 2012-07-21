@@ -213,6 +213,9 @@ class UsersController < ApplicationController
         render :text => "Please login first"
       end
     else
+      render :text=> "Missing params[:id]" and return unless params[:id]
+      @user = User.find_by_id(params[:id]) 
+      render_404 and return unless @user
       render :profile
     end
   end

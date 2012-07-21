@@ -88,6 +88,9 @@ class User < ActiveRecord::Base
   # has_many :recommendation, :dependent => destroy
   has_one :subscription
   
+  # scope :in_requests , {:joins => " INNER JOIN requests ON users.id=requests.to_id" , :conditions => [ "requests.status = 1"] }
+  # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }
+  # scope :in_requests, lambda { |id| where('requests.to_id = ?', id) }
 
   # Generic method to deliver notifications for a pre-decided event
   # Delivers the following :-
@@ -364,6 +367,27 @@ class User < ActiveRecord::Base
   # => The user to be removed
   def remove_from_searches(user)
   end
+  
+  def incoming_requests(fields="from_id")
+    Request.find(:all ,
+                  :conditions => ["status=0 AND to_id= (?) ",self.id],
+                  :select => fields
+                )
+  end
+  
+  def outgoing_requests(fields="to_id")
+    Request.find(:all ,
+                  :conditions => ["status=0 AND from_id= (?) ",self.id],
+                  :select => fields
+                )
+  end
+  
+  def viewer_pane_info(user_ids)
+    user_ids.each do |id|
+      
+    end
+  end
+  
 end
 
 

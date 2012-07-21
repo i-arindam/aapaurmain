@@ -22,103 +22,124 @@
 		</aside>
 		
 		<div class="container dashBoardContainer">
-			<h3 class="span6">Howdy Arpita Chakraborty!</h3>
-			<h4 class="span6 requestLabel">Your Incoming Requests</h4>
-			<div class="requestContainer span10">
-				<ul class="requestList">
-					<li>
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 150px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 300px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 450px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 600px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 750px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-				</ul>
-			</div>
-						
-			<h4 class="span6 requestLabel">Your Outgoing Requests</h4>
-			<div class="requestContainer span10">
-				<ul class="requestList">
-					<li>
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 150px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 300px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 450px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 600px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 750px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="http://placehold.it/96x96">
-							<img src="http://placehold.it/96x96">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-				</ul>
-			</div>
+			<h3 class="span6">Howdy <%= @user.name %>!</h3>
+			<% if @in_requests and @in_requests.length > 0 %>
 			
+			  <h4 class="span6 requestLabel">Your Incoming Requests</h4>
+			  <div class="requestContainer span10">
+				<ul class="requestList">
+				  <% @in_requests.each do |in_req|
+				          in_name = in_req[:name]
+                  # untruncatedTitle = s slideshow.title rescue "No Title"
+                  # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
+                  # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
+                  # content = slideshow.is_presentation? ? "slide" : "page"
+          %>
+					<li>
+						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+						<a href="http://placehold.it/96x96">
+							<img src="http://placehold.it/96x96">
+							<h3 class="name"><%=in_name %></h3>
+						</a>
+					</li>
+					<% end %>
+					</ul>
+          <!-- <li style="left: 150px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 300px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 450px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 600px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 750px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+        </ul> -->
+			</div>
+			<% end %>		
+			<% if @out_requests && @out_requests.length > 0 %>
+			  <h4 class="span6 requestLabel">Your Outgoing Requests</h4>
+			  <div class="requestContainer span10">
+				<ul class="requestList">
+				  <% @out_requests.each do |out_req|
+				          out_name = out_req[:name]
+                  # untruncatedTitle = s slideshow.title rescue "No Title"
+                  # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
+                  # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
+                  # content = slideshow.is_presentation? ? "slide" : "page"
+          %>
+					<li>
+						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+						<a href="http://placehold.it/96x96">
+							<img src="http://placehold.it/96x96">
+							<h3 class="name"><%= out_name %></h3>
+						</a>
+					</li>
+					<% end %>
+				</ul>
+          <!-- <li style="left: 150px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 300px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 450px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 600px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 750px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="http://placehold.it/96x96">
+              <img src="http://placehold.it/96x96">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+        </ul> -->
+			</div>
+			<% end %>	
 			
 			<h3 class="span6 requestLabel">Viewer Pane</h3>	
 			<div class="viewerPane requestContainer span10">

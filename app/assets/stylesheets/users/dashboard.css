@@ -8,9 +8,11 @@ ul.requestList      { height: 170px;
 .requestList li			{
 						list-style: none;
 						padding-right: 30px;
-						position: absolute;
+					/*  position: absolute;*/
 						float: left;
 						width: 100px;
+						display: inline;
+						
 					}
 
 .dashBoardContainer  	{

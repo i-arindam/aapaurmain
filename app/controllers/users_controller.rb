@@ -186,8 +186,32 @@ class UsersController < ApplicationController
   end
   
   def show
-    if params[:who] == "me"
-      render :dashboard
+    
+    if params[:who] == "me"      
+      #@todo : debug line. remove later
+      session[:user] = User.first
+      
+      if session[:user]  
+        @user = User.find(:first, :conditions => ['id = ?', session[:user_id]]) || User.first
+        in_requests_objects = @user.incoming_requests                                 
+        in_requests_ids = in_requests_objects.collect(&:from_id)
+        
+ 
+        @in_requests = User.find( :all,
+                                  :conditions => "id in (#{in_requests_ids * "," })",
+                                  :select => "name") rescue nil # @todo add photo_url
+        
+        out_requests_objects = @user.outgoing_requests
+        out_requests_ids = out_requests_objects.collect(&:to_id)
+        
+        @out_requests = User.find( :all,
+                                  :conditions => "id in (#{out_requests_ids * "," })",
+                                  :select => "name" ) rescue nil # @todo add photo_url
+        
+        render :dashboard
+      else
+        render :text => "Please login first"
+      end
     else
       render :profile
     end

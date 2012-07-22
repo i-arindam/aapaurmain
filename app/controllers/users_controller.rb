@@ -222,7 +222,7 @@ class UsersController < ApplicationController
   def try_and_create(failure_render_path)
     @user = User.new(params[:user])
     if @user.save
-      redirect_to "users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
+      redirect_to "/users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
     else
       render "#{failure_render_path}"
     end

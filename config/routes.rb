@@ -16,7 +16,7 @@ Aapaurmain::Application.routes.draw do
   resources :sessions
 
   post 'users/signup' => 'users#signup'
-  match 'users/:id/create_profile' => 'users#create_profile'
+  match '/users/:id/create_profile' => 'users#create_profile'
   match 'users/:id/update' => 'users#update'
   
   # Request actions

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722083356) do
+ActiveRecord::Schema.define(:version => 20120722134203) do
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -20,6 +20,26 @@ ActiveRecord::Schema.define(:version => 20120722083356) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  create_table "hobbies", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "hobby"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "hobbies", ["hobby"], :name => "index_hobbies_on_hobby"
+  add_index "hobbies", ["user_id"], :name => "index_hobbies_on_user_id"
+
+  create_table "interested_in", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "interested"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "interested_in", ["interested"], :name => "index_interested_in_on_interested"
+  add_index "interested_in", ["user_id"], :name => "index_interested_in_on_user_id"
 
   create_table "locks", :force => true do |t|
     t.integer "one_id",                                    :null => false
@@ -33,6 +53,16 @@ ActiveRecord::Schema.define(:version => 20120722083356) do
 
   add_index "locks", ["another_id"], :name => "index_locks_on_another_id"
   add_index "locks", ["one_id"], :name => "index_locks_on_one_id"
+
+  create_table "not_interested_in", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "not_interested"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "not_interested_in", ["not_interested"], :name => "index_not_interested_in_on_not_interested"
+  add_index "not_interested_in", ["user_id"], :name => "index_not_interested_in_on_user_id"
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false

@@ -111,6 +111,9 @@ class User < ActiveRecord::Base
   
   # has_many :recommendation, :dependent => destroy
   has_one :subscription
+  has_many :hobby
+  has_many :interested_in
+  has_many :not_interested_in
   
   # scope :in_requests , {:joins => " INNER JOIN requests ON users.id=requests.to_id" , :conditions => [ "requests.status = 1"] }
   # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }

@@ -250,6 +250,30 @@ class UsersController < ApplicationController
     fields.each do |f|
       @user[f.to_s] = uhash[f] if uhash[f]
     end
+
+    hobbies = params[:user][:hobby]
+    hobbies.each do |h|
+      uh = Hobby.new
+      uh.user_id = @user.id
+      uh.hobby = h
+      uh.save
+    end if hobbies
+    
+    interested = params[:user][:interest]
+    interested.each do |i|
+      ui = InterestedIn.new
+      ui.user_id = @user.id
+      ui.interested = i
+      ui.save
+    end if interested
+    
+    not_interested = params[:user][:not_interest]
+    not_interested.each do |n|
+      un = NotInterestedIn.new
+      un.user_id = @user.id
+      un.not_interested = n
+      un.save
+    end if not_interested
     
     @user.save
     

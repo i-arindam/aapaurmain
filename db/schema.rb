@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710181226) do
+ActiveRecord::Schema.define(:version => 20120722083356) do
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -90,9 +90,9 @@ ActiveRecord::Schema.define(:version => 20120710181226) do
   add_index "user_flags", ["user_id"], :name => "fk_user_flags_users"
 
   create_table "users", :force => true do |t|
-    t.string   "name",                       :limit => 50,                     :null => false
-    t.date     "dob",                                                          :null => false
-    t.string   "sex",                                                          :null => false
+    t.string   "name",                       :limit => 50
+    t.date     "dob"
+    t.string   "sex",                        :limit => 10
     t.integer  "family_preference",          :limit => 2
     t.float    "height"
     t.integer  "spouse_preference",          :limit => 2
@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(:version => 20120710181226) do
     t.date     "notifying_for_success_date"
     t.date     "marriage_informed_date"
     t.date     "rejected_on"
+    t.string   "email",                      :limit => 128,                    :null => false
+    t.string   "auth_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string   "password_digest"
+    t.string   "short_bio",                  :limit => 500
+    t.string   "education"
+    t.string   "photo_url"
+    t.string   "blog_url"
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

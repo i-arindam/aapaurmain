@@ -9,7 +9,7 @@ gem "capistrano"
 gem "unicorn"
 gem "mysql"
 gem 'debugger'
-gem "bcrypt-ruby"
+gem "bcrypt-ruby", :require => "bcrypt"
 gem "jquery-rails"
 
 group :development, :test do

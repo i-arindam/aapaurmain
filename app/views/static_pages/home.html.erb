@@ -2,41 +2,64 @@
 <html>
   <head>
     <%= stylesheet_link_tag "homepage/homepage" %>
-    <title></title>
+    <title>Aap Aur Main: Destination for perfect matches</title>
   </head>
   <body>
     <div class="login">
+
       <!-- login -->
-      <form class="well form-inline pull-right">
+      <%= form_tag(sessions_path, :class => 'well form-inline pull-right') do %>
         <div class="control-group">
           <div class="controls">
             <div class="input-prepend">
+              <span class="add-on"><i class="icon-envelope"></i></span>
               <input class="span2" id="inputIcon" type="text" placeholder="Email" />
             </div>
             <div class="input-prepend">
+              <span class="add-on"><i class="icon-lock"></i></span>
               <input type="password" class="span2" placeholder="Password" />
-            </div><button type="submit" class="btn">Sign in</button>
+            </div>            
           </div>
-        </div><label class="checkbox"><input type="checkbox"> Remember me</label>
-      </form>
+        </div>
+        
+        <input name="remember_me" type="checkbox">
+        <label class="checkbox">Remember me</label>
+        <button type="submit" class="btn">Log in</button>
+      <% end %>
     </div><!-- login ends-->
+
     <!-- sign up-->
     <div class="signup">
-      <form class="well pull-right">
+      <% if @user && @user.errors.any? %>
+        <div class="error_messages">
+          <h2>Form is invalid</h2>
+          <ul>
+            <% for message in @user.errors.full_messages %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'well pull-right', :id => 'signup_form') do %>
         <div class="control-group">
           <div class="controls">
             <div class="input-prepend">
-              <input class="span3" type="text" placeholder="Name" />
+              <span class="add-on"><i class="icon-envelope"></i></span>
+              <input class="span3" type="text" name="email" placeholder="Email" />
             </div>
             <div class="input-prepend">
-              <input class="span3" type="text" placeholder="Email" />
+              <span class="add-on"><i class="icon-lock"></i></span>
+              <input class="span3" type="password" name="password" placeholder="Password" />
             </div>
             <div class="input-prepend">
-              <input type="password" class="span3" placeholder="Password" />
-            </div><button type="submit" class="btn">Sign up</button>
+              <span class="add-on"><i class="icon-refresh"></i></span>
+              <input type="password" class="span3" name="password_confirmation" placeholder="Password Confirm" />
+            </div>
+            <button type="submit" class="btn">Sign up</button>
           </div>
         </div>
-      </form>
+      <% end %>
     </div><!--signup ends-->
   </body>
 </html>

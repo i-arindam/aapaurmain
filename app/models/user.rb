@@ -1,52 +1,69 @@
 #################################################################################
-# This class represents users. 
+# This class represents users
 #
-# @attr [Fixnum(11)] id                      
-# @attr [String(50)] name                    
-# @attr [Date] dob                     
-# @attr [String] sex                     
-# @attr [Fixnum(6)] family_preference       
-# @attr [Float] height                  
-# @attr [Fixnum(6)] spouse_preference       
-# @attr [Fixnum(20)] spouse_salary           
-# @attr [String(500)] further_education_plans 
+# @attr [Fixnum(11)] id
+# @attr [String(50)] name
+# @attr [Date] dob
+# @attr [String] sex
+# @attr [Fixnum(6)] family_preference
+# @attr [Float] height
+# @attr [Fixnum(6)] spouse_preference
+# @attr [Fixnum(20)] spouse_salary
+# @attr [String(500)] further_education_plans
 # @attr [String(500)] spouse_further_education
-# @attr [String(500)] settle_else             
-# @attr [Fixnum(6)] sexual_preference       
-# @attr [String(500)] virginity_opinion       
-# @attr [String(500)] ideal_marriage          
-# @attr [Fixnum(20)] salary                  
-# @attr [String(500)] hobbies                 
-# @attr [Fixnum(6)] siblings                
-# @attr [Fixnum(6)] profession              
-# @attr [String(500)] dream_for_future        
-# @attr [String(500)] interested_in           
-# @attr [String(500)] not_interested_in       
-# @attr [String(255)] settled_in              
-# @attr [true, false] dont_search             
-# @attr [Date] hidden_since            
-# @attr [DateTime] created_at              
+# @attr [String(500)] settle_else
+# @attr [Fixnum(6)] sexual_preference
+# @attr [String(500)] virginity_opinion
+# @attr [String(500)] ideal_marriage
+# @attr [Fixnum(20)] salary
+# @attr [String(500)] hobbies
+# @attr [Fixnum(6)] siblings
+# @attr [Fixnum(6)] profession
+# @attr [String(500)] dream_for_future
+# @attr [String(500)] interested_in
+# @attr [String(500)] not_interested_in
+# @attr [String(255)] settled_in
+# @attr [true, false] dont_search
+# @attr [Date] hidden_since
+# @attr [DateTime] created_at
 # @attr [DateTime] updated_at
 #
 #################################################################################
 class User < ActiveRecord::Base
   
+  attr_accessible :email, :password, :password_confirmation
+ # attr_accessor :password
   has_secure_password
-  validates_presence_of :password, :on => :create
   
+  validates :password, :presence => true, :on => :create
+  validates :email, :presence => true, :uniqueness => true
+  
+#  before_create { generate_token(:auth_token) }
+
+  DOESNT_MATTER = 10
+    
   # Enumeration for family preference
-  FAMPREF_NUCLEAR = 0
-  FAMPREF_JOINT = 1
-  FAMPREF_EXTENDED = 2
+  FAMPREF_NUCLEAR = 1
+  FAMPREF_JOINT = 2
+  FAMPREF_EXTENDED = 3
   
   # Enumeration for spouse preference
-  SPOPREF_WORKING = 0
-  SPOPREF_HOMEMAKER = 1
+  SPOPREF_WORKING = 1
+  SPOPREF_HOMEMAKER = 2
   
   # Enumeration for sexual preference
-  SEXPREF_STRAIGHT = 0
-  SEXPREF_HOMO = 1
-  SEXPREF_BI = 2
+  SEXPREF_STRAIGHT = 1
+  SEXPREF_HOMO = 2
+  SEXPREF_BI = 3
+  
+  # Enumeration for spouse further education
+  DONT_WANT = 1
+  DEPENDS = 2
+  
+  # Enumeration for settle elsewhere
+  STAY = 1
+  CAN_TRY = 2
+
   
   # Enumeration for sex
   MALE = 0
@@ -83,6 +100,13 @@ class User < ActiveRecord::Base
     :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' },
     :confirm_reject => { :mail => 'confirm_reject', :sms => 'confirm_reject', :notif => 'confirm_reject' }
   }
+  
+  USER_FIELDS_LIST = [
+      :name, :dob, :sex, :family_preference, :height, :spouse_preference,
+      :spouse_salary, :further_education_plans, :spouse_further_education,
+      :settle_else, :sexual_preference, :virginity_opinion, :ideal_marriage,
+      :salary, :siblings, :profession, :dream_for_future, :settled_in
+    ]
   # add types for profession
   
   # has_many :recommendation, :dependent => destroy
@@ -92,6 +116,34 @@ class User < ActiveRecord::Base
   # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }
   # scope :in_requests, lambda { |id| where('requests.to_id = ?', id) }
 
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+  
+  def generate_toke(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
+  
+  def self.authenticate(email, password)
+    user = find_by_email(email)
+    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+      user
+    else
+      nil
+    end
+  end
+  
+  def encrypt_password
+    if password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    end
+  end
   # Generic method to deliver notifications for a pre-decided event
   # Delivers the following :-
   # => 1) Notification to the passed user object

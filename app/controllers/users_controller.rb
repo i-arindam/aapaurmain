@@ -1,9 +1,5 @@
 class UsersController < ApplicationController
   
-  def new
-    @user = User.new
-  end
-
   ### REQUESTS ACTION STARTS ###
   
   # Creates a request from a user to another user
@@ -171,18 +167,11 @@ class UsersController < ApplicationController
   ### POST LOCK STATE STARTS ###
   
   def create
-    @user = User.new(params[:user])
-    if @user.save
-      # @todo replace root_url with create profile url
-      redirect_to root_url, :notice => "Sign up successful!"
-    else
-      # @todo Figure out what to do here if signup fails
-      render "new"
-    end
+    try_and_create("new")
   end
   
   def new
-    render :create_profile
+    @user = User.new
   end
   
   def show
@@ -218,6 +207,53 @@ class UsersController < ApplicationController
       render_404 and return unless @user
       render :profile
     end
+  end
+  
+  def signup
+    params[:user] = {
+      :email => params[:email],
+      :password => params[:password],
+      :password_confirmation => params[:password_confirmation]
+    }
+    
+    try_and_create("static_pages/home")
+  end
+  
+  def try_and_create(failure_render_path)
+    @user = User.new(params[:user])
+    if @user.save
+      redirect_to "users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
+    else
+      render "#{failure_render_path}"
+    end
+  end
+  
+  def create_profile
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    uhash = params[:user]
+    success, message = true, ""
+    
+    valid_date = verify_dob(uhash[:dob])
+    redirect_to :back, :alert => "Invalid Dob" and return unless valid_date
+    
+    dob = get_date(uhash[:dob])
+    sex = uhash[:sex]
+    valid_age = verify_age(dob, sex)
+    
+    redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
+    
+    fields = User::USER_FIELDS_LIST
+    fields.each do |f|
+      @user[f.to_s] = uhash[f] if uhash[f]
+    end
+    
+    @user.save
+    
+    render :dashboard
   end
   
 end

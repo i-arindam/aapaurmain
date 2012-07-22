@@ -1,13 +1,23 @@
 Aapaurmain::Application.routes.draw do
+  get "password_resets/new"
+  get "log_out" => "sessions#destroy", :as => "logout"
+  get "log_in" => "sessions#new", :as => "login"
+  get "sign_up" => "users#new", :as => "signup"
+
   root to: 'static_pages#home'
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
-  
+
   resources :users do
     resources :subscription
   end
+  resources :sessions
+
+  post 'users/signup' => 'users#signup'
+  match 'users/:id/create_profile' => 'users#create_profile'
+  match 'users/:id/update' => 'users#update'
   
   # Request actions
   post 'users/:from_id/request/:to_id' => 'users#create_request'

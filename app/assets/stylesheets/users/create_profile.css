@@ -25,3 +25,8 @@
   font-size: 11px;
   color: gray;
 }
+
+button.saveDetails {
+  position: relative;
+  left: 40%;
+}

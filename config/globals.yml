@@ -4,6 +4,7 @@ requests-message:
   accepted: 'Your request from {{user}} has been accepted.'
   declined: 'Your request to {{user}} has been declined.'
   failed: 'Sorry the system could not register that request. Can you please try again?'
+  withdrawn: 'Your request to {{user}} has been withdrawn.'
   
 locked-message:
   success-sent: 'Your request to confirm the marriage to {{user}} has been sent.'

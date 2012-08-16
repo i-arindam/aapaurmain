@@ -9,7 +9,9 @@ Aapaurmain::Application.routes.draw do
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
-
+  
+  match 'users/showme' => 'users#showme'
+  
   resources :users do
     resources :subscription
   end
@@ -19,13 +21,17 @@ Aapaurmain::Application.routes.draw do
   match '/users/:id/create_profile' => 'users#create_profile'
   match 'users/:id/update' => 'users#update'
   
+  
   # Request actions
-  post 'users/:from_id/request/:to_id' => 'users#create_request'
-  post 'users/:to_id/request/:from_id/accept' => 'users#accept_request'
-  post 'users/:to_id/request/:from_id/decline' => 'users#decline_request'
+  post 'users/create_request' => 'users#create_request'
+  post 'users/withdraw_request' => 'users#withdraw_request'
+  post 'users/accept_request' => 'users#accept_request'
+  post 'users/decline_request' => 'users#decline_request'
+  
   
   # Post lock actions
-  post 'users/:id/locks/:lock_id/withdraw' => 'users#withdraw_lozck'
+  post 'users/withdraw_lock' => 'users#withdraw_lock'
+  post 'users/:id/locks/:lock_id/withdraw' => 'users#withdraw_lock'
   post 'users/:id/locks/:lock_id/finalize' => 'users#finalize_lock'
   post 'users/:id/lock/request_confirm' => 'users#request_confirm_locked'
   post 'users/:id/lock/confirm_success' => 'users#confirm_success'

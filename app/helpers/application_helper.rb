@@ -24,4 +24,14 @@ module ApplicationHelper
     Time.now.year - 90
   end
   
+  def join_as_string(user_field_array, field_name)
+    field_values = []
+    if user_field_array
+      user_field_array.each do |value|
+        field_values << value["#{field_name}"]
+      end
+      field_values.join(',')
+    end
+  end
+  
 end

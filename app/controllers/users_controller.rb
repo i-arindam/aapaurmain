@@ -10,13 +10,14 @@ class UsersController < ApplicationController
   # => id of the user to whom the request will be sent
   def create_request
     from_user = User.find_by_id(params[:from_id])
-    render_404 and return unless from_user and from_user == session[:user]
+    render_404 and return unless from_user and from_user == current_user
     to_user = User.find_by_id(params[:to_id])
     
     render_404 and return unless to_user
     success = from_user.create_new_request(to_user)
     
     message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
+    message.gsub!('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
@@ -32,18 +33,44 @@ class UsersController < ApplicationController
   # => The id of the user who had sent the request
   def accept_request
     to_user = User.find_by_id(params[:to_id])
-    render_404 and return unless to_user and to_user == session[:user] and to_user.has_active_subscription?
+    render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
     
     render_404 and return unless from_user
     success = to_user.accept_request_from(from_user)
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
+    message.gsub!('{{user}}', from_user.name)
     
     render :json => {
       :success => success,
       :message => message
     }
   end
+  
+  
+  # Withdraws a request from a user to another user
+  # Returns json response of success or failure with the message
+  # @param [Fixnum(11)] from_id
+  # => id of the user who is withdrawing the request
+  # @param [Fixnum(11)] to_id
+  # => id of the user to whom the request was sent
+  def withdraw_request
+    from_user = User.find_by_id(params[:from_id])
+    render_404 and return unless from_user and from_user == current_user
+    to_user = User.find_by_id(params[:to_id])
+    
+    render_404 and return unless to_user
+    
+    success = from_user.withdraw_request_to(to_user)
+    message = (success ? User::REQUEST_WITHDRAWN : User::REQUEST_FAILED)
+    message.gsub!('{{user}}', to_user.name)
+    
+    render :json => {
+      :success => success,
+      :message => message
+    }
+  end
+  
   
   # Rejects a request sent to me from another user
   # @param [Fixnum(11)] to_id 
@@ -53,12 +80,20 @@ class UsersController < ApplicationController
   # => The id of the user who had sent the request
   def decline_request
     to_user = User.find_by_id(params[:to_id])
-    render_404 and return unless to_user and to_user == session[:user] and to_user.has_active_subscription?
+    render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
     
     render_404 and return unless from_user
+    success = to_user.decline_request_from(from_user)
     
-    to_user.decline_request_from(from_user)
+    message = (success ? User::REQUEST_DECLINED : User::REQUEST_FAILED)
+    message.gsub!('{{user}}', from_user.name)
+    
+    render :json => {
+      :success => success,
+      :message => message
+    }
+    
   end
   
   ### REQUESTS ACTION ENDS ###
@@ -73,7 +108,7 @@ class UsersController < ApplicationController
   # => The id of the lock being withdrawn
   def withdraw_lock
     withdrawing_user = User.find_by_id(params[:id])
-    render_404 and return unless withdrawing_user and withdrawing_user == session[:user]
+    render_404 and return unless withdrawing_user and withdrawing_user == current_user
     
     lock = Lock.find_by_id(params[:lock_id])
     render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:id] || lock.another_id == params[:id])
@@ -95,7 +130,7 @@ class UsersController < ApplicationController
   # => the corresponding message
   def request_confirm_locked
     notifying_user = User.find_by_id(params[:id])
-    render_404 and return unless notifying_user and notifying_user == session[:user]
+    render_404 and return unless notifying_user and notifying_user == current_user
     
     to_approve_user = User.find_by_id(notifying_user.locked_with)
     render_404 and return unless to_approve_user and to_approve_user.status == User::LOCKED and to_approve_user.locked_with == params[:id]
@@ -122,7 +157,7 @@ class UsersController < ApplicationController
   # => the corresponding message
   def confirm_success
     accepting_user = User.find_by_id(params[:id])
-    render_404 and return unless accepting_user and accepting_user == session[:user]
+    render_404 and return unless accepting_user and accepting_user == current_user
     
     requesting_user = User.find_by_id(accepting_user.locked_with)
     render_404 and return unless requesting_user and requesting_user.status == User::MARK_MARRIED and requesting_user.locked_with == accepting_user.id
@@ -147,7 +182,7 @@ class UsersController < ApplicationController
   # => the corresponding message
   def request_reject_locked
     rejecting_user = User.find_by_id(params[:id])
-    render_404 and return unless rejecting_user and rejecting_user.status == User::LOCKED and rejecting_user == session[:user]
+    render_404 and return unless rejecting_user and rejecting_user.status == User::LOCKED and rejecting_user == current_user
     
     to_approve_user = User.find_by_id(rejecting_user.locked_with)
     render_404 and return unless to_approve_user and to_approve_user.status == User::LOCKED and to_approve_user.locked_with = params[:id]
@@ -174,40 +209,57 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
-  def show
+  def showme
+    if current_user  
+      @user = current_user
+      in_requests_objects = @user.incoming_requests                                 
+      in_requests_ids = in_requests_objects.collect(&:from_id)
     
-    if params[:who] == "me"      
-      #@todo : debug line. remove later
-      session[:user] = User.first
-      
-      if session[:user]  
-        @user = User.find(:first, :conditions => ['id = ?', session[:user_id]]) || User.first
-        in_requests_objects = @user.incoming_requests                                 
-        in_requests_ids = in_requests_objects.collect(&:from_id)
-        
- 
-        @in_requests = User.find( :all,
-                                  :conditions => "id in (#{in_requests_ids * "," })",
-                                  :select => "name") rescue nil # @todo add photo_url
-        
-        out_requests_objects = @user.outgoing_requests
-        out_requests_ids = out_requests_objects.collect(&:to_id)
-        
-        @out_requests = User.find( :all,
-                                  :conditions => "id in (#{out_requests_ids * "," })",
-                                  :select => "name" ) rescue nil # @todo add photo_url
-        
-        render :dashboard
-      else
-        render :text => "Please login first"
-      end
+
+      @in_requests = User.find( :all,
+                                :conditions => "id in (#{in_requests_ids * "," })",
+                                :select => "name") rescue nil # @todo add photo_url
+    
+      out_requests_objects = @user.outgoing_requests
+      out_requests_ids = out_requests_objects.collect(&:to_id)
+    
+      @out_requests = User.find( :all,
+                                :conditions => "id in (#{out_requests_ids * "," })",
+                                :select => "name" ) rescue nil # @todo add photo_url
+      render :dashboard
     else
+      render :text => "Please login first"
+    end
+  end
+    
+    def show
+      @values = {}
       render :text=> "Missing params[:id]" and return unless params[:id]
       @user = User.find_by_id(params[:id]) 
       render_404 and return unless @user
+      
+      if current_user.id.to_s == params[:id]
+        redirect_to :action => :showme and return        
+      end
+      
+      #Check if the logged in user has sent request to this user. Show buttons accordingly
+      request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
+      @values['show-send'] = true if request.nil?
+      if request
+        @values['show-withdraw'] = current_user && request.status == Request::ASKED
+      end
+      
+      #Check if the logged in user has received request from this user. Show buttons accordingly
+      request = Request.find_by_from_id_and_to_id(@user.id, current_user.id)
+      if request
+        @values['show-accept'] = @values['show-decline'] = current_user && request.status == Request::ASKED
+      end
+      
+      
+      @values['json'] = user_json_object
       render :profile
-    end
   end
+  
   
   def signup
     params[:user] = {
@@ -222,6 +274,7 @@ class UsersController < ApplicationController
   def try_and_create(failure_render_path)
     @user = User.new(params[:user])
     if @user.save
+      cookies[:auth_token] = @user.auth_token
       redirect_to "/users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
     else
       render "#{failure_render_path}"
@@ -278,6 +331,20 @@ class UsersController < ApplicationController
     @user.save
     
     render :dashboard
+  end
+  
+  
+  def check_request_exists(to_user_id)
+    
+  end
+  
+  def user_json_object
+    require 'json'
+    json_obj = {
+      :to_user_id => params[:id],
+      :session_user_id => (current_user && current_user.id) 
+    }
+    json_obj.to_json
   end
   
 end

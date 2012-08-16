@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   
   # Enumeration for requests sending, accepting etc
   REQUEST_SENT = $aapaurmain_conf['requests-message']['sent']
+  REQUEST_WITHDRAWN = $aapaurmain_conf['requests-message']['withdrawn']
   REQUEST_ACCEPTED = $aapaurmain_conf['requests-message']['accepted']
   REQUEST_DECLINED = $aapaurmain_conf['requests-message']['declined']
   REQUEST_FAILED = $aapaurmain_conf['requests-message']['failed']
@@ -161,11 +162,11 @@ class User < ActiveRecord::Base
   # @param [Symbol] event
   #   Symbol for the event 
   def deliver_notifications(event, args = [])
-    event = CONTACT_TEMPLATES[event]
-    Notification.send_notification(event[:notif], args << self) if event[:notif]
-    Notifier.deliver_mail(event[:mail], args << self) if event[:mail]
-    SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
-    self.send(event[:operation].to_sym, args << self) if event[:operation]
+    # event = CONTACT_TEMPLATES[event]
+    #   Notification.send_notification(event[:notif], args << self) if event[:notif]
+    #   Notifier.deliver_mail(event[:mail], args << self) if event[:mail]
+    #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
+    #   self.send(event[:operation].to_sym, args << self) if event[:operation]
   end
   
   # Checks if phone notification is allowed for the user
@@ -332,8 +333,9 @@ class User < ActiveRecord::Base
   #     The receiver of the request 
   # @return [TrueClass|FalseClass] denoting if the request got created or not
   def create_new_request(b)
+    # @todo : Sanity check if the request object already exists
     begin
-      req = Request.create
+      req = Request.new
       req.from_id = self.id
       req.to_id = b.id
       req.asked_date = Time.now.to_date
@@ -341,7 +343,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-    self.deliver_notification(:request_notification, [b])
+   # self.deliver_notifications(:request_notification, [b])
     return true
   end
   
@@ -353,11 +355,10 @@ class User < ActiveRecord::Base
   def accept_request_from(from_user)
     begin
       Request.set_as_accepted(self.id, from_user.id)
-      lock = Lock.create({
-        :one_id => self.id,
-        :another_id => from_user.id,
-        :creation_date => Time.now.to_date
-      })
+      lock = Lock.new
+      lock.one_id = self.id
+      lock.another_id = from_user.id
+      lock.creation_date = Time.now.to_date
       lock.save!
     rescue
       return false
@@ -373,8 +374,13 @@ class User < ActiveRecord::Base
   # @param [User] from_user
   #     The user who had sent the request
   def decline_request_from(from_user)
-    Request.set_as_declined(self.id, from_user.id)
+    begin
+      Request.set_as_declined(self.id, from_user.id)
+    rescue
+      return false
+    end
     self.deliver_notifications(:request_declined, [from_user])
+    return true
   end
   
   # Marks the request between self and from_user as withdrawn
@@ -382,8 +388,13 @@ class User < ActiveRecord::Base
   # @param [User] to_user
   #     The user to whom the request was sent
   def withdraw_request_to(to_user)
-    Request.set_as_withdrawn(to_user.id, self.id)
-    seld.deliver_notifications(:request_withdrawn, [from_user])
+    begin
+      Request.set_as_withdrawn(to_user.id, self.id)
+    rescue
+      return false
+    end
+    self.deliver_notifications(:request_withdrawn, [to_user])
+    return true
   end
   
   
@@ -442,6 +453,7 @@ class User < ActiveRecord::Base
       
     end
   end
+  
   
 end
 

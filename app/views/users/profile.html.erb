@@ -2,6 +2,10 @@
 <html>
   <head>
     <%= stylesheet_link_tag "application-user" %>
+    <%= javascript_include_tag "users/profile" %>
+    <script type="text/javascript">
+       window.user_object = <%= raw @values['json'] %>
+    </script>
   </head>
   <body>
     <aside>
@@ -27,7 +31,15 @@
           <h3 class="shortBio">Coder, Death Metal fan, Learner for life</h3>
         </div>
         <div class="profileActions">
-          <input type="button" class="btn btn-success sendRequest" value="Send Request" />
+          <% if @values['show-send'] %>
+            <input type="button" class="btn btn-success j-send-request" value="Send Request" />
+          <% elsif @values['show-withdraw'] %>
+            <input type="button" class="btn btn-danger j-withdraw-request" value="Withdraw Request" />
+          <% elsif @values['show-accept'] %>
+            <input type="button" class="btn btn-success j-accept-request" value="Accept Request" />
+          <% elsif @values['show-decline'] %>
+            <input type="button" class="btn btn-danger j-withdraw-request" value="Decline Request" />
+          <% end %>
           <input type="button" class="btn btn-success askQuestion" value="Ask a Question" />
         </div>
       </div>
@@ -36,7 +48,7 @@
         <label class="span2">Ideal Partner</label>
         <label class="span4"><%= @user.ideal_marriage %></label>
         <label class="span2">Interested In</label>
-        <label class="span4"><%= @user.interested_in %></label>
+        <label class="span4"><%= join_as_string(@user.interested_in,'interested') %></label>
       </div>
     
       <div class="personalDetails group">
@@ -51,7 +63,7 @@
         </div>
         <div class="row">
           <label class="span2">Hobbies</label>
-          <label class="span4"><%= @user.hobbies %></label>
+          <label class="span4"><%= join_as_string(@user.hobbies, 'hobby') %></label>
           <label class="span2">Further Education Plans</label>
           <label class="span4"><%= @user.further_education_plans %></label>
         </div>	
@@ -59,7 +71,7 @@
           <label class="span2">Dream For Future</label>
           <label class="span4"><%= @user.dream_for_future %></label>	
           <label class="span2">Not Interested In</label>
-          <label class="span4"><%= @user.not_interested_in %></label>
+          <label class="span4"><%= join_as_string(@user.not_interested_in, 'not_interested') %></label>
         </div>	
       </div>
     

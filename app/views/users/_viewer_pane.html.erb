@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag "roundabout/jquery-ui-1.8.5.custom" %>
+<%= stylesheet_link_tag "roundabout/viewer_pane" %>
+<%= javascript_include_tag "roundabout/jquery-ui-1.8.9.custom.min" %>
+<%= javascript_include_tag "roundabout/jquery.roundabout.min" %>
+<%= javascript_include_tag "roundabout/viewer_pane_controller" %>
+
+<div class="viewerPane">
+  <ul class="user-container">
+  <% if user_collection and user_collection.length > 0 %>
+    <% user_collection.each do |user|
+            name = user.name
+            ideal_marriage = user.ideal_marriage
+            interested_in = user.interested_in
+            hobbies = user.hobbies
+            profession = user.profession
+          
+    %>
+    <li class="user-info">
+    	<div class="row1">
+    		<img src="http://placehold.it/96X96">
+    		<h3><%= name %></h3>
+    		<label class="span2">Ideal Marriage</label>
+    		<p class="span2"><%= ideal_marriage %></p>
+    		<label class="span2">Interested In</label>
+    		<p class="span2"><%= interested_in %></p>	
+    		<div class="row2">
+    		<label class="span2">Hobbies</label>
+    		<p class="span2"><%= hobbies %></p>
+    		<label class="span2">Profession</label>
+    		<p class="span2"><%= profession %></p>	
+    		</div>									
+    	</div>
+    	<div class="pull-right">
+    	<input type="button" class="btn-mini  sendRequest" value="Send Request"></input>
+    	<input type="button" class="btn-mini  askQuestion" value="Ask a Question"></input>
+    	</div>	
+	  </li>
+	  <% end %>
+	<% end %>
+	</div>
+</div>

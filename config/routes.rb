@@ -11,6 +11,7 @@ Aapaurmain::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
   
   match 'users/showme' => 'users#showme'
+  get 'users/:id/more_info' => 'users#more_info'
   
   resources :users do
     resources :subscription

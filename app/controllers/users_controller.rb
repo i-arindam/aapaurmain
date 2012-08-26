@@ -218,14 +218,14 @@ class UsersController < ApplicationController
 
       @in_requests = User.find( :all,
                                 :conditions => "id in (#{in_requests_ids * "," })",
-                                :select => "name") rescue nil # @todo add photo_url
+                                :select => "name, ideal_marriage, hobbies , interested_in,profession,id") rescue nil # @todo add photo_url
     
       out_requests_objects = @user.outgoing_requests
       out_requests_ids = out_requests_objects.collect(&:to_id)
     
       @out_requests = User.find( :all,
                                 :conditions => "id in (#{out_requests_ids * "," })",
-                                :select => "name" ) rescue nil # @todo add photo_url
+                                :select => "name, ideal_marriage, hobbies , interested_in,profession,id" ) rescue nil # @todo add photo_url
       render :dashboard
     else
       render :text => "Please login first"
@@ -333,6 +333,16 @@ class UsersController < ApplicationController
     render :dashboard
   end
   
+  def more_info
+    @user = User.find_by_id(params[:id].to_i)
+    render_404 and return unless @user
+    
+    respond_to do |format|
+      format.json{render :json=>{}}
+      format.html{render(:locals => { :user => @user} ,:layout=>false)}
+    end
+    
+  end
   
   def check_request_exists(to_user_id)
     

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <%= stylesheet_link_tag "application-user" %>
+	  <%= stylesheet_link_tag "users/dashboard" %>
 	  <%= javascript_include_tag "users/profile" %>
+	  <%= javascript_include_tag "users/dashboard" %>
     <script type="text/javascript">
     </script>
     <!-- <link rel="stylesheet" href="../../assets/stylesheets/viewer_pane.css"> -->
@@ -38,7 +39,7 @@
                   # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
                   # content = slideshow.is_presentation? ? "slide" : "page"
           %>
-					<li>
+					<li class="select-thumbnails">
 						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
 						<a href="http://placehold.it/96x96">
 							<img src="http://placehold.it/96x96">
@@ -47,42 +48,7 @@
 					</li>
 					<% end %>
 					</ul>
-          <!-- <li style="left: 150px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 300px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 450px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 600px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 750px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-        </ul> -->
+   
 			</div>
 			<% end %>		
 			<% if @out_requests && @out_requests.length > 0 %>
@@ -90,13 +56,14 @@
 			  <div class="requestContainer span10">
 				<ul class="requestList">
 				  <% @out_requests.each do |out_req|
-				          out_name = out_req[:name]
+				          out_name = out_req.name
+				          
                   # untruncatedTitle = s slideshow.title rescue "No Title"
                   # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
                   # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
                   # content = slideshow.is_presentation? ? "slide" : "page"
           %>
-					<li>
+					<li class="user-info-out" id= '<%= out_req.id %>' >
 						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
 						<a href="http://placehold.it/96x96">
 							<img src="http://placehold.it/96x96">
@@ -105,69 +72,13 @@
 					</li>
 					<% end %>
 				</ul>
-          <!-- <li style="left: 150px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 300px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 450px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 600px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 750px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="http://placehold.it/96x96">
-              <img src="http://placehold.it/96x96">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-        </ul> -->
+
 			</div>
 			<% end %>	
 			
 			<h3 class="span6 requestLabel">Viewer Pane</h3>	
-			<div class="viewerPane requestContainer span10">
-				<div class="row">
-					<img class="vpThumb" src="http://placehold.it/256x256">
-					<div class="vpInfo">
-						<span class="partner label">Ideal Partner</span>
-						<span class="partnerText">Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes.</span>
-						
-						<span class="interested label">Interested in</span>
-						<span class="interestedText">Vivamus sagittis lacus vel augue natoque penatibus et magnis dis parturient montes natoque penatibuset magnis dis parturient montes</span>
-						
-						<span class="hobbies label">Hobbies</span>
-						<span class="hobbiesText">Table Tennis, Guitar, BC</span>
-						
-						<span class="profession label">Profession</span>
-						<span class="professionText">Software Engineer</span>
-					</div>
+			<%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests} %>
 
-				</div>
-				<div class="buttons pull-right">
-				<input type="button" class="btn btn-success sendRequest" value="Send Request"></input>
-				<input type="button" class="btn btn-success askQuestion" value="Ask a Question"></input>
-				</div>	
-			</div>
 			
 			<h2 class="span6 requestLabel">Recommendations for you</h2>
 			<div class="requestContainer span10">
@@ -219,33 +130,5 @@
 			
 			
 		</div>
-		
-		<!-- Test code -->
-    <!-- <h3>Incoming Requests Viewer Pane</h3>
-    <div class="viewerPane requestContainer span10">
-      <div class="row">
-        <img class="span4" src="http://placehold.it/160x120">
-        <h4 class="span2">Ideal Partner</h4>
-        <p class="span6">Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-        <h4 class="span2">Interested In</h4>
-        <p class="span6">Vivamus sagittis lacus vel augue natoque penatibus et magnis dis parturient montes natoque penatibuset magnis dis parturient montes</p>  
-        <div class="row">
-        <h4 class="span2">Hobbies</h4>
-        <p class="span6">Table Tennis, Guitar , BC</p>
-        <h4 class="span2">Profession</h4>
-        <p class="span6">Software Engineer</p>  
-        </div>                  
-      </div>
-      <div class="pull-right">
-      <input type="button" class="btn j-accept-request" value="Accept Request"></input>
-      <input type="button" class="btn  j-decline-request" value="Decline Request"></input>
-      </div>  
-    </div>
-    
-    
-    <h3>Outgoing Requests Viewer Pane</h3> -->
-		<!---Test code ends->
-		
-		
 	</body>
 </html>

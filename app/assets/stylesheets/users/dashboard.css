@@ -6,54 +6,53 @@ ul.requestList      { height: 170px;
                       list-style: none;
                       position: relative;}
 .requestList li			{
-						list-style: none;
-						padding-right: 30px;
-					/*  position: absolute;*/
-						float: left;
-						width: 100px;
-						display: inline;
-						
-					}
+	list-style: none;
+	padding-right: 30px;
+  position: absolute;
+	float: left;
+	width: 100px;
+	display: inline;
+}
 
 .dashBoardContainer  	{
-						 	background-color: #DAD9D3; 
-						 	width: 60%;
-						}
-						
+  background-color: #DAD9D3; 
+  width: 60%;
+}
+
 .requestContainer		{
-							background: #111123;
-							border-radius: 5px;
-							border: 1px solid #DAD9D3;
-              color: white;
-						}
+	background: #111123;
+	border-radius: 5px;
+	border: 1px solid #DAD9D3;
+  color: white;
+}
 .profile 			{ background-color:#DCEAF4; width: 60%; height: 100%;}
 .profileImage		{ float: left;}
 .profileActions		{ padding-top: 12px;}
 
 .profileIntro		{   
-						border: 1px solid #00F5FF;
-						background: lightBlue;
-						border-radius: 5px;
-						overflow: hidden;
-					}
+	border: 1px solid #00F5FF;
+	background: lightBlue;
+	border-radius: 5px;
+	overflow: hidden;
+}
 .profileSideNav		{
-						background-color: rgba(251, 180, 80, 0.66);
-						width: 15%;
-						float: left;
-						height: 100%;
-						margin-left: 54px;
-					}
+	background-color: rgba(251, 180, 80, 0.66);
+	width: 15%;
+	float: left;
+	height: 100%;
+	margin-left: 54px;
+}
 .span4				{width: 245px;}
 .span2				{width: 100px;}
 
 .group				{
-						border-bottom: 2px solid #00F5FF;
-						border-radius: 5px;
-						padding-left: 10px; 
-						margin-top: 2%;
-						padding-bottom: 2%
+	border-bottom: 2px solid #00F5FF;
+	border-radius: 5px;
+	padding-left: 10px; 
+	margin-top: 2%;
+	padding-bottom: 2%
 
-					}
+}
 .sideNavButtons		{text-align: center;}						
 
 .vpThumb          { float: left;

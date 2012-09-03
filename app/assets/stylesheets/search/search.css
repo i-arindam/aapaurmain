@@ -1,0 +1,22 @@
+ul.searchList {
+  height: 170px;
+  margin: 20px 0 0px 35px;
+  overflow: scroll;
+  list-style: none;
+  position: relative;
+}
+
+.searchList li {
+  list-style: none;
+  padding-right: 30px;
+  float: left;
+  width: 100px;
+  display: inline;
+  position: absolute;
+}
+
+.mainContent {
+  background: teal;
+  position: relative;
+  left: 22%;
+}

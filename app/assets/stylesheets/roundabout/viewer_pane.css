@@ -2,6 +2,11 @@
   background-color: #111123;
   clear: both;
   height: 360px;
+  overflow: hidden;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -border-radius: 15px;
 }
 
 .user-info {
@@ -21,8 +26,11 @@ margin: -35px;
    padding: 20px;
    margin: 0;
    height: inherit;
-   width: 400px;
-   background: whitesmoke;
+   width: 450px;
+   background: black;
+   position: relative;
+   left: 240px;
+   top: 36px;
 }
 .roundabout-moveable-item {
    height: inherit;

@@ -11,6 +11,7 @@ gem "mysql"
 gem 'debugger'
 gem "bcrypt-ruby", :require => "bcrypt"
 gem "jquery-rails"
+gem "rsolr"
 
 group :development, :test do
   gem "rspec"

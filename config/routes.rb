@@ -38,4 +38,6 @@ Aapaurmain::Application.routes.draw do
   post 'users/:id/lock/confirm_success' => 'users#confirm_success'
   post 'users/:id/lock/request_reject' => 'users#request_reject_locked'
   
+  # Search actions
+  get 'search/keyword_search' => 'search#keyword_search'
 end

@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag "application-search" %>
+<%= javascript_include_tag "application-search" %>
+
+<% if @show_nothing %>
+Nothing to display 
+<% else %>
+<div class="span12 mainContent page-center">
+  <div class="searchResults">
+    <ul class="searchList">
+      <% @users.each do |user| %>
+      <li class="select-thumbnails">
+        <a href="http://placehold.it/96x96">
+          <img src="http://placehold.it/96x96">
+          <h3 class="name"><%= user.name %></h3>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <h3 class="span6 requestLabel">Viewer Pane</h3>	
+  <%= render :partial => 'users/viewer_pane', :locals => { :user_collection => @users} %>
+
+</div>
+
+
+<% end %>

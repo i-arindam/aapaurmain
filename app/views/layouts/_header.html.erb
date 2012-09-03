@@ -2,6 +2,13 @@
   <div class="navbar-inner">
     <div class="container">
       <%= link_to "AapAurMain", root_path, id: "logo" %>
+      <form class="top-search pull-left" method="get" action="/search/keyword_search">
+        <input name="searchfrom" type="hidden" value="header">
+        <input class="search-query" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
+        <input type="submit" class="iconSearch">
+        <div class="suggestionContainer"></div>
+      </form>
+        
       <nav>
         <ul class="nav pull-right">
           <% if current_user %>

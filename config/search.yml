@@ -1,0 +1,26 @@
+development:
+  host: http://localhost
+  port: 8983
+
+
+production:
+  host: http://www.aapaurmain.com
+
+basic_params:
+  defType: dismax
+  debugQuery: on
+  fl: "*,score"
+  indent: on
+  
+keyword_search:
+  fields:
+    - u_dream^3.0
+    - u_profession^2.5
+    - u_ideal_marriage^2.75
+    - u_education^2.0
+    - u_location^1.0
+  defType: edismax
+  fl:
+    - id
+    - score
+

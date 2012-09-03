@@ -11,6 +11,7 @@ Aapaurmain::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
   
   match 'users/showme' => 'users#showme'
+  get 'users/:id/more_info' => 'users#more_info'
   
   resources :users do
     resources :subscription
@@ -37,4 +38,6 @@ Aapaurmain::Application.routes.draw do
   post 'users/:id/lock/confirm_success' => 'users#confirm_success'
   post 'users/:id/lock/request_reject' => 'users#request_reject_locked'
   
+  # Search actions
+  get 'search/keyword_search' => 'search#keyword_search'
 end

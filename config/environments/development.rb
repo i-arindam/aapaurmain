@@ -49,4 +49,5 @@ Aapaurmain::Application.configure do
     :enable_starttls_auto => true  }
   
   $aapaurmain_conf = YAML.load(File.read("#{Rails.root}/config/globals.yml"))
+  $search_conf = YAML.load(File.read("#{Rails.root}/config/search.yml"))
 end

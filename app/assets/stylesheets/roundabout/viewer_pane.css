@@ -1,0 +1,44 @@
+.viewerPane 	{
+  background-color: #111123;
+  clear: both;
+  height: 360px;
+  overflow: hidden;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -border-radius: 15px;
+}
+
+.user-info {
+width: 260px;
+height: 260px;
+float: left;
+position: relative;
+margin: -35px;
+	background: #111123;
+	border-radius: 5px;
+	border: 1px solid #DAD9D3;
+  color: white;
+}
+
+.roundabout-holder {
+   list-style: none;
+   padding: 20px;
+   margin: 0;
+   height: inherit;
+   width: 450px;
+   background: black;
+   position: relative;
+   left: 240px;
+   top: 36px;
+}
+.roundabout-moveable-item {
+   height: inherit;
+   width: inherit;
+   cursor: pointer;
+   background-color: darkBlue;
+   border: 1px solid #999;
+}
+.roundabout-in-focus {
+   cursor: auto;
+}

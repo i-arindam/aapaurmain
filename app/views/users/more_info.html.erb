@@ -1,0 +1,28 @@
+<li class="user-info" id='<%= 'user_' + user.id.to_s %>' >
+	<div class="row1">
+		<img src="http://placehold.it/96X96">
+		<h3><%= user.name %></h3>
+		<label class="span2">Ideal Marriage</label>
+		<p class="span2"><%= user.ideal_marriage %></p>
+
+    <% if user.interested_in %>
+  		<label class="span2">Interested In</label>
+  		<p class="span2"><%= user.interested_in.collect(&:interested).join(",") %></p>
+		<% end %>
+
+		<div class="row2">
+
+    <% if user.hobby %>
+  		<label class="span2">Hobbies</label>
+  		<p class="span2"><%= user.hobby.collect(&:hobby).join(",") %></p>
+		<% end %>
+		
+		<label class="span2">Profession</label>
+		<p class="span2"><%= user.profession %></p>	
+		</div>									
+	</div>
+	<div class="pull-right">
+	<input type="button" class="btn-mini  sendRequest" value="Send Request"></input>
+	<input type="button" class="btn-mini  askQuestion" value="Ask a Question"></input>
+	</div>	
+</li>

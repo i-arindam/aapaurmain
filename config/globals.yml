@@ -13,3 +13,8 @@ locked-message:
   reject-sent: 'Your request to reject the lock with {{user}} has been sent.'
   reject-accepted: 'Your rejection of lock with {{user}} has been noted.'
   reject-failed: 'Sorry the system could not register that request. Can you please try again?'
+  
+pusher:
+  app_id: '26861'
+  key: '4b87c0aa5ae5fa58eb8c'
+  secret: 'ff570eff48d16ffdf932'

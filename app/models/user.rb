@@ -229,11 +229,15 @@ class User < ActiveRecord::Base
     a.status = LOCKED
     b.status = LOCKED
     a.locked_since = b.locked_since = Time.now.to_date
-    a.locked_with = b
-    b.locked_with = a
+    a.locked_with = b.id
+    b.locked_with = a.id
     
     a.save!
     b.save!
+  end
+  
+  def can_chat(b_id)
+    self.locked_with == b_id
   end
   
   # I have notified that my lock was successful

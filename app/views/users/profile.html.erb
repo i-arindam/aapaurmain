@@ -21,7 +21,16 @@
           <span class="badge badge-info">8 Views</span>
           <span class="badge badge-important">6 Msgs</span>
         </div>
+        <br />
+        <br />
+        <h3>CHAT</h3>
+        <div class="sidebar">
+          <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
+        </div>
+        
       </div>
+      
+      
 
     </aside>
     <div class="container profile">
@@ -135,5 +144,6 @@
     
     
     </div>
+    
   </body>
 </html>

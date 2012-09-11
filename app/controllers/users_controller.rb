@@ -235,6 +235,7 @@ class UsersController < ApplicationController
     def show
       @values = {}
       render :text=> "Missing params[:id]" and return unless params[:id]
+      @current_user = current_user
       @user = User.find_by_id(params[:id]) 
       render_404 and return unless @user
       
@@ -245,7 +246,9 @@ class UsersController < ApplicationController
       #Check if the logged in user has sent request to this user. Show buttons accordingly
       request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
       @values['show-send'] = true if request.nil?
+
       if request
+         @values['show-chat'] = request.status == Request::ACCEPTED
         @values['show-withdraw'] = current_user && request.status == Request::ASKED
       end
       

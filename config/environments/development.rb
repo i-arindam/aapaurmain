@@ -49,5 +49,13 @@ Aapaurmain::Application.configure do
     :enable_starttls_auto => true  }
   
   $aapaurmain_conf = YAML.load(File.read("#{Rails.root}/config/globals.yml"))
+
   $search_conf = YAML.load(File.read("#{Rails.root}/config/search.yml"))
+
+  
+  require "pusher"
+  Pusher.app_id = $aapaurmain_conf['pusher']['app_id']
+  Pusher.key    = $aapaurmain_conf['pusher']['key']
+  Pusher.secret = $aapaurmain_conf['pusher']['secret']
+
 end

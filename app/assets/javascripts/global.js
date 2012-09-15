@@ -9,8 +9,24 @@
           left: leftVal
         });
       });
-    
-    },
-  });
+    }
+  }); // $.fn.extend
   
+  var dropdownSelector = 'ul.dropdown-menu li a';
+  
+  $.extend({
+    setupDropdownDisplays : function() {
+      $(dropdownSelector).click(function(e) {
+        e.preventDefault();
+        $(this).closest('div.btn-group').children('input').attr('value', $(this).attr('data-value'));
+      });
+    },
+    setupDropdownInputs : function() {
+      $(dropdownSelector).click(function(e) {
+        e.preventDefault();
+        $(this).parents('ul').siblings('a').text($(this).text());
+      });
+    }
+  }); // $.extend
+
 })(jQuery);

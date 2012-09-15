@@ -7,6 +7,8 @@
     <%= javascript_include_tag "application-all" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>    
+    <%= yield :stylesheet %>
+    <%= yield :javascript %>
   </head>
   <body>
     <%= render 'layouts/header' %>
@@ -14,6 +16,7 @@
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     <% end %>
     <%= yield %>
+    <%= yield :js_footer %>
     <%= render 'layouts/footer' %>
   </body>
 </html>

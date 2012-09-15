@@ -3,4 +3,7 @@ $(function () {
   pane.bindNewAdditions();
   
   $('.searchList').setupHorizontalScroll();
+  
+  $.setupDropdownDisplays();
+  $.setupDropdownInputs();
 });

@@ -1,0 +1,10 @@
+.advancedSearch {
+  background: pink;
+}
+
+.searchLabel {
+  display: block;
+}
+.searchFilters {
+  width: 300px;
+}

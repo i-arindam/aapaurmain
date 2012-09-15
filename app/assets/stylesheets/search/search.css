@@ -20,3 +20,12 @@ ul.searchList {
   position: relative;
   left: 22%;
 }
+
+.leftSearchBar {
+  position: fixed;
+  top: 50px;
+  left: -10px;
+  border-radius: 10px;
+  background: lightGreen;
+  padding: 10px;
+}

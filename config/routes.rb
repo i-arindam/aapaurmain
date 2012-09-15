@@ -41,11 +41,10 @@ Aapaurmain::Application.routes.draw do
 
   # Search actions
   get 'search/keyword_search' => 'search#keyword_search'
+  post 'search/advanced_search' => 'search#advanced_search'
   
   #Chat actions
   resources :chat
   match '/pusher/auth' => 'chat#auth'
-  
-
   
 end

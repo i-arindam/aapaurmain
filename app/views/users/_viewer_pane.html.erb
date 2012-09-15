@@ -1,6 +1,10 @@
-<%= stylesheet_link_tag "roundabout/viewer_pane" %>
-<%= javascript_include_tag "roundabout/jquery.roundabout.min" %>
-<%= javascript_include_tag "roundabout/viewer_pane_controller" %>
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "roundabout/viewer_pane" %>
+<% end %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag "roundabout/jquery.roundabout.min" %>
+  <%= javascript_include_tag "roundabout/viewer_pane_controller" %>
+<% end %>
 
 <div class="viewerPane">
   <ul class="user-container">

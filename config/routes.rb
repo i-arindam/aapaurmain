@@ -47,4 +47,8 @@ Aapaurmain::Application.routes.draw do
   resources :chat
   match '/pusher/auth' => 'chat#auth'
   
+  # Conversations and messages
+  get 'conversations' => 'conversation#conversations'
+  get 'conversations/:id' => 'conversation#show'
+  post 'conversations/:id/new_message' => 'conversation#new_message'
 end

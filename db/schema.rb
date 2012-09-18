@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722134203) do
+ActiveRecord::Schema.define(:version => 20120916133924) do
+
+  create_table "conversations", :force => true do |t|
+    t.integer  "from_user_id",                :null => false
+    t.integer  "to_user_id",                  :null => false
+    t.string   "snippet",      :limit => 100
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -53,6 +61,15 @@ ActiveRecord::Schema.define(:version => 20120722134203) do
 
   add_index "locks", ["another_id"], :name => "index_locks_on_another_id"
   add_index "locks", ["one_id"], :name => "index_locks_on_one_id"
+
+  create_table "messages", :force => true do |t|
+    t.integer  "conversation_id",                 :null => false
+    t.string   "text",            :limit => 3000, :null => false
+    t.integer  "from",                            :null => false
+    t.integer  "to",                              :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
 
   create_table "not_interested_in", :force => true do |t|
     t.integer  "user_id"
@@ -129,14 +146,14 @@ ActiveRecord::Schema.define(:version => 20120722134203) do
     t.integer  "spouse_salary",              :limit => 8
     t.string   "further_education_plans",    :limit => 500
     t.string   "spouse_further_education",   :limit => 500
-    t.string   "settle_else",                :limit => 500
+    t.integer  "settle_else"
     t.integer  "sexual_preference",          :limit => 2,   :default => 0
-    t.string   "virginity_opinion",          :limit => 500
+    t.integer  "virginity_opinion"
     t.string   "ideal_marriage",             :limit => 500
     t.integer  "salary",                     :limit => 8
     t.string   "hobbies",                    :limit => 500
     t.integer  "siblings",                   :limit => 2
-    t.integer  "profession",                 :limit => 2
+    t.string   "profession"
     t.string   "dream_for_future",           :limit => 500
     t.string   "interested_in",              :limit => 500
     t.string   "not_interested_in",          :limit => 500
@@ -161,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20120722134203) do
     t.string   "education"
     t.string   "photo_url"
     t.string   "blog_url"
+    t.integer  "age"
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

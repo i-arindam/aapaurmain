@@ -1,0 +1,22 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag 'conversation' %>
+<% end %>
+<% content_for :js_footer do %>
+  <%= javascript_include_tag 'application-conversation' %>
+<% end %>
+
+<div class="span8 conversationContainer">
+  <ul class="conversationList">
+    <% @values.each do |conv| %>
+      <li class="conversation">
+        <a rel="nofollow" href="conversations/<%= conv[:id] %>">
+          <img src="http://placehold.it/96x96" />
+          <span class="conversationName"><%= conv[:with] %></span>
+        </a>
+        on <span class="muted conversationTime"><%= conv[:last_time] %></span>
+        <span class="conversationSnippet"><%= conv[:snippet] %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>
+  

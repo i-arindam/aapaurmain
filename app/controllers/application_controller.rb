@@ -23,5 +23,10 @@ class ApplicationController < ActionController::Base
     User.find_by_auth_token!(cookies[:auth_token]) if !cookies[:auth_token].blank?
   end
   helper_method  :current_user
+  
+  def sanitize_input(in_text)
+    ActionController::Base.helpers.strip_tags(in_text)
+  end
+  helper_method :sanitize_input
 
 end

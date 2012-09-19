@@ -1,47 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
   <head>
-    <%= stylesheet_link_tag "homepage/homepage" %>
+    <% content_for :stylesheet do %>
+      <%= stylesheet_link_tag "homepage/homepage" %>
+    <% end %>
     <title>Aap Aur Main: Destination for perfect matches</title>
   </head>
   <body>
-    <div class="login">
-
-      <!-- login -->
-      <%= form_tag(sessions_path, :class => 'well form-inline pull-right') do %>
-        <div class="control-group">
-          <div class="controls">
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-envelope"></i></span>
-              <input class="span2" id="inputIcon" name="email" type="text" placeholder="Email" />
-            </div>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-lock"></i></span>
-              <input type="password" class="span2" name="password" placeholder="Password" />
-            </div>            
-          </div>
-        </div>
-        
-        <input name="remember_me" type="checkbox">
-        <label class="checkbox">Remember me</label>
-        <button type="submit" class="btn">Log in</button>
-      <% end %>
-    </div><!-- login ends-->
 
     <!-- sign up-->
+    <% if @user && @user.errors.any? %>
+      <div class="signupError alert alert-error">
+        <a class="close">&times;</a>
+        <h2>Form is invalid</h2>
+        <ul>
+          <li>Email can't be blank</li>
+          <li>Password can't be blank</li>
+          <li>Password confirm should match with password</li>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="signup">
-      <% if @user && @user.errors.any? %>
-        <div class="error_messages">
-          <h2>Form is invalid</h2>
-          <ul>
-            <% for message in @user.errors.full_messages %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      
-      <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'well pull-right', :id => 'signup_form') do %>
+      <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
         <div class="control-group">
           <div class="controls">
             <div class="input-prepend">
@@ -56,10 +37,29 @@
               <span class="add-on"><i class="icon-refresh"></i></span>
               <input type="password" class="span3" name="password_confirmation" placeholder="Password Confirm" />
             </div>
-            <button type="submit" class="btn">Sign up</button>
+            <button type="submit" class="signupBtn"></button>
           </div>
         </div>
       <% end %>
     </div><!--signup ends-->
+    
+    <!-- Main talking area -->
+    <div class="span11 mainContent">
+      <div class="calloutCloud">
+        <img src="assets/female1.png" />
+      </div>
+      <img class="fmascot" src="assets/female_mascot.png" />
+      <div class="stickyArea">
+        <ul>
+          <li>We are not a dating site. We do not cater to people who want to have some fun</li>
+          <li>We do not provide matches based on caste/race/religion/salary/skin color/height or weight</li>
+          <li>We take care of your aspirations and preferences; not only what you are today</li>
+          <li>Our members accept each others' responsibilities towards their parents. Its not an obligation for them</li>
+          <li>We stand for Rational match making; the right spice of thoughts & reality. We do not create fairy tales for you</li>
+        </ul>
+      </div>
+      <img class="mmascot" src="assets/female_mascot.png" />
+    </div>
+    <!-- Main talking area ends -->
   </body>
 </html>

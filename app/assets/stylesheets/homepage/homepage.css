@@ -10,9 +10,77 @@
 
 .signup {
   clear: both; 
-  margin-right: 91px;
+  margin-right: 76px;
+  background: url('../signup.png') no-repeat;
+  position: relative;
+  float: right;
+  width: 420px;
+  height: 490px;
+}
+
+#signup_form {
+  position: absolute;
+  left: 50px;
+  top: 100px;
+}
+
+.signupBtn {
+  background:url('../arrow.png') no-repeat;
+  width: 30px;
+  height: 30px;
+  margin-left: 200px;
 }
 
 .input-prepend span.add-on {
   margin-right: -5px;
+}
+
+.signupError {
+  float: right;
+  position: relative;
+  right: 60px;
+  width: 310px;
+  top: 30px;
+  list-style: none;
+  list-style-type: none;
+}
+
+.signupError ul {
+  list-style-type: none;
+  padding-top: 10px;
+}
+
+.signupError h2 {
+  margin-bottom: 2px;
+}
+
+.stickyArea {
+  background: url('../s.png') repeat;
+  color: black;
+  position: absolute;
+  left: 160px;
+  top: 290px;
+  padding: 10px;
+  width: 560px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.fmascot {
+  width: 100px;
+  position: absolute;
+}
+
+.mmascot {
+  width: 100px;
+  position: absolute;
+  left: 800px;
+}
+
+.calloutCloud {
+  position: relative;
+  left: 310px;
 }

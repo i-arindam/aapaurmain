@@ -58,4 +58,8 @@ module ApplicationHelper
   def family_preference_list
     list = $user_prefs['family_preference']
   end
+  
+  def is_homepage?
+    (params[:controller] == "static_pages" and params[:action] == "home") or (params[:controller] == "users" and params[:action] == "signup")
+  end
 end

@@ -5,7 +5,8 @@ html {
 }
 
 body {
-  padding-top: 60px;
+  padding-top: 90px;
+  background: url('../denim-bg.png') repeat;
 }
 
 section {
@@ -53,6 +54,63 @@ p {
 
 /* header */
 
+header {
+  height: 70px;
+}
+
+.navbar-inner {
+  background: #2F532F;
+  height: inherit;
+  padding-top: 10px;
+}
+
+header .navbar-inner .container {
+  width: 1110px;
+}
+
+.rememberSection {
+  position: relative;
+  left: 160px;
+  top: -13px;
+}
+
+.signin {
+  background: #f8d4cf; /* Old browsers */
+  background: -moz-linear-gradient(top, #f8d4cf 0%, #deaea7 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8d4cf), color-stop(100%,#deaea7)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #f8d4cf 0%,#deaea7 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #f8d4cf 0%,#deaea7 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #f8d4cf 0%,#deaea7 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #f8d4cf 0%,#deaea7 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8d4cf', endColorstr='#deaea7',GradientType=0 ); /* IE6-9 */
+  width:80px;
+  height: 30px;
+  color: #b74242;
+  font-weight: bold;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.inputFields {
+  background: #cfcfcf; /* Old browsers */
+  background: -moz-linear-gradient(top, #cfcfcf 0%, #c3c3c3 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cfcfcf), color-stop(100%,#c3c3c3)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #cfcfcf 0%,#c3c3c3 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfcfcf', endColorstr='#c3c3c3',GradientType=0 ); /* IE6-9 */
+  width: 170px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -63,6 +121,7 @@ p {
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
+  background-image: url('../logo.png') !important;
 }
 
 #logo:hover {
@@ -73,10 +132,13 @@ p {
 /* footer */
 
 footer {
-  margin-top: 250px;
+  position: absolute;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #999;
+  bottom: 0px;
+  width: 100%;
+  background: #2F532F;
 }
 
 footer a {
@@ -100,3 +162,94 @@ footer ul li {
   float: left;
   margin-left: 10px;
 }
+
+.footer {
+  height: 30px;
+}
+
+/* Section Elements */
+
+#box_content {
+  width: 65%;
+  float: left;
+  height: 1200px;
+  background: lightSeaGreen;
+  left: 200px;
+  border-radius: 10px;
+  padding: 10px;
+  color: #fff;
+  margin-bottom: 30px;
+}
+#left_content {
+  width: 16%;
+  float: left;
+}
+#right_content {
+  width: 16%;
+  float: left;
+}
+
+.profileImage {
+  float: left;
+  height: 200px;
+  width: 200px;
+  margin-left: 130px;
+  margin-top: 20px;
+  text-align: center;
+}
+.profileImage div {
+  height: 180px;
+  width: 200px;
+  background-color: white;
+}
+.profileActions {
+  padding-top: 12px;
+}
+
+.profileIntro {
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 25px 5px 10px 30px;
+}
+.profileImageSmall {
+  float: left;
+  height: 150px;
+  width: 150px;
+  margin-left: 30px;
+  margin-top: 20px;
+  text-align: center;
+}
+.profileImageSmall div {
+  height: 120px;
+  width: 120px;
+  background-color: white;
+}
+.profileActionsSmall {
+  padding-top: 4px;
+}
+
+.profileIntroSmall {
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 15px;
+  font-size: 0.7em;
+}
+.bioSection {
+  text-align: left;
+}
+.shortBio {
+  font-style: italic;
+  font-weight: normal;
+  margin-bottom: 30px;
+}
+.name {
+  letter-spacing: 0px;
+  text-align: left !important;
+  margin-bottom: 10px !important;
+}
+
+.row label.span2 {
+  font-size: 14px;
+  font-weight: bold;
+}
+

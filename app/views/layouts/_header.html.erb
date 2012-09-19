@@ -1,24 +1,37 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "AapAurMain", root_path, id: "logo" %>
-      <form class="top-search pull-left" method="get" action="/search/keyword_search">
-        <input name="searchfrom" type="hidden" value="header">
-        <input class="search-query" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
-        <input type="submit" class="iconSearch">
-        <div class="suggestionContainer"></div>
-      </form>
+      <a href="/" id="logo">AAPAURMAIN</a>
+      <% unless is_homepage? %>
+        <form class="top-search pull-left" method="get" action="/search/keyword_search">
+          <input name="searchfrom" type="hidden" value="header">
+          <input class="search-query" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
+          <input type="submit" class="iconSearch">
+          <div class="suggestionContainer"></div>
+        </form>
+      <% end %>
         
       <nav>
-        <ul class="nav pull-right">
-          <% if current_user %>
+        <!-- <ul class="nav pull-right"> -->
+          <% if is_homepage? %>
+            <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
+              <div class="control-group">
+                <div class="controls">
+                  <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
+                  <input type="password" class="inputFields" name="password" placeholder="Password" />
+                  <button type="submit" class="signin">Log in</button>
+                </div>
+              </div>
+              <div class="rememberSection">
+                <input name="remember_me" type="checkbox">
+                <label class="checkbox">Remember me</label>
+              </div>
+            <% end %>
+          <% elsif current_user %>
             Logged in as <%= current_user.name %>.
             <%= link_to "Log out", logout_path %>
-          <% else %>
-            <%= link_to "Sign up", signup_path %> or
-            <%= link_to "log in", login_path %>
           <% end %>
-        </ul>
+        <!-- </ul> -->
       </nav>
     </div>
   </div>

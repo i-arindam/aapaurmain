@@ -1,133 +1,122 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	  <%= stylesheet_link_tag "users/dashboard" %>
-	  <%= javascript_include_tag "application-user" %>
-    <script type="text/javascript">
-    </script>
-    <!-- <link rel="stylesheet" href="../../assets/stylesheets/viewer_pane.css"> -->
-	</head>
-	<body>
-		<aside>
-			<div class="profileSideNav">
-				<img src="http://placehold.it/260x180" class="profileImage" />
-				<div class="sideNavButtons">
-					<input type="button" class="btn-small btn-success" value="My album"></input>
-					<br />
-					<br />
-					<span class="badge badge-success">2 Ques</span>
-					<span class="badge badge-warning">4 Interests</span>
-					<br />
-					<span class="badge badge-info">8 Views</span>
-					<span class="badge badge-important">6 Msgs</span>
-				</div>
-			</div>
-		</aside>
-		
-		<div class="container dashBoardContainer">
-			<h3 class="span6">Howdy <%= @user.name %>!</h3>
-			<% if @in_requests and @in_requests.length > 0 %>
-			
-			  <h4 class="span6 requestLabel">Your Incoming Requests</h4>
-			  <div class="requestContainer span10">
-				<ul class="requestList incomingRequests">
-				  <% @in_requests.each do |in_req|
-				          in_name = in_req[:name]
+  <head>
+    <% content_for :stylesheet do %>
+      <%= stylesheet_link_tag "users/dashboard" %>
+    <% end %>
+    <% content_for :js_footer do %>
+      <%= javascript_include_tag "application-user" %>
+    <% end %>
+    <title>Lo! Your home page <%= @user.name.capitalize %></title>
+  </head>
+  <body>
+    <div id="left_content">left content</div>
+    <div id="box_content">
+    <div class="container dashBoardContainer profile">
+      <h3 class="span6">Howdy <%= @user.name %>!</h3>
+      <% if @in_requests and @in_requests.length > 0 %>
+      
+      <h4 class="span6 requestLabel">Your Incoming Requests</h4>
+      <div class="requestContainer span10">
+        <ul class="requestList incomingRequests">
+          <% @in_requests.each do |in_req|
+            in_name = in_req[:name]
                   # untruncatedTitle = s slideshow.title rescue "No Title"
                   # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
                   # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
                   # content = slideshow.is_presentation? ? "slide" : "page"
           %>
-					<li class="select-thumbnails" id="<%= in_req.id %>">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name"><%=in_name %></h3>
-						</a>
-					</li>
-					<% end %>
-					</ul>
+          <li class="select-thumbnails" id="<%= in_req.id %>">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name"><%=in_name %></h3>
+            </a>
+          </li>
+          <% end %>
+        </ul>
    
-			</div>
-			<% end %>		
-			<% if @out_requests && @out_requests.length > 0 %>
-			  <h4 class="span6 requestLabel">Your Outgoing Requests</h4>
-			  <div class="requestContainer span10">
-				<ul class="requestList outgoingRequests">
-				  <% @out_requests.each do |out_req|
-				          out_name = out_req.name
-				          
+      </div>
+      <% end %>		
+      <% if @out_requests && @out_requests.length > 0 %>
+      <h4 class="span6 requestLabel">Your Outgoing Requests</h4>
+      <div class="requestContainer span10">
+        <ul class="requestList outgoingRequests">
+          <% @out_requests.each do |out_req|
+            out_name = out_req.name
+      
                   # untruncatedTitle = s slideshow.title rescue "No Title"
                   # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
                   # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
                   # content = slideshow.is_presentation? ? "slide" : "page"
           %>
-					<li class="select-thumbnails" id= '<%= out_req.id %>' >
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name"><%= out_name %></h3>
-						</a>
-					</li>
-					<% end %>
-				</ul>
+          <li class="select-thumbnails" id= '<%= out_req.id %>' >
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name"><%= out_name %></h3>
+            </a>
+          </li>
+          <% end %>
+        </ul>
 
-			</div>
-			<% end %>	
-			
-			<h3 class="span6 requestLabel">Viewer Pane</h3>	
-			<%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests} %>
+      </div>
+      <% end %>	
 
-			
-			<h2 class="span6 requestLabel">Recommendations for you</h2>
-			<div class="requestContainer span10">
-				<ul class="requestList recommendations">
-					<li>
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 150px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 300px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 450px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 600px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-					<li style="left: 750px;">
-						<span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-						<a href="#">
-							<img src="users/96x96.gif">
-							<h3 class="name">Apoorvi Kapoor</h3>
-						</a>
-					</li>
-				</ul>
-			</div>
-			
-			
-		</div>
-	</body>
+      <h3 class="span6 requestLabel">Viewer Pane</h3>	
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests} %>
+
+      
+      <h4 class="span6 requestLabel">Recommendations for you</h4>
+      <div class="requestContainer span10">
+        <ul class="requestList recommendations">
+          <li>
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 150px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 300px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 450px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 600px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+          <li style="left: 750px;">
+            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
+            <a href="#">
+              <img src="/assets/users/96x96.gif">
+              <h3 class="name">Apoorvi Kapoor</h3>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    </div> <!-- box_content -->
+    <div id="right_content">right content</div>
+  </body>
 </html>

@@ -12,8 +12,7 @@
       <% end %>
         
       <nav>
-        <!-- <ul class="nav pull-right"> -->
-          <% if is_homepage? %>
+          <% if is_homepage? and !current_user %>
             <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
               <div class="control-group">
                 <div class="controls">
@@ -26,12 +25,18 @@
                 <input name="remember_me" type="checkbox">
                 <label class="checkbox">Remember me</label>
               </div>
-            <% end %>
-          <% elsif current_user %>
-            Logged in as <%= current_user.name %>.
-            <%= link_to "Log out", logout_path %>
+            <% end %> <!-- end for form -->
+          <% else %>
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                Logged in as 
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Log out", logout_path %></li>
+                </ul>
+              </li>
+            </ul>
           <% end %>
-        <!-- </ul> -->
       </nav>
     </div>
   </div>

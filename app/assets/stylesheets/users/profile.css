@@ -1,53 +1,161 @@
-.name {
-	letter-spacing: 0px;
-	text-align: none;
-}
 .profile {
-	background-color: #F6F5EF;
-	width: 60%;
-	height: 100%;
-}
-.profileImage	{ 
-	float: left;
-}
-.profileActions { 
-	padding-top: 12px;
-}
-
-.profileIntro {
-  border: 1px solid brown;
-  background: rgba(251, 180, 80, 0.66);
-  border-radius: 5px;
-  overflow: hidden;
-  padding: 5px 5px 10px 10px;
-}
-.profileSideNav {
-  background-color: rgba(251, 180, 80, 0.66);
-  width: 15%;
-  float: left;
+  width: 100%;
   height: 100%;
-  margin-left: 54px;
 }
-.span4 {width: 245px;}
-.span2 {width: 100px;}
+.profileheader {
+  width: 100%;
+  height: 270px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
 
-.group {
-  border-bottom: 2px solid rgba(70, 0, 0, 0.67);
-  border-radius: 5px;
-  padding-left: 10px; 
-  margin-top: 2%;
-  padding-bottom: 2%	
+.profileImage {
+  width: 100px;
+  height: 100px;
 }
-.sideNavButtons		{text-align: center;}
+
+.profileSideNav {
+width: 15%;
+float: left;
+height: 100%;
+margin-left: 54px;
+margin-top: 30px;
+border-left: 1px solid grey;
+}
+
+.heading {
+  font-size: 1.5em;
+  font-family: 'Oregano', cursive;
+  border-bottom : 2px solid #D6D6D6;
+  padding: 5px;
+  padding-left: 30px;
+  color: #3a87ad;
+}
+.group {
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-top: 30px;
+  width: 100%;
+  background-color: #F2F2F2;
+  padding: 20px;
+  min-height: 230px;
+}
+.sideNavButtons {
+  text-align: left;
+  margin-left: 50px
+}
 
 div.profile span.label {
-	margin-left: 20px;
-	position: relative;
-	bottom: 5px;
+  margin-left: 20px;
+  position: relative;
+  bottom: 5px;
 }
 
-.row label.span2 {
-	font-size: 14px;
-	font-weight: bold;
+
+
+.badge {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-family: 'Oregano', cursive;
+  font-weight: bold;
+  line-height: 40px;
+  color: #ffffff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  -moz-border-radius-topleft: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
+.badge-left {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 40px;
+  color: #000;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: #D6D6D6;
+}
+.group.col {
+  background: #191814;
+  border-radius: 10px;
+  height: 200px;
+}
+
+.group.col .values {
+  margin-top: 20px;
+}
+.span4 {
+  width: 200px;
+}
+.span2 {
+  width: 170px;
+}
+
+.leftCol {
+  float: left;
+  width: 45%;
+  margin-left: -50px;
+}
+
+.rightCol {
+  float: left;
+  margin-left: 100px;
+  width: 45%;
+}
+
+.group.col {
+  margin: 20px;
+/*  border: 5px solid #eee;*/
+  -webkit-box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+  -moz-box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+  box-shadow: 9px 9px 9px rgba(0,0,0,0.4);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}
+
+.group.col:hover {
+  opacity: 1;
+  border: 5px solid #eee;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
+  -webkit-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+  -moz-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+  box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+  height: 133%;
+  width: 133%;
+  margin-left: -50px;
+}
+
+.lcol1:hover, .rcol2:hover {
+  -webkit-transform: rotate(-7deg);
+  -moz-transform: rotate(-7deg);
+  -o-transform: rotate(-7deg);
+}
+
+.lcol2:hover, .rcol1:hover {
+  -webkit-transform: rotate(7deg);
+  -moz-transform: rotate(7deg);
+  -o-transform: rotate(7deg);
+}
+
+/*.lcol1:hover, .rcol1:hover {
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
+}
+
+.lcol2:hover, .rcol2:hover {
+  -webkit-box-reflect: above 0px -webkit-gradient(linear, left bottom, left top, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
+}*/
+
+#box_content {
+  background: inherit;
+}

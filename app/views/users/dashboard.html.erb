@@ -7,7 +7,7 @@
     <% content_for :js_footer do %>
       <%= javascript_include_tag "application-user" %>
     <% end %>
-    <title>Lo! Your home page <%= @user.name.capitalize %></title>
+    <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
   </head>
   <body>
     <div id="left_content">left content</div>

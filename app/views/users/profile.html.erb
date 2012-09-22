@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= stylesheet_link_tag "application-user" %>
+    <% content_for :stylesheet do%>
+      <%= stylesheet_link_tag "users/profile" %>
+    <% end %>
     <%= javascript_include_tag "users/profile" %>
     <script type="text/javascript">
        window.user_object = <%= raw @values['json'] %>
     </script>
   </head>
   <body>
-    <aside>
+    <!-- <aside>
       <div class="profileSideNav">
         <img src="http://placehold.it/260x180" class="profileImage" />
         <div class="sideNavButtons">
@@ -29,19 +31,21 @@
         </div>
         
       </div>
-      
-      
+    </aside> -->
 
-    </aside>
-    <div class="container profile">
-      <div class="profileIntro">
+    <div id="left_content">left content</div>
+    <div id="box_content">
+    <div id="main_content">
+      <section class="profileHeader">
+        <div class="profileImage"></div>
         <div class="bioSection">
           <h1 class="name"><%= @user.name %></h1>
           <h3 class="shortBio">Coder, Death Metal fan, Learner for life</h3>
         </div>
+        
         <div class="profileActions">
           <% if @values['show-send'] %>
-            <input type="button" class="btn btn-success j-send-request" value="Send Request" />
+            <input type="button" class="btn btn-danger btn-large j-send-request" value="Send Request" />
           <% elsif @values['show-withdraw'] %>
             <input type="button" class="btn btn-danger j-withdraw-request" value="Withdraw Request" />
           <% elsif @values['show-accept'] %>
@@ -49,101 +53,125 @@
           <% elsif @values['show-decline'] %>
             <input type="button" class="btn btn-danger j-withdraw-request" value="Decline Request" />
           <% end %>
-          <input type="button" class="btn btn-success askQuestion" value="Ask a Question" />
+          <input type="button" class="btn btn-danger btn-large askQuestion" value="Ask a Question" />
         </div>
-      </div>
-    
-      <div class="recoFields row group">
-        <label class="span2">Ideal Partner</label>
-        <label class="span4"><%= @user.ideal_marriage %></label>
-        <label class="span2">Interested In</label>
-        <label class="span4"><%= join_as_string(@user.interested_in,'interested') %></label>
-      </div>
-    
-      <div class="personalDetails group">
-        <div class="row">
-          <span class="label label-important"><em>Stuff that is important</em></span>
-        </div>
-        <div class="row">
-          <label class="span2">Profession</label>
-          <label class="span4"><%= @user.profession %></label>
-          <label class="span2">Education</label>
-          <label class="span4">B.Tech Computer Science</label>
-        </div>
-        <div class="row">
-          <label class="span2">Hobbies</label>
-          <label class="span4"><%= join_as_string(@user.hobbies, 'hobby') %></label>
-          <label class="span2">Further Education Plans</label>
-          <label class="span4"><%= @user.further_education_plans %></label>
-        </div>	
-        <div class="row">
-          <label class="span2">Dream For Future</label>
-          <label class="span4"><%= @user.dream_for_future %></label>	
-          <label class="span2">Not Interested In</label>
-          <label class="span4"><%= join_as_string(@user.not_interested_in, 'not_interested') %></label>
-        </div>	
-      </div>
-    
-    
-      <div class="spousePreferences group">
-        <div class="row">
-          <span class="label label-info"><em>Aap</em></span>
-        </div>
-        <div class="row">
-          <label class="span2">Spouse Preference</label>
-          <label class="span4"><%= @user.spouse_preference %></label>
-          <label class="span2">Spouse's Further Education Plans</label>
-          <label class="span4"><%= @user.spouse_further_education %></label>
-        </div>
-        <br />
-      </div>
-    
-      <div class="group">
-          <div class="row">
-            <span class="label label-warning"><em>The taboo topics!</em></span>
+      </section>
+
+      <div class="container profile">
+        <div class="leftCol">
+
+          <div class="group col lcol1">
+            <div class="row heading">
+              <span><em>Aap</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <label class="span2">Spouse Preference</label>
+                <label class="span4"><%= spouse_pref_list[@user.spouse_preference] %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Sexual Preference</label>
+                <label class="span4"><%= @user.sexual_preference %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Family Preference</label>
+                <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
+              </div>
+            </div>
           </div>
-        <div class="row">
-          <label class="span2">Opinion on Virginity</label>
-          <label class="span8"><%= @user.virginity_opinion %></label>
-        </div>
-      </div>
-    
-      <div class="group">
-          <div class="row">
-          	<span class="label label-success"><em>I Me Myself(Main)</em></span>
+
+          <div class="group col lcol2">
+            <div class="row heading">
+              <span><em>Stuff that is important</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <label class="span2">Profession</label>
+                <label class="span4"><%= @user.profession %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Education</label>
+                <label class="span4"><%= @user.education %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Hobbies</label>
+                <label class="span4"><%= join_as_string(@user.hobbies, 'hobby') %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Further Education Plans</label>
+                <label class="span4"><%= further_education_list[@user.further_education_plans] %></label>
+              </div>	
+              <div class="row">
+                <label class="span2">Dream For Future</label>
+                <label class="span4"><%= @user.dream_for_future %></label>	
+              </div>
+            </div>
           </div>
-        <div class="row">
-          <label class="span2 h4">Sex[y]</label>
-          <label class="span4"><%= @user.sex %></label>
-          <label class="span2 h4">I can reach till</label>
-          <label class="span4"><%= @user.height %></label>
-        </div>
-        <div class="row">
-          <label class="span2 h4">The day earth was blessed</label>
-          <label class="span4"><%= @user.dob %></label>
-          <label class="span2 h4">Max shopping bill that i can afford</label>
-          <label class="span4"><%= @user.salary %></label>
-        </div>
-        <div class="row">
-          <label class="span2">Settled In</label>
-          <label class="span4"><%= @user.settled_in %></label>
-          <label class="span2">Willing to relocate</label>
-          <label class="span4"><%= @user.settle_else %></label>
-        </div>	
-        <div class="row">
-          <label class="span2">Sexual Preference</label>
-          <label class="span4"><%= @user.sexual_preference %></label>
-          <label class="span2">Family Preference</label>
-          <label class="span4"><%= @user.family_preference %></label>
-        </div>
-        <div class="row">
-          <label class="span2">Siblings</label>
-          <label class="span4"><%= @user.siblings %></label>
-        </div>
-      </div>
     
+        </div> <!-- left col -->
     
-    </div>
+        <div class="rightCol">
+
+          <div class="group col rcol1">
+            <div class="row heading">
+              <span><em>I Me Myself(Main)</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <label class="span2 h4">Sex[y]</label>
+                <label class="span4"><%= @user.sex %></label>
+              </div>
+              <div class="row">
+                <label class="span2 h4">I can reach till</label>
+                <label class="span4"><%= @user.height %></label>
+              </div>
+              <div class="row">
+                <label class="span2 h4">Seen years</label>
+                <label class="span4"><%= @user.age %></label>
+              </div>
+              <div class="row">
+                <label class="span2 h4">Max shopping bill that i can afford</label>
+                <label class="span4"><%= @user.salary %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Settled In</label>
+                <label class="span4"><%= @user.settled_in %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Willing to relocate</label>
+                <label class="span4"><%= relocate_list[@user.settle_else] %></label>
+              </div>	
+              <div class="row">
+                <label class="span2">Siblings</label>
+                <label class="span4"><%= @user.siblings %></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="group col rcol2">
+            <div class="row heading">
+              <span><em>The taboo topics!</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <label class="span2">Opinion on Virginity</label>
+                <label class="span4"><%= virginity_opinion_list[@user.virginity_opinion] %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Ideal Partner</label>
+                <label class="span4"><%= @user.ideal_marriage %></label>
+              </div>
+              <div class="row">
+                <label class="span2">Interested In</label>
+                <label class="span4"><%= join_as_string(@user.interested_in,'interested') %></label>
+              </div>
+            </div>
+          </div>
+          
+        <div> <!-- right col -->
     
+      </div> <!-- container profile -->
+    </div> <!-- main_content -->
+    </div> <!-- box_content -->
   </body>
 </html>

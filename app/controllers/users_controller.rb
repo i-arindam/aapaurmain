@@ -232,35 +232,35 @@ class UsersController < ApplicationController
     end
   end
     
-    def show
-      @values = {}
-      render :text=> "Missing params[:id]" and return unless params[:id]
-      @current_user = current_user
-      @user = User.find_by_id(params[:id]) 
-      render_404 and return unless @user
-      
-      if current_user.id.to_s == params[:id]
-        redirect_to :action => :showme and return        
-      end
-      
-      #Check if the logged in user has sent request to this user. Show buttons accordingly
-      request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
-      @values['show-send'] = true if request.nil?
+  def show
+    @values = {}
+    render :text=> "Missing params[:id]" and return unless params[:id]
+    @current_user = current_user
+    @user = User.find_by_id(params[:id]) 
+    render_404 and return unless @user
+    
+    if current_user.id.to_s == params[:id]
+      redirect_to :action => :showme and return        
+    end
+    
+    #Check if the logged in user has sent request to this user. Show buttons accordingly
+    request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
+    @values['show-send'] = true if request.nil?
 
-      if request
-         @values['show-chat'] = request.status == Request::ACCEPTED
-        @values['show-withdraw'] = current_user && request.status == Request::ASKED
-      end
-      
-      #Check if the logged in user has received request from this user. Show buttons accordingly
-      request = Request.find_by_from_id_and_to_id(@user.id, current_user.id)
-      if request
-        @values['show-accept'] = @values['show-decline'] = current_user && request.status == Request::ASKED
-      end
-      
-      
-      @values['json'] = user_json_object
-      render :profile
+    if request
+       @values['show-chat'] = request.status == Request::ACCEPTED
+      @values['show-withdraw'] = current_user && request.status == Request::ASKED
+    end
+    
+    #Check if the logged in user has received request from this user. Show buttons accordingly
+    request = Request.find_by_from_id_and_to_id(@user.id, current_user.id)
+    if request
+      @values['show-accept'] = @values['show-decline'] = current_user && request.status == Request::ASKED
+    end
+    
+    
+    @values['json'] = user_json_object
+    render :profile
   end
   
   

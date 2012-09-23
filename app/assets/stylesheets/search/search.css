@@ -1,3 +1,17 @@
+body {
+  margin-bottom: 100px;
+}
+.searchResults {
+  position: relative;
+  left: 380px;
+  top: 20px;
+  background: #191814;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  color: white;
+}
 ul.searchList {
   height: 170px;
   margin: 20px 0 0px 35px;
@@ -15,17 +29,25 @@ ul.searchList {
   position: absolute;
 }
 
-.mainContent {
-  background: teal;
+.viewerPane {
   position: relative;
-  left: 22%;
+  width: 940px;
+  left: 400px;
+  top: 50px;
+  height: 363px;
 }
 
+.viewerPane ul.user-container {
+  left: 280px;
+  top: 38px;
+}
 .leftSearchBar {
-  position: fixed;
-  top: 50px;
-  left: -10px;
+  position: absolute;
+  top: 110px;
   border-radius: 10px;
-  background: lightGreen;
+  background: rgba(12, 220, 238, 0.33);
   padding: 10px;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  color: #FFEBCD;
 }

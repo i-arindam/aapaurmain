@@ -3,10 +3,10 @@
   clear: both;
   height: 360px;
   overflow: hidden;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -border-radius: 5px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }
 
 .user-info {
@@ -30,7 +30,7 @@
    background: black;
    position: relative;
    left: 240px;
-   top: 36px;
+   top: 46px;
 }
 .roundabout-moveable-item {
    height: inherit;

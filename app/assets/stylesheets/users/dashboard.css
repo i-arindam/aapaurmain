@@ -1,3 +1,7 @@
+#box_content {
+  background: inherit;
+}
+
 .requestLabel {
   margin: 20px 0 10px 20px;
 }
@@ -23,11 +27,13 @@ ul.requestList {
 
 .requestContainer		{
   background: #191814;
-  border-radius: 5px;
-  border: 1px solid #DAD9D3;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   color: white;
   margin-left: 10px;
-  width: 98%;
+  width: 99%;
 }
 .profileImage {
   float: left;
@@ -73,8 +79,10 @@ ul.requestList {
 }
 
 .viewerPane {
-  border-radius: 5px;
-  border: 1px solid #DAD9D3;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+  -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   margin-left: 10px;
   padding: 10px;
 }
@@ -98,6 +106,10 @@ ul.requestList {
 }
 .viewerPane .buttons input {
   margin-right: 15px;
+}
+
+.viewerPane ul.user-container {
+  left: 260px;
 }
 .span4 {
   width: 170px;

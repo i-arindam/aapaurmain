@@ -1,6 +1,7 @@
 .profile {
   width: 100%;
   height: 100%;
+  color: whitesmoke;
 }
 .profileheader {
   width: 100%;
@@ -85,12 +86,6 @@ div.profile span.label {
   border-bottom-left-radius: 10px;
   background-color: #D6D6D6;
 }
-.group.col {
-  background: #191814;
-  border-radius: 10px;
-  height: 200px;
-}
-
 .group.col .values {
   margin-top: 20px;
 }
@@ -114,10 +109,11 @@ div.profile span.label {
 }
 
 .group.col {
+  background: #191814;
+  border-radius: 10px;
+  height: 350px;
   margin: 20px;
-/*  border: 5px solid #eee;*/
-  -webkit-box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
-  -moz-box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+  -moz-box-shadow: 9px 9px 9px rgba(0,0,0,0.2);
   box-shadow: 9px 9px 9px rgba(0,0,0,0.4);
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease;
@@ -148,14 +144,16 @@ div.profile span.label {
   -o-transform: rotate(7deg);
 }
 
-/*.lcol1:hover, .rcol1:hover {
-  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
-}
-
-.lcol2:hover, .rcol2:hover {
-  -webkit-box-reflect: above 0px -webkit-gradient(linear, left bottom, left top, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
-}*/
-
 #box_content {
   background: inherit;
+}
+
+.row label.span2 {
+  width: 370px;
+  font-family: 'Oregano' cursive;
+}
+.row label.span4 {
+  position: relative;
+  left: 55px;
+  font-weight: 700;
 }

@@ -1,10 +1,32 @@
-.advancedSearch {
-  background: pink;
-}
-
 .searchLabel {
   display: block;
 }
 .searchFilters {
-  width: 300px;
+  width: 200px;
+}
+i {
+  position: relative;
+  left: 10px;
+}
+i.pushTop {
+  top: 5px;
+}
+
+div.row {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+label.radio {
+  display: inline;
+}
+
+.femaleRadio {
+  position: relative;
+  left: 20px;
+}
+
+.maleRadio {
+  position: relative;
+  left: 85px;
 }

@@ -11,4 +11,8 @@ class StaticPagesController < ApplicationController
   
   def contact
   end
+  
+  def how_it_works
+    render :layout => false
+  end
 end

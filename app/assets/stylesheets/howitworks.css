@@ -1,0 +1,285 @@
+ul {
+  position: relative;
+  top: 100px;
+}
+
+li {
+  width: 220px;
+  height: 220px;
+  display: inline-block;
+  margin: 20px;
+  position: absolute;
+}
+.how-item {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.how-thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  box-shadow: inset 0 0 0 15px rgba(255,255,255, 0.5);
+  -webkit-transform-origin: 95% 40%;
+  -moz-transform-origin: 95% 40%;
+  -o-transform-origin: 95% 40%;
+  -ms-transform-origin: 95% 40%;
+  transform-origin: 95% 40%;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.how-thumb:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  top: 40%;
+  left: 95%;
+  margin: -4px 0 0 -4px;
+  background: rgb(14,14,14);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(14,14,14,1) 0%, rgba(125,126,125,1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(14,14,14,1)), color-stop(100%,rgba(125,126,125,1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(14,14,14,1) 0%,rgba(125,126,125,1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(14,14,14,1) 0%,rgba(125,126,125,1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(14,14,14,1) 0%,rgba(125,126,125,1) 100%);
+  background: radial-gradient(ellipse at center, rgba(14,14,14,1) 0%,rgba(125,126,125,1) 100%);
+  box-shadow: 0 0 1px rgba(255,255,255,0.9);
+}
+
+.how-img-1 {
+  background-image: url('howitworks/pic1.jpg');
+  z-index: 12;
+}
+
+.how-img-2 {
+  background-image: url('howitworks/picf.png');
+  z-index: 11;
+}
+
+.how-img-3 {
+  background-image: url('howitworks/pic3.jpg');
+  z-index: 10;
+}
+
+.how-img-4 {
+  background-image: url('howitworks/pic4.png');
+  z-index: 9;
+}
+
+.how-img-5 {
+  background-image: url('howitworks/cof.png');
+  z-index: 8;
+}
+.how-img-6 {
+  background-image: url('howitworks/pic6.png');
+  z-index: 7;
+}
+
+.how-info {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #c9512e url('howitworks/noise.png');
+  box-shadow: inset 0 0 0 5px rgba(0,0,0,0.05);
+}
+
+.how-info h3 {
+  color: #fff;
+  text-transform: uppercase;
+  position: relative;
+  letter-spacing: 2px;
+  font-size: 18px;
+  margin: 0 60px;
+  padding: 22px 0 0 0;
+  height: 85px;
+  font-family: 'Open Sans', Arial, sans-serif;
+  text-shadow: 0 0 1px #fff,
+  0 1px 2px rgba(0,0,0,0.3);
+}
+
+.how-info p {
+  color: #fff;
+  padding: 10px 5px;
+  font-style: italic;
+  margin: 0 30px;
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.how-info p a {
+  display: block;
+  color: #333;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding-top: 24px;
+  margin: 7px auto 0;
+  font-family: 'Open Sans', Arial, sans-serif;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out 0.2s,
+  opacity 0.3s ease-in-out 0.2s,
+  background 0.2s linear 0s;
+  -moz-transition: -moz-transform 0.3s ease-in-out 0.2s,
+  opacity 0.3s ease-in-out 0.2s,
+  background 0.2s linear 0s;
+  -o-transition: -o-transform 0.3s ease-in-out 0.2s,
+  opacity 0.3s ease-in-out 0.2s,
+  background 0.2s linear 0s;
+  -ms-transition: -ms-transform 0.3s ease-in-out 0.2s,
+  opacity 0.3s ease-in-out 0.2s,
+  background 0.2s linear 0s;
+  transition: transform 0.3s ease-in-out 0.2s,
+  opacity 0.3s ease-in-out 0.2s,
+  background 0.2s linear 0s;
+  -webkit-transform: translateX(60px) rotate(90deg);
+  -moz-transform: translateX(60px) rotate(90deg);
+  -o-transform: translateX(60px) rotate(90deg);
+  -ms-transform: translateX(60px) rotate(90deg);
+  transform: translateX(60px) rotate(90deg);
+  -webkit-backface-visibility: hidden;
+}
+
+.how-item:hover .how-thumb {
+  box-shadow: inset 0 0 0 15px rgba(255,255,255, 0.5), 0 1px 3px rgba(0,0,0,0.2);
+  -webkit-transform: rotate(-110deg);
+  -moz-transform: rotate(-110deg);
+  -o-transform: rotate(-110deg);
+  -ms-transform: rotate(-110deg);
+  transform: rotate(-110deg);
+}
+.how-item:hover .how-info p a {
+  opacity: 1;
+  -webkit-transform: translateX(0px) rotate(0deg);
+  -moz-transform: translateX(0px) rotate(0deg);
+  -o-transform: translateX(0px) rotate(0deg);
+  -ms-transform: translateX(0px) rotate(0deg);
+  transform: translateX(0px) rotate(0deg);
+}
+
+.li1 {
+  left: 220px;
+  top: 40px;
+}
+
+.li2 {
+  right: 220px;
+  top: 340px;
+}
+
+.li3 {
+  left: 220px;
+  top: 640px;
+}
+
+.li4 {
+  right: 220px;
+  top: 940px;
+}
+
+.li5 {
+  left: 220px;
+  top: 1240px;
+}
+
+.li6 {
+  right: 220px;
+  top: 1540px;
+}
+
+.content {
+  height: 1800px;
+}
+
+body {
+  background: url('denim-bg.png');
+}
+[class*=lasso] {
+  display: block;
+  z-index: -10;
+  width: 720px;
+  height: 460px;
+}
+
+.lasso1 {
+  background: url('howitworks/lasso1.png') no-repeat;
+  top: 120px;
+  left: 410px;
+}
+
+.lasso2 {
+  background: url('howitworks/lasso2.png') no-repeat;
+  top: 400px;
+  left: 410px;
+}
+
+.lasso3 {
+  background: url('howitworks/lasso1.png') no-repeat;
+  top: 750px;
+  left: 410px;
+}
+
+.lasso4 {
+  background: url('howitworks/lasso2.png') no-repeat;
+  top: 1000px;
+  left: 410px;
+}
+
+.lasso5 {
+  background: url('howitworks/lasso1.png') no-repeat;
+  top: 1350px;
+  left: 410px;
+}
+
+[class*=text] {
+  width: 1000px;
+  height: 320px;
+}
+.text1 {
+  background: url('howitworks/text1.png') no-repeat;
+  top: -120px;
+  left: 110px;
+}
+.text2 {
+  background: url('howitworks/text2.png') no-repeat;
+  top: 130px;
+  left: 750px;
+}
+.text3 {
+  background: url('howitworks/text3.png') no-repeat;
+  top: 510px;
+  left: 60px;
+}
+.text4 {
+  background: url('howitworks/text4.png') no-repeat;
+  top: 790px;
+  left: 660px;
+}
+.text5 {
+  background: url('howitworks/text5.png') no-repeat;
+  top: 1060px;
+  left: 50px;
+}
+.text6 {
+  background: url('howitworks/text6.png') no-repeat;
+  top: 1380px;
+  left: 630px;
+}

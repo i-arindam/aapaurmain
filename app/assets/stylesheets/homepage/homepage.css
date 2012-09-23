@@ -1,3 +1,6 @@
+body {
+  background: url('../how_bg.png');
+}
 .login label.checkbox {
   position: relative;
   top: 5px;

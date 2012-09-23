@@ -13,7 +13,8 @@ gem "bcrypt-ruby", :require => "bcrypt"
 gem "jquery-rails"
 gem "rsolr"
 gem "pusher"
-
+gem "right_aws", '2.0.0'
+gem "rmagick"
 
 group :development, :test do
   gem "rspec"

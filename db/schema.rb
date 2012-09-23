@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120916133924) do
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
+ActiveRecord::Schema.define(:version => 20120923070752) do
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -179,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20120916133924) do
     t.string   "photo_url"
     t.string   "blog_url"
     t.integer  "age"
+    t.boolean  "photo_exists"
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

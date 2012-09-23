@@ -226,6 +226,9 @@ class UsersController < ApplicationController
       @out_requests = User.find( :all,
                                 :conditions => "id in (#{out_requests_ids * "," })",
                                 :select => "name, ideal_marriage, hobbies , interested_in,profession,id" ) rescue nil # @todo add photo_url
+                                
+      @values = {}
+      @values['json'] = user_json_object
       render :dashboard
     else
       render :text => "Please login first"
@@ -355,9 +358,46 @@ class UsersController < ApplicationController
     require 'json'
     json_obj = {
       :to_user_id => params[:id],
-      :session_user_id => (current_user && current_user.id) 
+      :session_user_id => (current_user && current_user.id),
+      :name => (current_user && current_user.name)
     }
     json_obj.to_json
   end
+  
+  
+  
+  def upload_photo
+    session_user = current_user
+
+    img = params[:qqfile].is_a?(String) ? request.body : params[:qqfile]
+    img.rewind
+    errors = {
+      :invalid_format => 'Unsupported image format',
+      :size_limit_exceeded => 'Image upload failed. Maximum allowed size is 4MB'
+    }
+
+    unless is_file_object(img) and is_image?(img)
+      render :text => {:success => false, :message => errors[:invalid_format]}.to_json and return
+    end
+    unless img.size <= 4194304
+      render :text => {:success => false, :message => errors[:size_limit_exceeded]}.to_json and return
+    end
+    session_user.photo_url = img
+    render :text => {:success => true }.to_json
+  end
+  
+
+
+   # Handles the ajax 'delete' request from 'My Photo' page
+   def delete_photo
+       session_user = current_user
+     begin
+       session_user.delete_photo      
+       render :json => { :success => true }
+     rescue Exception => e
+       logger.error e.backtrace.join("\n")
+       render :json => { :success => false, :message => 'Deleting failed. Please try again.' }
+     end
+   end
   
 end

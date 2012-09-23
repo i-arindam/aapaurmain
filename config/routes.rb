@@ -29,6 +29,8 @@ Aapaurmain::Application.routes.draw do
   post 'users/withdraw_request' => 'users#withdraw_request'
   post 'users/accept_request' => 'users#accept_request'
   post 'users/decline_request' => 'users#decline_request'
+  post 'users/:id/upload_photo' => 'users#upload_photo'
+  post 'users/:id/delete_photo' => 'users#delete_photo'
   
   
   # Post lock actions

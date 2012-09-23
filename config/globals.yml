@@ -18,3 +18,14 @@ pusher:
   app_id: '26861'
   key: '4b87c0aa5ae5fa58eb8c'
   secret: 'ff570eff48d16ffdf932'
+  
+aws:
+  s3-key: 'AKIAIH7OUMOARI7LSSGQ'
+  s3-secret: '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'
+  photo-bucket: 'aam-user-photos'
+  
+user-photo-headers:
+    Cache-Control: 'max-age=63115200'
+    
+aws-origin-server: '//s3-ap-southeast-1.amazonaws.com/'
+  

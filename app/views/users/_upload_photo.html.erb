@@ -1,0 +1,18 @@
+<%= javascript_include_tag "upload_photo", "ajax_upload", "jquery.Jcrop.min", "jquery.textLimit.min" %>
+<div class="alert alert-success" id="successMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
+ <div class="alert alert-error" id="errorMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
+<div class="profilePicUpload clearfix">
+  <div class="imageThumbContainer">
+    <img class="imageThumb" src="<%= @user.photo_exists ? '//s3-ap-southeast-1.amazonaws.com/aam-user-photos/profile-'+  @user.id.to_s : 'http://placehold.it/150x150' %>"  alt='' title='' id='preview' width="150" height="150" />
+  </div>
+  <div class="upload">
+    <span class="title">Select an image file on your computer</span>
+    <span class="imageInfo">Supported formats:&nbsp;jpg, png, gif</span>
+    <span class="imageInfo">Maximum size:&nbsp;4MB</span>
+    <div>Tip: For best results use a square image (150 X 150 pixels)</div>
+
+    <div class="btn btn-info" id="deletePhoto" style="display:<%= @user.photo_exists ? 'block' : 'none' %>;" >Delete</div>
+    <div class="btn btn-danger" id="upload_placeholder"></div>
+    <%=image_tag "indicator.gif",:id=>"indicator",:style=>"display:none;",:class=>"indicator"%>
+  </div>
+</div>

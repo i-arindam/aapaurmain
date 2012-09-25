@@ -95,14 +95,14 @@ class User < ActiveRecord::Base
   
   # Enumeration for contacting templates
   CONTACT_TEMPLATES = {
-    :confirm_locked_success => { :mail => 'confirm_locked_success', :sms => 'confirm_locked_success', :notif => 'confirm_locked_success' },
-    :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' },
-    :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' },
-    :request_declined => { :mail => 'request_declined', :sms => 'request_declined', :notif => 'request_declined' },
+    :confirm_locked_success => { :mail => 'confirm_locked_success', :sms => 'confirm_locked_success', :notif => 'confirm_locked_success' , :subject => 'test subject' },
+    :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' , :subject => 'test subject'},
+    :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'test subject' },
+    :request_declined => { :mail => 'request_declined', :sms => 'request_declined', :notif => 'request_declined', :subject => 'test subject' },
     :request_withdrawn => { :operation => 'remove_request' },
-    :blocked_state => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' },
-    :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' },
-    :confirm_reject => { :mail => 'confirm_reject', :sms => 'confirm_reject', :notif => 'confirm_reject' }
+    :blocked_state => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'test subject'},
+    :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' , :subject => 'test subject'},
+    :confirm_reject => { :mail => 'confirm_reject', :sms => 'confirm_reject', :notif => 'confirm_reject', :subject => 'test subject' }
   }
   
   USER_FIELDS_LIST = [
@@ -167,7 +167,7 @@ class User < ActiveRecord::Base
   def deliver_notifications(event, args = [])
     # event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
-    #   Notifier.deliver_mail(event[:mail], args << self) if event[:mail]
+    UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject]}, args << self) if event[:mail]
     #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
     #   self.send(event[:operation].to_sym, args << self) if event[:operation]
   end
@@ -261,7 +261,7 @@ class User < ActiveRecord::Base
   # when I notify that lock was successful
   def send_request_for_successful_lock
     notifying_user = User.find_by_id(self.locked_with) rescue nil
-    notifying_user and self.deliver_notifications(:request_for_successful_lock, notifying_user)
+    notifying_user and self.deliver_notifications(:request_for_successful_lock, [notifying_user])
   end
   
   # Class method to mark a couple as successfully married
@@ -350,7 +350,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-   # self.deliver_notifications(:request_notification, [b])
+   self.deliver_notifications(:request_sent, [b,a])
     return true
   end
   

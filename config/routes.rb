@@ -10,6 +10,7 @@ Aapaurmain::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/howitworks', to: 'static_pages#how_it_works'
+  match '/pricing', to: 'payment#pricing'
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'

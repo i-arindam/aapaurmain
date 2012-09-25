@@ -9,6 +9,7 @@ Aapaurmain::Application.routes.draw do
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
+  match '/faq', to: 'static_pages#faq'
   match '/howitworks', to: 'static_pages#how_it_works'
   match '/pricing', to: 'payment#pricing'
   

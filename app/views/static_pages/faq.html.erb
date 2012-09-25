@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<%= javascript_include_tag "expand" %>
+<%= stylesheet_link_tag "faq" %>
+<title>Aap Aur Main-FAQs</title>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+$(function() {
+   
+    $("#demo2 div.expand").toggler({initShow: "div.collapse:eq(0)"});
+   
+    $("#demo2").expandAll({
+      trigger: "div.expand", 
+      ref: "div.expand", 
+      showMethod: "slideDown", 
+      hideMethod: "slideUp", 
+      oneSwitch : false
+    });
+    
+  
+});
+//--><!]]>
+</script>
+<!--<![endif]-->
+</head>
+
+<body>
+    <div id="wrapper"> 
+      <div id="content">  
+        <h1 class="heading">FAQs</h1>
+ 
+         <div id="demo2" class="demo">
+                   <h2>Sign Up</h2>
+                   <div class="expand">Ques 1</div>
+                   <div class="collapse">
+                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
+                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+                       qui officia deserunt mollit anim id est laborum.</p>
+                   </div>
+                   <div class="expand">Ques 2</div>
+                   <div class="collapse">
+                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
+                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+                       qui officia deserunt mollit anim id est laborum.</p>
+                   </div>
+                   <div class="expand">Ques 3</div>
+                   <div class="collapse">
+                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
+                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
+                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+                       qui officia deserunt mollit anim id est laborum.</p>
+                   </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>

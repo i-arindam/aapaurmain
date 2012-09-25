@@ -15,4 +15,9 @@ class StaticPagesController < ApplicationController
   def how_it_works
     render :layout => false
   end
+  
+  def faq
+    render :layout => false
+  end
+  
 end

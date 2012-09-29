@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
   end
   
   def faq
-    render :layout => false
+    render "faq", :layout => false
   end
   
 end

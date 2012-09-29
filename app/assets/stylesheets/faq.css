@@ -1,6 +1,8 @@
-* {margin:0; padding:0}
 /* --- Page Structure  --- */
-html {height:100%}
+html {
+  height: 100%
+}
+
 body {
   min-width:400px;
   width:100%;
@@ -12,6 +14,7 @@ body {
   padding-top: 90px;
   background: url('denim-bg.png') repeat;
 }
+
 #wrapper{
   margin:0 auto;
   padding:15px 15% 8em;
@@ -26,74 +29,131 @@ body {
 }
 .demo {
   margin:1.5em 0;
-  padding:1.5em 1.5em 0.75em;
-
+  padding: 1px 0 0 20px;
   position:relative;
   overflow:hidden
 }
-.collapse p {padding:0 10px 1em}
+.collapse p {
+  padding: 0 10px 1em;
+}
 
-.switch {position:absolute; top:1.5em; right: 1.5em; padding:3px}
+.switch {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  padding: 3px;
+}
 
-.post .switch {position:static; text-align:right}
+.post .switch {
+  position: static;
+  text-align: right
+}
 
-.post .main{margin-bottom:.3em; padding-bottom:0}
+.post .main {
+  margin-bottom: .3em;
+  padding-bottom: 0
+}
 
-.other ul, .summary {margin-bottom:.3em; padding:1em; border:1px solid #e8e7e8; background-color:#f8f7f8}
+.other ul, .summary {
+  margin-bottom: .3em;
+  padding: 1em;
+  border: 1px solid #e8e7e8;
+  background-color: #f8f7f8
+}
 
-.other ul {margin-bottom:1em; list-style-type:none; text-align:center}
+.other ul {
+  margin-bottom: 1em;
+  list-style-type: none;
+  text-align: center
+}
 
 
 /* --- Headings  --- */
 h1 {
-  margin-bottom:1em; 
-  font-family:georgia,'times new roman',times,serif; 
-  font-size:2.5em; 
-  font-weight:normal; 
-  color:#c30
+  font-family: georgia,'times new roman',times,serif;
+  font-size: 2.5em;
+  font-weight: normal;
+  color: #c30;
+  padding-left: 20px;
+  position: relative;
+  top: 30px;
 }
-h2 {margin-bottom:1em; padding:3px; background-color:green; border-radius:10px}
-h2, h3{font-size:1em; background-color:green}
-
-.expand{padding-bottom:.75em}
-
-/* --- Links  --- */
-
-/*
-a:hover, a:active, a:focus {
-  border-style:solid;
-  background-color:#f0f0f0;
-  text-decoration:underline;
-  outline:0 none
+h2 {
+  margin-bottom: 1em;
+  padding: 3px;
+  background-color: green;
+  border-radius: 10px
 }
-a:active, a:focus {
-  color:red;
-}*/
+h2, h3 {
+  font-size: 1em;
+  background-color: green;
+  padding: 10px;
+}
+
 .expand a {
-  display:block;
-  padding:3px 10px
+  display: block;
+  padding: 3px 10px;
 }
 
 .expand a:link, .expand a:visited {
-  /*border-width:1px;*/
-  background-image:url('arrow-down.gif');
-  background-repeat:no-repeat;
-  background-position:98% 50%;
-}
-.expand a:hover, .expand a:active, .expand a:focus {
+  background-image: url('arrow-down.gif');
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
 }
 .expand a.open:link, .expand a.open:visited {
-  /*border-style:solid;*/
-
-  background: url('arrow-up.gif') no-repeat 98% 50%
+  background: url('arrow-up.gif') no-repeat 98% 50%;
 }
-a:hover, a:visited, a:link, a:active
-{
-   color: white;
-    text-decoration: none;
+a:hover, a:visited, a:link, a:active {
+  color: white;
+  text-decoration: none;
 }
 .expand {
-  border-radius:5px;
-  background :black;
+  border-radius: 5px;
+  background: black;
   margin-bottom: 10px;
+  padding: 4px;
+}
+
+.hide {
+  display: none;
+}
+
+ul {
+  clear: both;
+  content: "";
+  display: table;
+  margin-bottom: 18px;
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  left: 20px;
+  top: 42px;
+  height: 40px;
+  line-height: 35px;
+  z-index: 200;
+}
+
+li.active {
+  background: #AC4311;
+}
+
+li {
+  position: relative;
+  float: left;
+  width: 70px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+ul li a {
+  padding: 8px;
+  font-size: 12px;
+}
+
+li.active a {
+  pointer-events: none;
+}
+.mainContent {
+  position: relative;
+  top: 30px;
 }

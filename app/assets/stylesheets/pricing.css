@@ -207,10 +207,10 @@ button.start {
   border-radius: 10px;
   background: #E64343;
   background-image: -webkit-linear-gradient(top, rgba(0,0,0, 0.4), rgba(230, 67, 67, 0));
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
   box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 7px 6px rgba(0, 0, 0, 0.2);
   font-size: 28px;
@@ -218,9 +218,19 @@ button.start {
   font-weight: 700;
   height: 50px;
   width: 230px;
-  -webkit-transition: all 1s ease;
+  -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
+}
+
+button:hover {
+  border: 1px inset black;
+  background: #A0EEA0;
+  background-image: -webkit-linear-gradient(bottom, rgba(0,0,0, 0.4), rgba(230, 67, 67, 0));
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
 }
 
 .start.freeplan {

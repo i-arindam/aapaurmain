@@ -1,4 +1,11 @@
-.chat                               { float:left; overflow: auto; text-align: left; width: 100%; }
+.chatWrapper {
+  position: fixed;
+  width: 300px;
+  bottom: 0;
+  left: 0;
+}
+
+/*.chat                               { float:left; overflow: auto; text-align: left; width: 100%; }*/
 .chat textarea.text                 { float: left; height: 1.3em; margin: 0 0 .5em; width: 290px; }
 .chat .ctaNormal                    { float: right; margin: 0 0 0 6px; overflow: hidden; width: 56px; }
 .chatWrapper                        { background: #F0F5F4; margin: 0 0 1em; padding: .75em 9px; }

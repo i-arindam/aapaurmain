@@ -1,14 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <%= javascript_include_tag "expand" %>
 <%= stylesheet_link_tag "faq" %>
 <title>Aap Aur Main-FAQs</title>
 <script type="text/javascript">
-<!--//--><![CDATA[//><!--
 $(function() {
    
+    $('li').click(function(e) {
+      if($(this).hasClass('active')) {
+        return false;
+      }
+      e.preventDefault();
+      $('li.active').removeClass('active');
+      $(this).addClass('active');
+
+      var index = $('li').index(this);
+      $('.demo').not('.hide').addClass('hide');
+      $('.demo:eq(' + index + ')').removeClass('hide');
+      $('.demo:eq(' + index + ')').toggler({ initShow: "div.collapse:eq(0)"});
+      
+      var selector = '.demo:eq(' + index + ')';
+      $(selector).expandAll({
+        trigger: "div.expand", 
+        ref: "div.expand", 
+        showMethod: "slideDown", 
+        hideMethod: "slideUp", 
+        oneSwitch : false
+      });
+      
+    });
+    
     $("#demo2 div.expand").toggler({initShow: "div.collapse:eq(0)"});
    
     $("#demo2").expandAll({
@@ -18,47 +41,306 @@ $(function() {
       hideMethod: "slideUp", 
       oneSwitch : false
     });
-    
-  
 });
-//--><!]]>
 </script>
-<!--<![endif]-->
 </head>
 
 <body>
-    <div id="wrapper"> 
-      <div id="content">  
-        <h1 class="heading">FAQs</h1>
- 
-         <div id="demo2" class="demo">
-                   <h2>Sign Up</h2>
-                   <div class="expand">Ques 1</div>
-                   <div class="collapse">
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-                       qui officia deserunt mollit anim id est laborum.</p>
-                   </div>
-                   <div class="expand">Ques 2</div>
-                   <div class="collapse">
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-                       qui officia deserunt mollit anim id est laborum.</p>
-                   </div>
-                   <div class="expand">Ques 3</div>
-                   <div class="collapse">
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore 
-                       et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-                       ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-                       eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-                       qui officia deserunt mollit anim id est laborum.</p>
-                   </div>
-          </div>
+
+  <div id="wrapper">
+    <div id="content">
+      <h1 class="heading">FAQs</h1>
+      
+      <ul class="nav nav-pills">
+        <li class="active"><a href="#"><i class="icon-home icon-white"></i>Sign Up</a></li>
+        <li><a href="#"><i class="icon-book"></i>Actions</a></li>
+        <li><a href="#"><i class="icon-pencil"></i>Profile</a></li>
+        <li><a href="#"><i class="i"></i>About Us</a></li>
+      </ul>
+      
+      <div class="mainContent">
+      <div id="demo2" class="demo signup">
+        <!--start from here-->
+        <h2>Sign Up related queries</h2>
+        <div class="expand">How to sign up ?</div>
+        <div class="collapse">
+            <p>Signining up for www.aapaurmain.com gives two(2) approaches to proceed:
+               Go CASUAL:
+               Provide basic information like Name, Age, Gender, Location,etc. The lists also lists your preference towards finding a suitable match.
+               Once done you can click on 'Sign up' to get your logging credetials & personalized dashboard.
+               Go SERIOUS
+               Provide basic information like Name, Age, Gender, Location,etc. The lists also lists your preference towards finding a suitable match.
+               Click on the payment link which will guide you to Payment Gateway. Complete the payment procedures and you will be directed back to our page. 
+               Once done you will get your logging credetials & personalized dashboard.</p>
         </div>
-    </div>
+        <div class="expand">What information on my profile will be seen by other users?</div>
+        <div class="collapse">
+            <p>We don't believe that prospective life partners should hide anything.All information[including profile picture] except
+               your personal contact details will be visbile to all users.Once you are in a locked state , you will be able to view 
+               contact details of the person with whom you are locked.</p>
+        </div>
+        <div class="expand">What can I do as a free user?</div>
+        <div class="collapse">
+            <p>As a free user, you can create your profile and browse through our site for prospective matches. You will be given 3 
+               personalized recommendations in a week. You can also search for a match for yourself through our keyword search.However, 
+               to contact another individual, you need to Go Serious.</p>
+        </div>
+
+        <div class="expand">What information should I fill while signing up & what can I skip?</div>
+        <div class="collapse">
+             <p>Filling the complete profile advances your recommendations. We simply ask few questions about your personality & your views
+                on few marriage reltated notions. Based on that we filter out best recommndations for you. So the more vocal you are about yourself; 
+                higher are the chances of finding the perfect match in shorter time.</p>
+        </div>
+
+
+        <div class="expand">What are the advantages of PAID membership over FREE?</div>
+        <div class="collapse">
+             <p>With Go SERIOUS membership, you can send request to a prospective partner.You would not want to receive requests from somebody 
+                who is not serious about finding a match , Would you ? Moreover , to help you in your search , you will get 5 personalized 
+                recommendations per week.</p>
+        </div>
+
+      
+        <div class="expand">Does giving my email-id entitles me to getting recommendations ?</div>
+        <div class="collapse">
+             <p>No, by just giving your email-id you will be signing-up for our site but for getting recommndations you need to complete the
+                profile page.</p>
+         </div>
+
+        <div class="expand">What do I do after signing up?</div>
+        <div class="collapse">
+             <p>You can browse through the recommendations provided for you in the dashboard . You can also find a suitable match by searching
+                for people with similar interests, profession, hobbies by using our keyword search.In case you are interested in contacting a 
+                prospective match, please Go Serious.</p>
+        </div>
+
+        <div class="expand">What is a short bio?</div>
+        <div class="collapse">
+             <p>A short bio is the minimum piece of information that any person would see first about you. We recommend you to make it as 
+                interesting as possible attract attention..</p>
+        </div>
+
+        <div class="expand">Why do you want opinion on virginity?</div>
+        <div class="collapse">
+            <p>It is not us who are really intersted in this information, but with changing values & times your prospective partner might
+               want to know your views on the subject. We are just medium to facilitate conversation.</p>
+        </div>
+        
+        <div class="expand">How many photos can I upload?</div>
+        <div class="collapse">
+            <p>Currently, you can upload only one photo. We are working on increasing this number but we truly believe beauty lies in the 
+               eyes of beholder :).</p>
+        </div>
+        
+        
+        <div class="expand">Are my photos visible to everyone?</div>
+        <div class="collapse">
+            <p>Yes your photos are visible to all the users who are logged in on our site.</p>
+        </div>
+        
+        
+        <div class="expand">Can I change my photo after upload ?</div>
+        <div class="collapse">
+            <p>Yes you can change your photo after upload as many times as you want.But each time we will screen it before making it visible
+               on your profile.</p>
+        </div>
+        
+        <div class="expand">Why is my photo not visible immediately?</div>
+        <div class="collapse">
+            <p>We do not apporve of photos that does not seem 'real of you'. Also we do not approve photos pertaining to nature, objects, religion,
+               abstract or anything but you.</p>
+        </div>
+        
+        
+        <div class="expand">Why does my profile needs to be screened and when will it be visible to everyone?</div>
+        <div class="collapse">
+            <p>We want to ensure that there are no fake profiles on our space. Hence we take time to screen every profile to check its authenticity. 
+               But rest assured that your profile will be visible in 24 hours.</p>
+        </div>
+        
+        
+        <div class="expand">Can I delete my account ?</div>
+        <div class="collapse">
+            <p>Yes, you can delte your account anytime you want.</p>
+        </div>
+        
+        <div class="expand">What is your criteria of giving recommendations ?</div>
+        <div class="collapse">
+            <p>Based on the information you fill in your profile , we try to find the matches that are similar to your interests/ideals/values.</p>
+        </div>
+
+
+
+      </div> <!-- .demo2.signup -->
+      
+      <div id="demo2" class="demo actions hide">
+        <!--start from here-->
+        <h2>Actions related queries</h2>
+        <div class="expand">What do I do if I like someone's profile?</div>
+        <div class="collapse">
+            <p>If you come across a profile in which you seem to be interested, just click on Send Request button & your interest will 
+                  be sent to the person.You need to Be Serious to send interest. Not yet ? Don't worry, check out our plans page.</p>
+        </div>
+        <div class="expand">What should I do after expressing an interest in someone ?</div>
+        <div class="collapse">
+            <p>You can continue your quest for finding the perfect fit. In case the other person does not respond within 2 days, 
+               your interest will be automatically withdrawn. But that does not stop you,from sending the request again.You can send a 
+               maximum of 3 requests at a time.</p>
+        </div>
+        <div class="expand">What after someone has accepted my request?</div>
+        <div class="collapse">
+            <p>Once your request has been accepted both of you go into a LOCKED STATE. It simply means both you will stop getting 
+               further recommendations and will not be featured in search results. You can then view each others contact details. 
+               You can also send personal messages to each other and chat on our website. However, once you are in locked state none of 
+               you would be able express further interest with some third party unless you explicitly withdraw the lock state.</p>
+        </div>
+        
+        <div class="expand">How many reqquests can I send everyday ?</div>
+        <div class="collapse">
+          <p>You can send maximum of 3 requests everyday.</p>
+        </div>
+        
+        
+        <div class="expand">What if I decide to give preference to one of my Incoming/Outgoing requests over previous Incoming/Outgoing requests?</div>
+        <div class="collapse">
+            <p>You simply need to withdraw the earlier request & accept/express new request.</p>
+        </div>
+        
+        
+        <div class="expand">What if I accept/express an interest with previous Incoming/Outgoing requests in the queue?</div>
+        <div class="collapse">
+            <p>Your previous Incoming/Outgoing requests get cancelled & current actions takes effect.</p>
+        </div>
+        
+        <div class="expand">What facilities do I get when I am in a LOCKED STATE with someone?</div>
+        <div class="collapse">
+            <p>You get to chat, send message, & video-chat when in locked state giving an exclusive & personal feel.</p>
+        </div>
+        
+        <div class="expand">How do I withdraw from the locked state?</div>
+        <div class="collapse">
+            <p>You can go the profile of your locked in partner and click on withdraw lock button.After doing this successfully, 
+               you can start searching for newer matches.</p>
+        </div>
+        
+        <div class="expand">How will i know if someone has accepted my interest?</div>
+        <div class="collapse">
+            <p>You will get an email in at the address which you have provided to keep you posted with latest developmets around your profile.</p>
+        </div>
+        
+        <div class="expand">Why is there a restriction on number of requests that I can send?</div>
+        <div class="collapse">
+            <p>We want you to make a 'Quality' decision when it comes to choosing a life-partner. We sincerely believe 'Quantity' hampers 'Qaulity' in 
+               such cases.</p>
+        </div>
+        
+        
+        <div class="expand">How do I send a message to another user?</div>
+        <div class="collapse">
+            <p>You need to click on the Message button on page & send the message.</p>
+        </div>
+        
+        
+        <div class="expand">How do I chat with another user?</div>
+        <div class="collapse">
+            <p>You will get a notifcation about the status of the person in case your logged in. Alternatively, you can also drop in a specific time
+               for chatting. But always remeber, you can chat with a person only when you are in locked state.</p>
+        </div>
+        
+        <div class="expand">Why can't I send request to someone else if I am in a locked state?</div>
+        <div class="collapse">
+            <p>We discourage 'trying out' someone else in case you are going forward with discussion with a person. Once you come out of locked state in case 
+               you could not click with person, you are free to send fresh requests.</p>
+        </div>
+        
+        
+        <div class="expand">I have found my match on your site. I would like to stay in touch. What do I do now?</div>
+        <div class="collapse">
+            <p>Congratulations! You and your partner can click on "I Do" button and you will be recorded as a couple on our site. We will keep you informed
+               about any new features of aapaurmain.com. We will also feature you in our success stories section. Feel free to drop in a mail at feedback@aapaurmain.com.</p>
+        </div>
+        
+        
+        <div class="expand">What happens to my outgoing and incoming requests once I am in a locked state?</div>
+        <div class="collapse">
+            <p>Both the requests automatically get cancelled in case you get into a locked state with someone.You can start afresh if you happen to withdraw from your 
+              locked state.</p>
+        </div>
+        
+        
+      </div> <!-- .demo2.actions -->
+      
+      <div id="demo2" class="demo profile hide">
+        <!--start from here-->
+        <h2>Profile related queries</h2>
+        <div class="expand">How can I edit my profile?</div>
+        <div class="collapse">
+            <p>For editing your profile:
+               Log into www.aapaurmain.com with your credentials.
+               Click on 'Edit Profile' tab.
+               Click 'Save' once you are done with editing & your changes will take effect.</p>
+        </div>
+        <div class="expand">What all information can be edited into my profile?</div>
+        <div class="collapse">
+            <p>Barring Age & Sex, you can edit any of your information from your profile.</p>
+        </div>
+        <div class="expand">Can I change my email address after I have registerd with the site?</div>
+        <div class="collapse">
+            <p>Yes, you can. After every change, you need to validate that email account by clicking the link sent to your new email's inbox.</p>
+        </div>
+      
+        <div class="expand">I fear that my profile would be searchable on Internet. How I do away with it?</div>
+        <div class="collapse">
+             <p>You do not have to worry about that at all. Your  profile will not be discoverable on the internet.</p>
+        </div>
+      
+      
+        <div class="expand">How do I give details about Height, Skin-color, Religion, Caste, Salary, etc.?</div>
+        <div class="collapse">
+             <p>You don't have to. We firmly believe that for finding a 'Soul-mate' we need to look beyond these criterion. We try to find a match 
+                on basis of other vital points which we believe is in coherence with the evolving requirements of youth.</p>
+        </div>
+      
+      
+        <div class="expand">What should I do in case I lost/forgot my login ID or password?</div>
+        <div class="collapse">
+             <p>In case you lost/forgot your logging credentials, you need to click on 'Forgot Login Info' tab & provide your email which you used 
+                for signing up with us. We will send your credentials to your email inbox.</p>
+        </div>
+      
+      </div>
+      
+      <div id="demo2" class="demo us hide">
+        <!--start from here-->
+        <h2>Who is we... o.O</h2>
+        <div class="expand">What is aapaurmain.com?</div>
+        <div class="collapse">
+            <p>aapaurmain.com is India's state-of-art matrimonial site which caters to the 'HUMANISTIC' approach towards marriage as compared to the 
+               'MATERIALISTIC' & 'SUPERFICIAL' approach.</p>
+        </div>
+        <div class="expand">How is aapaurmain.com different?</div>
+        <div class="collapse">
+            <p>Our difference speaks from the values we strongly advocate & expect from our 'RATIONAL-THINKING' users:
+               No Dowry expectation in any form i.e. MONETARILY(CASH or KIND), EMOTIONALLY, MENTALLY, SOCIALLY, & any form that is possible.
+               Mutual respect for each others' religion, culture, tradition & responsibilites. 
+               Not judging ones' life-partner on the basis of skin-color, caste, salary, family structure, etc.
+               Acceptance of each others' responsibilities towards each others' parents.
+               Freedom to choose ones' career after marriage with support from the partner in every possible way.
+               Discouraging concealing of facts one wants to know about his/her prospective interest i.e. medical check-ups, expectations from your 
+               life-partner, ideal notion of marriage. We firmly believe BEST MATCH IS ONE WHO ACCEPTS YOU THE WAY YOU ARE.</p>
+        </div>
+        <div class="expand">How do I get started?</div>
+        <div class="collapse">
+            <p>We know you can't wait to find that perfect match! Just click on Signup icon and tell us a few meaningful details about yourself on 
+               the create profile page. On completing  your profile, you will be presented with your personalized dashboard where you can see incoming
+               and outgoing requests for you . You will start getting recommendations as per your profile & you can also search through our database 
+               to find your interest.</p>
+        </div>
+      </div>
+      
+      </div>
+    </div> <!-- .content -->
+  </div> <!-- .wrapper -->
 </body>
 </html>

@@ -1,26 +1,28 @@
-<%= javascript_include_tag "http://js.pusher.com/1.12/pusher.min.js" %>
-<%= javascript_include_tag "chat/chat" %>
-<%= stylesheet_link_tag 'chat/chat'%>
+<% content_for :js_footer do %>
+  <%= javascript_include_tag "http://js.pusher.com/1.12/pusher.min.js" %>
+  <%= javascript_include_tag "chat/chat" %>
+<% end %>
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag 'chat/chat'%>
+<% end %>
 
-
-<div id="chatBox" class="chat">
-  <h2>Chat</h2>
-  <div class="chatWrapper">
-    <div id="messagebox" class="messageBox">
+<div class="chatWrapper">
+  <div id="chatBox" class="chat">
+    <h2>Chat</h2>
+    <div class="chatWrapper">
+      <div id="messagebox" class="messageBox">
+      </div>
+      <ul id="chat" class="chatMessages"></ul>
     </div>
-    <ul id="chat" class="chatMessages"></ul>
   </div>
-</div>
 
-<div id="controls">
-
-      <h2>You're logged in as <em><%= current_user.name %></em></h2>
-
+  <div id="controls">
+    <h2>You're logged in as <em><%= current_user.name %></em></h2>
     <form action="/chat" id="message" method="POST">
       <input name="text" placeholder="Say something">
       <input type="submit" value="Send">
     </form>
   </div>
-</div>
 
-<div id="presence"></div>
+  <div id="presence"></div>
+</div>

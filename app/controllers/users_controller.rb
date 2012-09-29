@@ -245,13 +245,13 @@ class UsersController < ApplicationController
     if current_user.id.to_s == params[:id]
       redirect_to :action => :showme and return        
     end
-    
+
     #Check if the logged in user has sent request to this user. Show buttons accordingly
     request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
     @values['show-send'] = true if request.nil?
 
     if request
-       @values['show-chat'] = request.status == Request::ACCEPTED
+       @values['show-chat'] = (request.status == Request::ACCEPTED)
       @values['show-withdraw'] = current_user && request.status == Request::ASKED
     end
     

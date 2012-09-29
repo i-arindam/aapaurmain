@@ -27,12 +27,10 @@
         <br />
         <br />
         <h3>CHAT</h3>
-        <div class="sidebar">
-          <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
-        </div>
         
       </div>
     </aside> -->
+    <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
 
     <div id="left_content">left content</div>
     <div id="box_content">

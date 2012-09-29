@@ -2,3 +2,47 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.span8.conversationContainer {
+  position: relative;
+  top: 20px;
+  left: 230px;
+  width: 980px;
+  padding: 20px;
+}
+
+ul.conversationList {
+  list-style-type: none;
+}
+
+li.conversation {
+  padding: 30px 30px 0px 30px;
+  background: #191814;
+  margin-bottom: 30px;
+  width: 900px;
+  border-radius: 10px;
+}
+
+span.conversationName {
+  position: relative;
+  top: -30px;
+  left: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+div.otherMeta {
+  position: relative;
+  top: -70px;
+  left: 110px;
+  color: #999;
+  font-size: 14px;
+}
+
+div.conversationSnippet {
+  position: relative;
+  top: 10px;
+  width: 460px;
+  font-size: 16px;
+  color: rgba(153, 153, 153, 0.53);
+}

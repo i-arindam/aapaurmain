@@ -13,8 +13,10 @@
           <img src="http://placehold.it/96x96" />
           <span class="conversationName"><%= conv[:with] %></span>
         </a>
-        on <span class="muted conversationTime"><%= conv[:last_time] %></span>
-        <span class="conversationSnippet"><%= conv[:snippet] %></span>
+        <div class="otherMeta">
+          on <span class="muted conversationTime"><%= conv[:last_time] %></span>
+          <div class="conversationSnippet"><%= conv[:snippet] %></div>
+        </div>
       </li>
     <% end %>
   </ul>

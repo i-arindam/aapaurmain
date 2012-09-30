@@ -59,7 +59,11 @@ module ApplicationHelper
     list = $user_prefs['family_preference']
   end
   
-  def is_homepage?
-    (params[:controller] == "static_pages" and params[:action] == "home") or (params[:controller] == "users" and params[:action] == "signup")
+  def show_login?
+    (params[:controller] == "static_pages" and params[:action] == "home" and !current_user) or (params[:controller] == "users" and params[:action] == "signup") or !current_user
+  end
+  
+  def show_search?
+    params[:controller] == "static_pages" and params[:action] == "home"
   end
 end

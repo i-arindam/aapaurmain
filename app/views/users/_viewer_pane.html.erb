@@ -6,7 +6,7 @@
   <%= javascript_include_tag "roundabout/viewer_pane_controller" %>
 <% end %>
 
-<div class="viewerPane">
+<div class="viewerPane <%= class_name %>">
   <ul class="user-container">
   <% if user_collection and user_collection.length > 0 %>
     <% user_collection.each do |user|

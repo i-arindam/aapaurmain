@@ -15,6 +15,7 @@ $(function() {
           
           var infoDiv = $('<div />').addClass('info');
           $('<span/>').addClass('name').html(data.name).appendTo(infoDiv);
+          $('<span/>').addClass('date pull-right').html(data.date).appendTo(infoDiv);
           $('<span/>').addClass('time pull-right').html(data.time).appendTo(infoDiv);
           $(infoDiv).appendTo(li);
           

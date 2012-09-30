@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] from_id
   # => The id of the user who had sent the request
   def accept_request
+    debugger
     to_user = User.find_by_id(params[:to_id])
     render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
@@ -55,6 +56,7 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request was sent
   def withdraw_request
+    debugger
     from_user = User.find_by_id(params[:from_id])
     render_404 and return unless from_user and from_user == current_user
     to_user = User.find_by_id(params[:to_id])
@@ -111,7 +113,7 @@ class UsersController < ApplicationController
     render_404 and return unless withdrawing_user and withdrawing_user == current_user
     
     lock = Lock.find_by_id(params[:lock_id])
-    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:id] || lock.another_id == params[:id])
+    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:id].to_i || lock.another_id == params[:id].to_i)
     
     lock.update_withdrawn
     withdrawing_user.update_status_post_lock_withdraw
@@ -210,23 +212,23 @@ class UsersController < ApplicationController
   end
   
   def showme
-    if current_user  
-      @user = current_user
-      in_requests_objects = @user.incoming_requests                                 
-      in_requests_ids = in_requests_objects.collect(&:from_id)
+    if @user = current_user
+      in_requests_ids = @user.incoming_requests.collect(&:from_id)
+      @in_requests = User.find_all_by_id(in_requests_ids)
     
-
-      @in_requests = User.find( :all,
-                                :conditions => "id in (#{in_requests_ids * "," })",
-                                :select => "name, ideal_marriage, hobbies , interested_in,profession,id") rescue nil # @todo add photo_url
-    
-      out_requests_objects = @user.outgoing_requests
-      out_requests_ids = out_requests_objects.collect(&:to_id)
-    
-      @out_requests = User.find( :all,
-                                :conditions => "id in (#{out_requests_ids * "," })",
-                                :select => "name, ideal_marriage, hobbies , interested_in,profession,id" ) rescue nil # @todo add photo_url
-                                
+      out_requests_ids = @user.outgoing_requests.collect(&:to_id)
+      @out_requests = User.find_all_by_id(out_requests_ids)
+      
+      profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
+      @profile_viewers = profile_viewer_ids.map do |p|
+        u = User.find_by_id(p.viewer_id)
+        if u
+          { :id => p.viewer_id, :name => u.name, :photo => u.photo_url, :viewed_on_date => p.updated_at.strftime("%d %b '%y"), :viewed_on_time => p.updated_at.strftime("%l:%M %P") }
+        end
+      end
+      
+      @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
+      
       @values = {}
       @values['json'] = user_json_object
       render :dashboard
@@ -237,33 +239,55 @@ class UsersController < ApplicationController
     
   def show
     @values = {}
-    render :text=> "Missing params[:id]" and return unless params[:id]
+    render_404 and return unless params[:id]
     @current_user = current_user
     @user = User.find_by_id(params[:id]) 
     render_404 and return unless @user
     
-    if current_user.id.to_s == params[:id]
-      redirect_to :action => :showme and return        
-    end
+    if @current_user 
+      if @current_user.id == params[:id].to_i
+        redirect_to :action => :showme and return        
+      end
 
-    #Check if the logged in user has sent request to this user. Show buttons accordingly
-    request = Request.find_by_from_id_and_to_id(current_user.id, @user.id)
-    @values['show-send'] = true if request.nil?
+      #Check if the logged in user has sent request to this user. Show buttons accordingly
+      request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
+      @values['show-send'] = true if request.nil?
 
-    if request
-       @values['show-chat'] = (request.status == Request::ACCEPTED)
-      @values['show-withdraw'] = current_user && request.status == Request::ASKED
-    end
+      if request
+         @values['show-chat'] = (request.status == Request::ACCEPTED)
+        @values['show-withdraw'] = @current_user && request.status == Request::ASKED
+      end
     
-    #Check if the logged in user has received request from this user. Show buttons accordingly
-    request = Request.find_by_from_id_and_to_id(@user.id, current_user.id)
-    if request
-      @values['show-accept'] = @values['show-decline'] = current_user && request.status == Request::ASKED
+      #Check if the logged in user has received request from this user. Show buttons accordingly
+      request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
+      if request
+        @values['show-accept'] = @values['show-decline'] = request.status == Request::ASKED if @current_user.id == params[:id].to_i
+      end
+      
+      debugger
+      # Log profile views
+      view = @user.profile_viewers.where(:viewer_id => @current_user.id)
+      unless view.blank?
+        # To update the latest time
+        view[0].touch
+      else
+        view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
+      end
+      
+    else # Not logged in user
+      @values['show-chat'] = false
+      @values['show-send'] = true
+      @values['show-cta'] = true
     end
-    
     
     @values['json'] = user_json_object
     render :profile
+  end
+  
+  def show_viewers
+    user = User.find_by_id(params[:id])
+    render_404 and return unless @current_user = current_user and @current_user == user
+    @viewers = @current_user.profile_viewers
   end
   
   
@@ -288,11 +312,11 @@ class UsersController < ApplicationController
   end
   
   def create_profile
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
   end
   
   def update
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
     uhash = params[:user]
     success, message = true, ""
     
@@ -340,7 +364,7 @@ class UsersController < ApplicationController
   end
   
   def more_info
-    @user = User.find_by_id(params[:id].to_i)
+    @user = User.find_by_id(params[:id])
     render_404 and return unless @user
     
     respond_to do |format|
@@ -357,7 +381,7 @@ class UsersController < ApplicationController
   def user_json_object
     require 'json'
     json_obj = {
-      :to_user_id => params[:id],
+      :to_user_id => params[:id].to_i,
       :session_user_id => (current_user && current_user.id),
       :name => (current_user && current_user.name)
     }

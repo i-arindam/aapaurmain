@@ -19,9 +19,9 @@
         <div class="info">
           <a rel="nofollow" href="/users/<%= mes.from %>"><span class="name"><%= (mes.from == myid ? myname : with_name) %></span></a>
           <span class="date pull-right"><%= mes.created_at.strftime("%d %b '%y") %></span>
-          <span class="time pull-right"><%= mes.created_at.strftime("%l:%M %P")%></span>
+          <span class="time pull-right"><%= mes.created_at.strftime("%l:%M %P") %></span>
         </div>
-        <div class="text"><%= mes.text %></div>
+        <div class="text"><%= sanitize mes.text.gsub(/\n/, '<br/>'), :tags => "br" %></div>
       </li>
     <% end %>
   </ul>

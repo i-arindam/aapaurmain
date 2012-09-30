@@ -14,61 +14,44 @@
     <div id="box_content">
     <div class="container dashBoardContainer profile">
       <h3 class="span6">Howdy <%= @user.name %>!</h3>
-      <% if @in_requests and @in_requests.length > 0 %>
       
-      <h4 class="span6 requestLabel">Your Incoming Requests</h4>
+      <ul class="nav nav-pills mainNav">
+        <li class="active"><a href="#">Incoming Requests</a></li>
+        <li><a href="#">Outgoing Requests</a></li>
+        <li><a href="#">Recommendations</a></li>
+        <li><a href="#">Your Profile Viewers</a></li>
+      </ul>
+      
+      
       <div class="requestContainer span10">
         <ul class="requestList incomingRequests">
-          <% @in_requests.each do |in_req|
-            in_name = in_req[:name]
-                  # untruncatedTitle = s slideshow.title rescue "No Title"
-                  # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
-                  # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
-                  # content = slideshow.is_presentation? ? "slide" : "page"
-          %>
+          <% @in_requests.each do |in_req| %>
           <li class="select-thumbnails" id="<%= in_req.id %>">
             <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
             <a href="#">
               <img src="/assets/users/96x96.gif">
-              <h3 class="name"><%=in_name %></h3>
+              <h3 class="name"><%= in_req.name %></h3>
             </a>
           </li>
           <% end %>
         </ul>
-   
       </div>
-      <% end %>		
-      <% if @out_requests && @out_requests.length > 0 %>
-      <h4 class="span6 requestLabel">Your Outgoing Requests</h4>
-      <div class="requestContainer span10">
+
+      <div class="requestContainer span10 hide">
         <ul class="requestList outgoingRequests">
-          <% @out_requests.each do |out_req|
-            out_name = out_req.name
-      
-                  # untruncatedTitle = s slideshow.title rescue "No Title"
-                  # photo_url = s(getSlideshowUrl(slideshow, @user)) rescue "#"
-                  # privacy = slideshow.slideshow_privacy_setting || SlideshowPrivacySetting.new
-                  # content = slideshow.is_presentation? ? "slide" : "page"
-          %>
+          <% @out_requests.each do |out_req| %>
           <li class="select-thumbnails" id= '<%= out_req.id %>' >
             <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
             <a href="#">
               <img src="/assets/users/96x96.gif">
-              <h3 class="name"><%= out_name %></h3>
+              <h3 class="name"><%= out_req.name %></h3>
             </a>
           </li>
           <% end %>
         </ul>
-
       </div>
-      <% end %>	
 
-      <h3 class="span6 requestLabel">Viewer Pane</h3>	
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests} %>
-
-      
-      <h4 class="span6 requestLabel">Recommendations for you</h4>
-      <div class="requestContainer span10">
+      <div class="requestContainer span10 hide">
         <ul class="requestList recommendations">
           <li>
             <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
@@ -115,6 +98,27 @@
         </ul>
       </div>
 
+      <div class="requestContainer span10 hide">
+        <ul class="requestList profileViewers">
+          <% @profile_viewers.each do |prof| %>
+          <li class="select-thumbnails" id= '<%= prof[:id] %>' >
+            <a href="#">
+              <h3 class="name"><%= prof[:name] %></h3>
+              <img src="/assets/users/96x96.gif">
+            </a>
+            on <span class="viewDate"><%= prof[:viewed_on_date] %></span>
+            at <span class="viewTime"><%= prof[:viewed_on_time] %></span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <h3 class="span6 requestLabel">Have a detailed look at the above here</h3>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => ''} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide'} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide'} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide'} %>
+      
     </div>
     </div> <!-- box_content -->
     <div id="right_content">right content</div>

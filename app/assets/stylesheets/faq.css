@@ -54,20 +54,6 @@ body {
   padding-bottom: 0
 }
 
-.other ul, .summary {
-  margin-bottom: .3em;
-  padding: 1em;
-  border: 1px solid #e8e7e8;
-  background-color: #f8f7f8
-}
-
-.other ul {
-  margin-bottom: 1em;
-  list-style-type: none;
-  text-align: center
-}
-
-
 /* --- Headings  --- */
 h1 {
   font-family: georgia,'times new roman',times,serif;

@@ -33,8 +33,8 @@ class ConversationController < ApplicationController
     render_404 and return if params[:id].nil? or !@current_user
     @conversation = Conversation.find_by_id(params[:id])
     render_404 and return unless @conversation
-    
-    comment_text = sanitize_input(params[:message][:text]).gsub(/\\n/, "<br/>")
+
+    comment_text = params[:message][:text]
     to_user_id = (@conversation.from_user_id == @current_user.id ? @conversation.to_user_id : @conversation.from_user_id)
     message = @conversation.messages.create({
       :text => comment_text,
@@ -46,7 +46,8 @@ class ConversationController < ApplicationController
       render :json => {
         :status => true,
         :name => @current_user.name,
-        :time => message.created_at.strftime("%d %b '%y"),
+        :time => message.created_at.strftime("%l:%M %P"),
+        :date => message.created_at.strftime("%d %b '%y"),
         :text => comment_text
       }
     else

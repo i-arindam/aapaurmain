@@ -2,7 +2,7 @@
   <div class="navbar-inner">
     <div class="container">
       <a href="/" id="logo">AAPAURMAIN</a>
-      <% unless is_homepage? %>
+      <% unless show_search? %>
         <form class="navbar-search pull-left" method="get" action="/search/keyword_search">
           <input name="searchfrom" type="hidden" value="header">
           <input class="search-query" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
@@ -11,7 +11,7 @@
       <% end %>
         
       <nav>
-          <% if is_homepage? and !current_user %>
+          <% if show_login? %>
             <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
               <div class="control-group">
                 <div class="controls">

@@ -12,6 +12,7 @@ Aapaurmain::Application.routes.draw do
   match '/faq', to: 'static_pages#faq'
   match '/howitworks', to: 'static_pages#how_it_works'
   match '/pricing', to: 'payment#pricing'
+  match '/copyright', to: 'static_pages#copyright'
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'
@@ -33,6 +34,7 @@ Aapaurmain::Application.routes.draw do
   post 'users/decline_request' => 'users#decline_request'
   post 'users/:id/upload_photo' => 'users#upload_photo'
   post 'users/:id/delete_photo' => 'users#delete_photo'
+  post 'users/:id/show_viewers' => 'users#show_viewers'
   
   
   # Post lock actions

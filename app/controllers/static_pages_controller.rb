@@ -17,7 +17,11 @@ class StaticPagesController < ApplicationController
   end
   
   def faq
-    render "faq", :layout => false
+    render :layout => false
+  end
+  
+  def copyright
+    render :layout => false
   end
   
 end

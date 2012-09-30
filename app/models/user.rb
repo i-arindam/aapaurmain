@@ -115,9 +115,10 @@ class User < ActiveRecord::Base
   
   # has_many :recommendation, :dependent => destroy
   has_one :subscription
-  has_many :hobby
-  has_many :interested_in
-  has_many :not_interested_in
+  has_many :hobby, :dependent => :destroy
+  has_many :interested_in, :dependent => :destroy
+  has_many :not_interested_in, :dependent => :destroy
+  has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   
   # scope :in_requests , {:joins => " INNER JOIN requests ON users.id=requests.to_id" , :conditions => [ "requests.status = 1"] }
   # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }
@@ -165,6 +166,7 @@ class User < ActiveRecord::Base
   # @param [Symbol] event
   #   Symbol for the event 
   def deliver_notifications(event, args = [])
+    return if Rails.env.starts_with("devel")
     # event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
     UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject]}, args << self) if event[:mail]

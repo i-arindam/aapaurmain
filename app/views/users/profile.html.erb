@@ -5,31 +5,17 @@
     <% content_for :stylesheet do%>
       <%= stylesheet_link_tag "users/profile" %>
     <% end %>
-    <%= javascript_include_tag "users/profile" %>
+    <%= content_for :js_footer do %>
+      <%= javascript_include_tag "users/profile" %>
+    <% end %>
     <script type="text/javascript">
-       window.user_object = <%= raw @values['json'] %>
+       window.user_object = <%= raw @values['json'] %>;
+       $(function() {
+         var actions = new UserActions();
+       });
     </script>
   </head>
   <body>
-    <!-- <aside>
-      <div class="profileSideNav">
-        <img src="http://placehold.it/260x180" class="profileImage" />
-        <div class="sideNavButtons">
-          <input type="button" class="btn-small btn-success" value="My album" />
-          <br />
-          <br />
-          <span class="badge badge-success">2 Ques</span>
-          <span class="badge badge-warning">4 Interests</span>
-          <br />
-          <span class="badge badge-info">8 Views</span>
-          <span class="badge badge-important">6 Msgs</span>
-        </div>
-        <br />
-        <br />
-        <h3>CHAT</h3>
-        
-      </div>
-    </aside> -->
     <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
 
     <div id="left_content">left content</div>
@@ -44,7 +30,7 @@
         
         <div class="profileActions">
           <% if @values['show-send'] %>
-            <input type="button" class="btn btn-danger btn-large j-send-request" value="Send Request" />
+            <input type="button" class="btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" />
           <% elsif @values['show-withdraw'] %>
             <input type="button" class="btn btn-danger j-withdraw-request" value="Withdraw Request" />
           <% elsif @values['show-accept'] %>
@@ -52,7 +38,7 @@
           <% elsif @values['show-decline'] %>
             <input type="button" class="btn btn-danger j-withdraw-request" value="Decline Request" />
           <% end %>
-          <input type="button" class="btn btn-danger btn-large askQuestion" value="Ask a Question" />
+          <!-- <input type="button" class="btn btn-danger btn-large askQuestion" value="Ask a Question" /> -->
         </div>
       </section>
 

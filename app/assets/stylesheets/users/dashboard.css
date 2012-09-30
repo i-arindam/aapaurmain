@@ -3,11 +3,12 @@
 }
 
 .requestLabel {
-  margin: 20px 0 10px 20px;
+  margin: 40px 0 10px 20px;
+  font-family: 'Oregano' cursive;
 }
 ul.requestList {
   height: 170px;
-  margin: 20px 0 0px 35px;
+  margin: 10px 0 0px 35px;
   overflow: scroll;
   width: 95%;
   list-style: none;
@@ -123,3 +124,45 @@ ul.requestList {
 .select-thumbnails img {
   border: 2px solid white;
 }
+
+ul.mainNav {
+  clear: both;
+  content: "";
+  display: table;
+  margin-bottom: 40px;
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  left: -10px;
+  top: 22px;
+  height: 40px;
+  line-height: 45px;
+  z-index: 200;
+}
+
+.mainNav li.active {
+  background: #AC4311;
+}
+
+.mainNav li {
+  position: relative;
+  float: left;
+  width: 200px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+ul.mainNav li a {
+  padding: 8px;
+  color: white;
+  font-family: 'Oregano' cursive;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 45px;
+  text-decoration: none;
+}
+
+.mainNav li.active a {
+  pointer-events: none;
+}
+

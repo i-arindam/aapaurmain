@@ -1,5 +1,5 @@
 <% content_for :stylesheet do %>
-  <%= stylesheet_link_tag 'conversation' %>
+  <%= stylesheet_link_tag 'messages' %>
 <% end %>
 <% content_for :js_footer do %>
   <%= javascript_include_tag 'application-conversation' %>
@@ -7,7 +7,6 @@
 
 <div class="span8 conversation">
   <h3>Conversations with <span class="person"><%= @with_user.name %></span></h3>
-  <hl></hl>
   <ul class="messages">
     <% @messages.each do |mes| %>
       <% with_name = @with_user.name
@@ -16,12 +15,13 @@
          with_id = @with_user.id
       %>
       <li class="messageContainer <%= (mes.from ==  myid ? 'myColor' : 'yourColor') %>">
-        <img src="http://placehold.it/96x96" />
+        <img src="http://placehold.it/50x50" />
         <div class="info">
-          <span class="name"><%= (mes.from == myid ? myname : with_name) %></span>
-          <span class="time pull-right"><%= mes.created_at.strftime("%d %b '%y") %></span>
+          <a rel="nofollow" href="/users/<%= mes.from %>"><span class="name"><%= (mes.from == myid ? myname : with_name) %></span></a>
+          <span class="date pull-right"><%= mes.created_at.strftime("%d %b '%y") %></span>
+          <span class="time pull-right"><%= mes.created_at.strftime("%l:%M %P")%></span>
         </div>
-        <span class="text"><%= mes.text %></span>
+        <div class="text"><%= mes.text %></div>
       </li>
     <% end %>
   </ul>
@@ -29,9 +29,10 @@
   <div class="newMessage">
     <form method="post">
       <fieldset>
-        <textarea name="message[text]" rows="4" cols="40"></textarea>
+        <img src="http://placehold.it/50x50" />
+        <textarea name="message[text]" rows="4" cols="40" placeholder="Reply, shall we?"></textarea>
         <input type="hidden" class="convId" value="<%= @conversation.id %>" />
-        <input type="submit" value="Say what you feel like?"/>
+        <input type="submit" class="btn btn-danger" value="Say what you feel like?"/>
       </fieldset>
     </form>
   </div>

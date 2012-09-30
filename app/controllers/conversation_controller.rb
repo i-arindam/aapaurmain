@@ -34,7 +34,7 @@ class ConversationController < ApplicationController
     @conversation = Conversation.find_by_id(params[:id])
     render_404 and return unless @conversation
     
-    comment_text = sanitize_input(params[:message][:text])
+    comment_text = sanitize_input(params[:message][:text]).gsub(/\\n/, "<br/>")
     to_user_id = (@conversation.from_user_id == @current_user.id ? @conversation.to_user_id : @conversation.from_user_id)
     message = @conversation.messages.create({
       :text => comment_text,

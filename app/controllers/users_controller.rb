@@ -32,7 +32,6 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] from_id
   # => The id of the user who had sent the request
   def accept_request
-    debugger
     to_user = User.find_by_id(params[:to_id])
     render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
@@ -40,7 +39,7 @@ class UsersController < ApplicationController
     render_404 and return unless from_user
     success = to_user.accept_request_from(from_user)
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
-    message.gsub!('{{user}}', from_user.name)
+    message.gsub!('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
@@ -56,7 +55,6 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request was sent
   def withdraw_request
-    debugger
     from_user = User.find_by_id(params[:from_id])
     render_404 and return unless from_user and from_user == current_user
     to_user = User.find_by_id(params[:to_id])
@@ -109,14 +107,23 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] lock_id
   # => The id of the lock being withdrawn
   def withdraw_lock
-    withdrawing_user = User.find_by_id(params[:id])
+    withdrawing_user = User.find_by_id(params[:from_id])
     render_404 and return unless withdrawing_user and withdrawing_user == current_user
     
-    lock = Lock.find_by_id(params[:lock_id])
-    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:id].to_i || lock.another_id == params[:id].to_i)
+    lock = Lock.find_by_one_id(params[:from_id])
+    lock = Lock.find_by_another_id(params[:from_id]) if lock.nil?
+    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:from_id].to_i || lock.another_id == params[:from_id].to_i)
     
     lock.update_withdrawn
-    withdrawing_user.update_status_post_lock_withdraw
+    to_user = User.find_by_id(params[:to_id])
+    message = (success ? User::REJECT_REQUEST_SENT : User::REJECT_REQUEST_FAILED_TO_SAVE)
+    message.gsub!('{{user}}', to_user.name)
+    
+    render :json => {
+      :success => success,
+      :message => message
+    }
+    #withdrawing_user.update_status_post_lock_withdraw
   end
   
   def finalize_lock
@@ -215,9 +222,36 @@ class UsersController < ApplicationController
     if @user = current_user
       in_requests_ids = @user.incoming_requests.collect(&:from_id)
       @in_requests = User.find_all_by_id(in_requests_ids)
+      @viewer_pane_info = {}
+      @viewer_pane_info[:in_requests] = {}
+      in_requests_ids.each do |in_req|
+        request = Request.find_by_from_id_and_to_id(in_req, @user.id)
+        if request
+          @viewer_pane_info[:in_requests][in_req] = 
+          {
+            :show_accept => request.status == Request::ASKED , :show_decline => request.status == Request::ASKED, :show_send => false , :show_withdraw => false , 
+            :show_withdraw_lock => request.status == Request::ACCEPTED
+          }
+        end
+      end
+      
+     
     
       out_requests_ids = @user.outgoing_requests.collect(&:to_id)
       @out_requests = User.find_all_by_id(out_requests_ids)
+      @viewer_pane_info[:out_requests] = {}
+      out_requests_ids.each do |out_req|
+        request = Request.find_by_from_id_and_to_id(@user.id,out_req)
+          @viewer_pane_info[:out_requests][out_req] = 
+          {
+            :show_accept => false , :show_decline => false, :show_send => request.nil? , :show_withdraw => request && request.status == Request::ASKED,
+            :show_withdraw_lock => request && request.status == Request::ACCEPTED
+          }
+      end
+      
+       puts "------------------------------"
+        puts out_requests_ids.inspect
+        puts @viewer_pane_info.inspect
       
       profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
       @profile_viewers = profile_viewer_ids.map do |p|
@@ -264,6 +298,7 @@ class UsersController < ApplicationController
         @values['show-accept'] = @values['show-decline'] = request.status == Request::ASKED if @current_user.id == params[:id].to_i
       end
       
+
       # Log profile views
       view = @user.profile_viewers.where(:viewer_id => @current_user.id)
       unless view.blank?

@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
   # @param [Symbol] event
   #   Symbol for the event 
   def deliver_notifications(event, args = [])
-    return if Rails.env.starts_with("devel")
+    return if Rails.env == 'development'
     # event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
     UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject]}, args << self) if event[:mail]
@@ -333,7 +333,8 @@ class User < ActiveRecord::Base
   # Determines if the user subscription is still valid?
   # @return [TrueClass|FalseClass]
   def has_active_subscription?
-    self.is_paid? and self.is_still_paid?
+    true
+    # self.is_paid? and self.is_still_paid?
   end
   
   # Creates a new request object for a & b.
@@ -352,7 +353,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-   self.deliver_notifications(:request_sent, [b,a])
+   self.deliver_notifications(:request_sent, [b,self])
     return true
   end
   

@@ -29,15 +29,25 @@
         </div>
         
         <div class="profileActions">
-          <% if @values['show-send'] %>
-            <input type="button" class="btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" />
-          <% elsif @values['show-withdraw'] %>
-            <input type="button" class="btn btn-danger j-withdraw-request" value="Withdraw Request" />
-          <% elsif @values['show-accept'] %>
-            <input type="button" class="btn btn-success j-accept-request" value="Accept Request" />
-          <% elsif @values['show-decline'] %>
-            <input type="button" class="btn btn-danger j-withdraw-request" value="Decline Request" />
-          <% end %>
+          
+          <% @values['show-send'] ? '' : class_to_add="hide" %>
+            <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= @user.id %>"/>
+
+          <% @values['show-withdraw'] ? '' : class_to_add_1="hide" %>
+            <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger j-withdraw-request" value="Withdraw Request" id="withdraw-<%= @user.id %>" />
+
+          <% @values['show-accept']  ? '' : class_to_add_2="hide" %>
+            <input type="button" data-toggle="modal" data-target="#myModal" class=" <%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
+
+          <% @values['show-decline'] ? '' : class_to_add_3="hide" %>
+            <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger j-decline-request" value="Decline Request" id="decline-<%= @user.id %>" />
+
+            <% @values['show-withdraw-lock'] ? '' : class_to_add_4="hide" %>
+              <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger j-withdraw-lock" value="Withdraw Lock" id="lock-<%= @user.id %>" />
+          
+          
+          
+        
           <!-- <input type="button" class="btn btn-danger btn-large askQuestion" value="Ask a Question" /> -->
         </div>
       </section>
@@ -112,7 +122,7 @@
               </div>
               <div class="row">
                 <label class="span2 h4">Seen years</label>
-                <label class="span4"><%= @user.age %></label>
+                <label class="span4"><%= 25 %></label>
               </div>
               <div class="row">
                 <label class="span2 h4">Max shopping bill that i can afford</label>

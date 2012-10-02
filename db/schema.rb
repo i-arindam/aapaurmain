@@ -14,12 +14,14 @@
 ActiveRecord::Schema.define(:version => 20120930121711) do
 
   create_table "conversations", :force => true do |t|
-    t.integer  "from_user_id",                :null => false
-    t.integer  "to_user_id",                  :null => false
-    t.string   "snippet",      :limit => 100
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.integer  "from_user_id", :null => false
+    t.integer  "to_user_id",   :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
+
+  add_index "conversations", ["from_user_id"], :name => "index_conversations_on_from_user_id"
+  add_index "conversations", ["to_user_id"], :name => "index_conversations_on_to_user_id"
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -155,14 +157,14 @@ ActiveRecord::Schema.define(:version => 20120930121711) do
     t.integer  "spouse_salary",              :limit => 8
     t.string   "further_education_plans",    :limit => 500
     t.string   "spouse_further_education",   :limit => 500
-    t.integer  "settle_else"
+    t.string   "settle_else",                :limit => 500
     t.integer  "sexual_preference",          :limit => 2,   :default => 0
-    t.integer  "virginity_opinion"
+    t.string   "virginity_opinion",          :limit => 500
     t.string   "ideal_marriage",             :limit => 500
     t.integer  "salary",                     :limit => 8
     t.string   "hobbies",                    :limit => 500
     t.integer  "siblings",                   :limit => 2
-    t.string   "profession"
+    t.integer  "profession",                 :limit => 2
     t.string   "dream_for_future",           :limit => 500
     t.string   "interested_in",              :limit => 500
     t.string   "not_interested_in",          :limit => 500
@@ -187,7 +189,6 @@ ActiveRecord::Schema.define(:version => 20120930121711) do
     t.string   "education"
     t.string   "photo_url"
     t.string   "blog_url"
-    t.integer  "age"
     t.boolean  "photo_exists"
   end
 

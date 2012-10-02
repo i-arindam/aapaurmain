@@ -8,6 +8,12 @@
       <%= javascript_include_tag "application-user" %>
     <% end %>
     <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
+    <script type="text/javascript">
+       window.user_object = <%= raw @values['json'] %>;
+       $(function() {
+         var actions = new UserActions();
+       });
+    </script>
   </head>
   <body>
     <div id="left_content">left content</div>
@@ -114,10 +120,12 @@
       </div>
 
       <h3 class="span6 requestLabel">Have a detailed look at the above here</h3>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => ''} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide'} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide'} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide'} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => '' ,
+         :viewer_pane_info => @viewer_pane_info[:in_requests] } %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
+        :viewer_pane_info => @viewer_pane_info[:out_requests]} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide' , :viewer_pane_info => nil} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil} %>
       
     </div>
     </div> <!-- box_content -->

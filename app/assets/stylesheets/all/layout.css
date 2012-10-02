@@ -55,11 +55,11 @@ p {
 /* header */
 
 header {
-  height: 70px;
+  height: 100px;
 }
 
 .navbar-inner {
-  background: #2F532F;
+  background: black;
   height: inherit;
   padding-top: 10px;
 }
@@ -113,20 +113,12 @@ header .navbar-inner .container {
 
 #logo {
   float: left;
+  width: 95px;
+  height: 102px;
   margin-right: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  line-height: 1;
+  position: relative;
+  top: -16px;
   background-image: url('../logo.png') !important;
-}
-
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
 }
 
 /* footer */

@@ -1,7 +1,18 @@
 body {
-  background: url('denim-bg.png');  
+  background: url('denim-bg.png');
 }
 
+.piggy {
+  position: absolute;
+  left: -80px;
+}
+
+.logo {
+  position: relative;
+  left: 500px;
+  width: 95px;
+  height: 102px;
+}
 .content {
   color: #F5F5F5;
   position: relative;
@@ -10,9 +21,8 @@ body {
   -moz-border-radius: 10px;
   -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   left: 150px;
-  top: 40px;
   width: 1080px;
-  height: 1000px;
+  height: 690px;
 }
 
 .message {
@@ -27,62 +37,59 @@ body {
   top: 40px;
 }
 
-.free {
-  position: absolute;
-  float: left;
-  width: 300px;
-  padding: 15px;
-}
-
 h2.freeHeader {
   position: relative;
   left: 70px;
 }
-.features.free {
-  position: relative;
-  background: #191814;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
-  -moz-box-shadow: 10px 10px 10px rgba(72, 99, 44, 0.47);
-  top: 30px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-}
 
 .features.free:hover {
   opacity: 1;
-  border: 5px solid #eee;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
   -webkit-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   -moz-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
 }
 
-.features h2 {
+.features h2, .extempore h2, .planned h2 {
   border-bottom: 2px solid rgba(68, 61, 61, 0.63);
-  padding-bottom: 15px;
+  padding-bottom: 25px;
   position: relative;
 }
 
 ul.featuresList {
   padding: 0;
   margin: 0;
-  border-bottom: 2px solid rgba(68, 61, 61, 0.63);
+  position: relative;
 }
 
-.featuresList li {
+.featuresList li.outline {
   list-style-type: none;
   padding: 15px 0 15px 0;
   width: auto;
-  font-size: 15px;
+  font-size: 20px;
   position: relative;
+  font-family: 'Oregano' cursive;
+  border-bottom: 2px solid gray;
 }
 
 .featuresList li i {
   left: 10px;
   position: relative;
+  top: 2px;
+}
+
+.featuresList ul li {
+  list-style-type: none;
+  padding-top: 5px;
+}
+
+li.outline ul {
+  position: relative;
+  top: 10px;
+}
+.featuresList li.liContent, .features li.outline {
+  font-family: sans-serif;
+  font-size: 14px;
 }
 
 .freeFooter {
@@ -90,23 +97,27 @@ ul.featuresList {
   line-height: 36px;
 }
 
-.or {
-  height: 420px;
-  width: 50px;
-  background: url('or.png');
+.extempore, .planned, .features{
+  width: 284px;
   position: absolute;
   float: left;
-  left: 390px;
-  z-index: 400;
+  top: 149px;
+  padding: 15px;
+  border-radius: 13px 13px 143px 143px;
+  height: 500px;
+  background: rgba(83, 79, 62, 0.82);
 }
 
-.paid {
-  float: left;
-  position: absolute;
-  padding: 15px;
-  left: 450px;
-  top: 30px;
-  width: 570px;
+.features {
+  left: 33px;
+}
+
+.extempore {
+  left: 366px;
+}
+
+.planned {
+  left: 705px;
 }
 
 h2.paidHeader {
@@ -137,7 +148,6 @@ h2.paidHeader {
 
 .listing:hover {
   opacity: 1;
-  border: 5px solid #eee;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
   -webkit-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   -moz-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
@@ -161,22 +171,6 @@ h2.rightTop {
   padding-left: 80px;
 }
 
-.paidFeatures li:nth-child(1) {
-  left: 230px;
-}
-.paidFeatures li:nth-child(2) {
-  left: 200px;
-}
-.paidFeatures li:nth-child(3) {
-  left: 140px;
-}
-.paidFeatures li:nth-child(4) {
-  left: 170px;
-}
-.paidFeatures li:nth-child(5) {
-  left: 100px;
-}
-
 .plansFooter {
   padding: 10px 0;
 }
@@ -194,7 +188,7 @@ h2.rightBot {
 }
 
 i.icon-question-sign {
-  background-image: url('question.png');
+  background-image: url('pricing/question.png');
   background-position: 0px 0px;
   width: 14px;
   height: 14px;
@@ -202,8 +196,9 @@ i.icon-question-sign {
 
 button.start {
   position: relative;
-  top: 10px;
+  top: 20px;
   padding: 10px;
+  left: 30px;
   border-radius: 10px;
   background: #E64343;
   background-image: -webkit-linear-gradient(top, rgba(0,0,0, 0.4), rgba(230, 67, 67, 0));
@@ -221,10 +216,10 @@ button.start {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
+  z-index: 300;
 }
 
 button:hover {
-  border: 1px inset black;
   background: #A0EEA0;
   background-image: -webkit-linear-gradient(bottom, rgba(0,0,0, 0.4), rgba(230, 67, 67, 0));
   background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
@@ -233,15 +228,101 @@ button:hover {
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(230, 67, 67, 0));
 }
 
-.start.freeplan {
-  left: 10px;
-  width: 300px;
+.faqs {
+  position: relative;
+  color: #D8BFD8;
+  top: 300px;
 }
 
-.start.paid1 {
-  left: 20px;
+h2.faqHeader {
+  position: relative;
+  left: 480px;
+  top: 20px;
+  font-family: 'Oregano' cursive;
 }
 
-.start.paid2 {
-  left: 70px;
+.faqWrapper {
+  position: relative;
+  left: 200px;
+  background: #0E2930;
+  height: 820px;
+  top: 30px;
+  border-radius: 10px;
+  box-shadow: -10px 10px 10px 10px rgba(0, 0, 0, 0.4);
+  width: 980px;
+}
+
+.rightCol {
+  left: 480px;
+}
+
+.leftCol, .rightCol {
+  position: absolute;
+  float: left;
+  border-radius: 10px;
+  padding: 30px;
+  width: 450px;
+}
+
+.leftCol .question, .rightCol .question {
+  font-family: 'Orgeano' cursive;
+  font-size: 18px;
+  font-weight: 700;
+  position: relative;
+  color: #FCE700;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.leftCol p, .rightCol p {
+  font-family: 'Times New Roman' sans-serif;
+  font-size: 16px;
+  position: relative;
+  line-height: 19px;
+}
+
+.q {
+  padding: 10px;
+}
+
+.thoughtsImage {
+  position: absolute;
+  top: 50px;
+  width: 140px;
+  left: 60px;
+}
+
+.iconProfile {
+  background: url('pricing/article.png');
+}
+
+.featuresList img {
+  width: 25px;
+  margin-right: 10px;
+}
+
+.freePrice, .extemporePrice, .plannedPrice {
+  position: absolute;
+  top: 587px;
+}
+.freePrice {
+  left: 30px;
+}
+.extemporePrice {
+  left: 370px;
+}
+.plannedPrice {
+  left: 710px;
+}
+
+.extemporeImg {
+  position: absolute;
+  top: 30px;
+  left: 360px;
+}
+
+.plannedImg {
+  position: absolute;
+  top: 32px;
+  left: 690px;
 }

@@ -264,7 +264,6 @@ class UsersController < ApplicationController
         @values['show-accept'] = @values['show-decline'] = request.status == Request::ASKED if @current_user.id == params[:id].to_i
       end
       
-      debugger
       # Log profile views
       view = @user.profile_viewers.where(:viewer_id => @current_user.id)
       unless view.blank?

@@ -73,12 +73,10 @@ body {
 }
 
 .fmascot {
-  width: 100px;
   position: absolute;
 }
 
 .mmascot {
-  width: 100px;
   position: absolute;
   left: 800px;
 }

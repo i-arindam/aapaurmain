@@ -47,7 +47,7 @@ Aapaurmain::Application.configure do
     :port                 => 587,
     :domain               => 'slideshare.com',
     :user_name            => 'apoorvi@slideshare.com',
-    :password             => '****',
+    :password             => '**',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
   

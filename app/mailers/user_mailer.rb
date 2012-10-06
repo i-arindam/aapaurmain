@@ -17,11 +17,11 @@ class UserMailer < ActionMailer::Base
   # template => mail template name.
   # template_path => path to template like 'mail_templates' for template app/views/mail_templates/mail.html.erb
   # headers => hash to contain various mail headers
-  def send_mail(mail_options,user)
+  def send_mail(mail_options,user_array)
     #attach all the files
-    return if Rails.env == 'development'
-    @to_user = user[0]
-    @from_user = user[1]
+    #return if Rails.env == 'development'
+    @to_user = user_array[0]
+    @from_user = user_array[1]
     files_attach = mail_options[:attachments]
 
     if files_attach 
@@ -33,7 +33,7 @@ class UserMailer < ActionMailer::Base
     #set header if any
     headers mail_options[:headers] if mail_options[:headers]
     
-    to = mail_options[:to] || @user.email
+    to = mail_options[:to] || @to_user.email
     subject = mail_options[:subject]
     template_path = mail_options[:template_path] || 'mail_templates'
     template = mail_options[:template]

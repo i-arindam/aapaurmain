@@ -1,0 +1,374 @@
+		#outlook a{
+			padding:0;
+		}
+		body{
+			width:100% !important;
+		}
+		.ReadMsgBody{
+			width:100%;
+		}
+		.ExternalClass{
+			width:100%;
+		}
+		body{
+			-webkit-text-size-adjust:none;
+		}
+		body{
+			margin:0;
+			padding:0;
+		}
+		img{
+			border:0;
+			height:auto;
+			line-height:100%;
+			outline:none;
+			text-decoration:none;
+		}
+		table td{
+			border-collapse:collapse;
+		}
+		#bodyTable{
+			height:100% !important;
+			margin:0;
+			padding:0;
+			width:100% !important;
+		}
+	/*
+	@tab Page
+	@section heading 1
+	@tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+	@style heading 1
+	*/
+		h1{
+			/*@editable*/color:#202020;
+			display:block;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:26px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:100%;
+			/*@editable*/letter-spacing:normal;
+			margin-top:0;
+			margin-right:0;
+			margin-bottom:10px;
+			margin-left:0;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section heading 2
+	@tip Set the styling for all second-level headings in your emails.
+	@style heading 2
+	*/
+		h2{
+			/*@editable*/color:#404040;
+			display:block;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:20px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:100%;
+			/*@editable*/letter-spacing:normal;
+			margin-top:0;
+			margin-right:0;
+			margin-bottom:10px;
+			margin-left:0;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section heading 3
+	@tip Set the styling for all third-level headings in your emails.
+	@style heading 3
+	*/
+		h3{
+			/*@editable*/color:#990000;
+			display:block;
+			/*@editable*/font-family:Georgia;
+			/*@editable*/font-size:20px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:100%;
+			/*@editable*/letter-spacing:normal;
+			margin-top:0;
+			margin-right:0;
+			margin-bottom:10px;
+			margin-left:0;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section heading 4
+	@tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+	@style heading 4
+	*/
+		h4{
+			/*@editable*/color:#808080;
+			display:block;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:12px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:100%;
+			/*@editable*/letter-spacing:normal;
+			margin-top:0;
+			margin-right:0;
+			margin-bottom:10px;
+			margin-left:0;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Header
+	@section preheader style
+	@tip Set the background color and bottom border for your email's preheader area.
+	@theme page
+	*/
+		#templatePreheader{
+			/*@editable*/background-color:#272733;
+			/*@editable*/border-bottom:0;
+		}
+	/*
+	@tab Header
+	@section preheader text
+	@tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+	*/
+		.preheaderContent{
+			/*@editable*/color:#404040;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:10px;
+			/*@editable*/line-height:125%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Header
+	@section preheader link
+	@tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+	*/
+		.preheaderContent a:link,.preheaderContent a:visited,.preheaderContent a .yshortcuts {
+			/*@editable*/color:#202020;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Header
+	@section header style
+	@tip Set the bottom border for your email's header area.
+	*/
+		#templateHeader{
+			/*@editable*/border-bottom:1px solid #DDDDDD;
+		}
+	/*
+	@tab Header
+	@section header text
+	@tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+	*/
+		.headerContent{
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:20px;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:100%;
+			/*@editable*/padding-top:0;
+			/*@editable*/padding-right:0;
+			/*@editable*/padding-bottom:0;
+			/*@editable*/padding-left:0;
+			/*@editable*/text-align:center;
+			/*@editable*/vertical-align:middle;
+		}
+	/*
+	@tab Header
+	@section header link
+	@tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+	*/
+		.headerContent a:link,.headerContent a:visited,.headerContent a .yshortcuts {
+			/*@editable*/color:#990000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+		#headerImage{
+			height:auto;
+			max-width:600px !important;
+		}
+	/*
+	@tab Body
+	@section body style
+	@tip Set the background color for your email's body area.
+	@theme page
+	*/
+		#templateBody{
+			/*@editable*/background-color:#272733;
+			/*@editable*/border-top:0;
+		}
+	/*
+	@tab Body
+	@section body text container
+	@tip Set the background color for your email's body content block.
+	*/
+		#bodyContentBlock{
+			/*@editable*/background-color:#FFFFFF;
+		}
+	/*
+	@tab Body
+	@section body text
+	@tip Set the styling for your email's main content text. Choose a size and color that is easy to read.
+	@theme main
+	*/
+		.bodyContent{
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Georgia;
+			/*@editable*/font-size:17px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Body
+	@section body link
+	@tip Set the styling for your email's main content links. Choose a color that helps them stand out from your text.
+	*/
+		.bodyContent a:link,.bodyContent a:visited,.bodyContent a .yshortcuts {
+			/*@editable*/color:#990000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+		.bodyContent img{
+			display:inline;
+			height:auto;
+		}
+	/*
+	@tab Columns
+	@section button style
+	@tip Set the styling for your email's buttons. Choose a style that draws attention.
+	*/
+		.templateButton{
+			/*@tab Columns
+@section button style
+@tip Set the styling for your email's buttons. Choose a style that draws attention.*/-moz-border-radius:4px;
+			-webkit-border-radius:4px;
+			/*@editable*/background-color:#990000;
+			border-radius:4px;
+		}
+	/*
+	@tab Columns
+	@section button style
+	@tip Set the styling for your email's buttons. Choose a style that draws attention.
+	*/
+		.templateButtonContent,.templateButtonContent a:link,.templateButtonContent a:visited,.templateButtonContent a .yshortcuts {
+			/*@editable*/color:#FFFFFF;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:11px;
+			/*@editable*/font-weight:bold;
+			/*@editable*/letter-spacing:1px;
+			text-align:center;
+			text-decoration:none;
+		}
+	/*
+	@tab Columns
+	@section image border
+	@tip Set the border for your email's column images.
+	*/
+		.columnImage{
+			/*@editable*/border:2px solid #FFFFFF;
+		}
+	/*
+	@tab Columns
+	@section left column text
+	@tip Set the styling for your email's left column text. Choose a size and color that is easy to read.
+	*/
+		.leftColumnContent{
+			/*@editable*/color:#303030;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:13px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Columns
+	@section left column link
+	@tip Set the styling for your email's left column links. Choose a color that helps them stand out from your text.
+	*/
+		.leftColumnContent a:link,.leftColumnContent a:visited,.leftColumnContent a .yshortcuts {
+			/*@editable*/color:#990000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:none;
+		}
+	/*
+	@tab Columns
+	@section center column text
+	@tip Set the styling for your email's center column text. Choose a size and color that is easy to read.
+	*/
+		.centerColumnContent{
+			/*@editable*/color:#303030;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:13px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Columns
+	@section center column link
+	@tip Set the styling for your email's center column links. Choose a color that helps them stand out from your text.
+	*/
+		.centerColumnContent a:link,.centerColumnContent a:visited,.centerColumnContent a .yshortcuts {
+			/*@editable*/color:#990000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:none;
+		}
+	/*
+	@tab Columns
+	@section right column text
+	@tip Set the styling for your email's right column text. Choose a size and color that is easy to read.
+	*/
+		.rightColumnContent{
+			/*@editable*/color:#303030;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:13px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Columns
+	@section right column link
+	@tip Set the styling for your email's right column links. Choose a color that helps them stand out from your text.
+	*/
+		.rightColumnContent a:link,.rightColumnContent a:visited,.rightColumnContent a .yshortcuts {
+			/*@editable*/color:#990000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:none;
+		}
+		.leftColumnContent img,.centerColumnContent img,.rightColumnContent img{
+			display:inline;
+			height:auto;
+			max-width:174px !important;
+		}
+		body,#bodyTable{
+			background-color:#FFFFFF;
+		}
+	/*
+	@tab Footer
+	@section footer text
+	@tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+	@theme footer
+	*/
+		.footerContent{
+			/*@editable*/color:#ffffff;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:10px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Footer
+	@section footer link
+	@tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+	*/
+		.footerContent a:link,.footerContent a:visited,.footerContent a .yshortcuts {
+			/*@editable*/color:#606060;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+		.footerContent img{
+			display:inline;
+		}
+		#monkeyRewards img{
+			max-width:190px !important;
+		}

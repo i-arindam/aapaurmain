@@ -96,8 +96,8 @@ class User < ActiveRecord::Base
   # Enumeration for contacting templates
   CONTACT_TEMPLATES = {
     :confirm_locked_success => { :mail => 'confirm_locked_success', :sms => 'confirm_locked_success', :notif => 'confirm_locked_success' , :subject => 'test subject' },
-    :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' , :subject => 'test subject'},
-    :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'test subject' },
+    :request_sent => { :mail => 'request_sent', :sms => 'request_sent', :notif => 'request_sent' , :subject => 'Somebody wants to know you better!'},
+    :request_accepted => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'You inched closer to success!' },
     :request_declined => { :mail => 'request_declined', :sms => 'request_declined', :notif => 'request_declined', :subject => 'test subject' },
     :request_withdrawn => { :operation => 'remove_request' },
     :blocked_state => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'test subject'},
@@ -166,8 +166,8 @@ class User < ActiveRecord::Base
   # @param [Symbol] event
   #   Symbol for the event 
   def deliver_notifications(event, args = [])
-    return if Rails.env == 'development'
-    # event = CONTACT_TEMPLATES[event]
+    #return if Rails.env == 'development'
+     event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
     UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject]}, args << self) if event[:mail]
     #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
@@ -353,7 +353,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-   self.deliver_notifications(:request_sent, [b,self])
+   self.deliver_notifications(:request_sent, [b])
     return true
   end
   

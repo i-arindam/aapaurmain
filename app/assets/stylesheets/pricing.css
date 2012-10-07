@@ -41,7 +41,15 @@ h2.freeHeader {
   position: relative;
   left: 70px;
 }
-
+#logo {
+  float: left;
+  width: 95px;
+  height: 102px;
+  margin-right: 10px;
+  position: relative;
+  background-image: url('logo_backup.png') !important;
+  left: 55px;
+}
 .features.free:hover {
   opacity: 1;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));

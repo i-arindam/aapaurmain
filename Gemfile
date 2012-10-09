@@ -15,6 +15,8 @@ gem "rsolr"
 gem "pusher"
 gem "right_aws", '2.0.0'
 gem "rmagick"
+gem 'delayed_job_active_record'
+gem "daemons"
 
 group :development, :test do
   gem "rspec"

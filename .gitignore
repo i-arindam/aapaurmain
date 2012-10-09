@@ -20,3 +20,4 @@ test/unit/*test.rb
 test/fixtures/*.yml
 doc/*
 .DS_Store
+script/delayed_job

@@ -27,4 +27,4 @@ production:
   database: aapaurmain_production
   username: root
   password: crackitin123
-  host: host.aapaurmain.com
+  host: 108.163.188.202

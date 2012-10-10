@@ -17,6 +17,7 @@ gem "right_aws", '2.0.0'
 gem 'delayed_job_active_record'
 gem "daemons"
 gem "rmagick", '2.13.1'
+gem 'rvm-capistrano'
 
 group :development, :test do
   gem "rspec"
@@ -26,7 +27,6 @@ group :development, :test do
 end
 
 group :production do
-  gem 'rvm-capistrano'
   gem 'therubyracer'
   gem "yui-compressor"
   gem "ZenTest", '4.8.2'

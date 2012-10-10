@@ -1,9 +1,10 @@
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-require "rvm/capistrano"
+# $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+# require "rvm/capistrano"
 set :rvm_ruby_string, '1.9.3-p194@rails326'
 
 set :application, "app"
 set :repository,  "git://github.com/i-arindam/aapaurmain.git"
+set :branch, 'master'
 set :rvm_type, :system
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`

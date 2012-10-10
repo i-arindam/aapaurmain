@@ -3,20 +3,20 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.6'
 gem 'rake'
-gem "cached_model"
-gem "json"
-gem "capistrano"
-gem "unicorn"
-gem "mysql"
-gem 'debugger'
+gem "cached_model", '1.3.1'
+gem "json", '1.7.5'
+gem "capistrano", '2.13.4'
+gem "unicorn", '4.3.1'
+gem "mysql", '2.8.1'
+gem 'debugger', '1.2.0'
 gem "bcrypt-ruby", :require => "bcrypt"
-gem "jquery-rails"
-gem "rsolr"
-gem "pusher"
+gem "jquery-rails", '2.1.3'
+gem "rsolr", '1.0.8'
+gem "pusher", '0.10.0'
 gem "right_aws", '2.0.0'
-gem "rmagick"
 gem 'delayed_job_active_record'
 gem "daemons"
+gem "rmagick", '2.13.1'
 
 group :development, :test do
   gem "rspec"
@@ -25,9 +25,12 @@ group :development, :test do
   gem "capybara"
 end
 
-# group :production do
-#   gem "yui_compressor"
-# end
+group :production do
+  gem 'rvm-capistrano'
+  gem 'therubyracer'
+  gem "yui-compressor"
+  gem "ZenTest", '4.8.2'
+end
 
 # Bundle edge Rails instead:
  # gem 'rails', :git => 'git://github.com/rails/rails.git'

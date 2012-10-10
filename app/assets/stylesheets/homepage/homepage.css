@@ -19,6 +19,7 @@ body {
   float: right;
   width: 420px;
   height: 490px;
+  top:40px;
 }
 
 #signup_form {
@@ -58,11 +59,12 @@ body {
 }
 
 .stickyArea {
-  background: url('../s.png') repeat;
-  color: black;
+  /*display: none;*/
+  /*background: url('../s.png') repeat;*/
+/*  color: white;*/
   position: absolute;
-  left: 160px;
-  top: 290px;
+  left: 200px;
+  top: 150px;
   padding: 10px;
   width: 560px;
   -webkit-border-radius: 10px;
@@ -73,15 +75,227 @@ body {
 }
 
 .fmascot {
+  display:none;
   position: absolute;
+  height: 1000px;
+  width: 780px;
+  left: -220px;
+  top: 344px;
 }
 
+
 .mmascot {
+  display:none;
   position: absolute;
-  left: 800px;
+  left: 600px;
 }
 
 .calloutCloud {
+  display:none;
   position: relative;
   left: 310px;
 }
+
+#logo {
+  width: 136px;
+  height: 175px;
+  margin-left: 30px;
+  position: absolute;
+  top: 28px;
+  background-image: url('../logo.png') !important;
+}
+
+.book_wrapper {
+margin: 0 auto;
+padding-top: 50px;
+width: 905px;
+height: 540px;
+position: relative;
+background: transparent url('../booklet/book-bg.png') no-repeat 9px 27px;
+left:190px;
+}
+
+.logoText{
+  font-family: cursive;
+  font-size: 30px;
+  color: green;
+  position: absolute;
+  left: 114px;
+  float: right;
+}
+.tagLine{
+  font-size: 15px;
+  left: 100px;
+  position: relative;
+  color: brown;
+}
+
+.bookletText{
+  font-family: cursive;
+  font-size: 20px;
+  color: green;
+  
+}
+.aamText{
+  position:relative;
+  top: 60px;
+  color:brown;
+  font-family: Comic Sans MS;
+}
+.phdImage{
+  width:350px;
+  height:250px;
+}
+.aamTagLine{
+/*  font-family: fantasy;*/
+font-size: 20px;
+margin-top: 55px;
+}
+.headerText{
+  border-bottom: 3px black solid;
+  padding-top: 15px;
+  padding-bottom: 12px;
+  text-align: center;
+  font-family: Comic sans MS;
+  font-size:20px;
+}
+.lastpageText{
+  top:52px;
+  color:brown;
+}
+
+
+/*Social Actions*/
+
+
+.socialActions {
+  background: #222222;
+  border: 1px solid #555555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+/*  display: none;*/
+  left: 158px;
+  list-style: none;
+  margin: 0;
+  padding: 15px 10px;
+  position: absolute;
+  width: 60px;
+  top:245px;
+}
+.socialActions li {
+  color: #333;
+  float: right;
+  line-height: 1;
+  margin: 0 0 15px;
+  vertical-align: top;
+}
+.socialActions .social-fb {
+  margin-right: 6px;
+}
+.socialActions .social-fb .fb-like > span {
+  width: 48px !important;
+}
+.socialActions .social-tw {
+  margin-right: 2px;
+}
+.socialActions .social-li {
+  margin-top: -11px;
+}
+.socialActions .social-go {
+  margin-right: 4px;
+}
+.socialActions .social-go > div {
+  height: 20px !important;
+}
+.socialActions .social-pi {
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+.socialActions li div,
+.socialActions li iframe {
+  vertical-align: top !important;
+}
+.socialActions .fb-like {
+  float: left !important;
+}
+.IN-widget span,
+span.IN-widget span:first-child {
+  vertical-align: top !important;
+}
+/* Social Actions End*/
+
+
+
+.faqs {
+  position: relative;
+  color: #D8BFD8;
+  top: 620px;
+}
+
+h2.faqHeader {
+  font-size: 23px;
+  width: 980px;
+  left: 210px;
+  position: relative;
+  float: left;
+  top: -610px;
+  font-family: 'Oregano' cursive;
+}
+
+.faqWrapper {
+  position: relative;
+  left: 200px;
+  background: rgba(0, 100, 0, 0.53);
+  height: 500px;
+  top: 92px;
+  border-radius: 10px;
+  box-shadow: -10px 10px 10px 10px rgba(0, 0, 0, 0.4);
+  width: 980px;
+
+}
+.leftCol {
+/*    border-right: 5px black solid;*/
+}
+
+.rightCol {
+  left: 480px;
+}
+
+.leftCol, .rightCol {
+  position: absolute;
+  float: left;
+  border-radius: 10px;
+  padding: 30px;
+  width: 450px;
+}
+
+.leftCol .question, .rightCol .question {
+  font-family: 'Arial' cursive;
+  font-size: 20px;
+  font-weight: 700;
+  position: relative;
+  color: black;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.leftCol p, .rightCol p {
+  font-family: Georgia;
+  font-size: 16px;
+  position: relative;
+  line-height: 19px;
+}
+
+.q {
+  padding: 10px;
+}
+.whatWeAre {
+  font-family: Georgia;
+  font-size: 20px;  
+}
+.whatWeAre li {
+  padding-bottom: 15px;
+}
+
+

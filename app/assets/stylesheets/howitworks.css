@@ -226,3 +226,14 @@ body {
   top: 1380px;
   left: 630px;
 }
+
+#logo {
+  float: left;
+  width: 95px;
+  height: 102px;
+  margin-right: 10px;
+  position: relative;
+  top: -16px;
+  background-image: url('logo_backup.png') !important;
+  left: 55px;
+}

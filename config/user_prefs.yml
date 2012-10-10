@@ -17,10 +17,6 @@ spouse_pref:
   3: "Doesn't matter"
 
 
-virginity_opinion:
-  1: OK
-
-
 further_education:
   1: OK
 
@@ -30,5 +26,14 @@ family_preference:
   2: Prefer Nuclear
   3: Prefer spouse only
   4: "Doesn't matter"
+
+sex:
+  'ma': Male
+  'fe' : Female
+
+sexual_pref:
+  1: Straight
+  2: Homo
+  3: Bi
 
 

@@ -25,6 +25,6 @@ production:
   adapter: mysql
   encoding: utf8
   database: aapaurmain_production
-  username: root
+  username: maindbadmin
   password: crackitin123
   host: 108.163.188.202

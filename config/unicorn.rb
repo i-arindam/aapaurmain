@@ -18,7 +18,7 @@ if env == "production"
 
   # feel free to point this anywhere accessible on the filesystem
   user 'deployer', 'deployers'
-  shared_path = "/home/deployer/aapaurmain/shared"
+  shared_path = "/home/aapaurmain/app/capped/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"

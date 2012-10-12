@@ -78,4 +78,15 @@ Aapaurmain::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  $aapaurmain_conf = YAML.load(File.read("#{Rails.root}/config/globals.yml"))
+
+  $search_conf = YAML.load(File.read("#{Rails.root}/config/search.yml"))
+  $user_prefs = YAML.load(File.read("#{Rails.root}/config/user_prefs.yml"))
+  
+  require "pusher"
+  Pusher.app_id = $aapaurmain_conf['pusher']['app_id']
+  Pusher.key    = $aapaurmain_conf['pusher']['key']
+  Pusher.secret = $aapaurmain_conf['pusher']['secret']
+
 end

@@ -220,6 +220,9 @@ class UsersController < ApplicationController
   
   def showme
     if @user = current_user
+
+      render :dashboard_locked and return if @user.status == User::LOCKED
+      
       in_requests_ids = @user.incoming_requests.collect(&:from_id)
       @in_requests = User.find_all_by_id(in_requests_ids)
       @viewer_pane_info = {}
@@ -249,9 +252,7 @@ class UsersController < ApplicationController
           }
       end
       
-       puts "------------------------------"
-        puts out_requests_ids.inspect
-        puts @viewer_pane_info.inspect
+      
       
       profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
       @profile_viewers = profile_viewer_ids.map do |p|

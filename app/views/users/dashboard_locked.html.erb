@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :stylesheet do %>
+      <%= stylesheet_link_tag "users/dashboard" %>
+    <% end %>
+    <% content_for :js_footer do %>
+      <%= javascript_include_tag "application-user" %>
+    <% end %>
+    <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
+   
+  </head>
+  <body>
+    <div id="left_content">left content</div>
+    <div id="box_content">
+    <div class="container dashBoardContainer profile">
+      <h3 class="span6">Howdy <%= @user.name %>!</h3>
+
+    <h3 class="span6 requestLabel">Tip of the Day</h3>
+      <div class="requestContainer span10">
+        <div class="tips">
+          <h2>Tip of the day!!! <%= show_tip %></h2>
+        </div>
+      </div>
+
+    <h3 class="span6 requestLabel">Have a detailed look at your prospective partner here</h3>
+      <div class="requestContainer span10">
+        <%= render :partial => 'viewer_pane', :locals => {:user_collection => [User.find(@user.locked_with)], :class_name => '' ,
+         :viewer_pane_info => nil } %>
+        <div class="userProfile">
+        </div>
+      </div>
+
+      <h3 class="span6 requestLabel">Your conversations with XYZ</h3>
+      <div class="requestContainer span10">
+        <div class="conversations">
+        </div>
+      </div>
+
+
+    </div>
+  </div>

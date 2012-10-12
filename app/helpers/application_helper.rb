@@ -66,4 +66,11 @@ module ApplicationHelper
   def show_search?
     params[:controller] == "static_pages" and params[:action] == "home"
   end
+
+  def show_tip
+    list = $user_tips['locked_tips']
+    r= Random.rand(5)
+    list[r]
+  end
+
 end

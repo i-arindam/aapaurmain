@@ -37,9 +37,13 @@ namespace :deploy do
 
   task :default do
     update
-    restart
+    if File.exists?("/tmp/unicorn.aapaurmain.pid")
+      restart
+    else
+      start
+    end
   end
-  
+
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
     run "kill -s USR2 `cat /tmp/unicorn.aapaurmain.pid`"

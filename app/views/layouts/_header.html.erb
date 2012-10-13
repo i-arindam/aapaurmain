@@ -1,11 +1,13 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
+      <a href="/" id="logo"></a>
       <% unless show_search? %>
         <form class="navbar-search pull-left" method="get" action="/search/keyword_search">
           <input name="searchfrom" type="hidden" value="header">
-          <input class="search-query" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
+          <input class="search-query search-bar" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
           <div class="suggestionContainer"></div>
+          <button type='button' class="btn-large btn-primary advSearch">Help Me Search</button>
         </form>
       <% end %>
         
@@ -25,19 +27,27 @@
               </div>
             <% end %> <!-- end for form -->
           <% else %>
-            <ul class="nav pull-right">
+          <% if current_user %> 
+          <% user = current_user %>
+          <ul class="nav nav-pills nav-actions">
+            <li><!-- <a href="#">Dashboard</a> --><%= link_to "Dashboard", user %></li>
+            <li><%= link_to "Edit Profile",  :controller => "users", :action => "update", :id => user.id %></li>
+            <li><%= link_to "Messages", conversations_path %></li>
+          </ul>
+
+            <ul class="nav nav-dropdown">
               <li class="dropdown">
-                Logged in as 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><%= link_to "Log out", logout_path %></li>
                 </ul>
               </li>
             </ul>
+            <% end %>
           <% end %>
       </nav>
     </div>
   </div>
 
-      <a href="/" id="logo"></a>
+      <!-- <a href="/" id="logo"></a> -->
 </header>

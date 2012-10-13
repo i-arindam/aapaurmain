@@ -6,7 +6,7 @@ Aapaurmain::Application.routes.draw do
 
   root to: 'static_pages#home'
 
-  match '/help',    to: 'static_pages#help'
+  match '/tnc',    to: 'static_pages#tnc'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
   match '/faq', to: 'static_pages#faq'
@@ -16,6 +16,7 @@ Aapaurmain::Application.routes.draw do
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'
+  match '/users/:id/update' => 'users#update'
   
   resources :users do
     resources :subscription
@@ -24,7 +25,7 @@ Aapaurmain::Application.routes.draw do
 
   post 'users/signup' => 'users#signup'
   match '/users/:id/create_profile' => 'users#create_profile'
-  match 'users/:id/update' => 'users#update'
+  match '/users/:id/update' => 'users#update'
   
   
   # Request actions

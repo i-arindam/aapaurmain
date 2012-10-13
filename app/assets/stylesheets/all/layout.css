@@ -55,7 +55,7 @@ p {
 /* header */
 
 header {
-  height: 30px;
+  height: 60px;
 }
 
 .navbar-inner {
@@ -113,24 +113,33 @@ header .navbar-inner .container {
 
 #logo {
   float: left;
-  width: 95px;
-  height: 102px;
+  width: 97px;
+  height: 130px;
   margin-right: 10px;
   position: relative;
-  top: -16px;
-  background-image: url('../logo.png') !important;
+  top: -25px;
+  background-image: url('../logo-chota.png') !important;
+  margin-left: -180px;
 }
 
 /* footer */
 
 footer {
-  position: absolute;
+ /* position: absolute;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #999;
   bottom: 0px;
   width: 100%;
-  background: #2F532F;
+  background: #2F532F;*/
+
+ /*clear: both;
+ position: relative;
+ z-index: 10;
+ height: 3em;
+ margin-top: -3em;*/
+ background: black;
+ color: white;
 }
 
 footer a {
@@ -243,5 +252,79 @@ footer ul li {
 .row label.span2 {
   font-size: 14px;
   font-weight: bold;
+}
+#bodyContainer {
+  height: 100%;
+
+}
+#content { padding-bottom: 3em; }
+
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+  height: 142px; /* .push must be the same height as .footer */
+}
+input.search-bar {
+  height: 30px;
+  width: 280px;
+  margin-left: 30px;
+  border-radius: 5px;
+}
+.advSearch{
+  float: left;
+margin-left: 333px;
+margin-top: -48px;
+}
+.nav-pills.nav-actions {
+  margin-left: 45px;
+  margin-top: 15px;
+  font-size: 15px;
+}
+.nav-pills.nav-actions li>a:hover {color:brown;}
+
+.nav.nav-dropdown{
+margin-left: 154px;
+margin-top: 15px;
+font-size: 15px;
+}
+.footer-content{
+  width: 96%;
+max-width: 900px;
+margin: 0 auto;
+overflow: visible;
+}
+.three-col{
+  padding-top: 10px;
+  overflow: hidden;
+}
+.col1 , .col2  {
+  display: inline;
+float: left;
+width: 30%;
+padding: 0 1.667%;
+}
+.three-col ul > li {
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  
+}
+.three-col ul > li:hover {
+  background-color: orange;
+}
+.col3 {
+  display: inline;
+float: left;
+width: 16%;
+}
+
+.footer a {
+  color: white
 }
 

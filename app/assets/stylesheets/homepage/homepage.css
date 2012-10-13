@@ -95,14 +95,6 @@ body {
   left: 310px;
 }
 
-#logo {
-  width: 136px;
-  height: 175px;
-  margin-left: 30px;
-  position: relative;
-  top: 15px;
-  background-image: url('../logo.png') !important;
-}
 
 .book_wrapper {
 margin: 0 auto;

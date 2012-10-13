@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def home
   end
   
-  def help
+  def tnc
   end
   
   def about
@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
   end
   
   def faq
-    render :layout => false
+    #render :layout => false
   end
   
   def copyright

@@ -8,15 +8,15 @@
 <script type="text/javascript">
 $(function() {
    
-    $('li').click(function(e) {
+    $('#faq-wrapper li').click(function(e) {
       if($(this).hasClass('active')) {
         return false;
       }
       e.preventDefault();
-      $('li.active').removeClass('active');
+      $('#faq-wrapper li.active').removeClass('active');
       $(this).addClass('active');
 
-      var index = $('li').index(this);
+      var index = $('#faq-wrapper li').index(this);
       $('.demo').not('.hide').addClass('hide');
       $('.demo:eq(' + index + ')').removeClass('hide');
       $('.demo:eq(' + index + ')').toggler({ initShow: "div.collapse:eq(0)"});
@@ -47,8 +47,8 @@ $(function() {
 
 <body>
 
-  <div id="wrapper">
-    <div id="content">
+  <div id="faq-wrapper">
+    <div id="faq-content">
       <h1 class="heading">FAQs</h1>
       
       <ul>

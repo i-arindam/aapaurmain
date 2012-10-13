@@ -4,8 +4,8 @@ Aapaurmain::Application.routes.draw do
   get "log_in" => "sessions#new", :as => "login"
   get "sign_up" => "users#new", :as => "signup"
 
+  # static pages
   root to: 'static_pages#home'
-
   match '/tnc',    to: 'static_pages#tnc'
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'

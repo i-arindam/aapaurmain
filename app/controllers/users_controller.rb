@@ -38,6 +38,9 @@ class UsersController < ApplicationController
     
     render_404 and return unless from_user
     success = to_user.accept_request_from(from_user)
+    
+    User.remove_both_users_on_lock(to_user, from_user) if success
+
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
     message.gsub!('{{user}}', to_user.name)
     
@@ -124,10 +127,6 @@ class UsersController < ApplicationController
       :message => message
     }
     #withdrawing_user.update_status_post_lock_withdraw
-  end
-  
-  def finalize_lock
-    
   end
   
   # One of the user in a locked state comes and updates status as successfull Marriage.

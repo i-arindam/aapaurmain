@@ -334,6 +334,7 @@ class User < ActiveRecord::Base
   end
   
   # Determines if the user subscription is still valid?
+  # Mocked currently till free users are allowed ALL.
   # @return [TrueClass|FalseClass]
   def has_active_subscription?
     true
@@ -373,6 +374,15 @@ class User < ActiveRecord::Base
       lock.another_id = from_user.id
       lock.creation_date = Time.now.to_date
       lock.save!
+
+      # Making both users aware that they are locked.
+      self.locked_with = from_user.id
+      self.locked_since = Time.now.to_date
+      self.save
+
+      from_user.locked_with = self.id
+      from_user.locked_since = Time.now.to_date
+      from_user.save
     rescue
       return false
     end
@@ -576,6 +586,28 @@ class User < ActiveRecord::Base
     end
 
     self.recommended_user_ids = user_ids.join(",") unless user_ids.empty?
+  end
+
+  # When I and 'partner' enter into lock, system should remove both 
+  # from all search and recommendation indexes.
+  # Also, both of our requests are to be destroyed.
+  # @param [User] me 
+  #   self. I have accepted the request. This distinction is needed
+  # @param [User] partner
+  #   The person with which I am locked. The user whose request got accepted
+  def self.remove_both_users_on_lock(me, partner)
+    # Delete all requests sent by either of us
+    Request.find_all_by_from_id(me.id).delete_all
+    Request.find_all_by_from_id(partner.id).delete_all
+
+    # Not touching any requests sent to either of us, since
+    # those who had sent requests to me, can only withdraw.
+    # In x days, the requests will expire anyways. 
+
+    # Adding both users to remove table. It will be consumed periodically
+    RemoveUserFromSearch.create({ :user_id => me.id })
+    RemoveUserFromSearch.create({ :user_id => partner.id })
+
   end
 
 end

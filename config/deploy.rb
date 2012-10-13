@@ -3,15 +3,19 @@
 # $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 require "bundler/capistrano"
+
+# Server ruby gem and gemset name
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails326'
+# Specifying a system wide install
 set :rvm_type, :system
 
 set :application, "app"
 set :repository,  "git://github.com/i-arindam/aapaurmain.git"
 set :branch, 'master'
-set :rvm_type, :system
 set :scm, :git
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+
+# Allows server to do git pull on every deploy, not do a git clone.
+set :deploy_via, :remote_cache
 
 set :deploy_to, "/home/aapaurmain/#{application}/capped"
 
@@ -20,30 +24,31 @@ role :app, "dep"
 role :db,  "dep", :primary => true
 
 set :user, "deployer"
-# set :password, "Depl0y1ngat0nce"
 
 set :scm_username, "i-arindam"
 set :scm_password, "Hu57l3r!am"
 
-# before 'deploy:setup', 'rvm:install_rvm'
-# before 'deploy:setup', 'rvm:install_ruby'
+before 'deploy', 'deploy:check_revision'
 
-# set :rvm_install_ruby, :install
 
-# if you want to clean up old releases on each deploy uncomment this:
+# Clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
 
 namespace :deploy do
 
   task :default do
-    update
-    if File.exists?("/tmp/unicorn.aapaurmain.pid")
-      restart
-    else
-      start
-    end
+    migrations
   end
 
+  desc "Make sure local git is in sync with remote."
+  task :check_revision, roles: :web do
+    unless `git rev-parse HEAD` == `git rev-parse origin/master`
+      puts "WARNING: HEAD is not the same as origin/master"
+      puts "Run `git push` to sync changes."
+      exit
+    end
+  end
+ 
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
     run "kill -s USR2 `cat /tmp/unicorn.aapaurmain.pid`"

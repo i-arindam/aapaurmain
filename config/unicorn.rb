@@ -17,7 +17,7 @@ if env == "production"
   working_directory "/home/aapaurmain/app/capped/current/"
 
   # feel free to point this anywhere accessible on the filesystem
-  user 'deployer', 'deployers'
+  user 'deployer', 'root'
   shared_path = "/home/aapaurmain/app/capped/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"

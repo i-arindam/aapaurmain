@@ -11,17 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120930121711) do
+ActiveRecord::Schema.define(:version => 20121013115010) do
 
   create_table "conversations", :force => true do |t|
-    t.integer  "from_user_id", :null => false
-    t.integer  "to_user_id",   :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "from_user_id",                :null => false
+    t.integer  "to_user_id",                  :null => false
+    t.string   "snippet",      :limit => 100
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
-
-  add_index "conversations", ["from_user_id"], :name => "index_conversations_on_from_user_id"
-  add_index "conversations", ["to_user_id"], :name => "index_conversations_on_to_user_id"
 
   create_table "couples", :force => true do |t|
     t.integer  "one_id",                         :null => false
@@ -30,6 +28,22 @@ ActiveRecord::Schema.define(:version => 20120930121711) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "hobbies", :force => true do |t|
     t.integer  "user_id"
@@ -157,14 +171,14 @@ ActiveRecord::Schema.define(:version => 20120930121711) do
     t.integer  "spouse_salary",              :limit => 8
     t.string   "further_education_plans",    :limit => 500
     t.string   "spouse_further_education",   :limit => 500
-    t.string   "settle_else",                :limit => 500
+    t.integer  "settle_else"
     t.integer  "sexual_preference",          :limit => 2,   :default => 0
-    t.string   "virginity_opinion",          :limit => 500
+    t.integer  "virginity_opinion"
     t.string   "ideal_marriage",             :limit => 500
     t.integer  "salary",                     :limit => 8
     t.string   "hobbies",                    :limit => 500
     t.integer  "siblings",                   :limit => 2
-    t.integer  "profession",                 :limit => 2
+    t.string   "profession"
     t.string   "dream_for_future",           :limit => 500
     t.string   "interested_in",              :limit => 500
     t.string   "not_interested_in",          :limit => 500
@@ -189,7 +203,9 @@ ActiveRecord::Schema.define(:version => 20120930121711) do
     t.string   "education"
     t.string   "photo_url"
     t.string   "blog_url"
+    t.integer  "age"
     t.boolean  "photo_exists"
+    t.string   "recommended_user_ids",       :limit => 250
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

@@ -9,7 +9,7 @@
     <% end %>
     <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
     <script type="text/javascript">
-       window.user_object = <%= raw @values['json'] %>;
+       window.user_object = <%= raw @values['json'] if @values %>;
        $(function() {
          var actions = new UserActions();
        });
@@ -59,48 +59,15 @@
 
       <div class="requestContainer span10 hide">
         <ul class="requestList recommendations">
-          <li>
+          <% @recos.each do |reco| %>
+          <li class="select-thumbnails" id= '<%= reco.id %>' >
             <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
             <a href="#">
               <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
+              <h3 class="name"><%= reco.name %></h3>
             </a>
           </li>
-          <li style="left: 150px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="#">
-              <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 300px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="#">
-              <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 450px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="#">
-              <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 600px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="#">
-              <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
-          <li style="left: 750px;">
-            <span class="messageText" rel="tooltip" data-original-title="Hello this is female 1. Would you like to talk to me">Hello this is...</span>
-            <a href="#">
-              <img src="/assets/users/96x96.gif">
-              <h3 class="name">Apoorvi Kapoor</h3>
-            </a>
-          </li>
+          <% end %>
         </ul>
       </div>
 
@@ -124,7 +91,7 @@
          :viewer_pane_info => @viewer_pane_info[:in_requests] } %>
       <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
         :viewer_pane_info => @viewer_pane_info[:out_requests]} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide' , :viewer_pane_info => nil} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => 'hide' , :viewer_pane_info => nil} %>
       <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil} %>
       
     </div>

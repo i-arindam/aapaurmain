@@ -47,3 +47,22 @@ advanced_search:
     - family_preference
     
 
+recos_on_save:
+  defType: edismax
+  rows: 5
+  fl:
+    - id
+    - score
+  fields:
+    - hobbies
+    - profession
+    - relocate
+    - location
+    - spouse_preference
+    - ideal_marriage
+    - virginity_opinion
+    - sex
+    - education
+    - further_education
+    - family_preference
+

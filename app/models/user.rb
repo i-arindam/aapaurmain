@@ -118,8 +118,10 @@ class User < ActiveRecord::Base
   has_many :hobby, :dependent => :destroy
   has_many :interested_in, :dependent => :destroy
   has_many :not_interested_in, :dependent => :destroy
+
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
-  
+  # Every profile view is logged in DB. Used for analaytics services
+
   # scope :in_requests , {:joins => " INNER JOIN requests ON users.id=requests.to_id" , :conditions => [ "requests.status = 1"] }
   # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }
   # scope :in_requests, lambda { |id| where('requests.to_id = ?', id) }
@@ -152,6 +154,7 @@ class User < ActiveRecord::Base
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
   end
+
   # Generic method to deliver notifications for a pre-decided event
   # Delivers the following :-
   # => 1) Notification to the passed user object
@@ -179,7 +182,7 @@ class User < ActiveRecord::Base
   def is_phone_notif_allowed?
     !self.phone.blank?
   end
-  
+
   # Removes the request from the receiver's dashboard.
   # @param [Array] args
   #     An array of receiver id, then sender id for the request.
@@ -519,26 +522,61 @@ class User < ActiveRecord::Base
     FileUtils.rm(thumbnail_location)
   end
    
-def delete_photo
-   # if RAILS_ENV == 'development'
-   #   puts "development"
-   #   write_attribute('photo_exists', false)
-   #   return
-   # end
+  def delete_photo
+     # if RAILS_ENV == 'development'
+     #   puts "development"
+     #   write_attribute('photo_exists', false)
+     #   return
+     # end
 
-   #delete all sizes
-   profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
-   profile_pic_fullpath =  profile_pic_location + "/profile-#{self.id.to_s}"
-   profile_pic_name = "profile-#{self.id.to_s}"
-   $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
-   $s3.delete_file(profile_pic_name)
-   thumbnail_name = "profile-#{self.id.to_s}-thumbnail"
-   $s3.delete_file(thumbnail_name)
-   self.photo_exists =false
-   self.save!
-end
-   
+     #delete all sizes
+     profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
+     profile_pic_fullpath =  profile_pic_location + "/profile-#{self.id.to_s}"
+     profile_pic_name = "profile-#{self.id.to_s}"
+     $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
+     $s3.delete_file(profile_pic_name)
+     thumbnail_name = "profile-#{self.id.to_s}-thumbnail"
+     $s3.delete_file(thumbnail_name)
+     self.photo_exists =false
+     self.save!
+  end
   
+  # Queries Solr on new user create and finds out top 5 recommendations
+  # Returns the user_ids from that list. 
+  # 
+  def setup_recos_on_create
+    url = $search_conf[Rails.env]['host']
+    url += ":#{$search_conf[Rails.env]['port']}" unless $search_conf[Rails.env]['port'].nil?
+    url += "/solr/"
+
+    solr = RSolr.connect :url => url
+    conf = $search_conf['recos_on_save']
+
+    query_components = []
+    query_fields = conf['fields']
+    query_fields.each do |f|
+      val = self[f]
+      query_components.push( "u_#{f}:#{val}") unless val.blank?
+    end
+
+    query_components = query_components.join(" OR ")
+
+    @response = solr.post 'select', :params => { 
+      :q => query_components,
+      :wt => :ruby,
+      :start => 0,
+      :rows => conf['rows'],
+      :defType => conf['defType'],
+      :fl => conf['fl'].join(",")
+    }
+    
+    user_ids = []
+    unless @response["response"]["docs"].empty?
+      @response["response"]["docs"].each { |d| user_ids.push(d["id"].to_i) }
+    end
+
+    self.recommended_user_ids = user_ids.join(",") unless user_ids.empty?
+  end
 
 end
 

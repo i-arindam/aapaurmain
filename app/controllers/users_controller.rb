@@ -226,7 +226,7 @@ class UsersController < ApplicationController
           }
       end
       
-      
+      @recos = User.find_all_by_id(@user.recommended_user_ids)
       
       profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
       @profile_viewers = profile_viewer_ids.map do |p|
@@ -344,32 +344,31 @@ class UsersController < ApplicationController
     end
 
     hobbies = params[:user][:hobby]
-    hobbies.each do |h|
-      uh = Hobby.new
-      uh.user_id = @user.id
-      uh.hobby = h
-      uh.save
-    end if hobbies
     
+    unless hobbies.blank?
+      hobbies.each do |h|
+        uh = Hobby.new
+        uh.user_id = @user.id
+        uh.hobby = h
+        uh.save
+      end
+    end
+
     interested = params[:user][:interest]
-    interested.each do |i|
-      ui = InterestedIn.new
-      ui.user_id = @user.id
-      ui.interested = i
-      ui.save
-    end if interested
+    unless interested.blank?
+      interested.each do |i|
+        ui = InterestedIn.new
+        ui.user_id = @user.id
+        ui.interested = i
+        ui.save
+      end
+    end
     
-    not_interested = params[:user][:not_interest]
-    not_interested.each do |n|
-      un = NotInterestedIn.new
-      un.user_id = @user.id
-      un.not_interested = n
-      un.save
-    end if not_interested
+    @user.setup_recos_on_create
     
     @user.save
     
-    render :dashboard
+    redirect_to "/users/showme"
   end
   
   def more_info

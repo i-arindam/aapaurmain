@@ -1,5 +1,5 @@
 body {
-  background: url('../denim-bg.png');
+  background: url("<%= image_path 'users/website texture.jpeg' %>");
 }
 .login label.checkbox {
   position: relative;
@@ -14,17 +14,21 @@ body {
 .signup {
   clear: both; 
   margin-right: 76px;
-  background: url('../signup.png') no-repeat;
+  //background: url('../signup_green.png') no-repeat;
   position: relative;
   float: right;
   width: 420px;
   height: 490px;
-  top:55px;
+  top:-24px;
+}
+.signup img{
+  margin-top: 73px;
+  margin-left: 45px;
 }
 
 #signup_form {
-  position: absolute;
-  left: 50px;
+  position: relative;
+  left: 8px;
   top: 100px;
 }
 
@@ -33,6 +37,7 @@ body {
   width: 30px;
   height: 30px;
   margin-left: 200px;
+  background-color: whiteSmoke;
 }
 
 .input-prepend span.add-on {
@@ -105,20 +110,11 @@ height: 540px;
 position: relative;
 background: transparent url('../booklet/book-bg.png') no-repeat 9px 27px;
 top: 25px;
-left: -136px;
-}
-
-.logoText{
-  font-family: cursive;
-  font-size: 30px;
-  color: green;
-  position: absolute;
-  left: 114px;
-  float: right;
+left: -188px;
 }
 .tagLine{
-  font-size: 15px;
-  left: 100px;
+  font-size: 19px;
+  left: 50px;
   position: relative;
   color: brown;
 }
@@ -133,7 +129,8 @@ left: -136px;
   position:relative;
   top: 60px;
   color:brown;
-  font-family: Comic Sans MS;
+  font-family: 'Dancing Script', Georgia, Times, serif;
+  font-size: 25px;
 }
 .phdImage{
   width:350px;
@@ -141,7 +138,7 @@ left: -136px;
 }
 .aamTagLine{
 /*  font-family: fantasy;*/
-font-size: 20px;
+font-size: 23px;
 margin-top: 55px;
 }
 .headerText{
@@ -149,8 +146,8 @@ margin-top: 55px;
   padding-top: 15px;
   padding-bottom: 12px;
   text-align: center;
-  font-family: Comic sans MS;
-  font-size:20px;
+  font-family: 'Dancing Script', Georgia, Times, serif;
+  font-size:30px;
 }
 .lastpageText{
   top:52px;
@@ -221,49 +218,52 @@ span.IN-widget span:first-child {
 
 
 .faqs {
-  color: #D8BFD8;
+  color: lightgrey;
   top: 300px;
-  margin-left: -112px
+  margin-top: 80px;
+  background: #191814 url('http://static.mailchimp.com/www/images/bg_home.png')
 }
 
 h2.faqHeader {
-  left: 135px;
-  top: 400px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 0px;
+  font-weight: bold;
   font-family: 'Oregano' cursive;
 }
 
 .faqWrapper {
-  
-  background: brown;
   height: 500px;
-  
-  border-radius: 10px;
-  box-shadow: -10px 10px 10px 10px rgba(0, 0, 0, 0.4);
+  margin-left: auto;
+  margin-right: auto;
   width: 980px;
 
 }
 .leftCol {
 /*    border-right: 5px black solid;*/
+margin-right: 10px;
 }
 
 .rightCol {
-  left: 480px;
+  margin-left: 10px;
 }
 
 .leftCol, .rightCol {
   float: left;
+  background: rgba(36, 34, 82, 0.51);
   border-radius: 10px;
   width: 450px;
+  height: 450px;
 }
 
 .leftCol .question, .rightCol .question {
   font-family: 'Arial' cursive;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 26px;
   position: relative;
-  color: black;
+  color: #DBC896;
   line-height: 24px;
-  margin-bottom: 10px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .leftCol p, .rightCol p {
@@ -277,11 +277,58 @@ h2.faqHeader {
   padding: 10px;
 }
 .whatWeAre {
-  font-family: Comic Sans MS;
-  font-size: 20px;  
+  font-size: 15px;  
+  margin-top: 26px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
 }
 .whatWeAre li {
   padding-bottom: 15px;
+  line-height: 26px;
+  word-spacing: 1px;
 }
-
-
+.booklet div.b-wrap-right{
+  background: url('<%= image_path "booklet/book-part2.png" %>') no-repeat top left;
+}
+.booklet div.b-wrap-left{
+  background: url('<%= image_path "booklet/book-part1.png" %>') no-repeat top left; 
+}
+#logo{
+  margin-left: -136px;
+}
+input.span3{
+  border-radius: 0 10px 10px 0;
+}
+.control-group{
+  padding: 30px 50px 50px 50px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+.control-group .joinus{
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 26px;
+  color: white;
+}
+.controls div.input-prepend span.add-on{
+  border-radius: 10px 0 0 10px;
+}
+.controls .input-prepend{
+  margin-bottom: 12px;
+}
+.logoText{
+  font-family: 'Dancing Script', Georgia, Times, serif;
+  margin-left: 10px;
+  margin-top: 14px;
+  font-size: 33px;
+  color: green;
+  position: absolute;
+  left: 114px;
+  float: right;
+}
+.push{
+  display: none;
+}
+.patta{
+  width: 94px;
+}

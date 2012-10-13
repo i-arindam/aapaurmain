@@ -18,11 +18,13 @@
   <body>
     <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
 
-    <div id="left_content">left content</div>
+    <div id="left_content">&nbsp;</div>
     <div id="box_content">
     <div id="main_content">
       <section class="profileHeader">
-        <div class="profileImage"></div>
+        <div class="profileImage">
+          <img src="http://www.placehold.it/150x150" />
+        </div>
         <div class="bioSection">
           <h1 class="name"><%= @user.name %></h1>
           <h3 class="shortBio">Coder, Death Metal fan, Learner for life</h3>
@@ -54,37 +56,15 @@
 
       <div class="container profile">
         <div class="leftCol">
-
-          <div class="group col lcol1">
-            <div class="row heading">
-              <span><em>Aap</em></span>
-            </div>
-            <div class="values">
-              <div class="row">
-                <img src="/assets/users/green-power-outlet.png" class="profileIcon">
-                <label class="span2">Spouse Preference</label>
-                <label class="span4"><%= spouse_pref_list[@user.spouse_preference] %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/apple.png" class="profileIcon">
-                <label class="span2">Sexual Preference</label>
-                <label class="span4"><%= sexual_pref_list[@user.sexual_preference] %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/flowchart.png" class="profileIcon">
-                <label class="span2">Family Preference</label>
-                <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
-              </div>
-            </div>
-          </div>
-
           <div class="group col lcol2">
             <div class="row heading">
               <span><em>Stuff that is important</em></span>
             </div>
             <div class="values">
               <div class="row">
-                <img src="/assets/users/bag-full.png" class="profileIcon">
+                <div class="image">
+                  <img src="/assets/users/bag-full.png" class="profileIcon">
+                </div>
                 <label class="span2">Profession</label>
                 <label class="span4"><%= @user.profession %></label>
               </div>
@@ -108,51 +88,6 @@
                 <label class="span2">Dream For Future</label>
                 <label class="span4"><%= @user.dream_for_future %></label>	
               </div>
-            </div>
-          </div>
-    
-        </div> <!-- left col -->
-    
-        <div class="rightCol">
-
-          <div class="group col rcol1">
-            <div class="row heading">
-              <span><em>I Me Myself(Main)</em></span>
-            </div>
-            <div class="values">
-              <div class="row">
-                <img src="/assets/users/users.png" class="profileIcon">
-                <label class="span2 h4">Sex</label>
-                <label class="span4"><%= sex_list[@user.sex] %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/date.png" class="profileIcon">
-                <label class="span2 h4">Date Of Birth</label>
-                <label class="span4"><%= @user.dob %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/cash.png" class="profileIcon">
-                <label class="span2 h4">Salary</label>
-                <label class="span4"><%= @user.salary %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/globe.png" class="profileIcon">
-                <label class="span2">Settled In</label>
-                <label class="span4"><%= @user.settled_in %></label>
-              </div>
-              <div class="row">
-                <img src="/assets/users/users-2.png" class="profileIcon">
-                <label class="span2">Siblings</label>
-                <label class="span4"><%= @user.siblings %></label>
-              </div>
-            </div>
-          </div>
-
-          <div class="group col rcol2">
-            <div class="row heading">
-              <span><em>The taboo topics!</em></span>
-            </div>
-            <div class="values">
               <div class="row">
                 <img src="/assets/users/microphone.png" class="profileIcon">
                 <label class="span2">Opinion on Virginity</label>
@@ -175,8 +110,72 @@
               </div>
             </div>
           </div>
+        </div> <!-- left col -->
+    
+        <div class="rightCol">
+
+          <div class="group col rcol1">
+            <div class="row heading">
+              <span><em>I Me Myself(Main)</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <img src="/assets/users/date.png" class="profileIcon">
+                <label class="span2 h4">Date Of Birth</label>
+                <label class="span4"><%= @user.dob %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/cash.png" class="profileIcon">
+                <label class="span2 h4">Salary</label>
+                <label class="span4"><%= @user.salary %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/globe.png" class="profileIcon">
+                <label class="span2">Settled In</label>
+                <label class="span4"><%= @user.settled_in %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/users-2.png" class="profileIcon">
+                <label class="span2">Siblings</label>
+                <label class="span4"><%= @user.siblings %></label>
+              </div>
+            </div>
+          </div>
+          <div class="group col rcol2">
+            <div class="row heading">
+              <span><em>Aap</em></span>
+            </div>
+            <div class="values">
+              <div class="row">
+                <img src="/assets/users/green-power-outlet.png" class="profileIcon">
+                <label class="span2">Spouse Preference</label>
+                <label class="span4"><%= spouse_pref_list[@user.spouse_preference] %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/apple.png" class="profileIcon">
+                <label class="span2">Sexual Preference</label>
+                <label class="span4"><%= sexual_pref_list[@user.sexual_preference] %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/flowchart.png" class="profileIcon">
+                <label class="span2">Family Preference</label>
+                <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/users.png" class="profileIcon">
+                <label class="span2 h4">Sex</label>
+                <label class="span4"><%= sex_list[@user.sex] %></label>
+              </div>
+            </div>
+          </div>
+          <!--<div class="group col rcol2">
+            <div class="row heading">
+              <span><em>The taboo topics!</em></span>
+            </div>
+            
+          </div>-->
           
-        <div> <!-- right col -->
+        <div><!-- right col -->
     
       </div> <!-- container profile -->
     </div> <!-- main_content -->

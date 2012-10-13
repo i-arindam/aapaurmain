@@ -19,6 +19,7 @@ body {
   float: right;
   width: 420px;
   height: 490px;
+  top:55px;
 }
 
 #signup_form {
@@ -103,6 +104,8 @@ width: 905px;
 height: 540px;
 position: relative;
 background: transparent url('../booklet/book-bg.png') no-repeat 9px 27px;
+top: 25px;
+left: -136px;
 }
 
 .logoText{
@@ -218,24 +221,22 @@ span.IN-widget span:first-child {
 
 
 .faqs {
-  position: relative;
   color: #D8BFD8;
   top: 300px;
+  margin-left: -112px
 }
 
 h2.faqHeader {
-  position: relative;
   left: 135px;
   top: 400px;
   font-family: 'Oregano' cursive;
 }
 
 .faqWrapper {
-  position: relative;
-  left: 200px;
+  
   background: brown;
   height: 500px;
-  top: 500px;
+  
   border-radius: 10px;
   box-shadow: -10px 10px 10px 10px rgba(0, 0, 0, 0.4);
   width: 980px;
@@ -250,10 +251,8 @@ h2.faqHeader {
 }
 
 .leftCol, .rightCol {
-  position: absolute;
   float: left;
   border-radius: 10px;
-  padding: 30px;
   width: 450px;
 }
 

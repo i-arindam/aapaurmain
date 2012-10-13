@@ -10,9 +10,17 @@
     <script src="/assets/booklet/jquery.booklet.1.4.0.min.js" type="text/javascript"></script>
     <link href="/assets/booklet/jquery.booklet.1.4.0.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
     
+
+    <meta property="og:title" content="Aap Aur Main: Destination for perfect matches" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.facebook.com/indianmarriages" />
+    <meta property="og:image" content="http://www.aapaurmain.com/assets/logo-chota.png" />
+    <meta property="og:site_name" content="AapAurMain" />
+    <meta property="fb:admins" content="100003611317733" />
   </head>
   <body>
     <div id="fb-root"></div>
+
     <!-- sign up-->
     <% if @user && @user.errors.any? %>
       <div class="signupError alert alert-error">
@@ -49,35 +57,23 @@
     </div><!--signup ends-->
     
     <!-- Main talking area -->
-    <div class="span11 mainContent">
-     
-        <ul class="socialActions public-only">
-                  <li class="social-fb">
-                    <div class="fb-like" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="dark">
-                    </div>                            
-                  </li>
-                   <li class="social-tw">
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text=""  data-via="aapaurmain" rel="nofollow" data-count="vertical">Tweet</a>
-                    </li>
-                    <li class="social-li">
-                       <script type="IN/Share" data-counter="top" data-onSuccess="linkedInShareSuccess"></script>
-                     </li>
-                  <li class="social-go">
-                    <div class="g-plusone" data-size="tall" data-annotation="none" data-callback="plusone_success"></div>
-                  </li>
-                  <li class="social-pi">
-                    <a href="#" class="j-pinit pin-it-button" count-layout="none" target="_blank" title="Pin It"><img border="0" src="/slideview/images/PinExt.png" alt="Pin It" /></a>                    
-                  </li>
-                </ul>
-      <div class="stickyArea">
-        <!-- <ul>
-                <li>We are not a dating site. We do not cater to people who want to have some fun</li>
-                <li>We do not provide matches based on caste/race/religion/salary/skin color/height or weight</li>
-                <li>We take care of your aspirations and preferences; not only what you are today</li>
-                <li>Our members accept each others' responsibilities towards their parents. Its not an obligation for them</li>
-                <li>We do not create fairy tales for you</li>
-              </ul> -->
-              <div class="book_wrapper">
+    <div class="container">
+        <ul class="socialActions public-only hide">
+          <li class="social-fb">
+           <div class="fb-like" data-href="http://www.facebook.com/indianmarriages" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="dark"></div>                           
+          </li>
+           <li class="social-tw">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text=""  data-via="aapaurmain" rel="nofollow" data-count="vertical">Tweet</a>
+            </li>
+            <li class="social-li">
+               <script type="IN/Share" data-counter="top" data-onSuccess="linkedInShareSuccess"></script>
+             </li>
+          <li class="social-go">
+            <div class="g-plusone" data-size="tall" data-annotation="none" data-callback="plusone_success"></div>
+          </li>
+        </ul>
+      
+       <div class="book_wrapper">
                 <div id="mybook">
                   
                 <!--page 0-->
@@ -154,78 +150,73 @@
                     </span>
                 	</div>
                 	
-                		<div> 
+                	<div> 
                   	   <img src="assets/booklet/parents.jpg" class="phdImage"/>
                     		<span class="bookletText">
                     		  <p>“Being the single child, my aging parents was what held me back from thinking ahead. I was looking for the guy to accept my parents with me”</p>                      
                         </span>
-                  	</div>
+                  </div>
 
-                  	<div>
+                  <div>
                   	  <div class="headerText">What AapAurMain Believes</div>
                   		<span class="bookletText aamText">
                   		  <p>Our members believe marriage is an equal participation institute where both mutually share the crests and troughs.</p>
                   		           <p class="aamTagLine"><i>We ask you upfront about the deciding factors in your life so you do not waste time and emotions discovering them later!</i></p>         
                       </span>
-                  	</div>
+                  </div>
                   	
                   	<!--Last page-->
-                  			<div> 
-                      	   <img src="assets/booklet/brushes.png" class=""/>
-                      	</div>
+                  <div> 
+                    <img src="assets/booklet/brushes.png" class=""/>
+                  </div>
                       	
-                        	<div>
+                  <div>
+                		<span class="bookletText aamText lastpageText">
+                		  <p><h2 style="color:brown">The Beginning...</h2></p>
+                		  <p class="aamTagLine" style="padding-left:140px"><i>Your Life,Your Choice!</i></p>         
+                    </span>
+                  </div>
+                	
+                	
+                </div> <!--mybook-->
+              </div><!--boo_wrapper-->
 
-                        		<span class="bookletText aamText lastpageText">
-                        		  <p><h2 style="color:brown">The Beginning...</h2></p>
-                        		  <p class="aamTagLine" style="padding-left:140px"><i>Your Life,Your Choice!</i></p>         
-                            </span>
-                        	</div>
-                	
-                	
-                </div>
-              </div>
+    
+      <div class="faqs">
+        <h2 class="faqHeader">Why should you sign up with us? Decide for yourself.</h2>
+        <div class="faqWrapper">
+          <div class="leftCol">
             
-      </div>
-
-    </div>
-    <!-- Main talking area ends -->
-    
-    
-    <div class="faqs">
-      <h2 class="faqHeader">Why should you sign up with us? Decide for yourself.</h2>
-      <div class="faqWrapper">
-        <div class="leftCol">
-          
-          <div class="q">
-            <div class="question">What We Are ?</div>
+            <div class="q">
+              <div class="question">What We Are ?</div>
+                <ul class="whatWeAre">
+                  <li>Our members believe marriage is a union.Transaction in any form is unacceptable.</li>
+                  <li>We ask you crisp details on things related to your preferences, opinions and aspirations only. Integrity and honesty are the aspects to look out for!.</li>
+                  <li>We are open to your trusted people making your profile; but we encourage you to create, discuss and choose for yourself as you understand your priorities best</li>
+                  <li>Quality is the determining criterion. We handpick matches through our extremely sophisticated and detailed understanding of you and your profile</li>
+                  
+                </ul>
+                </div>
+          </div> <!-- div.leftCol -->
+        
+          <div class="rightCol">
+            
+            <div class="q">
+              <div class="question">What we are not?</div>
               <ul class="whatWeAre">
-                <li>Our members believe marriage is a union.Transaction in any form is unacceptable.</li>
-                <li>We ask you crisp details on things related to your preferences, opinions and aspirations only. Integrity and honesty are the aspects to look out for!.</li>
-                <li>We are open to your trusted people making your profile; but we encourage you to create, discuss and choose for yourself as you understand your priorities best</li>
-                <li>Quality is the determining criterion. We handpick matches through our extremely sophisticated and detailed understanding of you and your profile</li>
+                <li>We are not a dating site. We do not even call ourselves a ‘serious’ dating site..</li>
+                <li>We do not provide matches based on caste / race / religion / salary/ skin color / height and weight. We do not ask you about these details either.</li>
+                <li>We do not flood users with random matches. We give only select few matches per week. We do not allow random people to have fun.</li>
+                <li>We do not stand for multi tasking. We do not provide further matches to a couple when they are exploring each other. Loyalty in whatever we do is what defines our community.</li>
                 
               </ul>
-              </div>
-        </div> <!-- div.leftCol -->
-      
-        <div class="rightCol">
-          
-          <div class="q">
-            <div class="question">What we are not?</div>
-            <ul class="whatWeAre">
-              <li>We are not a dating site. We do not even call ourselves a ‘serious’ dating site..</li>
-              <li>We do not provide matches based on caste / race / religion / salary/ skin color / height and weight. We do not ask you about these details either.</li>
-              <li>We do not flood users with random matches. We give only select few matches per week. We do not allow random people to have fun.</li>
-              <li>We do not stand for multi tasking. We do not provide further matches to a couple when they are exploring each other. Loyalty in whatever we do is what defines our community.</li>
-              
-            </ul>
-          </div>
- 
-          
-        </div> <!-- div.rightCol -->
+            </div>
+   
+            
+          </div> <!-- div.rightCol -->
       </div>
-    </div>
+
+    </div><!-- Main talking area container ends -->
   </body>
 </html>
  <script type="text/javascript">
@@ -233,59 +224,57 @@
  	//single book
  	$('#mybook').booklet({
  	  width: 800,
- 	  height: 500
-    
+ 	  height: 500    
  	});
-
- 	});
+ });
  	
- 	$(window).load(function(){
+ 	(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
  	  
- 	  (function(d){
-          var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-          if (d.getElementById(id)) {return;}
-          js = d.createElement('script'); js.id = id; js.async = true;
-          js.src = "//connect.facebook.net/en_US/all.js";
-          ref.parentNode.insertBefore(js, ref);
-      }(document));
 
-      e = document.createElement('script'); 
-      e.type = 'text/javascript'; 
-      e.async = true;
-      e.src = document.location.protocol + '//apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+e = document.createElement('script'); 
+e.type = 'text/javascript'; 
+e.async = true;
+e.src = document.location.protocol + '//apis.google.com/js/plusone.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
 
-      window.twttr = (function (d,s,id) {
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)){return;} js=d.createElement(s); js.id=id;
-        js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f); } });
-      }(document, "script", "twitter-wjs"));
+window.twttr = (function (d,s,id) {
+  var t, js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)){return;} js=d.createElement(s); js.id=id;
+  js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+  return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f); } });
+}(document, "script", "twitter-wjs"));
 
-      e = document.createElement('script'); 
-      e.type = 'text/javascript'; 
-      e.async = true;
-      e.src = document.location.protocol + '//platform.linkedin.com/in.js';
-      s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+e = document.createElement('script'); 
+e.type = 'text/javascript'; 
+e.async = true;
+e.src = document.location.protocol + '//platform.linkedin.com/in.js';
+s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
 
 
-      twttr.ready(function(twttr){
-        twttr.events.bind('tweet', function(event) {
-          if (event) {
-            var targetUrl;
-            if (event.target && event.target.nodeName == 'IFRAME') {
-              targetUrl = slideshare_object.slideshow.ss_url;
-            }
-            _gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
-            _gaq.push(['_trackEvent', 'bigfoot_slideview', 'viralsharetwitter']);
-          }
-        });
-        twttr.events.bind('click', function(event) {
-          _gaq.push(['_trackEvent', 'bigfoot_slideview', 'viralsharetwitter_click']);
-        });      
-
-      });
+twttr.ready(function(twttr){
+  twttr.events.bind('tweet', function(event) {
+    if (event) {
+      var targetUrl;
+      if (event.target && event.target.nodeName == 'IFRAME') {
+        targetUrl = '';
+      }
+      // GA stuff!
+    }
   });
+  twttr.events.bind('click', function(event) {
+   //GA stuff
+  });   
+
+   $('.socialActions').delay(3500).fadeToggle(500, 'swing');   
+
+});
+  
  	
  	
 </script>

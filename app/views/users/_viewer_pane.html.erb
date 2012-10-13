@@ -20,21 +20,33 @@
             end
     %>
       <li class="user-info">
-        <div class="row1">
-        <img src="/assets/users/96x96.gif">
-        <h3><%= name %></h3>
-        <label class="span2">Ideal Partner</label>
-        <p class="span2"><%= ideal_marriage %></p>
-        <label class="span2">What excites me!</label>
-        <p class="span2"><%= (user.interested_in.map(&:interested_in)).join(",") %></p>	
-        <div class="row2">
-        <label class="span2">Hobbies</label>
-        <p class="span2"><%= (user.hobby.map(&:hobby)).join(",") %></p>
-        <label class="span2">Profession</label>
-        <p class="span2"><%= profession %></p>	
+        <div class="imageContainer">
+          <img src="https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=89210d7c1d&view=att&th=13a59a98a94c3ebb&attid=0.1&disp=inline&realattid=f_h88kz5ba0&safe=1&zw&saduie=AG9B_P9HbPXeRR9YVmb1hdRtw9If&sadet=1350124054105&sads=24RWcNFdaP6HElEZ2-_VAEehEuI">
+        </div> 
+        <div class="bio">
+          <div class="name">
+            <h2><%= name.upcase %></h2>
+          </div>
+          <div class="bio-details">
+            <div>
+              <label class="span2">Ideal Partner</label>
+              <p class="span2"><%= ideal_marriage %></p>
+            </div>
+            <div>
+              <label class="span2">What excites me!</label>
+              <p class="span2"><%= (user.interested_in.map(&:interested_in)).join(",") %></p>	
+            </div>
+            <div>
+              <label class="span2">Hobbies</label>
+              <p class="span2"><%= (user.hobby.map(&:hobby)).join(",") %></p>
+            </div>
+            <div>
+              <label class="span2">Profession</label>
+              <p class="span2"><%= profession %></p>	
+            </div>
+          </div>
         </div>
-        </div>
-      <div class="pull-right">
+      <div class="pull-left">
       <% if info%>  
         <% info[:show_send] ? '' : class_to_add="hide" %>
           <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= user_id %>"/>

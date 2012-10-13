@@ -13,8 +13,6 @@
     <% user_collection.each do |user|
             name = user.name
             ideal_marriage = user.ideal_marriage
-            interested_in = user.interested_in
-            hobbies = user.hobbies
             profession = user.profession
             user_id = user.id
             if !viewer_pane_info.nil?
@@ -25,13 +23,13 @@
         <div class="row1">
         <img src="/assets/users/96x96.gif">
         <h3><%= name %></h3>
-        <label class="span2">Ideal Marriage</label>
+        <label class="span2">Ideal Partner</label>
         <p class="span2"><%= ideal_marriage %></p>
-        <label class="span2">Interested In</label>
-        <p class="span2"><%= interested_in %></p>	
+        <label class="span2">What excites me!</label>
+        <p class="span2"><%= (user.interested_in.map(&:interested_in)).join(",") %></p>	
         <div class="row2">
         <label class="span2">Hobbies</label>
-        <p class="span2"><%= hobbies %></p>
+        <p class="span2"><%= (user.hobby.map(&:hobby)).join(",") %></p>
         <label class="span2">Profession</label>
         <p class="span2"><%= profession %></p>	
         </div>

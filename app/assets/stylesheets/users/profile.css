@@ -157,3 +157,7 @@ div.profile span.label {
   left: 55px;
   font-weight: 700;
 }
+.profileIcon {
+  float:left;
+  width:40px;
+}

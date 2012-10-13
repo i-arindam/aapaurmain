@@ -58,6 +58,14 @@ module ApplicationHelper
   def family_preference_list
     list = $user_prefs['family_preference']
   end
+
+  def sex_list
+    list = $user_prefs['sex']
+  end
+
+  def sexual_pref_list
+    list = $user_prefs['sexual_pref']
+  end
   
   def show_login?
     (params[:controller] == "static_pages" and params[:action] == "home" and !current_user) or (params[:controller] == "users" and params[:action] == "signup") or !current_user

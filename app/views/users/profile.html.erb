@@ -61,14 +61,17 @@
             </div>
             <div class="values">
               <div class="row">
+                <img src="/assets/users/green-power-outlet.png" class="profileIcon">
                 <label class="span2">Spouse Preference</label>
                 <label class="span4"><%= spouse_pref_list[@user.spouse_preference] %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/apple.png" class="profileIcon">
                 <label class="span2">Sexual Preference</label>
-                <label class="span4"><%= @user.sexual_preference %></label>
+                <label class="span4"><%= sexual_pref_list[@user.sexual_preference] %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/flowchart.png" class="profileIcon">
                 <label class="span2">Family Preference</label>
                 <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
               </div>
@@ -81,22 +84,27 @@
             </div>
             <div class="values">
               <div class="row">
+                <img src="/assets/users/bag-full.png" class="profileIcon">
                 <label class="span2">Profession</label>
                 <label class="span4"><%= @user.profession %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/graduation-cap.png" class="profileIcon">
                 <label class="span2">Education</label>
                 <label class="span4"><%= @user.education %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/colored-pencils.png" class="profileIcon">
                 <label class="span2">Hobbies</label>
-                <label class="span4"><%= join_as_string(@user.hobbies, 'hobby') %></label>
+                <label class="span4"><%= (@user.hobby.map(&:hobby)).join(",") %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/shaking-hands.png" class="profileIcon">
                 <label class="span2">Further Education Plans</label>
-                <label class="span4"><%= further_education_list[@user.further_education_plans] %></label>
+                <label class="span4"><%= @user.further_education_plans %></label>
               </div>	
               <div class="row">
+                <img src="/assets/users/green-lightbulb.png" class="profileIcon">
                 <label class="span2">Dream For Future</label>
                 <label class="span4"><%= @user.dream_for_future %></label>	
               </div>
@@ -113,30 +121,27 @@
             </div>
             <div class="values">
               <div class="row">
-                <label class="span2 h4">Sex[y]</label>
-                <label class="span4"><%= @user.sex %></label>
+                <img src="/assets/users/users.png" class="profileIcon">
+                <label class="span2 h4">Sex</label>
+                <label class="span4"><%= sex_list[@user.sex] %></label>
               </div>
               <div class="row">
-                <label class="span2 h4">I can reach till</label>
-                <label class="span4"><%= @user.height %></label>
+                <img src="/assets/users/date.png" class="profileIcon">
+                <label class="span2 h4">Date Of Birth</label>
+                <label class="span4"><%= @user.dob %></label>
               </div>
               <div class="row">
-                <label class="span2 h4">Seen years</label>
-                <label class="span4"><%= 25 %></label>
-              </div>
-              <div class="row">
-                <label class="span2 h4">Max shopping bill that i can afford</label>
+                <img src="/assets/users/cash.png" class="profileIcon">
+                <label class="span2 h4">Salary</label>
                 <label class="span4"><%= @user.salary %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/globe.png" class="profileIcon">
                 <label class="span2">Settled In</label>
                 <label class="span4"><%= @user.settled_in %></label>
               </div>
               <div class="row">
-                <label class="span2">Willing to relocate</label>
-                <label class="span4"><%= relocate_list[@user.settle_else] %></label>
-              </div>	
-              <div class="row">
+                <img src="/assets/users/users-2.png" class="profileIcon">
                 <label class="span2">Siblings</label>
                 <label class="span4"><%= @user.siblings %></label>
               </div>
@@ -149,16 +154,24 @@
             </div>
             <div class="values">
               <div class="row">
+                <img src="/assets/users/microphone.png" class="profileIcon">
                 <label class="span2">Opinion on Virginity</label>
-                <label class="span4"><%= virginity_opinion_list[@user.virginity_opinion] %></label>
+                <label class="span4"><%= @user.virginity_opinion %></label>
               </div>
               <div class="row">
+                <img src="/assets/users/clipboard-2.png" class="profileIcon">
                 <label class="span2">Ideal Partner</label>
                 <label class="span4"><%= @user.ideal_marriage %></label>
               </div>
               <div class="row">
-                <label class="span2">Interested In</label>
-                <label class="span4"><%= join_as_string(@user.interested_in,'interested') %></label>
+                <img src="/assets/users/coffee-mug.png" class="profileIcon">
+                <label class="span2">Things that excite me</label>
+                <label class="span4"><%= (@user.interested_in.map(&:interested_in)).join(",") %></label>
+              </div>
+              <div class="row">
+                <img src="/assets/users/favorite-delete.png" class="profileIcon">
+                <label class="span2">Things that put me off</label>
+                <label class="span4"><%= (@user.not_interested_in.map(&:not_interested_in)).join(",") %></label>
               </div>
             </div>
           </div>

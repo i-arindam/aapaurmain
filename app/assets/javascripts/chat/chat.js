@@ -87,7 +87,8 @@ function add_member(member) {
     content = $("<img>", {
       src: 'http://placehold.it/96x96',
       valign: "middle"
-    })
+    });
+    //name = $('<h3>').html(member.info.gravatar);
   } else if (member.id == me) {
     container.addClass("no-gravatar");
     content = 'you are here';
@@ -98,6 +99,8 @@ function add_member(member) {
   // if (member.id == me) container.addClass("me")
 
   $('#presence').append(container.html(content));
+ // content.append($('<p>').html(member.info.gravatar));
+  container.append($('<p>').html(member.info.gravatar));
 }
 
 function speak(user_id, text) {
@@ -110,7 +113,7 @@ function speak(user_id, text) {
 
   user.find(".bubble").remove();
   user.append(bubble);
-  $('#chat').append('<li class="chatNotice">' + user_id.info.gravatar + "says: " + text + '</li>');
+  $('#chat').append('<li class="chatNotice"><span style=color:darkblue>' + user_id.info.gravatar + ": </span>" + text + '</li>');
 
   setTimeout(function() {
     bubble.fadeOut(function() {

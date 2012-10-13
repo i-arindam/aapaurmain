@@ -194,6 +194,8 @@ class UsersController < ApplicationController
   def showme
     if @user = current_user
 
+      @values = {}
+      @values['json'] = user_json_object(@user.locked_with) if @user.status == User::LOCKED
       render :dashboard_locked and return if @user.status == User::LOCKED
       
       in_requests_ids = @user.incoming_requests.collect(&:from_id)
@@ -237,8 +239,7 @@ class UsersController < ApplicationController
       
       @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
       
-      @values = {}
-      @values['json'] = user_json_object
+      @values['json'] = user_json_object(params[:id])
       render :dashboard
     else
       render :text => "Please login first"
@@ -288,7 +289,7 @@ class UsersController < ApplicationController
       @values['show-cta'] = true
     end
     
-    @values['json'] = user_json_object
+    @values['json'] = user_json_object(params[:id])
     render :profile
   end
   
@@ -385,10 +386,10 @@ class UsersController < ApplicationController
     
   end
   
-  def user_json_object
+  def user_json_object(to_id=nil)
     require 'json'
     json_obj = {
-      :to_user_id => params[:id].to_i,
+      :to_user_id => to_id.to_i,
       :session_user_id => (current_user && current_user.id),
       :name => (current_user && current_user.name)
     }

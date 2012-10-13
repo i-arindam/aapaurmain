@@ -16,7 +16,7 @@
     </script>
   </head>
   <body>
-    <%= render :partial => "chat/chat" , :locals => {:current_user => @current_user} if @values['show-chat'] %>
+    
 
     <div id="left_content">&nbsp;</div>
     <div id="box_content">
@@ -101,12 +101,12 @@
               <div class="row">
                 <img src="/assets/users/coffee-mug.png" class="profileIcon">
                 <label class="span2">Things that excite me</label>
-                <label class="span4"><%= (@user.interested_in.map(&:interested_in)).join(",") %></label>
+                <label class="span4"><%= (@user.interested_in.map(&:interested)).join(",") %></label>
               </div>
               <div class="row">
                 <img src="/assets/users/favorite-delete.png" class="profileIcon">
                 <label class="span2">Things that put me off</label>
-                <label class="span4"><%= (@user.not_interested_in.map(&:not_interested_in)).join(",") %></label>
+                <label class="span4"><%= (@user.not_interested_in.map(&:not_interested)).join(",") %></label>
               </div>
             </div>
           </div>

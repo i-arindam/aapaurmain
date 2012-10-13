@@ -17,9 +17,9 @@ class ChatController < ApplicationController
     this_user_id = participant_list[1]
     that_user_id = participant_list[2]
     this_user = current_user
-
+   
     can_chat = this_user.can_chat(that_user_id)
-    render :text => "Not authorized", :status => '403' and return unless can_chat
+    #render :text => "Not authorized", :status => '403' and return unless can_chat
     
     channel = Pusher[channel_name]
 

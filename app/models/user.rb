@@ -31,8 +31,8 @@
 ################################################################################
 class User < ActiveRecord::Base
 
-  require "aws_helper"
-  require 'RMagick'
+  # require "aws_helper"
+  # require 'RMagick'
   
   attr_accessible :email, :password, :password_confirmation
  # attr_accessor :password
@@ -245,6 +245,7 @@ class User < ActiveRecord::Base
   end
   
   def can_chat(b_id)
+    
     self.locked_with == b_id
   end
   

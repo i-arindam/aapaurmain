@@ -8,12 +8,17 @@
       <%= javascript_include_tag "application-user" %>
     <% end %>
     <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
-   
+   <script type="text/javascript">
+       window.user_object = <%= raw @values['json'] %>;
+       
+    </script>
   </head>
   <body>
-    <div id="left_content">left content</div>
-    <div id="box_content">
-    <div class="container dashBoardContainer profile">
+    <div id="left_content">
+      <%= render :partial => "chat/chat" , :locals => {:current_user => @user}  %>
+    </div>
+    
+    <div class="container">
       <h3 class="span6">Howdy <%= @user.name %>!</h3>
 
     <h3 class="span6 requestLabel">Tip of the Day</h3>
@@ -37,6 +42,4 @@
         </div>
       </div>
 
-
-    </div>
   </div>

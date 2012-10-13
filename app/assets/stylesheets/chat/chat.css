@@ -1,15 +1,23 @@
 .chatWrapper {
   position: fixed;
   width: 300px;
+  height: 258px;
   bottom: 0;
   left: 0;
+  background: rgba(135, 207, 235, 0.88);
+   margin: 0 0 1em;
+    padding: .75em 9px;
+  overflow: scroll;
+  border-radius: 5px;
+  font-family: Georgia;
+font-size: 15px;
 }
 
 /*.chat                               { float:left; overflow: auto; text-align: left; width: 100%; }*/
 .chat textarea.text                 { float: left; height: 1.3em; margin: 0 0 .5em; width: 290px; }
 .chat .ctaNormal                    { float: right; margin: 0 0 0 6px; overflow: hidden; width: 56px; }
-.chatWrapper                        { background: #F0F5F4; margin: 0 0 1em; padding: .75em 9px; }
-.chatMessages                       { height: 280px; line-height: 1.25; list-style: none; 
+
+.chatMessages                       {  line-height: 1.25; list-style: none; 
                                       margin: 0 0 .5em; overflow: auto; padding: .5em 0 0 .2em; }
 .chatMessages li                    { margin: 0 0 .4em; }
 
@@ -49,6 +57,7 @@
 
 #presence {
   padding: 15px 40px;
+  width: 100%
 }
 #presence .member {
   background: #fff url("/images/question_mark.png") no-repeat center center;
@@ -57,8 +66,8 @@
   display: block;
   float: left;
   height: 80px;
-  margin: 0 40px 40px 0;
-  padding: 10px;
+  margin: 0 50px 13px -10px;
+  padding: 5px;
   position: relative;
   text-align: center;
   width: 80px;
@@ -92,15 +101,3 @@
   -webkit-box-shadow: 2px 2px 4px rgba(0,0,0, 0.3);
 }
 
-#fork-me {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-#fork-me a {
-  background: url("/images/fork_me.png") no-repeat 0 0;
-  display: block;
-  height: 149px;
-  text-indent: -9999px;
-  width: 149px;
-}

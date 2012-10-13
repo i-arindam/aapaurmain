@@ -21,7 +21,7 @@
     %>
       <li class="user-info">
         <div class="imageContainer">
-          <img src="https://mail-attachment.googleusercontent.com/attachment/u/0/?ui=2&ik=89210d7c1d&view=att&th=13a59a98a94c3ebb&attid=0.1&disp=inline&realattid=f_h88kz5ba0&safe=1&zw&saduie=AG9B_P9HbPXeRR9YVmb1hdRtw9If&sadet=1350124054105&sads=24RWcNFdaP6HElEZ2-_VAEehEuI">
+          <img src="/assets/users/96x96.gif">
         </div> 
         <div class="bio">
           <div class="name">
@@ -34,7 +34,7 @@
             </div>
             <div>
               <label class="span2">What excites me!</label>
-              <p class="span2"><%= (user.interested_in.map(&:interested_in)).join(",") %></p>	
+              <p class="span2"><%= (user.interested_in.map(&:interested)).join(",") %></p>	
             </div>
             <div>
               <label class="span2">Hobbies</label>
@@ -45,7 +45,7 @@
               <p class="span2"><%= profession %></p>	
             </div>
           </div>
-        </div>
+
       <div class="pull-left">
       <% if info%>  
         <% info[:show_send] ? '' : class_to_add="hide" %>

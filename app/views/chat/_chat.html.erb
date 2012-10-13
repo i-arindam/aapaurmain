@@ -8,19 +8,15 @@
 
 <div class="chatWrapper">
   <div id="chatBox" class="chat">
-    <h2>Chat</h2>
-    <div class="chatWrapper">
-      <div id="messagebox" class="messageBox">
-      </div>
+    <h2>Say Hi</h2>
       <ul id="chat" class="chatMessages"></ul>
-    </div>
   </div>
 
   <div id="controls">
     <h2>You're logged in as <em><%= current_user.name %></em></h2>
-    <form action="/chat" id="message" method="POST">
-      <input name="text" placeholder="Say something">
-      <input type="submit" value="Send">
+    <form action="/chat" id="message" method="POST" class="form-search">
+      <input name="text" placeholder="Say something" class="input-large search-query">
+      <button type="submit" value="Send" class="btn btn-primary">Send</button>
     </form>
   </div>
 

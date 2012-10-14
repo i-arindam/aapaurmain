@@ -20,8 +20,8 @@ class StaticPagesController < ApplicationController
     #render :layout => false
   end
   
-  def copyright
-    render :layout => false
+  def privacy
+    
   end
   
 end

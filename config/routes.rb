@@ -12,7 +12,7 @@ Aapaurmain::Application.routes.draw do
   match '/faq', to: 'static_pages#faq'
   match '/howitworks', to: 'static_pages#how_it_works'
   match '/pricing', to: 'payment#pricing'
-  match '/copyright', to: 'static_pages#copyright'
+  match '/privacy', to: 'static_pages#privacy'
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'

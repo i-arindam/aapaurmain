@@ -1,0 +1,56 @@
+body {
+   background-image: url('web texture blue.jpg');
+   color: white;
+   font-family: 'Georgia';
+    font-style: italic;
+
+}
+.aboutus {
+  padding-left: 240px;
+}
+.aboutusHeading{
+  text-align: center;
+  padding: 5px;
+  font-family: 'Georgia';
+  font-style: italic;
+  color: orange;
+  font-size: 28px;
+  margin-left: -16px;
+}
+.quote {
+  padding: 5px;
+  font-size: 15px;
+}
+
+.question {
+  color: orange;
+  font-size: 20px;
+  padding: 5px;
+  
+}
+.answer{
+  padding-left: 15px;
+  padding-bottom: 15px;
+  font-size: 13px;
+}
+
+.answer ol{
+  margin-left: 5px;
+
+}
+.answer li{
+  margin-left: 20px;
+  padding: 2px;
+}
+.aboutusContainer {
+ 
+  border: 2px darkgreen solid;
+
+  border-radius: 5px;
+  background-color: rgba(0, 255, 214, 0.28);
+ /* text-align: center;*/
+}
+
+.aboutusContainer img {
+  padding-left: 290px;
+}

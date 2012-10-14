@@ -122,11 +122,15 @@ class UsersController < ApplicationController
     message = (success ? User::REJECT_REQUEST_SENT : User::REJECT_REQUEST_FAILED_TO_SAVE)
     message.gsub!('{{user}}', to_user.name)
     
+    withdrawing_user.update_status_post_lock_withdraw
+    to_user.update_status_post_lock_withdraw
+
+    
     render :json => {
       :success => success,
       :message => message
     }
-    #withdrawing_user.update_status_post_lock_withdraw
+    
   end
   
   # One of the user in a locked state comes and updates status as successfull Marriage.

@@ -20,8 +20,9 @@ class UserMailer < ActionMailer::Base
   def send_mail(mail_options,user_array = nil)
     #attach all the files
     #return if Rails.env == 'development'
-    @to_user = user_array[0] if user_array
-    @from_user = user_array[1] if user_array
+    # @to_user = user_array[0] if user_array
+    # @from_user = user_array[1] if user_array
+    @users = user_array
     files_attach = mail_options[:attachments]
 
     if files_attach 

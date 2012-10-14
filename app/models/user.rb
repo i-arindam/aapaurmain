@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
     :request_withdrawn => { :operation => 'remove_request' },
     :blocked_state => { :mail => 'request_accepted', :sms => 'request_accepted', :notif => 'request_accepted' , :subject => 'test subject'},
     :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' , :subject => 'test subject'},
-    :confirm_reject => { :mail => 'confirm_reject', :sms => 'confirm_reject', :notif => 'confirm_reject', :subject => 'test subject' }
+    :lock_withdrawn => { :mail => 'lock_withdrawn', :sms => 'lock_withdrawn', :notif => 'lock_withdrawn', :subject => 'You withdrew your association' }
   }
   
   USER_FIELDS_LIST = [
@@ -221,11 +221,14 @@ class User < ActiveRecord::Base
     self.status == AVAILABLE
   end
   
-  # Updates the number of active locks right now post he withdraws a lock
+  # Updates the status to available after withdraws a lock
   def update_status_post_lock_withdraw
-    self.num_active_locks -= 1
-    self.num_active_locks = 0 if self.num_active_locks < 0
+    locked_with = self.locked_with
+    locked_with_user = User.find_by_id(locked_with)
+    self.status = AVAILABLE
+    self.locked_with = nil
     self.save!
+    self.deliver_notifications(:lock_withdrawn, [locked_with_user])
   end
   
   # Locks the two users and saves their states
@@ -403,7 +406,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-    self.deliver_notifications(:request_declined, [from_user])
+    #self.deliver_notifications(:request_declined, [from_user])
     return true
   end
   
@@ -417,7 +420,7 @@ class User < ActiveRecord::Base
     rescue
       return false
     end
-    self.deliver_notifications(:request_withdrawn, [to_user])
+    #self.deliver_notifications(:request_withdrawn, [to_user])
     return true
   end
   

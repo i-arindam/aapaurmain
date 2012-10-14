@@ -1,3 +1,6 @@
+body {
+  background-image: url('web texture blue.jpg');
+}
 ul {
   position: relative;
   top: 100px;
@@ -152,9 +155,7 @@ li {
   height: 1800px;
 }
 
-body {
-  background: url('denim-bg.png');
-}
+
 [class*=lasso] {
   display: block;
   z-index: -10;

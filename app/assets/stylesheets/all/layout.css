@@ -328,3 +328,10 @@ width: 16%;
   color: white
 }
 
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dancing Script'), local('DancingScript'), url("/assets/fonts/dancing script.woff") format('woff');
+} 
+

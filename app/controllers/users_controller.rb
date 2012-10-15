@@ -200,7 +200,27 @@ class UsersController < ApplicationController
 
       @values = {}
       @values['json'] = user_json_object(@user.locked_with) if @user.status == User::LOCKED
-      render :dashboard_locked and return if @user.status == User::LOCKED
+      
+      # Changing behaviour if user is locked, show him the mentioned template
+      # That page is significantly different from the normal view.
+      if @user.status == User::LOCKED
+        @with_user = User.find_by_id(@user.locked_with)
+        random_index = gimme_random_value($user_tips['locked_tips'].length)
+        @tip = $user_tips['locked_tips'][random_index]
+ 
+        @conversation = Conversation.find_by_from_user_id_and_to_user_id(@user.id, @user.locked_with)
+        unless @conversation
+          @conversation = Conversation.create({
+              :from_user_id => @user.id,
+              :to_user_id => @user.locked_with,
+            })
+          @messages = []
+        else
+          @messages = @conversation.messages.order("created_at ASC")
+        end
+ 
+        render :dashboard_locked and return
+      end
       
       in_requests_ids = @user.incoming_requests.collect(&:from_id)
       @in_requests = User.find_all_by_id(in_requests_ids)

@@ -2,15 +2,16 @@
 <html>
   <head>
     <% content_for :stylesheet do %>
-      <%= stylesheet_link_tag "users/dashboard" %>
+      <%= stylesheet_link_tag "users/dashboard_locked" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-user" %>
+      <%= javascript_include_tag "users/conversation" %>
     <% end %>
+
     <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
-   <script type="text/javascript">
+
+    <script type="text/javascript">
        window.user_object = <%= raw @values['json'] %>;
-       
     </script>
   </head>
   <body>
@@ -18,28 +19,53 @@
       <%= render :partial => "chat/chat" , :locals => {:current_user => @user}  %>
     </div>
     
-    <div class="container">
-      <h3 class="span6">Howdy <%= @user.name %>!</h3>
-
-    <h3 class="span6 requestLabel">Tip of the Day</h3>
-      <div class="requestContainer span10">
-        <div class="tips">
-          <h2>Tip of the day!!! <%= show_tip %></h2>
-        </div>
+    <div class="container pageContainer">
+      <div class="greeting">
+        <h3 class="span6">Howdy <%= @user.name %>!</h3>
       </div>
 
-    <h3 class="span6 requestLabel">Have a detailed look at your prospective partner here</h3>
-      <div class="requestContainer span10">
-        <%= render :partial => 'viewer_pane', :locals => {:user_collection => [User.find(@user.locked_with)], :class_name => '' ,
-         :viewer_pane_info => nil } %>
-        <div class="userProfile">
-        </div>
+      <div class="tips">
+        <h3 class="span6 requestLabel">Tip of the Day</h3>
+        <h3 class="span11 tip"><%= @tip %></h3>
       </div>
 
-      <h3 class="span6 requestLabel">Your conversations with XYZ</h3>
-      <div class="requestContainer span10">
-        <div class="conversations">
-        </div>
+      <div class="conversationsContainer">
+        <% unless @messages.blank? %>
+          <h3 class="span6 requestLabel">Your conversations with XYZ</h3>
+          <ul class="conversationList">
+            <% @messages.each do |mes| %>
+            <% with_name = @with_user.name
+               myname = @user.name
+               myid = @user.id
+               with_id = @with_user.id %>
+
+              <li class="messageContainer <%= (mes.from ==  @user.id ? 'myColor' : 'yourColor') %>">
+                <img src="http://placehold.it/50x50" />
+                <div class="info">
+                  <a rel="nofollow" href="/users/<%= mes.from %>"><span class="name"><%= (mes.from == @user.id ? myname : with_name) %></span></a>
+                  <span class="date pull-right"><%= mes.created_at.strftime("%d %b '%y") %></span>
+                  <span class="time pull-right"><%= mes.created_at.strftime("%l:%M %P") %></span>
+                </div>
+                <div class="text"><%= sanitize mes.text.gsub(/\n/, '<br/>'), :tags => "br" %></div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %> <!-- else for unless messages.blank? -->
+          <div class="messageFiller">You guys haven't talked yet? C'mon, use this box below. Get started. Please</div>
+        <% end %>
       </div>
 
-  </div>
+      <div class="newMessage">
+        <form method="post">
+          <fieldset>
+            <img src="http://placehold.it/50x50" />
+            <textarea name="message[text]" rows="4" cols="40" placeholder="Say something?"></textarea>
+            <input type="hidden" class="convId" value="<%= @conversation.id %>" />
+            <input type="submit" class="btn btn-large btn-danger" value="Just say it"/>
+          </fieldset>
+        </form>
+      </div> <!-- div.newMessage -->
+
+    </div>
+  </body>
+</html>

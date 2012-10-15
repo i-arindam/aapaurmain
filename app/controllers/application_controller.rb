@@ -52,17 +52,20 @@ class ApplicationController < ActionController::Base
   end
   
   def verifyUploadedFileAndConvert(file)
-     if  file.is_a? StringIO or file.is_a? Tempfile or file.is_a? Unicorn::TeeInput
-       #opening file in wb+ since same pointer is used to 'read' later
-       #todo: optimize
-       temp_file = File.new( "temporary-#{rand(100000000).to_s}", "wb+" )
-       temp_file.write file.read
-       temp_file.flush
-       temp_file.rewind
-       return temp_file, true
-     end
-     return file, false
-   end
+    if  file.is_a? StringIO or file.is_a? Tempfile or file.is_a? Unicorn::TeeInput
+      #opening file in wb+ since same pointer is used to 'read' later
+      #todo: optimize
+      temp_file = File.new( "temporary-#{rand(100000000).to_s}", "wb+" )
+      temp_file.write file.read
+      temp_file.flush
+      temp_file.rewind
+      return temp_file, true
+    end
+    return file, false
+  end
   
+  def gimme_random_value(size)
+    Time.now.to_i % size
+  end
 
 end

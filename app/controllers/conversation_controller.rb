@@ -58,7 +58,4 @@ class ConversationController < ApplicationController
     end
   end # End new_message
 
-  def conversation_with
-  end
-  
 end

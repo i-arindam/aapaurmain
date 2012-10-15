@@ -1,0 +1,131 @@
+body {
+  background: url("/assets/users/website texture.jpeg")
+}
+
+.pageContainer {
+  border: 2px darkGreen solid;
+  border-radius: 5px;
+  background-color: rgba(0, 255, 214, 0.28);
+  color: white;
+  position: relative;
+  top: 20px;
+}
+
+.greeting {
+  padding: 30px 10px 30px 10px;
+}
+
+.tips {
+  padding: 10px 10px 30px 10px;
+  position: relative;
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  height: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.tip {
+  font-size: 19px;
+  line-height: 30px;
+}
+
+.requestLabel {
+  margin: 10px 0 10px 20px;
+  font-family: 'Oregano' cursive;
+}
+
+.conversationsContainer {
+  position: relative;
+  padding: 30px;
+  color: black;
+  font-weight: 700;
+}
+
+.messageFiller {
+  position: relative;
+  height: 24px;
+  line-height: 18px;
+  font-size: 18px;
+  text-align: left;
+}
+
+.newMessage {
+  position: relative;
+  top: 10px;
+  padding: 10px 30px 0 30px;
+  margin-bottom: 30px;
+}
+
+.newMessage img {
+  position: relative;
+  top: 20px;
+}
+
+textarea {
+  width: 780px;
+  position: relative;
+  left: 20px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+input[type=submit] {
+  position: relative;
+  border-radius: 7px;
+  left: 75px;
+}
+
+ul.conversationList {
+  list-style-type: none;
+  margin-left: 0;
+  padding-top: 30px;
+  margin-top: 30px;
+  width: 880px;
+}
+
+li.messageContainer {
+  padding-left: 30px;
+  padding-top: 30px;
+  background: #191814;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+li.myColor {
+  background: rgba(48, 49, 39, 0.67);
+  color: white;
+}
+
+.myColor a, .yourColor a {
+  color: white;
+}
+
+li.yourColor {
+  background: rgba(40, 42, 51, 0.78);
+  color: white;
+}
+
+div.info {
+  position: relative;
+  top: -50px;
+  left: 70px;
+}
+
+.date {
+  position: relative;
+  right: 100px;
+}
+
+.time {
+  position: relative;
+  top: 15px;
+  right: 38px;
+}
+.text {
+  position: relative;
+  top: -50px;
+  left: 70px;
+  width: 500px;
+}

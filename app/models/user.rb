@@ -112,6 +112,11 @@ class User < ActiveRecord::Base
       :salary, :siblings, :profession, :dream_for_future, :settled_in
     ]
   # add types for profession
+
+  SEARCH_INDEX_FIELDS = [
+    :name, :family_preference, :spouse_preference, :further_education_plans, :settle_else,
+    :sexual_preference, :virginity_opinion, :profession, :dream_for_future, :settled_in
+  ]
   
   # has_many :recommendation, :dependent => destroy
   has_one :subscription
@@ -122,9 +127,17 @@ class User < ActiveRecord::Base
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
-  # scope :in_requests , {:joins => " INNER JOIN requests ON users.id=requests.to_id" , :conditions => [ "requests.status = 1"] }
-  # scope :out_requests , {:joins => " INNER JOIN requests ON users.id=requests.from_id" , :conditions => [ "requests.status = 1"] }
-  # scope :in_requests, lambda { |id| where('requests.to_id = ?', id) }
+  
+  def add_to_search_index
+    if self.changed.include?(SEARCH_INDEX_FIELDS)
+
+      new_index = AddUsersToSearch.new
+      USER_FIELDS_LIST.each do |uf|
+        new_index[uf] = self[uf]
+      end
+      new_index.save
+    end
+  end
 
   def send_password_reset
     generate_token(:password_reset_token)

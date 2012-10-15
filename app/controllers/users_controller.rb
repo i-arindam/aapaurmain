@@ -369,6 +369,7 @@ class UsersController < ApplicationController
     end
     
     @user.setup_recos_on_create
+    @user.add_to_search_index
     
     @user.save
     

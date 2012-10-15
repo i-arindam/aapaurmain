@@ -338,10 +338,57 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       cookies[:auth_token] = @user.auth_token
-      redirect_to "/users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
+      #redirect_to "/users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
+      send_confirmation_link @user
+      flash[:notice] = "A confirmation link has been sent to your email. Please confirm your account to proceed"
+      render "static_pages/message"
     else
       render "#{failure_render_path}"
     end
+  end
+
+  def send_confirmation_link(user)
+    confirmation_link = get_confirmation_key(user)
+    mail_params = {
+      :mail_options => {:to => user.email, :subject => "please confirm your account. #{confirmation_link}"},
+      :url => confirmation_link
+    }
+    UserMailer.delay.send_signup_confirmation mail_params
+  end
+
+  def get_confirmation_key(user)
+    hash = {
+      :id => user.id,
+      :email => user.email
+    }
+
+    json_hash = hash.to_json
+    confirmation_key = Base64.encode64 json_hash
+    url_for :controller => 'users', :action => 'confirm_signup', :key => URI.escape(confirmation_key)
+  end
+
+  def confirm_signup
+    key = params[:key]
+    user_hash = get_user_hash_from_signup_confirm_key key
+    user = User.find_by_id user_hash["id"]
+
+    if user.blank?
+      render_404
+    end
+    if user.signup_confirmed?
+      flash[:notice] = "Your account is already confirmed. Please login to continue."
+      render "static_pages/message"
+    elsif user.email == user_hash["email"]
+      user.confirm_signup
+      flash[:success] = "Your account is confirmed. Please login to continue"
+      render "static_pages/message"
+    end
+  end
+
+  def get_user_hash_from_signup_confirm_key(key)
+    unescaped_key = URI.unescape key
+    json_hash = Base64.decode64 unescaped_key
+    hash = JSON.parse json_hash
   end
   
   def create_profile

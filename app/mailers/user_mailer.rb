@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "apoorvi.kapoor@gmail.com"
+  default from: "hitesh.sharma.12345@gmail.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -17,12 +17,9 @@ class UserMailer < ActionMailer::Base
   # template => mail template name.
   # template_path => path to template like 'mail_templates' for template app/views/mail_templates/mail.html.erb
   # headers => hash to contain various mail headers
-  def send_mail(mail_options,user_array = nil)
+  def send_mail(mail_options)
     #attach all the files
     #return if Rails.env == 'development'
-    # @to_user = user_array[0] if user_array
-    # @from_user = user_array[1] if user_array
-    @users = user_array
     files_attach = mail_options[:attachments]
 
     if files_attach 
@@ -44,5 +41,11 @@ class UserMailer < ActionMailer::Base
             :subject => subject,
             :template_path => template_path,
             :template_name => template)
+  end
+
+  #expects all mail users plus confirmation url
+  def send_signup_confirmation(options)
+    @url = options[:url]
+    send_mail options[:mail_options]
   end
 end

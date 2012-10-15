@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AapAurMain.com</title>
+</head>
+
+<body>
+  <% if flash[:notice] %>
+    <div class="alert alert-info"><%= flash[:notice] %></div>
+  <% elsif flash[:error] %>
+    <div class="alert alert-error"><%= flash[:error] %></div>
+  <% elsif flash[:success] %>
+    <div class="alert alert-success"><%= flash[:success] %></div>
+  <% elsif flash[:alert] %>
+    <div class="alert"><%= flash[:alert] %></div>
+  <% end %>  
+</body>
+</html>

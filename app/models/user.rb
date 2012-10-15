@@ -104,6 +104,10 @@ class User < ActiveRecord::Base
     :request_for_successful_lock => { :mail => 'request_for_successful_lock', :sms => 'request_for_successful_lock', :notif => 'request_for_successful_lock' , :subject => 'test subject'},
     :lock_withdrawn => { :mail => 'lock_withdrawn', :sms => 'lock_withdrawn', :notif => 'lock_withdrawn', :subject => 'You withdrew your association' }
   }
+
+  #Enumeration for signup confirmation status
+  SIGNUP_CREATED = 0
+  SIGNUP_CONFIRMED = 1
   
   USER_FIELDS_LIST = [
       :name, :dob, :sex, :family_preference, :height, :spouse_preference,
@@ -334,6 +338,17 @@ class User < ActiveRecord::Base
     self.deliver_notifications(:confirm_reject, [reject_requesting_user])
   end
     
+  def signup_confirmed?
+    if self.signup_status == SIGNUP_CREATED
+      false
+    else
+      true
+    end
+  end
+
+  def confirm_signup
+    self.signup_status = SIGNUP_CONFIRMED
+  end
   
   ### LOCK SECTION ENDS ###
   

@@ -30,8 +30,10 @@
           <% if current_user %> 
           <% user = current_user %>
           <ul class="nav nav-pills nav-actions">
+
             <li><%= link_to "Dashboard", user %></li>
-            <li><%= link_to "Edit Profile",  :controller => "users", :action => "update", :id => user.id %></li>
+            <li><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
+
             <li><%= link_to "Messages", conversations_path %></li>
           </ul>
 

@@ -394,6 +394,11 @@ class UsersController < ApplicationController
   def create_profile
     @user = User.find_by_id(params[:id])
   end
+
+  def edit_profile
+    @user = User.find_by_id(params[:id])
+    render :create_profile
+  end
   
   def update
     debugger
@@ -417,6 +422,13 @@ class UsersController < ApplicationController
     end
 
     hobbies = (params[:user][:hobby]).split(",")
+    # old_hobbies = @user.hobby.map(&:hobby)
+    # changed_hobbies = hobbies-old_hobbies
+
+    #ugly hack for updating values
+    @user.hobby.destroy_all
+    @user.interested_in.destroy_all
+    @user.not_interested_in.destroy_all
     
     unless hobbies.blank?
       hobbies.each do |h|

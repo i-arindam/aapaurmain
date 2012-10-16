@@ -22,7 +22,7 @@
             <div class="control-group">
               <label class="control-label" for="name">Name</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[name]" id="name" placeholder="Enter your name &hellip;">
+                <input type="text" class="span4" name="user[name]" id="name" placeholder="Enter your name &hellip;" value="<%= @user.name %>" >
               </div>
             </div>
 
@@ -32,7 +32,7 @@
                 
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Day
+                    <%= @user.dob && @user.dob.day || 'Day' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -40,12 +40,12 @@
                       <li><a href="#" data-value="<%= d %>"><%= d %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[dob][date]">
+                  <input type="hidden" name="user[dob][date]" value="<%= @user.dob && @user.dob.day %>">
                 </div>
                 
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Month
+                    <%= @user.dob && @user.dob.month || 'Month' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -53,12 +53,12 @@
                       <li><a href="#" data-value="<%= (i.to_i+1).to_s %>"><%= m %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[dob][month]">
+                  <input type="hidden" name="user[dob][month]" value="<%= @user.dob && @user.dob.month %>">
                 </div>
                 
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Year
+                    <%= @user.dob && @user.dob.year || 'Year' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -66,7 +66,7 @@
                       <li><a href="#" data-value="<%= y %>"><%= y %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[dob][year]">
+                  <input type="hidden" name="user[dob][year]" value="<%= @user.dob && @user.dob.year %>">
                 </div>
               
               </div>
@@ -75,8 +75,8 @@
             <div class="control-group">
               <label class="control-label" for="sex">Sex</label>
               <div class="controls" id="sex">
-                <input type="radio" name="user[sex]" value="male" /> Male
-                <input type="radio" name="user[sex]" value="female" /> Female
+                <input type="radio" name="user[sex]" value="male" checked="<%=@user.sex == 'male'%>"/> Male
+                <input type="radio" name="user[sex]" value="female" checked="<%=@user.sex == 'female'%>"/> Female
               </div>
             </div>
 
@@ -87,60 +87,53 @@
              <div class="control-group">
               <label class="control-label" for="shortBio">Your short bio</label>
               <div class="controls">
-                <textarea class="span4" name="user[short_bio]" id="shortBio" placeholder="Five words that describe you"></textarea>
+                <textarea class="span4" name="user[short_bio]" id="shortBio" placeholder="Five words that describe you" ><%=@user.short_bio %></textarea>
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="education">Education</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[education]" id="education" placeholder="Your highest educational qualification">
+                <input type="text" class="span4" name="user[education]" id="education" placeholder="Your highest educational qualification" value="<%=@user.education %>">
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="further_education">Your plans for Further Education</label>
               <div class="controls">
-                <textarea class="span4" name="user[further_education_plans]" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;"></textarea>
+                <textarea class="span4" name="user[further_education_plans]" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;">
+                  <%=@user.further_education_plans %></textarea>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="profession">Current Profession</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[profession]" id="profession" placeholder="What are you doing currently">
+                <input type="text" class="span4" name="user[profession]" id="profession" placeholder="What are you doing currently" value="<%=@user.profession %>">
               </div>
             </div>
 
-            <div class="control-group">
-              <label class="control-label" for="siblings">Siblings?</label>
-              <div class="controls" id="siblings">
-                <input type="radio" name="user[siblings]" value="yes" /> Yes
-                <input type="radio" name="user[siblings]" value="no" /> No
-              </div>
-            </div>
+           
 
             <div class="control-group hide">
               <label class="control-label" for="siblings-count">How many siblings do you have</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[siblings-count]" id="siblings-count" placeholder="The number of siblings">
+                <input type="text" class="span4" name="user[siblings-count]" id="siblings-count" placeholder="The number of siblings" value="<%=@user.siblings %>">
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="hobbies">Interests/Hobbies</label>
               <div class="controls" id="hobbies">
-                <input type="text" class="span4" name="user[hobby]" placeholder="Mention a hobby">
-                <div class="moreHobbies">
-                  <span class="btn btn-mini btn-success">Add one more?<i class="icon-plus-sign pull-left"></i></span>
-                </div>
+                <input type="text" class="span4" name="user[hobby]" placeholder="Mention a hobby" value="<%= (@user.hobby.map(&:hobby)).join(",") %>">
+                
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="dream">Dream for Future</label>
               <div class="controls">
-                <textarea class="span4" id="dream" name="user[dream_for_future]" placeholder="What do you see yourself doing in the coming time"></textarea>
+                <textarea class="span4" id="dream" name="user[dream_for_future]" placeholder="What do you see yourself doing in the coming time"><%= @user.dream_for_future%></textarea>
               </div>
             </div>
             
@@ -151,7 +144,7 @@
               <div class="controls" id="familyPref">
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Choose a preference
+                    <%= family_preference_list[@user.family_preference] || 'Choose a preference' %> 
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -160,7 +153,7 @@
                     <% end %>
                     
                   </ul>
-                  <input type="hidden" name="user[family_preference]">
+                  <input type="hidden" name="user[family_preference]" value="<%=@user.family_preference%>">
                   <span class="help-inline">The kind of family you would like to be in</span>
                 </div>
               </div>
@@ -171,7 +164,7 @@
               <div class="controls" id="spousePref">
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Choose a preference
+                    <%= spouse_pref_list[@user.spouse_preference] || 'Choose a preference' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -179,7 +172,7 @@
                       <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[spouse_preference]">
+                  <input type="hidden" name="user[spouse_preference]" value="<%=@user.spouse_preference%>">
                   <span class="help-inline">The kind of spouse you are comfortable with</span>
                 </div>
               </div>
@@ -206,7 +199,7 @@
             <div class="control-group">
               <label class="control-label" for="settled">Your current location</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[settled_in]" id="settled" placeholder="Where are you based out of">
+                <input type="text" class="span4" name="user[settled_in]" id="settled" placeholder="Where are you based out of" value="<%= @user.settled_in %>">
               </div>
             </div>
 
@@ -234,7 +227,7 @@
               <div class="controls" id="sexualPref">
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Choose a preference
+                    <%= sexual_pref_list[@user.sexual_preference] || 'Choose a preference' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -242,7 +235,7 @@
                       <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[sexual_preference]">
+                  <input type="hidden" name="user[sexual_preference]" value="<%=@user.sexual_preference%>">
                   <span class="help-inline">This will be kept private</span>
                 </div>
               </div>
@@ -251,41 +244,37 @@
             <div class="control-group">
               <label class="control-label" for="virginity">Opinion on virginity</label>
               <div class="controls">
-                <textarea class="span4" id="virginity" name="user[virginity_opinion]" placeholder="How does your spouse&apos;s virginity matter to you"></textarea>
+                <textarea class="span4" id="virginity" name="user[virginity_opinion]" placeholder="How does your spouse&apos;s virginity matter to you"><%=@user.virginity_opinion%></textarea>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="idealPartner">An Ideal Life Partner</label>
               <div class="controls">
-                <textarea class="span4" id="idealPartner" name="user[ideal_partner]" placeholder="Five words that describe your ideal partner"></textarea>
+                <textarea class="span4" id="idealPartner" name="user[ideal_partner]" placeholder="Five words that describe your ideal partner"><%=@user.ideal_partner%></textarea>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="idealMarriage">My marriage will be..</label>
               <div class="controls">
-                <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="How do you see yourself getting married ?"></textarea>
+                <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="How do you see yourself getting married ?"><%=@user.ideal_marriage%></textarea>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="specificInterest">Things that excite me</label>
               <div class="controls">
-                <input id="specificInterest" type="text" name="user[interest]" class="span4" placeholder="You prefer Artists/Journalists/Software">
-                <div class="moreInterests">
-                  <span class="btn btn-mini btn-success">Add one more?<i class="icon-plus-sign pull-left"></i></span>
-                </div>
+                <input id="specificInterest" type="text" name="user[interest]" class="span4" placeholder="You prefer Artists/Journalists/Software" value="<%=(@user.interested_in.map(&:interested)).join(",") %>">
+                
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="notSpecificInterest">Things that put me off</label>
               <div class="controls">
-                <input id="notSpecificInterest" type="text" name="user[not_interest]" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software">
-                <div class="moreInterests">
-                  <span class="btn btn-mini btn-success">Add one more?<i class="icon-plus-sign pull-left"></i></span>
-                </div>
+                <input id="notSpecificInterest" type="text" name="user[not_interest]" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software" value="<%= (@user.not_interested_in.map(&:not_interested)).join(",") %>">
+                
               </div>
             </div>
 
@@ -293,7 +282,7 @@
               <label class="control-label" for="blogUrl">Your blog/website url</label>
               <div class="controls">
                 
-                <input type="text" class="span4" id="blogUrl" name="user[blog_url]" placeholder="Any expression of your creative skills">
+                <input type="text" class="span4" id="blogUrl" name="user[blog_url]" placeholder="Any expression of your creative skills" value="<%=@user.blog_url%>">
               </div>
             </div>
 
@@ -302,7 +291,7 @@
               <div class="controls" id="salary">
                 <div class="btn-group">
                   <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    Choose a range
+                    <%= salary_list[@user.salary] || 'Choose a Preference' %>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -310,7 +299,7 @@
                       <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
                     <% end %>
                   </ul>
-                  <input type="hidden" name="user[salary]">
+                  <input type="hidden" name="user[salary]" value="<%=@user.salary%>">
                   <span class="help-inline">Describe your salary range</span>
                 </div>
               </div>

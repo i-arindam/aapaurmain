@@ -27,6 +27,7 @@ Aapaurmain::Application.routes.draw do
   match '/signup/confirmation' => 'users#confirm_signup'
   match '/users/:id/create_profile' => 'users#create_profile'
   match '/users/:id/update' => 'users#update'
+  match '/users/:id/edit_profile' => 'users#edit_profile'
   
   
   # Request actions

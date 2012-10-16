@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_date(hash)
-    return Time.now.to_date
+    return Date.new(hash[:year].to_i, hash[:month].to_i,hash[:date].to_i)
   end
   
   def verify_age(dob, sex)

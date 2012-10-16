@@ -27,7 +27,7 @@
         </div>
         <div class="bioSection">
           <h1 class="name"><%= @user.name %></h1>
-          <h3 class="shortBio">Coder, Death Metal fan, Learner for life</h3>
+          <h3 class="shortBio"><%= @user.short_bio %></h3>
         </div>
         
         <div class="profileActions">
@@ -96,6 +96,11 @@
               <div class="row">
                 <img src="/assets/users/clipboard-2.png" class="profileIcon">
                 <label class="span2">Ideal Partner</label>
+                <label class="span4"><%= @user.ideal_partner %></label>
+              </div>
+               <div class="row">
+                <img src="/assets/users/clipboard-2.png" class="profileIcon">
+                <label class="span2">My kind of marriage</label>
                 <label class="span4"><%= @user.ideal_marriage %></label>
               </div>
               <div class="row">
@@ -164,7 +169,7 @@
               <div class="row">
                 <img src="/assets/users/users.png" class="profileIcon">
                 <label class="span2 h4">Sex</label>
-                <label class="span4"><%= sex_list[@user.sex] %></label>
+                <label class="span4"><%= @user.sex %></label>
               </div>
             </div>
           </div>

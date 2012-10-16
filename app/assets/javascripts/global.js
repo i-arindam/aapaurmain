@@ -25,6 +25,7 @@
       $(dropdownSelector).click(function(e) {
         e.preventDefault();
         $(this).parents('ul').siblings('a').text($(this).text());
+        //$(this).parents('ul').siblings('a').attr({'data-value': $(this).text()});
       });
     }
   }); // $.extend

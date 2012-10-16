@@ -396,6 +396,7 @@ class UsersController < ApplicationController
   end
   
   def update
+    debugger
     @user = User.find_by_id(params[:id])
     uhash = params[:user]
     success, message = true, ""
@@ -409,12 +410,13 @@ class UsersController < ApplicationController
     
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
     
+    @user.dob = dob
     fields = User::USER_FIELDS_LIST
     fields.each do |f|
       @user[f.to_s] = uhash[f] if uhash[f]
     end
 
-    hobbies = params[:user][:hobby]
+    hobbies = (params[:user][:hobby]).split(",")
     
     unless hobbies.blank?
       hobbies.each do |h|
@@ -425,7 +427,7 @@ class UsersController < ApplicationController
       end
     end
 
-    interested = params[:user][:interest]
+    interested = (params[:user][:interest]).split(",")
     unless interested.blank?
       interested.each do |i|
         ui = InterestedIn.new
@@ -434,9 +436,23 @@ class UsersController < ApplicationController
         ui.save
       end
     end
+
+    not_interested = (params[:user][:not_interest]).split(",")
+    unless not_interested.blank?
+      not_interested.each do |i|
+        ni = NotInterestedIn.new
+        ni.user_id = @user.id
+        ni.not_interested = i
+        ni.save
+      end
+    end
     
-    @user.setup_recos_on_create
-    @user.add_to_search_index
+
+    @user.setup_recos_on_create unless Rails.env == 'development'
+    @user.add_to_search_index unless Rails.env == 'development'
+
+    
+
     
     @user.save
     

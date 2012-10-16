@@ -33,7 +33,16 @@ sex:
 
 sexual_pref:
   1: Straight
-  2: Homo
-  3: Bi
+  2: Bi-Curious
+  3: Bi-sexual
+  4: Homo-sexual
+
+salary:
+  1: Hanging in the middle
+  2: Enough to go shopping once a month
+  3: Splurging is my swipe card
+  4: Hard earned is hard saved
+  5: Wanna support me?
+
 
 

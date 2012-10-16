@@ -13,7 +13,7 @@ module ApplicationHelper
   # Used to show the minimum year one can show as DOB.
   # @todo: Move limit to globals.yml
   def start_year
-    Time.now.year - 18
+    Time.now.year - 75
   end
   
   # Returns the end year from the current time
@@ -21,7 +21,7 @@ module ApplicationHelper
   # Used to show the maximum year one can show as DOB.
   # @todo: Move limit to globals.yml
   def end_year
-    Time.now.year - 90
+    Time.now.year 
   end
   
   def join_as_string(user_field_array, field_name)
@@ -65,6 +65,10 @@ module ApplicationHelper
 
   def sexual_pref_list
     list = $user_prefs['sexual_pref']
+  end
+
+  def salary_list
+    list = $user_prefs['salary']
   end
   
   def show_login?

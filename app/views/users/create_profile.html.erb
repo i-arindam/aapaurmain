@@ -2,6 +2,7 @@
 <html>
   <head>
     <%= stylesheet_link_tag "application-user" %>
+    <%= javascript_include_tag "global" %>
     <title>Create your Profile</title>
   </head>
   
@@ -36,7 +37,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% for d in 1..31 %>
-                      <li><a href="#"><%= d %></a></li>
+                      <li><a href="#" data-value="<%= d %>"><%= d %></a></li>
                     <% end %>
                   </ul>
                   <input type="hidden" name="user[dob][date]">
@@ -48,8 +49,8 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <% Date::MONTHNAMES[1..-1].each do |m| %>
-                      <li><a href="#"><%= m %></a></li>
+                    <% Date::MONTHNAMES[1..-1].each_with_index do |i,m| %>
+                      <li><a href="#" data-value="<%= (i.to_i+1).to_s %>"><%= m %></a></li>
                     <% end %>
                   </ul>
                   <input type="hidden" name="user[dob][month]">
@@ -62,7 +63,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% for y in start_year..end_year %>
-                      <li><a href="#"><%= y %></a></li>
+                      <li><a href="#" data-value="<%= y %>"><%= y %></a></li>
                     <% end %>
                   </ul>
                   <input type="hidden" name="user[dob][year]">
@@ -79,14 +80,16 @@
               </div>
             </div>
 
-            <div class="control-group">
-              <label class="control-label" for="height">Height</label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[height]" id="height" placeholder="In centimetres &hellip;">
-              </div>
-            </div>
+           
 
             <span class="label label-inverse span9">Something important about <em>you</em></span>
+
+             <div class="control-group">
+              <label class="control-label" for="shortBio">Your short bio</label>
+              <div class="controls">
+                <textarea class="span4" name="user[short_bio]" id="shortBio" placeholder="Five words that describe you"></textarea>
+              </div>
+            </div>
             
             <div class="control-group">
               <label class="control-label" for="education">Education</label>
@@ -152,10 +155,10 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Joint will do</a></li>
-                    <li><a href="#">Prefer Nuclear</a></li>
-                    <li><a href="#">Prefer spouse only</a></li>
-                    <li><a href="#">Doesn&apos;t matter</a></li>
+                    <% family_preference_list.each do |key, value| %>
+                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
+                    <% end %>
+                    
                   </ul>
                   <input type="hidden" name="user[family_preference]">
                   <span class="help-inline">The kind of family you would like to be in</span>
@@ -172,9 +175,9 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Working</a></li>
-                    <li><a href="#">Home maker</a></li>
-                    <li><a href="#">Doesn&apos;t matter</a></li>
+                    <% spouse_pref_list.each do |key, value| %>
+                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
+                    <% end %>
                   </ul>
                   <input type="hidden" name="user[spouse_preference]">
                   <span class="help-inline">The kind of spouse you are comfortable with</span>
@@ -182,7 +185,7 @@
               </div>
             </div>
 
-            <div class="control-group">
+           <!--  <div class="control-group">
               <label class="control-label" for="spouseEducation">Opinion on Spouse&apos;s further education</label>
               <div class="controls" id="spouseEducation">
                 <div class="btn-group">
@@ -198,7 +201,7 @@
                   <input type="hidden" name="user[spouse_further_education]">
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="control-group">
               <label class="control-label" for="settled">Your current location</label>
@@ -207,7 +210,7 @@
               </div>
             </div>
 
-            <div class="control-group">
+          <!--   <div class="control-group">
               <label class="control-label" for="settleAbroad">Can you settle abroad</label>
               <div class="controls" id="settleAbroad">
                 <div class="btn-group">
@@ -224,7 +227,7 @@
                   <span class="help-inline">Can you settle elsewhere after marriage?</span>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="control-group">
               <label class="control-label" for="sexualPref">Sexual Preference</label>
@@ -235,10 +238,9 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Straight</a></li>
-                    <li><a href="#">Bi-curious</a></li>
-                    <li><a href="#">Bi-sexual</a></li>
-                    <li><a href="#">Homo-sexual</a></li>
+                    <% sexual_pref_list.each do |key, value| %>
+                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
+                    <% end %>
                   </ul>
                   <input type="hidden" name="user[sexual_preference]">
                   <span class="help-inline">This will be kept private</span>
@@ -254,14 +256,21 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="idealMarriage">An Ideal Marriage</label>
+              <label class="control-label" for="idealPartner">An Ideal Life Partner</label>
               <div class="controls">
-                <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="What is your definition of an ideal marriage"></textarea>
+                <textarea class="span4" id="idealPartner" name="user[ideal_partner]" placeholder="Five words that describe your ideal partner"></textarea>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="specificInterest">Looking specially for?</label>
+              <label class="control-label" for="idealMarriage">My marriage will be..</label>
+              <div class="controls">
+                <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="How do you see yourself getting married ?"></textarea>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="specificInterest">Things that excite me</label>
               <div class="controls">
                 <input id="specificInterest" type="text" name="user[interest]" class="span4" placeholder="You prefer Artists/Journalists/Software">
                 <div class="moreInterests">
@@ -271,7 +280,7 @@
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="notSpecificInterest">Dont wan&apos;t these people</label>
+              <label class="control-label" for="notSpecificInterest">Things that put me off</label>
               <div class="controls">
                 <input id="notSpecificInterest" type="text" name="user[not_interest]" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software">
                 <div class="moreInterests">
@@ -281,11 +290,37 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="salary">Your Salary (per year)</label>
+              <label class="control-label" for="blogUrl">Your blog/website url</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[salary]" id="salary" placeholder="How much do you earn in a year" />
+                
+                <input type="text" class="span4" id="blogUrl" name="user[blog_url]" placeholder="Any expression of your creative skills">
               </div>
             </div>
+
+            <div class="control-group">
+              <label class="control-label" for="salary">Your Salary Range</label>
+              <div class="controls" id="salary">
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    Choose a range
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% salary_list.each do |key, value| %>
+                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
+                    <% end %>
+                  </ul>
+                  <input type="hidden" name="user[salary]">
+                  <span class="help-inline">Describe your salary range</span>
+                </div>
+              </div>
+            </div>
+
+            
+
+
+
+
             <button type="submit" class="btn btn-large btn-primary saveDetails">Submit</button>
           </fieldset>
         <% end %>
@@ -293,5 +328,12 @@
     </div> <!-- container-fluid -->
 
   </body>
+  <script type="text/javascript">
+    $(function(){
+       
+       $.setupDropdownInputs();
+       $.setupDropdownDisplays();
+    })
+  </script>
   
 </html>

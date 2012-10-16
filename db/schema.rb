@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121013144802) do
+ActiveRecord::Schema.define(:version => 20121016161705) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(:version => 20121013144802) do
     t.integer  "salary",                     :limit => 8
     t.string   "hobbies",                    :limit => 500
     t.integer  "siblings",                   :limit => 2
-    t.integer  "profession",                 :limit => 2
+    t.string   "profession"
     t.string   "dream_for_future",           :limit => 500
     t.string   "interested_in",              :limit => 500
     t.string   "not_interested_in",          :limit => 500
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20121013144802) do
     t.string   "blog_url"
     t.boolean  "photo_exists"
     t.string   "recommended_user_ids",       :limit => 250
+    t.string   "ideal_partner",              :limit => 500
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"

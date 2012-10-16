@@ -14,7 +14,6 @@ body {
 .signup {
   clear: both; 
   margin-right: 76px;
-  //background: url('../signup_green.png') no-repeat;
   position: relative;
   float: right;
   width: 420px;
@@ -33,7 +32,7 @@ body {
 }
 
 .signupBtn {
-  background:url('../arrow.png') no-repeat;
+  background:url('<%= image_path "arrow.png" %>') no-repeat;
   width: 30px;
   height: 30px;
   margin-left: 200px;
@@ -64,9 +63,6 @@ body {
 }
 
 .stickyArea {
-  /*display: none;*/
-  /*background: url('../s.png') repeat;*/
-/*  color: white;*/
   position: absolute;
   left: 200px;
   top: 150px;
@@ -108,15 +104,16 @@ padding-top: 50px;
 width: 905px;
 height: 540px;
 position: relative;
-background: transparent url('../booklet/book-bg.png') no-repeat 9px 27px;
+background: transparent url('<%= image_path "booklet/book-bg.png" %>') no-repeat 9px 27px;
 top: 25px;
 left: -188px;
 }
+
 .tagLine{
   font-size: 19px;
   left: 50px;
   position: relative;
-  color: brown;
+  color: #A52A2A;
 }
 
 .bookletText{
@@ -125,22 +122,25 @@ left: -188px;
   color: green;
   
 }
+
 .aamText{
-  position:relative;
+  position: relative;
   top: 60px;
-  color:brown;
+  color: #A52A2A;
   font-family: 'Dancing Script', Georgia, Times, serif;
   font-size: 25px;
 }
+
 .phdImage{
   width:350px;
   height:250px;
 }
+
 .aamTagLine{
-/*  font-family: fantasy;*/
 font-size: 23px;
 margin-top: 55px;
 }
+
 .headerText{
   border-bottom: 3px black solid;
   padding-top: 15px;
@@ -149,9 +149,10 @@ margin-top: 55px;
   font-family: 'Dancing Script', Georgia, Times, serif;
   font-size:30px;
 }
+
 .lastpageText{
   top:52px;
-  color:brown;
+  color: #A52A2A;
 }
 
 
@@ -164,7 +165,6 @@ margin-top: 55px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-/*  display: none;*/
   left: 158px;
   list-style: none;
   margin: 0;
@@ -173,6 +173,7 @@ margin-top: 55px;
   width: 60px;
   top:245px;
 }
+
 .socialActions li {
   color: #333;
   float: right;
@@ -180,35 +181,45 @@ margin-top: 55px;
   margin: 0 0 15px;
   vertical-align: top;
 }
+
 .socialActions .social-fb {
   margin-right: 6px;
 }
+
 .socialActions .social-fb .fb-like > span {
   width: 48px !important;
 }
+
 .socialActions .social-tw {
   margin-right: 2px;
 }
+
 .socialActions .social-li {
   margin-top: -11px;
 }
+
 .socialActions .social-go {
   margin-right: 4px;
 }
+
 .socialActions .social-go > div {
   height: 20px !important;
 }
+
 .socialActions .social-pi {
   margin-bottom: 0;
   margin-right: 8px;
 }
+
 .socialActions li div,
 .socialActions li iframe {
   vertical-align: top !important;
 }
+
 .socialActions .fb-like {
   float: left !important;
 }
+
 .IN-widget span,
 span.IN-widget span:first-child {
   vertical-align: top !important;
@@ -218,10 +229,10 @@ span.IN-widget span:first-child {
 
 
 .faqs {
-  color: lightgrey;
+  color: #D3D3D3;
   top: 300px;
   margin-top: 80px;
-  background: #191814 url('http://static.mailchimp.com/www/images/bg_home.png')
+  background: #191814 url('<%= image_path "faq_bg.png" %>')
 }
 
 h2.faqHeader {
@@ -237,11 +248,10 @@ h2.faqHeader {
   margin-left: auto;
   margin-right: auto;
   width: 980px;
-
 }
+
 .leftCol {
-/*    border-right: 5px black solid;*/
-margin-right: 10px;
+  margin-right: 10px;
 }
 
 .rightCol {
@@ -276,46 +286,57 @@ margin-right: 10px;
 .q {
   padding: 10px;
 }
+
 .whatWeAre {
   font-size: 15px;  
   margin-top: 26px;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
 }
+
 .whatWeAre li {
   padding-bottom: 15px;
   line-height: 26px;
   word-spacing: 1px;
 }
+
 .booklet div.b-wrap-right{
   background: url('<%= image_path "booklet/book-part2.png" %>') no-repeat top left;
 }
+
 .booklet div.b-wrap-left{
   background: url('<%= image_path "booklet/book-part1.png" %>') no-repeat top left; 
 }
+
 #logo{
   margin-left: -136px;
 }
+
 input.span3{
   border-radius: 0 10px 10px 0;
 }
+
 .control-group{
   padding: 30px 50px 50px 50px;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
 }
+
 .control-group .joinus{
   font-size: 40px;
   text-align: center;
   margin-bottom: 26px;
   color: white;
 }
+
 .controls div.input-prepend span.add-on{
   border-radius: 10px 0 0 10px;
 }
+
 .controls .input-prepend{
   margin-bottom: 12px;
 }
+
 .logoText{
   font-family: 'Dancing Script', Georgia, Times, serif;
   margin-left: 10px;
@@ -326,12 +347,15 @@ input.span3{
   left: 114px;
   float: right;
 }
+
 .push{
   display: none;
 }
+
 .patta{
   width: 94px;
 }
+
 @font-face {
   font-family: 'Dancing Script';
   font-style: normal;

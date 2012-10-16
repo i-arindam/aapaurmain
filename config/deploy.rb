@@ -38,6 +38,7 @@ namespace :deploy do
 
   task :default do
     migrations
+    restart
   end
 
   desc "Make sure local git is in sync with remote."
@@ -51,7 +52,7 @@ namespace :deploy do
  
   desc "Zero-downtime restart of Unicorn"
   task :restart, :except => { :no_release => true } do
-    run "kill -s USR2 `cat /tmp/unicorn.aapaurmain.pid`"
+    run "cd #{current_path} && kill -s USR2 `cat /tmp/unicorn.aapaurmain.pid`"
   end
 
   desc "Start unicorn"

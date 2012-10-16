@@ -1,9 +1,8 @@
 body {
-   background-image: url('web texture blue.jpg');
-   color: white;
-   font-family: 'Georgia';
-    font-style: italic;
-
+  background-image: url('web-texture-blue.jpg');
+  color: white;
+  font-family: 'Georgia';
+  font-style: italic;
 }
 .aboutus {
   padding-left: 240px;

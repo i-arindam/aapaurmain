@@ -4,7 +4,8 @@ development:
 
 
 production:
-  host: http://www.aapaurmain.com
+  host: http://localhost
+  port: 8983
 
 basic_params:
   defType: dismax

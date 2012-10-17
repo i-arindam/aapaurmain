@@ -105,11 +105,6 @@ div.profile span.label {
   margin-left: -50px;
 }
 
-.rightCol {
-  float: left;
-  width: 103%;
-}
-
 .group.col {
   background: rgba(37, 25, 8, 0.84);
   border-radius: 10px;
@@ -124,13 +119,11 @@ div.profile span.label {
 
 .group.col:hover {
   opacity: 1;
-  border: 5px solid #eee;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(0,0,0,0.4)));
   -webkit-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   -moz-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
   height: 100%;
-  margin-left: -50px;
 }
 
 .lcol1:hover, .rcol2:hover {
@@ -139,7 +132,7 @@ div.profile span.label {
   -o-transform: rotate(-7deg);
 }
 
-.lcol2:hover, .rcol1:hover {
+.rcol1:hover {
   -webkit-transform: rotate(7deg);
   -moz-transform: rotate(7deg);
   -o-transform: rotate(7deg);
@@ -191,10 +184,14 @@ body{
 .rightCol .col{
   width: 400px;
 }
-.group.rcol1{
+div.rightCol div.group.rcol1,div.rightCol div.group.rcol2{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+div.rightCol div.group.rcol1{
   float: left;
 }
-.group.rcol2{
+div.rightCol div.group.rcol2{
   float: right;
 }
 .group.rcol1 .span2{

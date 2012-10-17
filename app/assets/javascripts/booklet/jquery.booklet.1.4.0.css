@@ -66,7 +66,7 @@
 	
    	/* Arrow Controls */
 	.booklet .b-arrow          {display:block; position:absolute; text-indent:-9999px; top:0; height:100%; width:74px;}
-	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:170px; width:74px; position:absolute; left:0; top:25%;}
+	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:170px; width:74px; position:relative; left:18px; top:45%;}
 	.booklet .b-arrow-next     {right:-80px;}
 	.booklet .b-arrow-prev     {left:-80px;}
 	.booklet .b-arrow-next div {background:url("images/arrow-next.png") no-repeat left top;}

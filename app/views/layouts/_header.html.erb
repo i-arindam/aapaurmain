@@ -12,15 +12,21 @@
       <% end %>
         
       <nav>
-          <% if show_login? %>
+        <% if show_login? %>
+
+            <ul class="nav nav-pills nav-actions">
+              <li><%= link_to "About Us", :controller => "static_pages", :action => "about" %></li>
+              <li><%= link_to "How It Works",  :controller => "static_pages", :action => "how_it_works" %></li>
+              <li><a href="http://aapaurmainblog.wordpress.com/">Aap Aur Main Story</a></li>
+            </ul>
             <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
-              <div class="control-group">
+              
                 <div class="controls">
                   <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
                   <input type="password" class="inputFields" name="password" placeholder="Password" />
-                  <button type="submit" class="signin">Log in</button>
+                  <button type="submit" class="signin btn btn-success">Log in</button>
                 </div>
-              </div>
+              
               <div class="rememberSection">
                 <input name="remember_me" type="checkbox">
                 <label class="checkbox">Remember me</label>
@@ -28,28 +34,29 @@
             <% end %> <!-- end for form -->
           <% else %>
           <% if current_user %> 
-          <% user = current_user %>
-          <ul class="nav nav-pills nav-actions">
+            <% user = current_user %>
+            <ul class="nav nav-pills nav-actions">
 
-            <li><%= link_to "Dashboard", user %></li>
-            <li><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
+              <li><%= link_to "Dashboard", user %></li>
+              <li><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
 
-            <li><%= link_to "Messages", conversations_path %></li>
-          </ul>
-
-            <ul class="nav nav-dropdown">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to "Log out", logout_path %></li>
-                </ul>
-              </li>
+              <li><%= link_to "Messages", conversations_path %></li>
             </ul>
-            <% end %>
+
+              <ul class="nav nav-dropdown">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "Log out", logout_path %></li>
+                  </ul>
+                </li>
+              </ul>
+          
+            
           <% end %>
+        <% end %>
       </nav>
     </div>
   </div>
 
-      <!-- <a href="/" id="logo"></a> -->
 </header>

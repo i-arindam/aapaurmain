@@ -39,6 +39,10 @@
           <div class="joinus">Join Us</div>
           <div class="controls">
             <div class="input-prepend">
+              <span class="add-on"><i class="icon-user"></i></span>
+              <input class="span3" type="text" name="name" placeholder="Name" />
+            </div>
+            <div class="input-prepend">
               <span class="add-on"><i class="icon-envelope"></i></span>
               <input class="span3" type="text" name="email" placeholder="Email" />
             </div>
@@ -63,7 +67,7 @@
     <div class="container">
         <ul class="socialActions public-only hide">
           <li class="social-fb">
-           <div class="fb-like" data-href="http://www.facebook.com/indianmarriages" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="dark"></div>                           
+           <div class="fb-like" data-href="http://www.facebook.com/indianmarriages" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="light"></div>                           
           </li>
            <li class="social-tw">
                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text=""  data-via="aapaurmain" rel="nofollow" data-count="vertical">Tweet</a>
@@ -229,8 +233,13 @@
  	  width: 800,
  	  height: 500,
     pagePadding: 20,
-    pageNumbers: false  
+    pageNumbers: false ,
+    arrows: true,
+    easing: null,
+    speed: 500
  	});
+  
+
  });
  	
  	(function(d, s, id) {

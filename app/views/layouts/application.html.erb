@@ -5,6 +5,7 @@
     <%= stylesheet_link_tag    "application-all", media: "all" %>
     <%= javascript_include_tag "application-all" %>
     <%= csrf_meta_tags %>
+    <%= yield :head %>
     <%= render 'layouts/shim' %>    
     <%= yield :stylesheet %>
     <%= yield :javascript %>

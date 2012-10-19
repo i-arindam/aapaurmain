@@ -401,7 +401,6 @@ class UsersController < ApplicationController
   end
   
   def update
-    debugger
     @user = User.find_by_id(params[:id])
     uhash = params[:user]
     success, message = true, ""

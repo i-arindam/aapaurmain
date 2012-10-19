@@ -106,8 +106,8 @@ class User < ActiveRecord::Base
   }
 
   #Enumeration for signup confirmation status
-  SIGNUP_CREATED = 0
-  SIGNUP_CONFIRMED = 1
+  NOT_VERIFIED = 0
+  VERIFIED = 1
   
   USER_FIELDS_LIST = [
       :name, :sex, :family_preference, :spouse_preference,
@@ -339,7 +339,7 @@ class User < ActiveRecord::Base
   end
     
   def signup_confirmed?
-    if self.signup_status == SIGNUP_CREATED
+    if self.email_verified == NOT_VERIFIED
       false
     else
       true
@@ -347,7 +347,7 @@ class User < ActiveRecord::Base
   end
 
   def confirm_signup
-    self.signup_status = SIGNUP_CONFIRMED
+    self.email_verified = VERIFIED
   end
   
   ### LOCK SECTION ENDS ###

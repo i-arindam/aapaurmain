@@ -189,7 +189,7 @@ class User < ActiveRecord::Base
     #return if Rails.env == 'development'
      event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
-    UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject]}, args << self) if event[:mail]
+    UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject], :user_array => args << self}) if event[:mail]
     #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
     #   self.send(event[:operation].to_sym, args << self) if event[:operation]
   end

@@ -19,7 +19,8 @@ class UserMailer < ActionMailer::Base
   # headers => hash to contain various mail headers
   def send_mail(mail_options)
     #attach all the files
-    #return if Rails.env == 'development'
+    return if Rails.env == 'development'
+    @users = mail_options[:user_array]
     files_attach = mail_options[:attachments]
 
     if files_attach 

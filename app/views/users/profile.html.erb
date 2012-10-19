@@ -23,7 +23,7 @@
     <div id="left_content">&nbsp;</div>
     <div id="box_content">
       <div id="main_content">
-        <section class="profileHeader">
+        <div class="profileHeader">
           <div class="profileImage">
             <img src="http://www.placehold.it/150x150" />
           </div>
@@ -41,20 +41,15 @@
               <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger j-withdraw-request" value="Withdraw Request" id="withdraw-<%= @user.id %>" />
 
             <% @values['show-accept']  ? '' : class_to_add_2="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class=" <%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
+              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
 
             <% @values['show-decline'] ? '' : class_to_add_3="hide" %>
               <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger j-decline-request" value="Decline Request" id="decline-<%= @user.id %>" />
 
               <% @values['show-withdraw-lock'] ? '' : class_to_add_4="hide" %>
                 <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger j-withdraw-lock" value="Withdraw Lock" id="lock-<%= @user.id %>" />
-            
-            
-            
-          
-            <!-- <input type="button" class="btn btn-danger btn-large askQuestion" value="Ask a Question" /> -->
           </div>
-        </section>
+        </div>
 
         <div class="container profile">
           <div class="leftCol">
@@ -65,53 +60,53 @@
               <div class="values">
                 <div class="row">
                   <div class="image">
-                    <img src="/assets/users/bag-full.png" class="profileIcon">
+                    <img src="/assets/users/bag-full.png" class="profileIcon" />
                   </div>
                   <label class="span2">Profession</label>
                   <label class="span4"><%= @user.profession %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/graduation-cap.png" class="profileIcon">
+                  <img src="/assets/users/graduation-cap.png" class="profileIcon" />
                   <label class="span2">Education</label>
                   <label class="span4"><%= @user.education %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/colored-pencils.png" class="profileIcon">
+                  <img src="/assets/users/colored-pencils.png" class="profileIcon" />
                   <label class="span2">Hobbies</label>
                   <label class="span4"><%= (@user.hobby.map(&:hobby)).join(",") %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/shaking-hands.png" class="profileIcon">
+                  <img src="/assets/users/shaking-hands.png" class="profileIcon" />
                   <label class="span2">Further Education Plans</label>
                   <label class="span4"><%= @user.further_education_plans %></label>
                 </div>	
                 <div class="row">
-                  <img src="/assets/users/green-lightbulb.png" class="profileIcon">
+                  <img src="/assets/users/green-lightbulb.png" class="profileIcon" />
                   <label class="span2">Dream For Future</label>
                   <label class="span4"><%= @user.dream_for_future %></label>	
                 </div>
                 <div class="row">
-                  <img src="/assets/users/microphone.png" class="profileIcon">
+                  <img src="/assets/users/microphone.png" class="profileIcon" />
                   <label class="span2">Opinion on Virginity</label>
                   <label class="span4"><%= @user.virginity_opinion %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/clipboard-2.png" class="profileIcon">
+                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
                   <label class="span2">Ideal Partner</label>
                   <label class="span4"><%= @user.ideal_partner %></label>
                 </div>
                  <div class="row">
-                  <img src="/assets/users/clipboard-2.png" class="profileIcon">
+                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
                   <label class="span2">My kind of marriage</label>
                   <label class="span4"><%= @user.ideal_marriage %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/coffee-mug.png" class="profileIcon">
+                  <img src="/assets/users/coffee-mug.png" class="profileIcon" />
                   <label class="span2">Things that excite me</label>
                   <label class="span4"><%= (@user.interested_in.map(&:interested)).join(",") %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/favorite-delete.png" class="profileIcon">
+                  <img src="/assets/users/favorite-delete.png" class="profileIcon" />
                   <label class="span2">Things that put me off</label>
                   <label class="span4"><%= (@user.not_interested_in.map(&:not_interested)).join(",") %></label>
                 </div>
@@ -175,14 +170,7 @@
                 </div>
               </div>
             </div>
-            <!--<div class="group col rcol2">
-              <div class="row heading">
-                <span><em>The taboo topics!</em></span>
-              </div>
-              
-            </div>-->
-            
-          <div><!-- right col -->
+          </div><!-- right col -->
       
         </div> <!-- container profile -->
       </div> <!-- main_content -->

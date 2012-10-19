@@ -68,8 +68,11 @@ h2 {
   margin-bottom: 1em;
   padding: 3px;
   background-color: green;
-  border-radius: 10px
+  border-radius: 10px;
+  color: white;
+  text-align: left;
 }
+
 h2, h3 {
   font-size: 1em;
   background-color: green;
@@ -125,8 +128,9 @@ li.active {
 
 #faq-wrapper li {
   position: relative;
+  padding: 10px;
   float: left;
-  width: 70px;
+  width: 80px;
   margin-right: 10px;
   border-radius: 5px;
 }

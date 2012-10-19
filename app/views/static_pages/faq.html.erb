@@ -1,61 +1,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<%= javascript_include_tag "expand" %>
-<%= stylesheet_link_tag "faq" %>
-<title>Aap Aur Main-FAQs</title>
-<script type="text/javascript">
-$(function() {
-   
-    $('#faq-wrapper li').click(function(e) {
-      if($(this).hasClass('active')) {
-        return false;
-      }
-      e.preventDefault();
-      $('#faq-wrapper li.active').removeClass('active');
-      $(this).addClass('active');
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "faq" %>
+<% end %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'expand' %>
+  <%= javascript_include_tag 'faq' %>
+<% end %>
 
-      var index = $('#faq-wrapper li').index(this);
-      $('.demo').not('.hide').addClass('hide');
-      $('.demo:eq(' + index + ')').removeClass('hide');
-      $('.demo:eq(' + index + ')').toggler({ initShow: "div.collapse:eq(0)"});
-      
-      var selector = '.demo:eq(' + index + ')';
-      $(selector).expandAll({
-        trigger: "div.expand", 
-        ref: "div.expand", 
-        showMethod: "slideDown", 
-        hideMethod: "slideUp", 
-        oneSwitch : false
-      });
-      
-    });
-    
-    $("#demo2 div.expand").toggler({initShow: "div.collapse:eq(0)"});
-   
-    $("#demo2").expandAll({
-      trigger: "div.expand", 
-      ref: "div.expand", 
-      showMethod: "slideDown", 
-      hideMethod: "slideUp", 
-      oneSwitch : false
-    });
-});
-</script>
+<title>Aap Aur Main-FAQs</title>
 </head>
 
 <body>
 
   <div id="faq-wrapper">
     <div id="faq-content">
-      <h1 class="heading">FAQs</h1>
+      <h1 class="heading">FAQs - Thoughts on your mind?</h1>
       
       <ul>
         <li class="active"><a href="#">Sign Up</a></li>
         <li><a href="#">Actions</a></li>
         <li><a href="#">Profile</a></li>
-        <li><a href="#">About Us</a></li>
       </ul>
       
       <div class="mainContent">
@@ -309,34 +275,6 @@ $(function() {
                 for signing up with us. We will send your credentials to your email inbox.</p>
         </div>
       
-      </div>
-      
-      <div id="demo2" class="demo us hide">
-        <!--start from here-->
-        <h2>Who is we... o.O</h2>
-        <div class="expand">What is aapaurmain.com?</div>
-        <div class="collapse">
-            <p>aapaurmain.com is India's state-of-art matrimonial site which caters to the 'HUMANISTIC' approach towards marriage as compared to the 
-               'MATERIALISTIC' & 'SUPERFICIAL' approach.</p>
-        </div>
-        <div class="expand">How is aapaurmain.com different?</div>
-        <div class="collapse">
-            <p>Our difference speaks from the values we strongly advocate & expect from our 'RATIONAL-THINKING' users:
-               No Dowry expectation in any form i.e. MONETARILY(CASH or KIND), EMOTIONALLY, MENTALLY, SOCIALLY, & any form that is possible.
-               Mutual respect for each others' religion, culture, tradition & responsibilites. 
-               Not judging ones' life-partner on the basis of skin-color, caste, salary, family structure, etc.
-               Acceptance of each others' responsibilities towards each others' parents.
-               Freedom to choose ones' career after marriage with support from the partner in every possible way.
-               Discouraging concealing of facts one wants to know about his/her prospective interest i.e. medical check-ups, expectations from your 
-               life-partner, ideal notion of marriage. We firmly believe BEST MATCH IS ONE WHO ACCEPTS YOU THE WAY YOU ARE.</p>
-        </div>
-        <div class="expand">How do I get started?</div>
-        <div class="collapse">
-            <p>We know you can't wait to find that perfect match! Just click on Signup icon and tell us a few meaningful details about yourself on 
-               the create profile page. On completing  your profile, you will be presented with your personalized dashboard where you can see incoming
-               and outgoing requests for you . You will start getting recommendations as per your profile & you can also search through our database 
-               to find your interest.</p>
-        </div>
       </div>
       
       </div>

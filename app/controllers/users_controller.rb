@@ -326,6 +326,7 @@ class UsersController < ApplicationController
   
   def signup
     params[:user] = {
+      :name => params[:name],
       :email => params[:email],
       :password => params[:password],
       :password_confirmation => params[:password_confirmation]
@@ -338,28 +339,27 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       cookies[:auth_token] = @user.auth_token
-      #redirect_to "/users/#{@user.id}/create_profile", :notice => "Sign Up Successful!" and return
-      send_confirmation_link @user
-      flash[:notice] = "A confirmation link has been sent to your email. Please confirm your account to proceed"
+      send_confirmation_link
+      flash[:notice] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
       render "static_pages/message"
     else
       render "#{failure_render_path}"
     end
   end
 
-  def send_confirmation_link(user)
-    confirmation_link = get_confirmation_key(user)
+  def send_confirmation_link
+    confirmation_link = get_confirmation_key
     mail_params = {
-      :mail_options => {:to => user.email, :subject => "please confirm your account. #{confirmation_link}"},
+      :mail_options => {:to => @user.email, :subject => "Please confirm your account. #{confirmation_link}"},
       :url => confirmation_link
     }
     UserMailer.delay.send_signup_confirmation mail_params
   end
 
-  def get_confirmation_key(user)
+  def get_confirmation_key
     hash = {
-      :id => user.id,
-      :email => user.email
+      :id => @user.id,
+      :email => @user.email
     }
 
     json_hash = hash.to_json
@@ -376,7 +376,7 @@ class UsersController < ApplicationController
       render_404
     end
     if user.signup_confirmed?
-      flash[:notice] = "Your account is already confirmed. Please login to continue."
+      flash[:info] = "Your account is already confirmed. Please login to continue."
       render "static_pages/message"
     elsif user.email == user_hash["email"]
       user.confirm_signup

@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   # require "aws_helper"
   # require 'RMagick'
   
-  attr_accessible :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation, :name
  # attr_accessor :password
   has_secure_password
   

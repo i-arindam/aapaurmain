@@ -2,7 +2,7 @@
   <div class="navbar-inner">
     <div class="container">
       <a href="/" id="logo"></a>
-      <% unless show_search? %>
+      <% if show_search? %>
         <form class="navbar-search pull-left" method="get" action="/search/keyword_search">
           <input name="searchfrom" type="hidden" value="header">
           <input class="search-query search-bar" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">

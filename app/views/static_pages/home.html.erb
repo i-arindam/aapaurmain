@@ -19,7 +19,8 @@
   </head>
   <body>
     <div id="fb-root"></div>
-
+    
+    <%= render :partial => 'static_pages/alerts' %>
     <!-- sign up-->
     <% if @user && @user.errors.any? %>
       <div class="signupError alert alert-error">
@@ -185,7 +186,7 @@
                 	
                 	
                 </div> <!--mybook-->
-              </div><!--boo_wrapper-->
+              </div><!--book_wrapper-->
       </div><!-- Main talking area container ends -->
       <div class="faqs">
         <h2 class="faqHeader">

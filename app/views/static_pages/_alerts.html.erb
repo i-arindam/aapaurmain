@@ -1,0 +1,8 @@
+<% [:notice, :error, :success, :warning].each do |mes| %>
+  <% if flash[mes] %>
+  <div class="alert alert-<%= (mes == :notice ? 'info' : mes.to_s) %>">
+    <a class="close">&times;</a>
+    <strong><%= flash[mes] %></strong>
+  </div>
+  <% end %>
+<% end %>

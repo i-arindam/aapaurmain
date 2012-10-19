@@ -76,7 +76,7 @@ module ApplicationHelper
   end
   
   def show_search?
-    params[:controller] == "static_pages" and params[:action] == "home"
+    !show_login?
   end
 
   def show_tip

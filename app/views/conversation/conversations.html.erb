@@ -6,6 +6,7 @@
 <% end %>
 
 <div class="span8 conversationContainer">
+  <% unless @values.blank? %>
   <ul class="conversationList">
     <% @values.each do |conv| %>
       <li class="conversation">
@@ -20,5 +21,9 @@
       </li>
     <% end %>
   </ul>
+  <% else %> <!-- unless @values.blank? -->
+    <h3>Start a talk with <%= @locked_with_user.name || 'Anonymous User' %></h3>
+    <a type="button" class="btn btn-danger btn-large startNew" href="conversations/new" value="Talk">Talk</a>
+  <% end %>
 </div>
   

@@ -1,6 +1,10 @@
+body {
+  background: url('web-texture-blue.jpg');
+}
+
 .span8.conversation {
   padding: 30px 30px 0px 30px;
-  background: #191814;
+  background: rgba(0, 255, 214, 0.28);
   margin-bottom: 30px;
   width: 770px;
   border-radius: 10px;

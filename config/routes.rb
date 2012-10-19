@@ -58,6 +58,7 @@ Aapaurmain::Application.routes.draw do
   
   # Conversations and messages
   get 'conversations' => 'conversation#conversations'
+  get 'conversations/new' => 'conversation#create'
   get 'conversations/:id' => 'conversation#show'
   post 'conversations/:id/new_message' => 'conversation#new_message'
 end

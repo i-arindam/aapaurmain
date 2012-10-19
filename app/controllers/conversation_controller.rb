@@ -1,8 +1,14 @@
 class ConversationController < ApplicationController
   
+  # List all conversations
   def conversations
-    render_404 and return unless current_user
-    my_id = current_user.id
+    @current_user = current_user
+    render_404 and return unless @current_user
+    my_id = @current_user.id
+    render_404 and return if @current_user.status == User::AVAILABLE
+
+    @locked_with_user = User.find_by_id(@current_user.locked_with)
+
     conversations = Conversation.where("from_user_id = ? OR to_user_id = ? ", my_id, my_id).order("updated_at DESC").uniq
     
     @values = conversations.map do |conv|
@@ -16,6 +22,7 @@ class ConversationController < ApplicationController
     end # end conversations.map
   end # End conversations
   
+  # Show one conversation and its messages
   def show
     @current_user = current_user
     render_404 and return unless @current_user
@@ -57,5 +64,15 @@ class ConversationController < ApplicationController
       }
     end
   end # End new_message
+
+  # Create a new conversation between 2 locked users
+  def create
+    @current_user = current_user
+    conv = Conversation.create({
+      :from_user_id => @current_user.id,
+      :to_user_id => @current_user.locked_with
+      })
+    redirect_to "/conversations/#{conv.id}"
+  end
 
 end

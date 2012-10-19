@@ -208,7 +208,10 @@ class UsersController < ApplicationController
         random_index = gimme_random_value($user_tips['locked_tips'].length)
         @tip = $user_tips['locked_tips'][random_index]
  
-        @conversation = Conversation.find_by_from_user_id_and_to_user_id(@user.id, @user.locked_with)
+        # Need to check if this user is a from or to user
+        @conversation = Conversation.find_by_from_user_id_and_to_user_id(@user.id, @user.locked_with) || Conversation.find_by_to_user_id_and_from_user_id(@user.id, @user.locked_with)
+        
+        # If they haven't talked, create the conversation here.
         unless @conversation
           @conversation = Conversation.create({
               :from_user_id => @user.id,

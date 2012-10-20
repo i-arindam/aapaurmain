@@ -47,6 +47,6 @@ class UserMailer < ActionMailer::Base
   #expects all mail users plus confirmation url
   def send_signup_confirmation(options)
     @url = options[:url]
-    send_mail options[:mail_options]
+    delay.send_mail options[:mail_options]
   end
 end

@@ -275,6 +275,9 @@ class User < ActiveRecord::Base
     self.setup_recos_on_create unless Rails.env == 'development'
     self.add_to_search_index unless Rails.env == 'development'
 
+    profile_update = self.profile_updates.find(:first, :conditions => ['status=?',0])
+    profile_update.status = ProfileUpdate::APPROVED
+
     self.save
   end
   ### PAID SECTION STARTS ###

@@ -379,7 +379,7 @@ class UsersController < ApplicationController
       :mail_options => {:to => @user.email, :subject => "Please confirm your account. #{confirmation_link}"},
       :url => confirmation_link
     }
-    UserMailer.delay.send_signup_confirmation mail_params
+    UserMailer.send_signup_confirmation mail_params
   end
 
   def get_confirmation_key

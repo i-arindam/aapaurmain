@@ -4,7 +4,7 @@ class ProfileUpdate < ActiveRecord::Base
   belongs_to :user
 
   #PROFILE APPROVAL STATUS
-  APPROVED = 0
-  NOT_APPROVED = 1
+  NOT_APPROVED = 0
+  APPROVED = 1
 
 end

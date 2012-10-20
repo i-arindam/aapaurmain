@@ -27,7 +27,8 @@ class AdminController < ApplicationController
 	end
 
 	def get_latest_profile_update(user)
-		@new_profile = user.profile_updates.find(:first, :conditions => ['status=?',0]) unless user.profile_updates.blank?
+		profile_update = user.profile_updates.find(:first, :conditions => ['status=?',0])
+		@new_profile = JSON.parse profile_update.profile
 	end
 
 	def approve_profile_update

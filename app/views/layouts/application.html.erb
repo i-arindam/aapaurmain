@@ -12,6 +12,11 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
+  <div class = "wrapper">
+    
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}", :class => "flash-error alert-#{name} alert-block"%>
+    <% end %>
     <%= yield %>
     <div class="push"></div>
     <%= yield :js_footer %>

@@ -1,0 +1,24 @@
+<% content_for :stylesheet do%>
+  <%= stylesheet_link_tag "admin/show_profile_update" %>    
+<% end %>
+<%= form_tag({:controller => 'admin', :action => 'show_profile_udpates'}, :class=> 'navbar-form pull-left'	) do %>
+	<input type="text" name="email" class="span2">
+	<button type="submit" class="btn">Submit</button>
+<% end %>
+<% if @user and @new_profile %>
+	<div class="profile-diff">
+		<% fields = User::USER_FIELDS_LIST %>
+	    <% fields.each do |f| %>
+	      	<% if @user[f.to_s] != @new_profile[f.to_s] %>
+				<div class="controls controls-row">
+					<input class="span3" type="text" value="<%= @user[f.to_s] %>" />
+					<input class="span3" type="text" value="<%= @new_profile[f.to_s] %>" /%>
+				</div>
+			<% end %>
+		<% end %>
+		<%= form_tag({:controller => 'admin', :action => 'approve_profile_update'}, :class=> 'navbar-form pull-left', :id => 'approve-update') do %>
+			<input type="hidden" name="id" value="<%= @user.id %>" />
+			<button type="submit" class="btn">Approve</button>
+		<% end %>
+	</div>
+<% end %>

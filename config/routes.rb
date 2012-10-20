@@ -16,7 +16,7 @@ Aapaurmain::Application.routes.draw do
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'
-  match '/users/:id/update' => 'users#update'
+  match '/update' => 'users#update'
   
   resources :users do
     resources :subscription
@@ -27,7 +27,7 @@ Aapaurmain::Application.routes.draw do
   match '/signup/confirmation' => 'users#confirm_signup'
   match '/users/:id/create_profile' => 'users#create_profile'
   match '/users/:id/update' => 'users#update'
-  match '/users/:id/edit_profile' => 'users#edit_profile'
+  match '/edit_profile' => 'users#edit_profile'
   
   
   # Request actions
@@ -61,4 +61,9 @@ Aapaurmain::Application.routes.draw do
   get 'conversations/new' => 'conversation#create'
   get 'conversations/:id' => 'conversation#show'
   post 'conversations/:id/new_message' => 'conversation#new_message'
+
+  #admin
+  match '/admin' => 'admin#index'
+  match '/admin/profiles/show' => 'admin#show_profile_udpates'
+  match '/admin/profiles/approve' => 'admin#approve_profile_update'
 end

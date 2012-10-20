@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121016161705) do
+ActiveRecord::Schema.define(:version => 20121020062520) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -112,6 +112,14 @@ ActiveRecord::Schema.define(:version => 20121016161705) do
 
   add_index "not_interested_in", ["not_interested"], :name => "index_not_interested_in_on_not_interested"
   add_index "not_interested_in", ["user_id"], :name => "index_not_interested_in_on_user_id"
+
+  create_table "profile_updates", :force => true do |t|
+    t.text     "profile"
+    t.integer  "status",     :default => 0
+    t.integer  "user_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "profile_viewers", :force => true do |t|
     t.integer  "profile_id", :null => false
@@ -227,12 +235,13 @@ ActiveRecord::Schema.define(:version => 20121016161705) do
     t.string   "blog_url"
     t.integer  "age"
     t.boolean  "photo_exists"
+    t.integer  "signup_status",                             :default => 0
     t.string   "recommended_user_ids",       :limit => 250
     t.string   "ideal_partner",              :limit => 500
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"
-  add_index "users", ["interested_in"], :name => "index_users_on_interested_in", :length => {"interested_in"=>"255"}
+  add_index "users", ["interested_in"], :name => "index_users_on_interested_in"
   add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["profession"], :name => "index_users_on_profession"
   add_index "users", ["spouse_preference"], :name => "index_users_on_spouse_preference"

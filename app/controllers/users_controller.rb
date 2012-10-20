@@ -422,77 +422,32 @@ class UsersController < ApplicationController
   end
 
   def edit_profile
-    @user = User.find_by_id(params[:id])
+    @user = current_user
     render :create_profile
   end
-  
+
   def update
-    @user = User.find_by_id(params[:id])
     uhash = params[:user]
-    success, message = true, ""
-    
+    approval_pending_updates = current_user.profile_updates.count(:all, :conditions => ['status = ?', 0])
+
+    redirect_to :back, :alert => "Already you have a profile update which is pending approval. Please update after previous update gets approved/rejected." and return if approval_pending_updates > 0
+
     valid_date = verify_dob(uhash[:dob])
     redirect_to :back, :alert => "Invalid Dob" and return unless valid_date
-    
+
     dob = get_date(uhash[:dob])
     sex = uhash[:sex]
     valid_age = verify_age(dob, sex)
     
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
-    
-    @user.dob = dob
-    fields = User::USER_FIELDS_LIST
-    fields.each do |f|
-      @user[f.to_s] = uhash[f] if uhash[f]
-    end
 
-    hobbies = (params[:user][:hobby]).split(",")
-    # old_hobbies = @user.hobby.map(&:hobby)
-    # changed_hobbies = hobbies-old_hobbies
+    @user = current_user
 
-    #ugly hack for updating values
-    @user.hobby.destroy_all
-    @user.interested_in.destroy_all
-    @user.not_interested_in.destroy_all
-    
-    unless hobbies.blank?
-      hobbies.each do |h|
-        uh = Hobby.new
-        uh.user_id = @user.id
-        uh.hobby = h
-        uh.save
-      end
-    end
+    profile_update = @user.profile_updates.new
+    profile_update.profile = uhash.to_json
 
-    interested = (params[:user][:interest]).split(",")
-    unless interested.blank?
-      interested.each do |i|
-        ui = InterestedIn.new
-        ui.user_id = @user.id
-        ui.interested = i
-        ui.save
-      end
-    end
+    profile_update.save
 
-    not_interested = (params[:user][:not_interest]).split(",")
-    unless not_interested.blank?
-      not_interested.each do |i|
-        ni = NotInterestedIn.new
-        ni.user_id = @user.id
-        ni.not_interested = i
-        ni.save
-      end
-    end
-    
-
-    @user.setup_recos_on_create unless Rails.env == 'development'
-    @user.add_to_search_index unless Rails.env == 'development'
-
-    
-
-    
-    @user.save
-    
     redirect_to "/users/showme"
   end
   

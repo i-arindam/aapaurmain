@@ -16,10 +16,18 @@
     </script>
   </head>
   <body>
-    <div id="left_content">&nbsp;</div>
+    
+    <div id="left_content">
+      <img src="/assets/users/image_placeholder.png" />
+      <span class="shortBio">
+        <%= @user.short_bio || 'Thats me' %>
+      </span>
+    </div>
+
     <div id="box_content">
     <div class="container dashBoardContainer profile">
-      <h3 class="span6">Howdy <%= @user.name %>!</h3>
+      <h3 class="span12">Howdy <%= @user.name %>!</h3>
+      <h3 class="span10">Check out the amazing people we found for you and some who found you!</h3>
       
       <ul class="nav nav-pills mainNav">
         <li class="active"><a href="#">Incoming Requests</a></li>

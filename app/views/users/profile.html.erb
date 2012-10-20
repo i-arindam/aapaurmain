@@ -38,16 +38,16 @@
               <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= @user.id %>"/>
 
             <% @values['show-withdraw'] ? '' : class_to_add_1="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger j-withdraw-request" value="Withdraw Request" id="withdraw-<%= @user.id %>" />
+              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger btn-large j-withdraw-request" value="Withdraw Request" id="withdraw-<%= @user.id %>" />
 
             <% @values['show-accept']  ? '' : class_to_add_2="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
+              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_2%> btn btn-success btn-large j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
 
             <% @values['show-decline'] ? '' : class_to_add_3="hide" %>
-              <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger j-decline-request" value="Decline Request" id="decline-<%= @user.id %>" />
+              <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger btn-large j-decline-request" value="Decline Request" id="decline-<%= @user.id %>" />
 
               <% @values['show-withdraw-lock'] ? '' : class_to_add_4="hide" %>
-                <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger j-withdraw-lock" value="Withdraw Lock" id="lock-<%= @user.id %>" />
+                <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger btn-large j-withdraw-lock" value="Withdraw Lock" id="lock-<%= @user.id %>" />
           </div>
         </div>
 

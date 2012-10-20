@@ -30,7 +30,8 @@ UserActions.prototype.setupActions = function() {
   this.setupWithdraw();
   this.setupDecline();
   this.setupAccept();
-  this.setupWithdraw();
+  this.setupWithdrawLock();
+  
 };
 
 UserActions.prototype.setupSend = function(){
@@ -180,6 +181,7 @@ UserActions.prototype.setupDecline = function(){
 };
 
 UserActions.prototype.setupWithdrawLock = function(){
+  var that = this;
   $('.j-withdraw-lock').live('click',function(evt){
     that.actionButton = this;
     var to_id = user_object.to_user_id || this.id.split("-")[1];

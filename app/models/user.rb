@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
   REQUEST_ACCEPTED = $aapaurmain_conf['requests-message']['accepted']
   REQUEST_DECLINED = $aapaurmain_conf['requests-message']['declined']
   REQUEST_FAILED = $aapaurmain_conf['requests-message']['failed']
+  REQUEST_NOT_SENT = $aapaurmain_conf['requests-message']['not-sent']
   
   # Enumeration for success/reject message in locked state
   SUCCESS_REQUEST_SENT = $aapaurmain_conf['locked-message']['success-sent']
@@ -240,12 +241,17 @@ class User < ActiveRecord::Base
   
   # Updates the status to available after withdraws a lock
   def update_status_post_lock_withdraw
-    locked_with = self.locked_with
-    locked_with_user = User.find_by_id(locked_with)
-    self.status = AVAILABLE
-    self.locked_with = nil
-    self.save!
-    self.deliver_notifications(:lock_withdrawn, [locked_with_user])
+    begin
+      locked_with = self.locked_with
+      locked_with_user = User.find_by_id(locked_with)
+      self.status = AVAILABLE
+      self.locked_with = nil
+      self.save!
+      self.deliver_notifications(:lock_withdrawn, [locked_with_user])
+    rescue
+      return false
+    end
+    return true
   end
   
   # Locks the two users and saves their states
@@ -408,13 +414,8 @@ class User < ActiveRecord::Base
       lock.save!
 
       # Making both users aware that they are locked.
-      self.locked_with = from_user.id
-      self.locked_since = Time.now.to_date
-      self.save
-
-      from_user.locked_with = self.id
-      from_user.locked_since = Time.now.to_date
-      from_user.save
+      lock_users(self,from_user)
+      
     rescue
       return false
     end
@@ -444,11 +445,11 @@ class User < ActiveRecord::Base
   #     The user to whom the request was sent
   def withdraw_request_to(to_user)
     begin
-      Request.set_as_withdrawn(to_user.id, self.id)
+      req = Request.find_by_from_id_and_to_id(self.id, to_user.id) rescue nil
+      req.destroy if req
     rescue
       return false
     end
-    #self.deliver_notifications(:request_withdrawn, [to_user])
     return true
   end
   
@@ -629,16 +630,26 @@ class User < ActiveRecord::Base
   #   The person with which I am locked. The user whose request got accepted
   def self.remove_both_users_on_lock(me, partner)
     # Delete all requests sent by either of us
-    Request.find_all_by_from_id(me.id).delete_all
-    Request.find_all_by_from_id(partner.id).delete_all
+    
+    req = Request.find_all_by_from_id(me.id)
+    req.delete_if {|x| x.to_id = partner.id}
+    req.each do |r|
+      r.delete
+    end
+
+    req = Request.find_all_by_from_id(partner.id)
+    req.delete_if {|x| x.to_id = me.id}
+    req.each do |r|
+      r.delete
+    end
 
     # Not touching any requests sent to either of us, since
     # those who had sent requests to me, can only withdraw.
     # In x days, the requests will expire anyways. 
 
     # Adding both users to remove table. It will be consumed periodically
-    RemoveUserFromSearch.create({ :user_id => me.id })
-    RemoveUserFromSearch.create({ :user_id => partner.id })
+    RemoveUsersFromSearch.create({ :user_id => me.id })
+    RemoveUsersFromSearch.create({ :user_id => partner.id })
 
   end
 

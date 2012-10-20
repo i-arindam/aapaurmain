@@ -29,7 +29,9 @@ class Request < ActiveRecord::Base
       req.status = ACCEPTED
       req.approved_date = Time.now.to_date
       req.save!
+      return true
     end
+    return false
   end
   
   # Finds the relevant request object and sets status to declined
@@ -46,15 +48,17 @@ class Request < ActiveRecord::Base
     end
   end
   
-  # Finds the relevant request object and sets status to withdrawn
+  
+
+   # Finds the relevant request object and sets status to ASKED
   # @param [Fixnum] to_id
   #     The id of the user to which the request was sent
   # @param [Fixnum] from_id
   #     The id of the user who sent the request, and who withdrew it
-  def self.set_as_withdrawn(to_id, from_id)
+  def self.set_as_asked(to_id, from_id)
     req = Request.find_by_from_id_and_to_id(from_id, to_id) rescue nil
     if req
-      req.status = WITHDRAWN
+      req.status = ASKED
       req.withdraw_date = Time.now.to_date
       req.save!
     end

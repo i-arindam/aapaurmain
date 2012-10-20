@@ -9,19 +9,30 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request will be sent
   def create_request
+    
     from_user = User.find_by_id(params[:from_id])
     render_404 and return unless from_user and from_user == current_user
     to_user = User.find_by_id(params[:to_id])
     
     render_404 and return unless to_user
-    success = from_user.create_new_request(to_user)
-    
-    message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
-    message.gsub!('{{user}}', to_user.name)
+
+    r = Request.find_by_from_id_and_to_id(from_user.id,to_user.id)
+    if r.nil?
+      success = from_user.create_new_request(to_user) 
+      message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
+    elsif r.status == Request::DECLINED
+      success = false
+      message = User::REQUEST_NOT_SENT
+    elsif r.status == Request::WITHDRAWN      
+      success = Request.set_as_asked(to_user.id,from_user.id)
+      message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
+    end 
+
+    m=message.gsub('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
   end
   
@@ -32,6 +43,7 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] from_id
   # => The id of the user who had sent the request
   def accept_request
+    
     to_user = User.find_by_id(params[:to_id])
     render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
     from_user = User.find_by_id(params[:from_id])
@@ -42,11 +54,11 @@ class UsersController < ApplicationController
     User.remove_both_users_on_lock(to_user, from_user) if success
 
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
-    message.gsub!('{{user}}', to_user.name)
+    m=message.gsub!('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
   end
   
@@ -58,6 +70,7 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request was sent
   def withdraw_request
+    
     from_user = User.find_by_id(params[:from_id])
     render_404 and return unless from_user and from_user == current_user
     to_user = User.find_by_id(params[:to_id])
@@ -66,11 +79,11 @@ class UsersController < ApplicationController
     
     success = from_user.withdraw_request_to(to_user)
     message = (success ? User::REQUEST_WITHDRAWN : User::REQUEST_FAILED)
-    message.gsub!('{{user}}', to_user.name)
+    m = message.gsub('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
   end
   
@@ -90,11 +103,11 @@ class UsersController < ApplicationController
     success = to_user.decline_request_from(from_user)
     
     message = (success ? User::REQUEST_DECLINED : User::REQUEST_FAILED)
-    message.gsub!('{{user}}', from_user.name)
+    m=message.gsub('{{user}}', from_user.name)
     
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
     
   end
@@ -119,16 +132,19 @@ class UsersController < ApplicationController
     
     lock.update_withdrawn
     to_user = User.find_by_id(params[:to_id])
-    message = (success ? User::REJECT_REQUEST_SENT : User::REJECT_REQUEST_FAILED_TO_SAVE)
-    message.gsub!('{{user}}', to_user.name)
+   
     
     withdrawing_user.update_status_post_lock_withdraw
     to_user.update_status_post_lock_withdraw
-
+    withdrawing_user.decline_request_from(to_user)
+    success = to_user.decline_request_from(withdrawing_user)
     
+    message = (success ? User::REJECT_REQUEST_SENT : User::REJECT_REQUEST_FAILED_TO_SAVE)
+    m=message.gsub('{{user}}', to_user.name)
+
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
     
   end
@@ -149,13 +165,13 @@ class UsersController < ApplicationController
     
     success = notifying_user.request_mark_as_married
     message = (success ? User::SUCCESS_REQUEST_SENT : User::SUCCESS_REQUEST_FAILED_TO_SAVE)
-    message.gsub!('{{user}}', to_approve_user.name)
+    m=message.gsub('{{user}}', to_approve_user.name)
     
     to_approve_user.send_request_for_successful_lock if success
 
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
   end
   
@@ -177,11 +193,11 @@ class UsersController < ApplicationController
     success = User.mark_as_married(requesting_user, accepting_user)
     
     message = (success ? User::SUCCESS_REQUEST_ACCEPTED : User::SUCCESS_REQUEST_FAILED_TO_SAVE)
-    message.gsub!('{{user}}', to_approve_user.name)
+    m=message.gsub('{{user}}', to_approve_user.name)
 
     render :json => {
       :success => success,
-      :message => message
+      :message => m
     }
   end
   
@@ -196,6 +212,7 @@ class UsersController < ApplicationController
   end
   
   def showme
+    
     if @user = current_user
 
       @values = {}
@@ -240,7 +257,6 @@ class UsersController < ApplicationController
         end
       end
       
-     
     
       out_requests_ids = @user.outgoing_requests.collect(&:to_id)
       @out_requests = User.find_all_by_id(out_requests_ids)
@@ -274,7 +290,7 @@ class UsersController < ApplicationController
   end
     
   def show
-
+    
     render_404 and return unless current_user
     @values = {}
     render_404 and return unless params[:id]
@@ -288,20 +304,25 @@ class UsersController < ApplicationController
       end
 
       #Check if the logged in user has sent request to this user. Show buttons accordingly
-      request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
-      @values['show-send'] = true if request.nil?
+      sent_request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
+      @values['show-send'] = true if sent_request.nil? 
 
-      if request
-         @values['show-chat'] = (request.status == Request::ACCEPTED)
-        @values['show-withdraw'] = @current_user && request.status == Request::ASKED
+      if sent_request
+        @values['show-withdraw'] =  true if sent_request.status == Request::ASKED   
+        @values['show-send'] =  false if sent_request.status == Request::DECLINED  
       end
     
       #Check if the logged in user has received request from this user. Show buttons accordingly
-      request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
-      if request
-        @values['show-accept'] = @values['show-decline'] = request.status == Request::ASKED if @current_user.id == params[:id].to_i
+      received_request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
+      if received_request 
+        @values['show-accept'] = @values['show-decline'] =  (received_request.status == Request::ASKED)  
+        @values['show-send'] =  false  
       end
       
+      if (sent_request and sent_request.status == Request::ACCEPTED) or (received_request and received_request.status == Request::ACCEPTED)
+         @values['show-chat'] = @values['show-withdraw-lock'] = true
+         @values['show-send'] = @values['show-accept'] = @values['show-withdraw'] = false
+      end
 
       # Log profile views
       view = @user.profile_viewers.where(:viewer_id => @current_user.id)

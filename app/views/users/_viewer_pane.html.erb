@@ -30,46 +30,52 @@
           <div class="name">
             <h2><%= name %></h2>
           </div>
+
+          <div class="shortProfile">
+            <label class="value userBio"><%= user.short_bio || 'Thats me' %></label>
+          </div>
+
           <div class="bio-details">
             <div>
               <label class="span2">Ideal Partner</label>
-              <p class="span2"><%= ideal_marriage %></p>
+              <label class="value"><%= ideal_marriage %></label>
             </div>
             <div>
               <label class="span2">What excites me!</label>
-              <p class="span2"><%= (user.interested_in.map(&:interested)).join(",") %></p>	
+              <label class="value"><%= (user.interested_in.map(&:interested)).join(",") %></label>
             </div>
             <div>
               <label class="span2">Hobbies</label>
-              <p class="span2"><%= (user.hobby.map(&:hobby)).join(",") %></p>
+              <label class="value"><%= (user.hobby.map(&:hobby)).join(",") %></label>
             </div>
             <div>
               <label class="span2">Profession</label>
-              <p class="span2"><%= profession %></p>	
+              <label class="value"><%= profession %></label>
             </div>
-          </div>
+          </div> <!-- div.bio-details -->
+        </div> <!-- div.bio -->
 
-      <div class="pull-left">
-      <% if info%>  
-        <% info[:show_send] ? '' : class_to_add="hide" %>
-          <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= user_id %>"/>
+        <div class="pull-left">
+          <% if info%>  
+            <% info[:show_send] ? '' : class_to_add="hide" %>
+              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= user_id %>"/>
 
-        <% info[:show_withdraw] ? '' : class_to_add_1="hide" %>
-          <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger j-withdraw-request" value="Withdraw Request" id="withdraw-<%= user_id %>" />
+            <% info[:show_withdraw] ? '' : class_to_add_1="hide" %>
+              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger j-withdraw-request" value="Withdraw Request" id="withdraw-<%= user_id %>" />
 
-        <% info[:show_accept] ? '' : class_to_add_2="hide" %>
-          <input type="button" data-toggle="modal" data-target="#myModal" class=" <%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= user_id %>" />
+            <% info[:show_accept] ? '' : class_to_add_2="hide" %>
+              <input type="button" data-toggle="modal" data-target="#myModal" class=" <%=class_to_add_2%> btn btn-success j-accept-request" value="Accept Request" id="accept-<%= user_id %>" />
 
-        <% info[:show_decline] ? '' : class_to_add_3="hide" %>
-          <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger j-decline-request" value="Decline Request" id="decline-<%= user_id %>" />
-          
-          <% info[:show_withdraw_lock] ? '' : class_to_add_4="hide" %>
-            <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger j-withdraw-lock" value="Withdraw Lock" id="lock-<%= user_id %>" />
+            <% info[:show_decline] ? '' : class_to_add_3="hide" %>
+              <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger j-decline-request" value="Decline Request" id="decline-<%= user_id %>" />
+              
+            <% info[:show_withdraw_lock] ? '' : class_to_add_4="hide" %>
+                <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger j-withdraw-lock" value="Withdraw Lock" id="lock-<%= user_id %>" />
 
-      <% end %>
+          <% end %>
 
-    </div>	
-    </li>
+        </div>	
+      </li>
     <% end %>
   <% end %>
   </ul>

@@ -1,5 +1,6 @@
 function UserActions() {
   this.setupActions();
+  
 };
 
 UserActions.prototype.requestStates = { 
@@ -41,7 +42,7 @@ UserActions.prototype.setupSend = function(){
     evt.preventDefault();
     evt.stopPropagation();
     var to_id = user_object.to_user_id || this.id.split("-")[1]
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm(user_object.send_request_text, function(confirmed) {
                         console.log("Confirmed: "+confirmed);
                         if (confirmed){
 
@@ -77,7 +78,7 @@ UserActions.prototype.setupWithdraw = function(){
     evt.preventDefault();
     evt.stopPropagation();
     var to_id = user_object.to_user_id || this.id.split("-")[1];
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm(user_object.withdraw_request_text, function(confirmed) {
                         console.log("Confirmed: "+confirmed);
       if (confirmed){
         $.ajax({
@@ -113,7 +114,7 @@ UserActions.prototype.setupAccept = function(){
     var to_id = user_object.to_user_id || this.id.split("-")[1];
     evt.preventDefault();
     evt.stopPropagation();
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm(user_object.accept_request_text, function(confirmed) {
                           console.log("Confirmed: "+confirmed);
       if (confirmed){
         $.ajax({
@@ -150,7 +151,7 @@ UserActions.prototype.setupDecline = function(){
     var to_id = user_object.to_user_id || this.id.split("-")[1];
     evt.preventDefault();
     evt.stopPropagation();
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm(user_object.decline_request_text, function(confirmed) {
                           console.log("Confirmed: "+confirmed);
       if (confirmed){
         $.ajax({
@@ -187,7 +188,7 @@ UserActions.prototype.setupWithdrawLock = function(){
     var to_id = user_object.to_user_id || this.id.split("-")[1];
     evt.preventDefault();
     evt.stopPropagation();
-    bootbox.confirm("Are you sure?", function(confirmed) {
+    bootbox.confirm(user_object.withdraw_lock_text, function(confirmed) {
                           console.log("Confirmed: "+confirmed);
       if (confirmed){    
         $.ajax({

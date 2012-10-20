@@ -471,7 +471,12 @@ class UsersController < ApplicationController
     json_obj = {
       :to_user_id => to_id.to_i,
       :session_user_id => (current_user && current_user.id),
-      :name => (current_user && current_user.name)
+      :name => (current_user && current_user.name),
+      :send_request_text => $aapaurmain_conf['modal-dialog-messages']['send-request'],
+      :accept_request_text => $aapaurmain_conf['modal-dialog-messages']['accept-request'],
+      :decline_request_text => $aapaurmain_conf['modal-dialog-messages']['decline-request'],
+      :withdraw_request_text => $aapaurmain_conf['modal-dialog-messages']['withdraw-request'],
+      :withdraw_lock_text => $aapaurmain_conf['modal-dialog-messages']['withdraw_lock']
     }
     json_obj.to_json
   end

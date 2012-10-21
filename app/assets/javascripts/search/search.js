@@ -1,5 +1,5 @@
 $(function () {
-  var pane = new ViewerPaneController();
+  var pane = new ViewerPaneController('noId');
   pane.bindNewAdditions();
   
   $('.searchList').setupHorizontalScroll();

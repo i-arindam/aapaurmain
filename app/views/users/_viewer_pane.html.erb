@@ -7,7 +7,7 @@
 <% end %>
 
 <div class="viewerPane <%= class_name %>">
-  <ul class="user-container" id="<%= id %>">
+  <ul class="user-container" id="<%= defined?(id) ? id : 'noId' %>">
   <% if user_collection and user_collection.length > 0 %>
   <% puts user_collection %>
     <% user_collection.each do |user|

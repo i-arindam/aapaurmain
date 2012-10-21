@@ -46,7 +46,7 @@ class SearchController < ApplicationController
     render_404 and return unless @current_user
 
     if params[:q] == "*"
-      user_ids = @current_user.recommended_user_ids.split(",")
+      user_ids = @current_user.recommended_user_ids and @current_user.recommended_user_ids.split(",")
     else
       qf, q = form_keyword_search_query(params[:q])
       solr = RSolr.connect :url => base_url

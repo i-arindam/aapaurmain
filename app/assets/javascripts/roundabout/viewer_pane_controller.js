@@ -1,5 +1,5 @@
-function ViewerPaneController(){
-  this.selector = '.user-container';
+function ViewerPaneController(id){
+  this.selector = '#' + id;
   this._init();
 }
 
@@ -34,22 +34,9 @@ ViewerPaneController.prototype.bindNewAdditions = function() {
   $(that.liSelectorClass).live('click',function(evt){
     evt.preventDefault();
     var index = that.hasChild('#' + 'user_' + this.id);
-    if (index === -1){
-    $.ajax({
-       type: "GET",
-       url: '/users/' + this.id + '/more_info',
-       dataType: "html",
-       success: function(html_data){
-         that.addChild(html_data);
-       },
-       failure: function(){
-        console.log("FUcked");
-       }
-
-     });
-   }else{
+    
      that.skipTo(index);
-   }
+   
  });
   
 }

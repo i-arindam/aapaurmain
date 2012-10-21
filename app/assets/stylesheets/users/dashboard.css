@@ -192,4 +192,10 @@ ul.mainNav li a {
 .mainNav li.active a {
   pointer-events: none;
 }
-
+.dashboardHeading {
+  font-family: Georgia;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  word-spacing: 2px;
+}

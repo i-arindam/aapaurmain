@@ -26,8 +26,7 @@
 
     <div id="box_content">
     <div class="container dashBoardContainer profile">
-      <h3 class="span12">Howdy <%= @user.name %>!</h3>
-      <h3 class="span10">Check out the amazing people we found for you and some who found you!</h3>
+      <span class="span12 dashboardHeading">Howdy <%= @user.name %>! Check out the amazing people we found for you and some who found you!</span>
       
       <ul class="nav nav-pills mainNav">
         <li class="active"><a href="#">Incoming Requests</a></li>
@@ -96,11 +95,11 @@
 
       <h3 class="span6 requestLabel">&nbsp;</h3>
       <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => '' ,
-         :viewer_pane_info => @viewer_pane_info[:in_requests] } %>
+         :viewer_pane_info => @viewer_pane_info[:in_requests] ,:id => 'in_pane' } %>
       <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
-        :viewer_pane_info => @viewer_pane_info[:out_requests]} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => 'hide' , :viewer_pane_info => nil} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil} %>
+        :viewer_pane_info => @viewer_pane_info[:out_requests] , :id => 'out_pane'} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => 'hide' , :viewer_pane_info => nil , :id => 'recos_pane'} %>
+      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil , :id =>'prof_view_pane'} %>
       
     </div>
     </div> <!-- box_content -->

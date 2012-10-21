@@ -1,6 +1,12 @@
 $(function () {
-  var pane = new ViewerPaneController();
-  pane.bindNewAdditions();
+  var inPane = new ViewerPaneController('in_pane');
+  var outPane = new ViewerPaneController('out_pane');
+  var recoPane = new ViewerPaneController('recos_pane');
+  var profViewPane = new ViewerPaneController('prof_view_pane');
+  inPane.bindNewAdditions();
+  outPane.bindNewAdditions();
+  recoPane.bindNewAdditions();
+  profViewPane.bindNewAdditions();
   
   $('.incomingRequests').setupHorizontalScroll();
   $('.outgoingRequests').setupHorizontalScroll();

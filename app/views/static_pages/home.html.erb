@@ -88,6 +88,7 @@
       </div>
     <% end %>
 
+    <% unless current_user %>
     <div class="signup">
       <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
         <div class="control-group">
@@ -122,6 +123,7 @@
         <%= image_tag "cutie.png"%>
       </div>
     </div><!--signup ends-->
+    <%end%>
     
     <!-- Main talking area -->
     <div class="container">

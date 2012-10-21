@@ -41,7 +41,7 @@
               <li><%= link_to "Dashboard", :controller => "users", :action => "showme", :id => user.id %></li>
               <li><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
 
-              <li><%= link_to "Messages", conversations_path %></li>
+              <li><%= link_to "Messages", conversations_path if user.status == 1 %></li>
             </ul>
 
               <ul class="nav nav-dropdown">

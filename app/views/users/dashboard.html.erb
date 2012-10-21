@@ -18,6 +18,9 @@
   <body>
     
     <div id="left_content">
+      <span class="shortBio">
+        <%= @user.name %>
+      </span>
       <img src="/assets/users/image_placeholder.png" />
       <span class="shortBio">
         <%= @user.short_bio || 'Thats me' %>
@@ -26,7 +29,7 @@
 
     <div id="box_content">
     <div class="container dashBoardContainer profile">
-      <span class="span12 dashboardHeading">Howdy <%= @user.name %>! Check out the amazing people we found for you and some who found you!</span>
+      <span class="span12 dashboardHeading">Howdy! Check out the amazing people we found for you and some who found you!</span>
       
       <ul class="nav nav-pills mainNav">
         <li class="<%= @tab_to_show == 'in' ? 'active' : '' %>"><a href="#">Incoming Requests</a></li>

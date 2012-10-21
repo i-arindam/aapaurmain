@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Aap Aur Main</title>
+        <%= stylesheet_link_tag 'emails/email'%>  
+</head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+      <center>
+          <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+              <tr>
+                  <td align="center" valign="top">
+                      <!-- // BEGIN PREHEADER -->
+                        <%= render :partial => 'mail_templates/email_header'%>
+                        <!-- END PREHEADER \\ -->
+                      <!-- // BEGIN CONTAINER -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateContainer">
+                          <tr>
+                              <td align="center" valign="top">
+                                  <!-- // BEGIN BODY -->
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="background-color:#D65959">
+                                      <tr>
+                                          <td align="center" valign="top">
+                                              <table border="0" cellpadding="0" cellspacing="0" width="600">
+                                                  <tr>
+                                                      <td align="center" valign="top" style="padding-bottom:20px;">
+                                                          <img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/snowflakes_top.png" height="90" width="600" style="display:block;">
+                                                            <table border="0" cellpadding="20" cellspacing="0" width="600" id="bodyContentBlock" style="background-color:rgba(245, 245, 220, 0.96)">
+                                                                <tr>
+                                                                    <td align="center" valign="top">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                                          <tr>
+                                                                              <td id="templateHeader" class="headerContent" style="padding-bottom:20px;text-align:center">
+                                                                                  <img src="http://www.aapaurmain.com/assets/logo.png" style="max-width:560px;" id="headerImage campaign-icon" mc:label="logo_image" mc:edit="logo_image" mc:allowtext>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top" class="bodyContent" style="padding-top:20px; color:#505050;font-family:Georgia;font-size:17px;line-height:150%;
+text-align:left;" mc:edit="body_content01"><h1>
+  <span style="font-size:24px;">Your Life, Your Choice!</span></h1>
+<br>
+Hello There! 
+<br>
+<br>
+<p>
+<i>"Single but not yet ready to explore just another match making website” </i>- Enough said! </p>
+                                            
+<ul>How about a platform that strictly, strongly, & proudly gives you people matched on things that matter:
+  <li>Your opinions, aspirations and preferences as a person - as today and going forward</li>
+  <li>Your understanding of yourself and expectations from your partner and marriage</li>
+  <li>We do not provide you matches based on your caste, religion, family structure, skin colour, height or weight and we do not even ask you about such things. What matters is to know you as a person and not as a horoscope!</li>
+</ul>
+
+<p>Sounds interesting? Can give it a shot?! Go ahead & try our newly launched match making portal <a href="http://www.aapaurmain.com">AapAurMain</a>. </p>
+
+<p>We at AapAurMain, aim to redefine the experience of finding someone you would want to know further completely. We render you people and ask things that matter. We know it does not need to go by the books anymore!  We firmly believe BEST MATCH IS THE ONE WHO ACCEPTS YOU FOR WHO YOU ARE. </p>
+
+<p>We are in our Beta Stage and are offering free one month premium subscription - only for a limited period! Premium subscription gives you a chance to explore the entire world inside AapAurMai - a privilege we are offering only to our early loyal birds;</p>   
+
+<p>Rush to discover your chapter at AapAurMain.com or if you know friends / family / colleagues looking forward to stumbling upon one roof that talks meaningful people and not numbers; do forward this mail to them!</p>
+
+<p>Thank you for your support and we look forward to meeting you in our world. </p>
+
+
+<br>
+
+<br>
+<br>
+Best Wishes, 
+<br>
+Team Aap Aur Main
+<br>
+<br>
+</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/snowflakes_bottom.png" height="45" width="600" style="display:block;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td align="center" valign="top">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td height="158">&nbsp;</td>
+                                                        <td rowspan="2"><img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/snowman_footer.png" height="190" width="600" style="display:block;"></td>
+                                                        <td height="158">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="50%" height="32" bgcolor="#FFFFFF">&nbsp;</td> 
+                                                        <td width="50%" height="32" bgcolor="#FFFFFF">&nbsp;</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- END BODY \\ -->
+                                </td>
+                            </tr>
+                          <tr>
+                              <td align="center" valign="top">
+                                  <!-- // BEGIN FOOTER -->
+                                  <%= render :partial => "mail_templates/email_footer" %>
+                                    <!-- END FOOTER \\ -->
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- END CONTAINER \\ -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

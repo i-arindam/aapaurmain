@@ -210,6 +210,10 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+
+  # def show_my_profile
+  #   redirect_to (:action => 'show', :parmams => {:dashboard => false}) 
+  # end
   
   def showme
     
@@ -298,11 +302,7 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id]) 
     render_404 and return unless @user
     
-    if @current_user 
-      if @current_user.id == params[:id].to_i
-        redirect_to :action => :showme and return        
-      end
-
+    if @current_user.id != params[:id].to_i     # View other user's profile
       #Check if the logged in user has sent request to this user. Show buttons accordingly
       sent_request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
       @values['show-send'] = true if sent_request.nil? 
@@ -333,9 +333,9 @@ class UsersController < ApplicationController
         view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
       end
       
-    else # Not logged in user
+    else # Show my own profile
       @values['show-chat'] = false
-      @values['show-send'] = true
+      @values['show-send'] = @values['show-accept'] = @values['show-withdraw'] = @values['show-withdraw-lock'] = false 
       @values['show-cta'] = true
     end
     
@@ -493,7 +493,7 @@ class UsersController < ApplicationController
     
     @user.save
     
-    redirect_to "/users/showme"
+    redirect_to "/users/#{@user.id}"
   end
   
   def more_info

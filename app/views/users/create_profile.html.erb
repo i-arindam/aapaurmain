@@ -76,8 +76,8 @@
             <div class="control-group">
               <label class="control-label" for="sex">Sex</label>
               <div class="controls" id="sex">
-                <input type="radio" name="user[sex]" value="male" checked="<%=@user.sex == 'male'%>"/> Male
-                <input type="radio" name="user[sex]" value="female" checked="<%=@user.sex == 'female'%>"/> Female
+                <input type="radio" name="user[sex]" value="male" checked="<%= @user.sex == 'male' %>"/> Male
+                <input type="radio" name="user[sex]" value="female" checked="<%= @user.sex == 'female' %>"/> Female
               </div>
             </div>
 
@@ -116,10 +116,10 @@
 
            
 
-            <div class="control-group hide">
+            <div class="control-group">
               <label class="control-label wider" for="siblings-count">How many siblings do you have</label>
               <div class="controls">
-                <input type="text" class="span4" name="user[siblings-count]" id="siblings-count" placeholder="The number of siblings" value="<%=@user.siblings %>">
+                <input type="text" class="span4" name="user[siblings]" id="siblings" placeholder="The number of siblings" value="<%=@user.siblings %>">
               </div>
             </div>
 

@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
       :name, :sex, :family_preference, :spouse_preference,
       :spouse_salary, :further_education_plans, :spouse_further_education,
       :settle_else, :sexual_preference, :virginity_opinion, :ideal_marriage,
-      :salary, :siblings, :profession, :dream_for_future, :settled_in, :blog_url, :short_bio, :education, :ideal_partner
+      :salary, :profession, :dream_for_future, :settled_in, :blog_url, :short_bio, :education, :ideal_partner
     ]
   # add types for profession
 

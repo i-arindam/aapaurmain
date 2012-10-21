@@ -453,6 +453,7 @@ class UsersController < ApplicationController
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
     
     @user.dob = dob
+    @user.siblings = uhash[:siblings].to_i rescue nil
     fields = User::USER_FIELDS_LIST
     fields.each do |f|
       @user[f.to_s] = uhash[f] if uhash[f]

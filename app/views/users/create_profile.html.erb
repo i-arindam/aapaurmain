@@ -6,10 +6,46 @@
     <% end %>
     <% content_for :js_footer do %>
       <%= javascript_include_tag "global" %>
+      <%= javascript_include_tag "jquery.validate.min" %>
     <% end %>
     <title>Create your Profile</title>
   </head>
-  
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.profileContainer form').validate({
+        submitHandler: function(form) {
+          $(form).ajaxSubmit();
+        }, 
+        rules: {
+          "user[name]": {
+            required: true,
+            minlength: 4
+          },
+          "user[sex]": {
+            required: true,
+            checked: true
+          },
+          "user[short_bio]": {
+            required: true,
+            minlength: 10
+          },
+          "user[education]": "required",
+          "user[further_education_plans]": "required",
+          "user[profession]": "required",
+          "user[siblings]": "required",
+          "user[hobby]": "required",
+          "user[dream_for_future]": "required",
+          "user[settled_in]": "required",
+          "user[virginity_opinion]": "required",
+          "user[ideal_partner]": "required",
+          "user[ideal_marriage]": "required",
+          "user[interest]": "required",
+          "user[not_interest]": "required",
+          "user[blog_url]": "required"
+        }
+      });
+    });
+  </script>
   <body>
     <div class="container-fluid">
       
@@ -83,7 +119,9 @@
 
            
 
-            <span class="label label-inverse span9">Something important about <em>you</em></span>
+            <span class="label label-inverse span9">
+              Something important about <em>you</em>
+            </span>
 
              <div class="control-group">
               <label class="control-label" for="shortBio">Your short bio</label>
@@ -114,10 +152,8 @@
               </div>
             </div>
 
-           
-
-            <div class="control-group">
-              <label class="control-label wider" for="siblings-count">How many siblings do you have</label>
+            <div class="control-group hide">
+              <label class="control-label wider" for="siblings">How many siblings do you have</label>
               <div class="controls">
                 <input type="text" class="span4" name="user[siblings]" id="siblings" placeholder="The number of siblings" value="<%=@user.siblings %>">
               </div>

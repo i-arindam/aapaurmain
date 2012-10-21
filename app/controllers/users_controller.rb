@@ -280,7 +280,7 @@ class UsersController < ApplicationController
           }
       end
       
-      @recos = User.find_all_by_id(@user.recommended_user_ids)
+      @recos = User.find_all_by_id([1, 2, 3, 4, 5, 6, 7, 8])
 
       @tab_to_show = 'reco' unless @recos.blank? or defined?(@tab_to_show)
       

@@ -41,11 +41,10 @@ text-align:left;" mc:edit="body_content01"><h1>
 <br>
 &nbsp;Hey <%= @users[0].name %><br>
 <br>
-How would you feel if you come to know someone wants to know you better? And that “someone” has similar aspirations and interests like yours.
-Got a kick?! Why don’t you drop in and find out if <%= @users[1].name %> is the one you are actually looking for!
+You just got a request from someone. And that “someone” has similar aspirations and interests like yours.Got a kick?! Simply drop in at <a href="http://www.aapaurmain.com">AapAurMain</a> and find out if <%= @users[1].name %> is the one you are looking for!
 <br>
 <br>
-This is what <a href="http://www.aapaurmain.com<%=url_for(@users[1])%>"><%= @users[1].name %></a> says about <%= @users[1].sex == "fe" ? 'herself' : 'himself'%> :-
+This is what <a href="http://www.aapaurmain.com<%=url_for(@users[1])%>"><%= @users[1].name %></a> says about <%= @users[1].sex == "female" ? 'herself' : 'himself'%> :-
 <br>
 <%= @users[1].short_bio %>
 <br>

@@ -248,6 +248,9 @@ class UsersController < ApplicationController
       
       in_requests_ids = @user.incoming_requests.collect(&:from_id)
       @in_requests = User.find_all_by_id(in_requests_ids)
+
+      @tab_to_show = 'in' unless @in_requests.blank?
+
       @viewer_pane_info = {}
       @viewer_pane_info[:in_requests] = {}
       in_requests_ids.each do |in_req|
@@ -264,6 +267,9 @@ class UsersController < ApplicationController
     
       out_requests_ids = @user.outgoing_requests.collect(&:to_id)
       @out_requests = User.find_all_by_id(out_requests_ids)
+
+      @tab_to_show = 'out' unless @out_requests.blank? or defined?(@tab_to_show)
+
       @viewer_pane_info[:out_requests] = {}
       out_requests_ids.each do |out_req|
         request = Request.find_by_from_id_and_to_id(@user.id,out_req)
@@ -275,6 +281,8 @@ class UsersController < ApplicationController
       end
       
       @recos = User.find_all_by_id(@user.recommended_user_ids)
+
+      @tab_to_show = 'reco' unless @recos.blank? or defined?(@tab_to_show)
       
       profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
       @profile_viewers = profile_viewer_ids.map do |p|
@@ -565,5 +573,5 @@ class UsersController < ApplicationController
        render :json => { :success => false, :message => 'Deleting failed. Please try again.' }
      end
    end
-  
+
 end

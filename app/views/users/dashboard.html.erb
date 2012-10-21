@@ -29,14 +29,14 @@
       <span class="span12 dashboardHeading">Howdy <%= @user.name %>! Check out the amazing people we found for you and some who found you!</span>
       
       <ul class="nav nav-pills mainNav">
-        <li class="active"><a href="#">Incoming Requests</a></li>
-        <li><a href="#">Outgoing Requests</a></li>
-        <li><a href="#">Recommendations</a></li>
+        <li class="<%= @tab_to_show == 'in' ? 'active' : '' %>"><a href="#">Incoming Requests</a></li>
+        <li class="<%= @tab_to_show == 'out' ? 'active' : '' %>"><a href="#">Outgoing Requests</a></li>
+        <li class="<%= @tab_to_show == 'reco' ? 'active' : '' %>"><a href="#">Recommendations</a></li>
         <li><a href="#">Your Profile Viewers</a></li>
       </ul>
       
       
-      <div class="requestContainer span10">
+      <div class="requestContainer span10 <%= @tab_to_show == 'in' ? '' : 'hide' %>">
         <ul class="requestList incomingRequests">
           <% @in_requests.each do |in_req| %>
           <li class="select-thumbnails" id="<%= in_req.id %>">
@@ -50,7 +50,7 @@
         </ul>
       </div>
 
-      <div class="requestContainer span10 hide">
+      <div class="requestContainer span10 <%= @tab_to_show == 'out' ? '' : 'hide' %>">
         <ul class="requestList outgoingRequests">
           <% @out_requests.each do |out_req| %>
           <li class="select-thumbnails" id= '<%= out_req.id %>' >
@@ -64,7 +64,7 @@
         </ul>
       </div>
 
-      <div class="requestContainer span10 hide">
+      <div class="requestContainer span10 <%= @tab_to_show == 'reco' ? '' : 'hide' %>">
         <ul class="requestList recommendations">
           <% @recos.each do |reco| %>
           <li class="select-thumbnails" id= '<%= reco.id %>' >

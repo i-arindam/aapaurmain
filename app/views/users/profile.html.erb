@@ -29,7 +29,7 @@
           </div>
           <div class="bioSection">
             <h1 class="name"><%= @user.name %></h1>
-            <h3 class="shortBio"><%= @user.short_bio %></h3>
+            <h3 class="shortBio"><%= @user.short_bio || 'Thats me' %></h3>
           </div>
           
           <div class="profileActions">
@@ -90,11 +90,6 @@
                   <label class="span2">Opinion on Virginity</label>
                   <label class="span4"><%= @user.virginity_opinion %></label>
                 </div>
-                <div class="row">
-                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
-                  <label class="span2">Ideal Partner</label>
-                  <label class="span4"><%= @user.ideal_partner %></label>
-                </div>
                  <div class="row">
                   <img src="/assets/users/clipboard-2.png" class="profileIcon" />
                   <label class="span2">My kind of marriage</label>
@@ -141,11 +136,16 @@
                   <label class="span2">Siblings</label>
                   <label class="span4"><%= @user.siblings %></label>
                 </div>
+                <div class="row">
+                  <img src="/assets/users/users.png" class="profileIcon">
+                  <label class="span2 h4">Sex</label>
+                  <label class="span4"><%= @user.sex %></label>
+                </div>
               </div>
             </div>
             <div class="group col rcol2">
               <div class="row heading">
-                <span><em>Aap</em></span>
+                <span><em>Aap (My thoughts about you)</em></span>
               </div>
               <div class="values">
                 <div class="row">
@@ -164,9 +164,9 @@
                   <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
                 </div>
                 <div class="row">
-                  <img src="/assets/users/users.png" class="profileIcon">
-                  <label class="span2 h4">Sex</label>
-                  <label class="span4"><%= @user.sex %></label>
+                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
+                  <label class="span2">Ideal Partner</label>
+                  <label class="span4"><%= @user.ideal_partner %></label>
                 </div>
               </div>
             </div>

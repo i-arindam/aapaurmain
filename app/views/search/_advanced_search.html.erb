@@ -9,7 +9,6 @@
         <div class="row">
           <span class="searchLabel">Hobbies</span>
           <input class="searchFilters" type="text" name="search[pref_hobbies]" />
-          <i class="icon-question-sign" rel="tooltip" data-original-title="Enter comma separated values for hobbies that excite you"></i>
         </div>
         
         <div class="row">
@@ -24,7 +23,6 @@
                 <li><a href="#" data-value="<%= prof %>"><%= prof %></a></li>
               <% end %>
             </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="Any specific profession you are eagerly looking for?"></i>
             <input type="hidden" name="search[pref_profession]">
           </div>
         </div>
@@ -41,7 +39,6 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="Looking for someone who is willing to change his/her current city"></i>
             <input type="hidden" name="search[pref_relocate]">
           </div>
         </div>
@@ -49,7 +46,6 @@
         <div class="row">
           <span class="searchLabel">City</span>
           <input type="text" class="searchFilters" name="search[pref_location]" />
-          <i class="icon-question-sign" rel="tooltip" data-original-title="Which city you want your partner to be in?"></i>
         </div>
         
         <div class="row">
@@ -64,7 +60,6 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="Looking for someone with this kind of preference for spouse"></i>
             <input type="hidden" name="search[pref_spouse_preference]">
           </div>
         </div>
@@ -72,40 +67,11 @@
         <div class="row">
           <span class="searchLabel">Ideal Marriage</span>
           <input type="text" class="searchFilters" name="search[pref_ideal_marriage]" />
-          <i class="icon-question-sign" rel="tooltip" data-original-title="Your definition of ideal marriage should be applied to search results?"></i>
-        </div>
-        
-<!--         <div class="row">
-          <span class="searchLabel">Opinion on virginity</span>
-          <div class="btn-group searchFilters">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Select one ?
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-            </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="What should your partner's reaction be to this question"></i>
-            <input type="hidden" name="search[pref_virginity_opinion]">
-          </div>
-        </div>
- -->        
-        <div class="row">
-          <span class="searchLabel">Sex of your partner</span>
-          <label class="radio">
-            <input type="radio" class="maleRadio" name="search[pref_sex]" value="male" <%= user.sex == 'female' ? 'checked' : ''%>>
-            Female
-          </label>
-          <label class="radio">
-            <input type="radio" class="femaleRadio" name="search[pref_sex]" value="female" <%= user.sex == 'male' ? 'checked' : ''%>>
-            Male
-          </label>
-          <i class="icon-question-sign" rel="tooltip" data-original-title="We also allow same sex marriage. Selecting same-sex will search for people who are interested in same-sex marriages themselves"></i>
         </div>
         
         <div class="row">
           <span class="searchLabel">Education of your partner</span>
           <input type="text" class="searchFilters" name="search[pref_education]" />
-          <i class="icon-question-sign" rel="tooltip" data-original-title="Specify this to limit your searches based on education of your partner"></i>
         </div>
         
         <div class="row">
@@ -120,7 +86,6 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="What should your partner's opinion be on your plans for further education"></i>
             <input type="hidden" name="search[pref_further_education]">
           </div>
         </div>
@@ -137,7 +102,6 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <i class="icon-question-sign pushTop" rel="tooltip" data-original-title="What should your partner's preference be for family"></i>
             <input type="hidden" name="search[pref_family_preference]">
           </div>
         </div>

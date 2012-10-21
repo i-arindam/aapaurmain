@@ -235,13 +235,12 @@ ActiveRecord::Schema.define(:version => 20121020062520) do
     t.string   "blog_url"
     t.integer  "age"
     t.boolean  "photo_exists"
-    t.integer  "signup_status",                             :default => 0
     t.string   "recommended_user_ids",       :limit => 250
     t.string   "ideal_partner",              :limit => 500
   end
 
   add_index "users", ["family_preference"], :name => "index_users_on_family_preference"
-  add_index "users", ["interested_in"], :name => "index_users_on_interested_in"
+  add_index "users", ["interested_in"], :name => "index_users_on_interested_in", :length => {"interested_in"=>"255"}
   add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["profession"], :name => "index_users_on_profession"
   add_index "users", ["spouse_preference"], :name => "index_users_on_spouse_preference"

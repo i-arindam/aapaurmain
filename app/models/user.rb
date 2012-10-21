@@ -272,11 +272,12 @@ class User < ActiveRecord::Base
     end
     
 
-    self.setup_recos_on_create unless Rails.env == 'development'
+    self.setup_recos_on_create
     self.add_to_search_index unless Rails.env == 'development'
 
     profile_update = self.profile_updates.find(:first, :conditions => ['status=?',0])
     profile_update.status = ProfileUpdate::APPROVED
+    profile_update.save
 
     self.save
   end

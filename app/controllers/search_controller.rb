@@ -43,23 +43,28 @@ class SearchController < ApplicationController
     @show_nothing = true if params[:q].blank?
     return if @show_nothing
     @current_user = current_user
-    
-    qf, q = form_keyword_search_query(params[:q])
-    solr = RSolr.connect :url => base_url
-    conf = $search_conf['keyword_search']
-    
-    @response = solr.get 'select', :params => { 
-      :q => q,
-      :qf => qf,
-      :wt => :ruby,
-      :start => 0,
-      :rows => conf['rows'],
-      :defType => conf['defType'],
-      :fl => conf['fl'].join(",")
-    }
-    
-    user_ids = []
-    @response["response"]["docs"].each { |d| user_ids.push(d["id"].to_i) }
+    render_404 and return unless @current_user
+
+    if params[:q] == "*"
+      user_ids = @current_user.recommended_user_ids.split(",")
+    else
+      qf, q = form_keyword_search_query(params[:q])
+      solr = RSolr.connect :url => base_url
+      conf = $search_conf['keyword_search']
+      
+      @response = solr.get 'select', :params => { 
+        :q => q,
+        :qf => qf,
+        :wt => :ruby,
+        :start => 0,
+        :rows => conf['rows'],
+        :defType => conf['defType'],
+        :fl => conf['fl'].join(",")
+      }
+      
+      user_ids = []
+      @response["response"]["docs"].each { |d| user_ids.push(d["id"].to_i) }
+    end
 
     @users = User.find_all_by_id(user_ids)
     render :search_results

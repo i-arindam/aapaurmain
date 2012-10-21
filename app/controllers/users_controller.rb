@@ -282,7 +282,7 @@ class UsersController < ApplicationController
       
       @recos = User.find_all_by_id([1, 2, 3, 4, 5, 6, 7, 8])
 
-      @tab_to_show = 'reco' unless @recos.blank? or defined?(@tab_to_show)
+      @tab_to_show = 'reco'
       
       profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
       @profile_viewers = profile_viewer_ids.map do |p|

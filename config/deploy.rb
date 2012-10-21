@@ -37,8 +37,10 @@ after "deploy:restart", "deploy:cleanup"
 namespace :deploy do
 
   task :default do
+    daemons.delayed_jobs.kill
     migrations
     restart
+    daemons.delayed_jobs.start
   end
 
   desc "Make sure local git is in sync with remote."
@@ -63,5 +65,22 @@ namespace :deploy do
   desc "Stop unicorn"
   task :stop, :except => { :no_release => true } do
     run "kill -s QUIT `cat /tmp/unicorn.aapaurmain.pid`"
+  end
+end
+
+namespace :daemons do
+
+  namespace :delayed_jobs do
+
+    desc "Stop old delayed jobs"
+    task :kill, roles: :web do
+      run "script/delayed_job stop"
+    end
+
+    desc "Restart delayed jobs in current path"
+    task :start, roles: :web do
+      run "cd #{current_path} script/delayed_job -n 2 start"
+    end
+
   end
 end

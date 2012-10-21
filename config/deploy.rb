@@ -1,8 +1,7 @@
-# $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-
-# $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 require "bundler/capistrano"
+require "bundler/setup"
+require "delayed/recipes"
 
 # Server ruby gem and gemset name
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails326'
@@ -30,6 +29,7 @@ set :scm_password, "Hu57l3r!am"
 
 before 'deploy', 'deploy:check_revision'
 
+# after "deploy:update_code", "daemons:delayed_jobs:restart"
 
 # Clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
@@ -37,10 +37,9 @@ after "deploy:restart", "deploy:cleanup"
 namespace :deploy do
 
   task :default do
-    daemons.delayed_jobs.kill
+    # daemons.delayed_jobs.kill
     migrations
     restart
-    daemons.delayed_jobs.start
   end
 
   desc "Make sure local git is in sync with remote."
@@ -59,7 +58,7 @@ namespace :deploy do
 
   desc "Start unicorn"
   task :start, :except => { :no_release => true } do
-    run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.rb -D -E production"
+    run "cd #{current_path} && bundle exec unicorn_rails -c config/unicorn.rb -D -E production"
   end
 
   desc "Stop unicorn"
@@ -74,13 +73,12 @@ namespace :daemons do
 
     desc "Stop old delayed jobs"
     task :kill, roles: :web do
-      run "script/delayed_job stop"
+      run "cd #{current_path} && RAILS_ENV=production script/delayed_job stop"
     end
 
     desc "Restart delayed jobs in current path"
-    task :start, roles: :web do
-      run "cd #{current_path} script/delayed_job -n 2 start"
+    task :restart, :roles => :web do
+      run "cd #{current_path} && rails g delayed_job && RAILS_ENV=production script/delayed_job restart"
     end
-
   end
 end

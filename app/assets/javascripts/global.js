@@ -1,4 +1,9 @@
 (function($) {
+  $('.close').click(function(e) {
+    e.preventDefault();
+    $(this).parent().toggle('slow');
+  });
+
   $.fn.extend({
     setupHorizontalScroll : function() {
       var lis = $(this).children('li');

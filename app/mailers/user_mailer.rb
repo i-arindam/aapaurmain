@@ -20,7 +20,6 @@ class UserMailer < ActionMailer::Base
   def send_mail(mail_options)
     #attach all the files
     return if Rails.env == 'development'
-
     @url = mail_options[:url]
     @users = mail_options[:user_array]
     files_attach = mail_options[:attachments]
@@ -44,6 +43,7 @@ class UserMailer < ActionMailer::Base
             :subject => subject,
             :template_path => template_path,
             :template_name => template)
+    
 
   end
 

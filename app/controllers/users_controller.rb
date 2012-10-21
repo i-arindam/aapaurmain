@@ -362,31 +362,31 @@ class UsersController < ApplicationController
   end
   
   def try_and_create(failure_render_path)
-    @user = User.new(params[:user])
-    if @user.save
+    user = User.new(params[:user])
+    if user.save
       
-      send_confirmation_link
-      flash[:notice] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
+      send_confirmation_link user
+      flash[:success] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
       render "static_pages/message"
     else
       render "#{failure_render_path}"
     end
   end
 
-  def send_confirmation_link
+  def send_confirmation_link(user)
 
-    confirmation_link = get_confirmation_key
+    confirmation_link = get_confirmation_key(user)
     mail_params = {
-      :mail_options => {:to => @user.email, :subject => "Please confirm your account with aapaurmain", :template => 'email_confirm', :url => confirmation_link},
+      :mail_options => {:to => user.email, :subject => "Please confirm your account with aapaurmain", :template => 'email_confirm', :url => confirmation_link},
       :url => confirmation_link
     }
     UserMailer.send_signup_confirmation mail_params
   end
 
-  def get_confirmation_key
+  def get_confirmation_key(user)
     hash = {
-      :id => @user.id,
-      :email => @user.email
+      :id => user.id,
+      :email => user.email
     }
 
     json_hash = hash.to_json
@@ -408,7 +408,7 @@ class UsersController < ApplicationController
       render "static_pages/message"
     elsif user.email == user_hash["email"]
       user.confirm_signup
-      cookies[:auth_token] = user.auth_token
+      
       flash[:success] = "Your account is confirmed. Please login to continue"
       render "static_pages/message"
     end

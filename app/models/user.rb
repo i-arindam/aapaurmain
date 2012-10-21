@@ -132,8 +132,6 @@ class User < ActiveRecord::Base
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
-  has_many :profile_updates, :foreign_key => "user_id", :dependent => :destroy
-
   
   def add_to_search_index
     if self.changed.include?(SEARCH_INDEX_FIELDS)
@@ -218,69 +216,7 @@ class User < ActiveRecord::Base
   end
   
 
-  def approve_profile_update
 
-    profile_update = self.profile_updates.find(:first, :conditions => ['status=?', 0])
-    uhash = JSON.parse profile_update.profile
-
-    dob = uhash[:dob]
-
-    success, message = true, ""
-    
-    self.dob = dob
-    fields = User::USER_FIELDS_LIST
-    fields.each do |f|
-      self[f.to_s] = uhash[f.to_s] if uhash[f.to_s]
-    end
-
-    hobbies = (uhash["hobby"]).split(",")
-    # old_hobbies = @user.hobby.map(&:hobby)
-    # changed_hobbies = hobbies-old_hobbies
-
-    #ugly hack for updating values
-    self.hobby.destroy_all
-    self.interested_in.destroy_all
-    self.not_interested_in.destroy_all
-    
-    unless hobbies.blank?
-      hobbies.each do |h|
-        uh = Hobby.new
-        uh.user_id = self.id
-        uh.hobby = h
-        uh.save
-      end
-    end
-
-    interested = (uhash["interest"]).split(",")
-    unless interested.blank?
-      interested.each do |i|
-        ui = InterestedIn.new
-        ui.user_id = self.id
-        ui.interested = i
-        ui.save
-      end
-    end
-
-    not_interested = (uhash["not_interest"]).split(",")
-    unless not_interested.blank?
-      not_interested.each do |i|
-        ni = NotInterestedIn.new
-        ni.user_id = self.id
-        ni.not_interested = i
-        ni.save
-      end
-    end
-    
-
-    self.setup_recos_on_create
-    self.add_to_search_index unless Rails.env == 'development'
-
-    profile_update = self.profile_updates.find(:first, :conditions => ['status=?',0])
-    profile_update.status = ProfileUpdate::APPROVED
-    profile_update.save
-
-    self.save
-  end
   ### PAID SECTION STARTS ###
   
   # Returns whether the user is paid or not

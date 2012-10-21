@@ -19,7 +19,7 @@
       </div>
       
       <div class="span10 profileContainer">
-        <%= form_for @user, :url => "/update", :html => { :class => "form-horizontal"} do %>
+        <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-horizontal"} do %>
           <fieldset>
             <span class="label label-inverse span9">Your Personal Information</span>
 

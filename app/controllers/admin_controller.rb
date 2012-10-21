@@ -6,8 +6,7 @@ class AdminController < ApplicationController
 		if @user.blank?
 			render 404
 		end
-
-		@user.approve_profile_update
+		@user.signup_status = User.APPROVED
 	end
 
 	def reject_request
@@ -18,6 +17,7 @@ class AdminController < ApplicationController
 
 		@user.signup_status = User.REJECTED
 	end
+
 
 	def show_profile_udpates
 		return if params[:email].blank?
@@ -45,5 +45,6 @@ class AdminController < ApplicationController
 
 	def index
 	end
+
 
 end

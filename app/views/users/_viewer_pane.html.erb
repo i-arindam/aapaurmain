@@ -23,12 +23,11 @@
         <div class="imageContainer">
           <%= image_tag "/assets/users/image_placeholder_small.png"%>
         </div>
-        <div class="fullProfile pull-right">
-          <a href="/users/<%= user_id %>" rel="nofollow">View Full Profile?</a>
-        </div>
+
         <div class="bio">
           <div class="name">
             <h2><%= name %></h2>
+            <a href="/users/<%= user_id %>" class="btn btn-danger fullProfile" rel="nofollow">View Full Profile?</a>
           </div>
 
           <div class="shortProfile">

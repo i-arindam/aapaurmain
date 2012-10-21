@@ -280,7 +280,7 @@ class UsersController < ApplicationController
           }
       end
       
-      @recos = User.find_all_by_id([1, 2, 3, 4, 5, 6, 7, 8])
+      @recos = User.find_all_by_id([1, 2, 3, 4, 5, 6, 7, 8] - [@user.id])
 
       @tab_to_show = 'reco'
       

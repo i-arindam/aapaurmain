@@ -47,13 +47,14 @@ ul.requestList {
   float: left;
   width: 100px;
   display: inline;
+  margin-top: 15px;
 }
 
-.dashBoardContainer  	{
+.dashBoardContainer {
   width: 100%;
 }
 
-.requestContainer		{
+.requestContainer {
   background: #191814;
   border-radius: 10px;
   -moz-border-radius: 10px;
@@ -147,10 +148,6 @@ ul.requestList {
   margin-left: 50px;
 }
 
-
-.select-thumbnails img {
-  border: 2px solid white;
-}
 
 ul.mainNav {
   clear: both;

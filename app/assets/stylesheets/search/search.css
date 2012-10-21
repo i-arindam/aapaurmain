@@ -1,6 +1,8 @@
 body {
   margin-bottom: 100px;
+  background: url('/assets/web-texture-blue.jpg');
 }
+
 .searchResults {
   position: relative;
   left: 380px;
@@ -50,4 +52,19 @@ ul.searchList {
   box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   color: #FFEBCD;
+}
+
+.mainContent {
+  position: relative; 
+  width: 60%;
+  top: 5%;
+  left: 30%;
+}
+
+.mainContent .hero-unit h1 {
+  text-align: left;
+}
+
+.footer {
+  display: none;
 }

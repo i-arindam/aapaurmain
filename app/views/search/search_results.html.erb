@@ -5,18 +5,15 @@
   <%= javascript_include_tag "application-search" %>
 <% end %>
 
-<% if @show_nothing %>
-Nothing to display 
-<% else %>
-
 <%= render :partial => 'advanced_search', :locals => { :user => @current_user } %>
 
+<% unless @users.blank? %>
 <div class="searchResults span12">
   <ul class="searchList">
     <% @users.each do |user| %>
     <li id="<%= user.id %>" class="select-thumbnails">
       <a href="#">
-        <img src="/assets/users/96x96.gif">
+        <img src="/assets/users/image_placeholder_small.png">
         <h3 class="name"><%= user.name %></h3>
       </a>
     </li>
@@ -24,9 +21,14 @@ Nothing to display
   </ul>
 </div>
 
-<h3 class="span6 requestLabel">Viewer Pane</h3>	
 <%= render :partial => 'users/viewer_pane', :locals => { :user_collection => @users, :class_name => '', :viewer_pane_info => nil} %>
-
-
-
+<% else %>
+<div class="mainContent">
+  <div class="hero-unit">
+    <img src="/assets/hello.jpg" />
+    <h3>Awww!!! No results.</h3>
+    <p>While we are working on building more and more profiles as of now, this is an earnest promise that in some time, you will get results for any queer searches</p>
+    <p>In the meanwhile, use the panel on the left to fire off more specific searches</p>
+  </div>
+</div>
 <% end %>

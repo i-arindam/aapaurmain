@@ -127,7 +127,7 @@ font-weight: 700;
 .aamText{
   position: relative;
   top: 60px;
-  color: #A52A2A;
+  color: #5823DF;
   font-family: 'Dancing Script', Georgia, Times, serif;
   font-size: 25px;
 }
@@ -165,7 +165,7 @@ margin-top: 55px;
 
 
 .socialActions {
-  background: rgba(187, 78, 44, 0.74);
+  background: rgba(245, 245, 220, 0.44);
   border: 1px solid #555;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -368,3 +368,23 @@ input.span3{
   font-weight: 400;
   src: local('Dancing Script'), local('DancingScript'), url("<%= asset_path '/assets/fonts/dancing script.woff' %>") format('woff');
 } 
+
+.conditions {
+  color: white;
+}
+
+.conditions label {
+  cursor: pointer;
+}
+
+.conditions input {
+  margin-right: 10px;
+}
+
+/* Validations */
+
+form label.error {
+  color: red;
+  font-style: italic;
+  padding-top: 3px;
+}

@@ -3,51 +3,47 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Aap Aur Main</title>
-        <%= stylesheet_link_tag 'emails/email'%>	
+        <%= stylesheet_link_tag 'emails/email'%>  
 </head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-    	<center>
-        	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
-            	<tr>
-                	<td align="center" valign="top">
-                    	<!-- // BEGIN PREHEADER -->
+      <center>
+          <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+              <tr>
+                  <td align="center" valign="top">
+                      <!-- // BEGIN PREHEADER -->
                         <%= render :partial => 'mail_templates/email_header'%>
                         <!-- END PREHEADER \\ -->
-                    	<!-- // BEGIN CONTAINER -->
+                      <!-- // BEGIN CONTAINER -->
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateContainer">
-                        	<tr>
-                            	<td align="center" valign="top">
-                                	<!-- // BEGIN BODY -->
-                                	<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="background-color:#D65959">
-                                    	<tr>
-                                        	<td align="center" valign="top">
-                                            	<table border="0" cellpadding="0" cellspacing="0" width="600">
-                                                	<tr>
-                                                    	<td align="center" valign="top" style="padding-bottom:20px;">
-                                                        	<img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/snowflakes_top.png" height="90" width="600" style="display:block;">
+                          <tr>
+                              <td align="center" valign="top">
+                                  <!-- // BEGIN BODY -->
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="background-color:#D65959">
+                                      <tr>
+                                          <td align="center" valign="top">
+                                              <table border="0" cellpadding="0" cellspacing="0" width="600">
+                                                  <tr>
+                                                      <td align="center" valign="top" style="padding-bottom:20px;">
+                                                          <img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/snowflakes_top.png" height="90" width="600" style="display:block;">
                                                             <table border="0" cellpadding="20" cellspacing="0" width="600" id="bodyContentBlock" style="background-color:rgba(245, 245, 220, 0.96)">
                                                                 <tr>
                                                                     <td align="center" valign="top">
                                                                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                                                        	<tr>
-                                                                            	<td id="templateHeader" class="headerContent" style="padding-bottom:20px;text-align:center">
-                                                                                	<img src="http://www.aapaurmain.com/assets/logo.png" style="max-width:560px;" id="headerImage campaign-icon" mc:label="logo_image" mc:edit="logo_image" mc:allowtext>
+                                                                          <tr>
+                                                                              <td id="templateHeader" class="headerContent" style="padding-bottom:20px;text-align:center">
+                                                                                  <img src="http://www.aapaurmain.com/assets/logo.png" style="max-width:560px;" id="headerImage campaign-icon" mc:label="logo_image" mc:edit="logo_image" mc:allowtext>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td valign="top" class="bodyContent" style="padding-top:20px; color:#505050;font-family:Georgia;font-size:17px;line-height:150%;
 text-align:left;" mc:edit="body_content01"><h1>
-	<span style="font-size:24px;">Some special people for you</span></h1>
+  <span style="font-size:24px;">Some special people for you</span></h1>
 <br>
-&nbsp;Hey <%= @users[0].name %><br>
+&nbsp;Hey <br>
 <br>
-How would you feel if you come to know someone wants to know you better? And that “someone” has similar aspirations and interests like yours.
-Got a kick?! Why don’t you drop in and find out if <%= @users[1].name %> is the one you are actually looking for!
+Please confirm your email by clicking on the following <a href="<%= @url %>">link</a>
 <br>
-<br>
-This is what <a href="http://www.aapaurmain.com<%=url_for(@users[1])%>"><%= @users[1].name %></a> says about <%= @users[1].sex == "fe" ? 'herself' : 'himself'%> :-
-<br>
-<%= @users[1].short_bio %>
+
 <br>
 <br>
 Best Wishes, 
@@ -65,7 +61,7 @@ Team Aap Aur Main
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                    	<td align="center" valign="top">
+                                                      <td align="center" valign="top">
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -76,7 +72,7 @@ Team Aap Aur Main
                                                         <td height="158">&nbsp;</td>
                                                     </tr>
                                                     <tr>
-                                                        <td width="50%" height="32" bgcolor="#FFFFFF">&nbsp;</td>	
+                                                        <td width="50%" height="32" bgcolor="#FFFFFF">&nbsp;</td> 
                                                         <td width="50%" height="32" bgcolor="#FFFFFF">&nbsp;</td>
                                                     </tr>
                                                 </table>
@@ -86,9 +82,9 @@ Team Aap Aur Main
                                     <!-- END BODY \\ -->
                                 </td>
                             </tr>
-                        	<tr>
-                            	<td align="center" valign="top">
-                                	<!-- // BEGIN FOOTER -->
+                          <tr>
+                              <td align="center" valign="top">
+                                  <!-- // BEGIN FOOTER -->
                                   <%= render :partial => "mail_templates/email_footer" %>
                                     <!-- END FOOTER \\ -->
                                 </td>

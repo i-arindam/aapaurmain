@@ -107,8 +107,8 @@ class User < ActiveRecord::Base
   }
 
   #Enumeration for signup confirmation status
-  NOT_VERIFIED = 0
-  VERIFIED = 1
+  NOT_VERIFIED = false
+  VERIFIED = true
   
   USER_FIELDS_LIST = [
       :name, :sex, :family_preference, :spouse_preference,
@@ -190,7 +190,7 @@ class User < ActiveRecord::Base
     #return if Rails.env == 'development'
      event = CONTACT_TEMPLATES[event]
     #   Notification.send_notification(event[:notif], args << self) if event[:notif]
-    UserMailer.send_mail({:template => event[:mail] , :subject => event[:subject], :user_array => args << self}) if event[:mail]
+    UserMailer.delay.send_mail({:template => event[:mail] , :subject => event[:subject], :user_array => args << self}) if event[:mail]
     #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
     #   self.send(event[:operation].to_sym, args << self) if event[:operation]
   end
@@ -414,9 +414,9 @@ class User < ActiveRecord::Base
       lock.another_id = from_user.id
       lock.creation_date = Time.now.to_date
       lock.save!
-
+      
       # Making both users aware that they are locked.
-      lock_users(self,from_user)
+      self.lock_users(self,from_user)
       
     rescue
       return false

@@ -43,11 +43,11 @@ Aapaurmain::Application.configure do
   
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
+    :address              => "smtp.sendgrid.net",
     :port                 => 587,
-    :domain               => 'slideshare.com',
-    :user_name            => 'apoorvi@slideshare.com',
-    :password             => '**',
+    :domain               => 'aapaurmain.com',
+    :user_name            => 'aapaurmain',
+    :password             => 'Bollywood',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
   

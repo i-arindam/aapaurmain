@@ -294,7 +294,7 @@ class UsersController < ApplicationController
       
       @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
       
-      @values['json'] = user_json_object(params[:id])
+      @values['json'] = user_json_object()
       render :dashboard
     else
       render :text => "Please login first"

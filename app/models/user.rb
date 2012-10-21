@@ -415,8 +415,18 @@ class User < ActiveRecord::Base
       lock.creation_date = Time.now.to_date
       lock.save!
       
+      a=self
+      b=from_user
       # Making both users aware that they are locked.
-      self.lock_users(self,from_user)
+      a.status = LOCKED
+      b.status = LOCKED
+      a.locked_since = b.locked_since = Time.now.to_date
+      a.locked_with = b.id
+      b.locked_with = a.id
+      
+      a.save!
+      b.save!
+        
       
     rescue
       return false

@@ -10,10 +10,6 @@ class ApplicationController < ActionController::Base
     return true
   end
   
-  def get_date(hash)
-    return Date.new(hash[:year].to_i, hash[:month].to_i,hash[:date].to_i)
-  end
-  
   def verify_age(dob, sex)
     return true
   end

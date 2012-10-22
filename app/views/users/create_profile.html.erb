@@ -3,15 +3,28 @@
   <head>
     <% content_for :stylesheet do %>
       <%= stylesheet_link_tag "users/create_profile" %>
+      <%= stylesheet_link_tag "users/jquery.datepick" %>
     <% end %>
     <% content_for :js_footer do %>
       <%= javascript_include_tag "global" %>
       <%= javascript_include_tag "jquery.validate.min" %>
+      <%= javascript_include_tag "jquery.datepick.min.js" %>
     <% end %>
     <title>Create your Profile</title>
   </head>
   <script type="text/javascript">
     $(document).ready(function() {
+      var maxYr = (new Date()).getFullYear() - 18;
+      var yrRange = '1960:' + maxYr;
+      // Date picker for DOB
+      $('.datepicker').datepick({
+        yearRange: yrRange,
+        dateFormat: 'dd/M/yyyy',
+        pickerClass: 'mypicker',
+        defaultDate: '01/Jan/1987'
+      });
+
+      // Validation for entire form
       $('.profileContainer form').validate({
         submitHandler: function(form) {
           $(form).ajaxSubmit();
@@ -44,12 +57,34 @@
           "user[blog_url]": "required"
         }
       });
+
+      // Disallow form submit if validations fail
+      $('.profileContainer .saveDetails').click(function(e) {
+        var inputFields = [ "#name", "#sex input:checked", "#shortBio", "#education", "#further_education", "#profession", 
+          "#hobbies input", "#dream", "#settled", "#virginity", "#idealPartner",
+          "#idealMarriage", "#specificInterest", "#notSpecificInterest", "#blogUrl" ];
+        $.each( inputFields, function (i, v) {
+          if ( $( v ).val() === "") {
+            e.preventDefault();
+            e.stopPropagation();
+            $('<div/>').addClass('alert alert-error')
+            .html('<strong>Please fill required fields</strong><a href="#" class="close">&times;<a>')
+            .insertBefore($('.footer'));
+            return false;
+          }
+        });
+        return true;
+      });
+
+      $('.close').live('click', function(e) {
+        e.preventDefault();
+        $(this).parent().toggle('slow');
+      });
+
     });
   </script>
   <body>
     <div class="container-fluid">
-      
-    
       
       <div class="span10 profileContainer">
         <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-horizontal"} do %>
@@ -66,54 +101,15 @@
             <div class="control-group">
               <label class="control-label" for="dob">Date of Birth</label>
               <div class="controls" id="dob">
-                
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= @user.dob && @user.dob.day || 'Day' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% for d in 1..31 %>
-                      <li><a href="#" data-value="<%= d %>"><%= d %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[dob][date]" value="<%= @user.dob && @user.dob.day %>">
-                </div>
-                
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= @user.dob && @user.dob.month || 'Month' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% Date::MONTHNAMES[1..-1].each_with_index do |i,m| %>
-                      <li><a href="#" data-value="<%= (i.to_i+1).to_s %>"><%= m %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[dob][month]" value="<%= @user.dob && @user.dob.month %>">
-                </div>
-                
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= @user.dob && @user.dob.year || 'Year' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% for y in start_year..end_year %>
-                      <li><a href="#" data-value="<%= y %>"><%= y %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[dob][year]" value="<%= @user.dob && @user.dob.year %>">
-                </div>
-              
+                <input type="text" class="datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" for="sex">Sex</label>
               <div class="controls" id="sex">
-                <input type="radio" name="user[sex]" value="male" checked="<%= @user.sex == 'male' %>"/> Male
-                <input type="radio" name="user[sex]" value="female" checked="<%= @user.sex == 'female' %>"/> Female
+                <input type="radio" name="user[sex]" value="male" <%= @user.sex == 'male' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
+                <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
               </div>
             </div>
 
@@ -141,7 +137,7 @@
               <label class="control-label wider" for="further_education">Your plans for Further Education</label>
               <div class="controls">
                 <textarea class="span4" name="user[further_education_plans]" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;">
-                  <%=@user.further_education_plans %></textarea>
+                  <%= @user.further_education_plans and @user.further_education_plans.strip %></textarea>
               </div>
             </div>
 

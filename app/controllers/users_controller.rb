@@ -431,22 +431,22 @@ class UsersController < ApplicationController
   
   def create_profile
     @user = User.find_by_id(params[:id])
+    # render_404 and return unless @user == current_user
   end
 
   def edit_profile
     @user = User.find_by_id(params[:id])
+    render_404 and return unless @user == current_user
     render :create_profile
   end
   
   def update
     @user = User.find_by_id(params[:id])
+    render_404 and return unless @user == current_user
     uhash = params[:user]
     success, message = true, ""
     
-    valid_date = verify_dob(uhash[:dob])
-    redirect_to :back, :alert => "Invalid Dob" and return unless valid_date
-    
-    dob = get_date(uhash[:dob])
+    dob = uhash[:dob]
     sex = uhash[:sex]
     valid_age = verify_age(dob, sex)
     

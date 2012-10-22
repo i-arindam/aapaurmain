@@ -12,8 +12,8 @@ class SessionsController < ApplicationController
       else
         cookies[:auth_token] = user.auth_token
       end
-      # redirect_to :controller => "user", :action => 'showme' , :id => user.id , :who => "me", :notice => "Logged In!"
-      redirect_to "/users/#{user.id}/create_profile"
+      route_to = (user.sex ? "/users/showme" : "/users/#{user.id}/create_profile")
+      redirect_to route_to
     else
       redirect_to root_url, :alert => "Invalid email or password"
     end

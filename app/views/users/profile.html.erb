@@ -119,7 +119,7 @@
                 <div class="row">
                   <img src="/assets/users/date.png" class="profileIcon">
                   <label class="span2 h4">Date Of Birth</label>
-                  <label class="span4"><%= @user.dob.strftime("%d %b %Y") %></label>
+                  <label class="span4"><%= @user.dob and @user.dob.strftime("%d %b %Y") %></label>
                 </div>
                 <div class="row">
                   <img src="/assets/users/cash.png" class="profileIcon">

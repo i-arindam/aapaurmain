@@ -280,7 +280,10 @@ class UsersController < ApplicationController
           }
       end
       
-      @recos = User.find_all_by_id([1, 2, 3, 4, 5, 6, 7, 8] - [@user.id])
+      @recos = User.find_all_by_id(@user.recommended_user_ids)
+
+      
+      @recos = get_default_recos if @recos.length < 3
 
       @tab_to_show = 'reco'
       
@@ -501,9 +504,6 @@ class UsersController < ApplicationController
     @user.setup_recos_on_create unless Rails.env == 'development'
     @user.add_to_search_index unless Rails.env == 'development'
 
-    
-
-    
     @user.save
     
     redirect_to "/users/#{@user.id}"
@@ -574,5 +574,14 @@ class UsersController < ApplicationController
        render :json => { :success => false, :message => 'Deleting failed. Please try again.' }
      end
    end
+
+  # Living off with default recos to begin with
+  def get_default_recos
+    if @user.sex == 'male'
+      return User.find_all_by_id([5, 8, 10, 11, 12, 15, 17])
+    else
+      return User.find_all_by_id([1, 2, 3, 4, 6, 7, 13])
+    end
+  end
 
 end

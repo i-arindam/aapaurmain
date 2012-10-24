@@ -92,21 +92,21 @@
             <span class="label label-inverse span9">Your Personal Information</span>
 
             <div class="control-group">
-              <label class="control-label" for="name">Name</label>
+              <label class="control-label" for="name">Name<strong class="must">*</strong></label>
               <div class="controls">
                 <input type="text" class="span4" name="user[name]" id="name" placeholder="Enter your name &hellip;" value="<%= @user.name %>" >
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="dob">Date of Birth</label>
+              <label class="control-label" for="dob">Date of Birth<strong class="must">*</strong></label>
               <div class="controls" id="dob">
                 <input type="text" class="datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" for="sex">Sex</label>
+              <label class="control-label" for="sex">Sex<strong class="must">*</strong></label>
               <div class="controls" id="sex">
                 <input type="radio" name="user[sex]" value="male" <%= @user.sex == 'male' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
                 <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
@@ -120,21 +120,21 @@
             </span>
 
              <div class="control-group">
-              <label class="control-label" for="shortBio">Your short bio</label>
+              <label class="control-label" for="shortBio">Your short bio<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" name="user[short_bio]" id="shortBio" placeholder="Five words that describe you" ><%=@user.short_bio %></textarea>
               </div>
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="education">Education</label>
+              <label class="control-label" for="education">Education<strong class="must">*</strong></label>
               <div class="controls">
                 <input type="text" class="span4" name="user[education]" id="education" placeholder="Your highest educational qualification" value="<%=@user.education %>">
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="further_education">Your plans for Further Education</label>
+              <label class="control-label wider" for="further_education">Your plans for Further Education<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" name="user[further_education_plans]" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;">
                   <%= @user.further_education_plans and @user.further_education_plans.strip %></textarea>
@@ -142,21 +142,21 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="profession">Current Profession</label>
+              <label class="control-label wider" for="profession">Current Profession<strong class="must">*</strong></label>
               <div class="controls">
                 <input type="text" class="span4" name="user[profession]" id="profession" placeholder="What are you doing currently" value="<%=@user.profession %>">
               </div>
             </div>
 
-            <div class="control-group hide">
-              <label class="control-label wider" for="siblings">How many siblings do you have</label>
+            <div class="control-group">
+              <label class="control-label wider" for="siblings">No of siblings</label>
               <div class="controls">
                 <input type="text" class="span4" name="user[siblings]" id="siblings" placeholder="The number of siblings" value="<%=@user.siblings %>">
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="hobbies">Interests/Hobbies</label>
+              <label class="control-label wider" for="hobbies">Interests/Hobbies<strong class="must">*</strong></label>
               <div class="controls" id="hobbies">
                 <input type="text" class="span4" name="user[hobby]" placeholder="Mention a hobby" value="<%= (@user.hobby.map(&:hobby)).join(",") %>">
                 
@@ -164,7 +164,7 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="dream">Dream for Future</label>
+              <label class="control-label wider" for="dream">Dream for Future<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" id="dream" name="user[dream_for_future]" placeholder="What do you see yourself doing in the coming time"><%= @user.dream_for_future%></textarea>
               </div>
@@ -212,7 +212,7 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="settled">Your current location</label>
+              <label class="control-label wider" for="settled">Your current location<strong class="must">*</strong></label>
               <div class="controls">
                 <input type="text" class="span4" name="user[settled_in]" id="settled" placeholder="Where are you based out of" value="<%= @user.settled_in %>">
               </div>
@@ -238,28 +238,28 @@
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="virginity">Opinion on virginity</label>
+              <label class="control-label wider" for="virginity">Opinion on virginity<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" id="virginity" name="user[virginity_opinion]" placeholder="How does your spouse&apos;s virginity matter to you"><%=@user.virginity_opinion%></textarea>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="idealPartner">An Ideal Life Partner</label>
+              <label class="control-label wider" for="idealPartner">An Ideal Life Partner<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" id="idealPartner" name="user[ideal_partner]" placeholder="Five words that describe your ideal partner"><%=@user.ideal_partner%></textarea>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="idealMarriage">My marriage will be..</label>
+              <label class="control-label wider" for="idealMarriage">My marriage will be..<strong class="must">*</strong></label>
               <div class="controls">
                 <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="How do you see yourself getting married ?"><%=@user.ideal_marriage%></textarea>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label wider" for="specificInterest">Things that excite me</label>
+              <label class="control-label wider" for="specificInterest">Things that excite me<strong class="must">*</strong></label>
               <div class="controls">
                 <input id="specificInterest" type="text" name="user[interest]" class="span4" placeholder="You prefer Artists/Journalists/Software" value="<%=(@user.interested_in.map(&:interested)).join(",") %>">
                 
@@ -267,7 +267,7 @@
             </div>
             
             <div class="control-group">
-              <label class="control-label wider" for="notSpecificInterest">Things that put me off</label>
+              <label class="control-label wider" for="notSpecificInterest">Things that put me off<strong class="must">*</strong></label>
               <div class="controls">
                 <input id="notSpecificInterest" type="text" name="user[not_interest]" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software" value="<%= (@user.not_interested_in.map(&:not_interested)).join(",") %>">
                 

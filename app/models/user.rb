@@ -611,6 +611,9 @@ class User < ActiveRecord::Base
     query_fields = conf['fields']
     query_fields.each do |f|
       val = self[f]
+      if f == 'sex'
+        val = (self[f] == 'male' ? 'female' : 'male')
+      end
       query_components.push( "u_#{f}:#{val}") unless val.blank?
     end
 

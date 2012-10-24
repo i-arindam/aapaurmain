@@ -57,7 +57,6 @@ recos_on_save:
   fields:
     - hobbies
     - profession
-    - relocate
     - location
     - spouse_preference
     - ideal_marriage

@@ -577,7 +577,7 @@ class UsersController < ApplicationController
 
   # Living off with default recos to begin with
   def get_default_recos
-    if @user.sex == 'male'
+    if @user.sex == 'female'
       return User.find_all_by_id([5, 8, 10, 11, 12, 15, 17])
     else
       return User.find_all_by_id([1, 2, 3, 4, 6, 7, 13])

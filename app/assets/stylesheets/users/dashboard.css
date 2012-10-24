@@ -37,7 +37,7 @@ ul.requestList {
   height: 170px;
   margin: 10px 0 0px 35px;
   overflow: scroll;
-  width: 95%;
+  width: 1400px;
   list-style: none;
   position: relative;
 }

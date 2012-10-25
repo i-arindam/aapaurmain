@@ -118,18 +118,22 @@ font-weight: 700;
 }
 
 .bookletText{
-  font-family: cursive;
+  font-family: initial;
   font-size: 20px;
   color: green;
   
 }
 
+.bookletText p {
+  margin-left: 20px;
+}
+
 .aamText{
   position: relative;
   top: 60px;
-  color: #5823DF;
-  font-family: 'Dancing Script', Georgia, Times, serif;
-  font-size: 25px;
+  color: black;
+  font-family: fantasy;
+  font-size: 22px;
 }
 
 .pushTop {
@@ -151,8 +155,8 @@ margin-top: 55px;
   padding-top: 15px;
   padding-bottom: 12px;
   text-align: center;
-  font-family: 'Dancing Script', Georgia, Times, serif;
-  font-size:30px;
+  font-family: serif;
+  font-size: 29px;
 }
 
 .lastpageText{
@@ -387,4 +391,23 @@ form label.error {
   color: red;
   font-style: italic;
   padding-top: 3px;
+}
+
+
+/* Booklet overrides */
+.booklet .b-arrow {
+  width: 34px;
+}
+
+.booklet .b-arrow div {
+  width: 34px;
+  left: 7px;
+}
+
+.booklet .b-arrow-prev {
+  left: -20px;
+}
+
+.booklet .b-arrow-next {
+  right: -50px;
 }

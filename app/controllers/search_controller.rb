@@ -78,7 +78,7 @@ class SearchController < ApplicationController
       @response["response"]["docs"].each { |d| user_ids.push(d["id"].to_i) }
     end
 
-    @users = User.find_all_by_id(user_ids)
+    @users = User.find_all_by_id(user_ids).reject { |u| u.sex == @current_user.sex }
     render :search_results
   end
   

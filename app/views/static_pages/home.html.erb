@@ -99,7 +99,7 @@
 
     $.each(gaActions, function(i, obj) {
       $(obj.sel).live('click', function(e) {
-        window._gaq.push(['homepageActions', obj.label]);
+        window._gaq.push(['_trackEvent', 'homepageActions', obj.label]);
       });
     });
 

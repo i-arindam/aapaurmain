@@ -33,10 +33,22 @@ class SearchController < ApplicationController
     
     fields.each do |f|
       value = form_hash["pref_#{f}"]
-      query_components.push( "u_#{f}:#{value}" ) unless value.blank?
+      if value
+        values = value.split(",")
+        values.each do |v|
+          query_components.push( "u_#{f}:\"#{v.strip}\"" )
+        end
+      end
     end
-    
-    return query_components.join(" OR ")
+
+    query_components = query_components.join(" OR ")
+
+    not_interesteds = form_hash['pref_not_interested'].split(",")
+    not_interesteds.each do |ni|
+      query_components += " NOT u_profession:\"#{ni.strip}\""
+    end
+
+    query_components
   end
   
   def keyword_search

@@ -20,6 +20,7 @@ keyword_search:
     - u_ideal_marriage^2.75
     - u_education^2.0
     - u_location^1.0
+    - u_hobbies^2.0
   defType: edismax
   rows: 20
   fl:
@@ -37,16 +38,15 @@ advanced_search:
   fields:
     - hobbies
     - profession
-    - relocate
+    - specific_interest
     - location
     - spouse_preference
+    - family_preference
     - ideal_marriage
-    - virginity_opinion
-    - sex
+    - ideal_partner
     - education
     - further_education
-    - family_preference
-    
+
 
 recos_on_save:
   defType: edismax

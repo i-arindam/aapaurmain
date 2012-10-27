@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121016161705) do
+ActiveRecord::Schema.define(:version => 20121020062520) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -112,6 +112,14 @@ ActiveRecord::Schema.define(:version => 20121016161705) do
 
   add_index "not_interested_in", ["not_interested"], :name => "index_not_interested_in_on_not_interested"
   add_index "not_interested_in", ["user_id"], :name => "index_not_interested_in_on_user_id"
+
+  create_table "profile_updates", :force => true do |t|
+    t.text     "profile"
+    t.integer  "status",     :default => 0
+    t.integer  "user_id"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
 
   create_table "profile_viewers", :force => true do |t|
     t.integer  "profile_id", :null => false

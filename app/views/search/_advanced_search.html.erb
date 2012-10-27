@@ -8,44 +8,22 @@
       <fieldset>
         <div class="row">
           <span class="searchLabel">Hobbies</span>
-          <input class="searchFilters" type="text" name="search[pref_hobbies]" />
+          <input class="searchFilters" type="text" name="search[pref_hobbies]" value="<%= user.hobby.collect(&:hobby).join(", ") %>" />
         </div>
         
         <div class="row">
           <span class="searchLabel">Specifically Interested in?</span>
-          <div class="btn-group searchFilters">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Select one ?
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <% profession_list.each do |prof| %>
-                <li><a href="#" data-value="<%= prof %>"><%= prof %></a></li>
-              <% end %>
-            </ul>
-            <input type="hidden" name="search[pref_profession]">
-          </div>
+          <input class="searchFilters" type="text" name="search[pref_profession]" value="<%= user.interested_in.collect(&:interested).join(", ") %>" />
         </div>
         
         <div class="row">
-          <span class="searchLabel">Comfortable with relocation</span>
-          <div class="btn-group searchFilters">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Select one ?
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <% relocate_list.each do |key, value| %>
-                <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-              <% end %>
-            </ul>
-            <input type="hidden" name="search[pref_relocate]">
-          </div>
+          <span class="searchLabel">Not Interested in?</span>
+          <input class="searchFilters" type="text" name="search[pref_not_interested]" value="<%= user.not_interested_in.collect(&:not_interested).join(", ") %>" />
         </div>
-        
+
         <div class="row">
           <span class="searchLabel">City</span>
-          <input type="text" class="searchFilters" name="search[pref_location]" />
+          <input type="text" class="searchFilters" name="search[pref_location]" value="<%= user.settled_in %>" />
         </div>
         
         <div class="row">
@@ -60,33 +38,7 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <input type="hidden" name="search[pref_spouse_preference]">
-          </div>
-        </div>
-        
-        <div class="row">
-          <span class="searchLabel">Ideal Marriage</span>
-          <input type="text" class="searchFilters" name="search[pref_ideal_marriage]" />
-        </div>
-        
-        <div class="row">
-          <span class="searchLabel">Education of your partner</span>
-          <input type="text" class="searchFilters" name="search[pref_education]" />
-        </div>
-        
-        <div class="row">
-          <span class="searchLabel">Further education plans</span>
-          <div class="btn-group searchFilters">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Select one ?
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <% further_education_list.each do |key, value| %>
-                <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-              <% end %>
-            </ul>
-            <input type="hidden" name="search[pref_further_education]">
+            <input type="hidden" name="search[pref_spouse_preference]" value="<%= user.spouse_preference %>" />
           </div>
         </div>
         
@@ -102,8 +54,28 @@
                 <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
               <% end %>
             </ul>
-            <input type="hidden" name="search[pref_family_preference]">
+            <input type="hidden" name="search[pref_family_preference]" value="<%= user.family_preference %>" />
           </div>
+        </div>
+        
+        <div class="row">
+          <span class="searchLabel">Ideal Marriage</span>
+          <input type="text" class="searchFilters" name="search[pref_ideal_marriage]" value="<%= user.ideal_marriage %>" />
+        </div>
+        
+        <div class="row">
+          <span class="searchLabel">Ideal Partner</span>
+          <input type="text" class="searchFilters" name="search[pref_ideal_partner]" value="<%= user.ideal_partner %>" />
+        </div>
+
+        <div class="row">
+          <span class="searchLabel">Education of your partner</span>
+          <input type="text" class="searchFilters" name="search[pref_education]" value="<%= user.education %>" />
+        </div>
+        
+        <div class="row">
+          <span class="searchLabel">Further education plans</span>
+          <input type="text" class="searchFilters" name="search[pref_further_education]" value="<%= user.further_education_plans %>" />
         </div>
         
         <div class="row">

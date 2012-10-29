@@ -375,10 +375,11 @@ class UsersController < ApplicationController
   def try_and_create(failure_render_path)
     user = User.new(params[:user])
     if user.save
+      cookies[:auth_token] = user.auth_token
       
       send_confirmation_link user
       flash[:success] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
-      render "static_pages/message"
+      redirect_to "/users/#{user.id}/create_profile"
     else
       render "#{failure_render_path}"
     end

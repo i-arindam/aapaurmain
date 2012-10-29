@@ -62,7 +62,7 @@
       $('.profileContainer .saveDetails').click(function(e) {
         var inputFields = [ "#name", "#sex input:checked", "#shortBio", "#education", "#further_education", "#profession", 
           "#hobbies input", "#dream", "#settled", "#virginity", "#idealPartner",
-          "#idealMarriage", "#specificInterest", "#notSpecificInterest", "#blogUrl" ];
+          "#idealMarriage", "#specificInterest", "#notSpecificInterest" ];
         $.each( inputFields, function (i, v) {
           if ( $( v ).val() === "") {
             e.preventDefault();
@@ -112,8 +112,6 @@
                 <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
               </div>
             </div>
-
-           
 
             <span class="label label-inverse span9">
               Something important about <em>you</em>

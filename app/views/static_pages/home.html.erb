@@ -84,17 +84,20 @@
     });
 
     var gaActions = [
-      { sel: '#logo', label : 'logoclick' },
-      { sel: 'a.advSearch', label : 'advSearchClick' },
       { sel: '.b-arrow-next div', label : 'bookletNext' },
       { sel: '.b-arrow-prev div', label : 'bookletPrev' },
-      { sel: 'header ul.nav-actions li:nth(0) a', label : 'loggedInDashboard' },
-      { sel: 'header ul.nav-actions li:nth(1) a', label : 'loggedInEditProfile' },
-      { sel: 'header ul.nav-dropdown>li>a', label : 'loggedInDropDownClick' },
-      { sel: 'header ul.nav-dropdown ul li:nth(0) a', label : 'loggedInMyProfile' },
-      { sel: 'header ul.nav-dropdown ul li:nth(1) a', label : 'loggedInLogout' },
       { sel: 'header form button', label : 'loginClick' },
       { sel: '.signup button.signupBtn', label : 'signupClick'}
+      /* header actions */
+      { sel: '#logo', label : 'logoclick' },
+      { sel: '.j-about_us', label: 'headerAboutUs' },
+      { sel: '.j-how_it_works', label: 'headerHowItWorks' },
+      { sel: '.j-dashboard', label: 'headerDashboard' },
+      { sel: '.j-edit_profile', label: 'headerEditProfile' },
+      { sel: '.j-messages', label: 'headerMessages' },
+      { sel: '.j-my_profile', label: 'headerMyProfile' },
+      { sel: '.j-log_out', label: 'headerLogOut' },
+      { sel: '.advSearch', label: 'headerAdvSearch' }
     ];
 
     $.each(gaActions, function(i, obj) {

@@ -16,48 +16,43 @@
       <nav>
         <% if show_login? %>
 
-            <ul class="nav nav-pills nav-actions">
-              <li><%= link_to "About Us", :controller => "static_pages", :action => "about" %></li>
-              <li><%= link_to "How It Works",  :controller => "static_pages", :action => "how_it_works" %></li>
-              
-            </ul>
-            <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
-              
-                <div class="controls">
-                  <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
-                  <input type="password" class="inputFields" name="password" placeholder="Password" />
-                  <button type="submit" class="signin btn btn-success">Log in</button>
-                </div>
-              
-              <div class="rememberSection">
-                <input name="remember_me" type="checkbox">
-                <label class="checkbox">Remember me</label>
-              </div>
-            <% end %> <!-- end for form -->
-          <% else %>
-          <% if current_user %> 
-            <% user = current_user %>
-            <ul class="nav nav-pills nav-actions">
-
-              <li><%= link_to "Dashboard", :controller => "users", :action => "showme", :id => user.id %></li>
-              <li><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
-
-              <li><%= link_to "Messages", conversations_path if user.status == 1 %></li>
-            </ul>
-
-              <ul class="nav nav-dropdown">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
-                  <ul class="dropdown-menu dontToggle"> 
-                    <li><%= link_to "My Profile",  :controller => "users", :action => "show", :id => user.id %></li>
-                    <li><%= link_to "Log out", logout_path %></li>
-                  </ul>
-                </li>
-              </ul>
-          
+          <ul class="nav nav-pills nav-actions">
+            <li class="j-about_us"><%= link_to "About Us", :controller => "static_pages", :action => "about" %></li>
+            <li class="j-how_it_works"><%= link_to "How It Works",  :controller => "static_pages", :action => "how_it_works" %></li>
             
-          <% end %>
-        <% end %>
+          </ul>
+          <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
+            <div class="controls">
+              <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
+              <input type="password" class="inputFields" name="password" placeholder="Password" />
+              <button type="submit" class="signin btn btn-success">Log in</button>
+            </div>
+              
+            <div class="rememberSection">
+              <input name="remember_me" type="checkbox">
+              <label class="checkbox">Remember me</label>
+            </div>
+          <% end %> <!-- end for form -->
+
+        <% else %>
+          <% user = current_user %>
+          <ul class="nav nav-pills nav-actions">
+            <li class="j-dashboard"><%= link_to "Dashboard", :controller => "users", :action => "showme", :id => user.id %></li>
+            <li class="j-edit_profile"><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
+            <li class="j-messages"><%= link_to "Messages", conversations_path if user.status == 1 %></li>
+          </ul>
+
+          <ul class="nav nav-dropdown">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
+              <ul class="dropdown-menu dontToggle"> 
+                <li class="j-my_profile"><%= link_to "My Profile",  :controller => "users", :action => "show", :id => user.id %></li>
+                <li class="j-log_out"><%= link_to "Log out", logout_path %></li>
+              </ul>
+            </li>
+          </ul>
+            
+        <% end %> <!-- end of if-else -->
       </nav>
     </div>
   </div>

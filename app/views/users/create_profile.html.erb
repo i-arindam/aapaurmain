@@ -13,6 +13,16 @@
     <title>Create your Profile</title>
   </head>
   <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-35891488-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function(d) {
+      var ga = d.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })(document);
+
     $(document).ready(function() {
       var maxYr = (new Date()).getFullYear() - 18;
       var yrRange = '1960:' + maxYr;
@@ -307,9 +317,11 @@
   </body>
   <script type="text/javascript">
     $(function(){
-       
-       $.setupDropdownInputs();
-       $.setupDropdownDisplays();
+      $('button.saveDetails').click(function(e) {
+        window._gaq.push(['_trackEvent', 'create_profile', 'detailsSubmit']);
+      });
+      $.setupDropdownInputs();
+      $.setupDropdownDisplays();
     })
   </script>
   

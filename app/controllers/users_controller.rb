@@ -256,7 +256,7 @@ class UsersController < ApplicationController
       in_requests_ids.each do |in_req|
         request = Request.find_by_from_id_and_to_id(in_req, @user.id)
         if request
-          @viewer_pane_info[:in_requests][in_req] = 
+          @viewer_pane_info[:in_requests][:in_req] = 
           {
             :show_accept => request.status == Request::ASKED , :show_decline => request.status == Request::ASKED, :show_send => false , :show_withdraw => false , 
             :show_withdraw_lock => request.status == Request::ACCEPTED
@@ -273,7 +273,7 @@ class UsersController < ApplicationController
       @viewer_pane_info[:out_requests] = {}
       out_requests_ids.each do |out_req|
         request = Request.find_by_from_id_and_to_id(@user.id,out_req)
-          @viewer_pane_info[:out_requests][out_req] = 
+          @viewer_pane_info[:out_requests][:out_req] = 
           {
             :show_accept => false , :show_decline => false, :show_send => request.nil? , :show_withdraw => request && request.status == Request::ASKED,
             :show_withdraw_lock => request && request.status == Request::ACCEPTED

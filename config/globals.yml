@@ -52,4 +52,3 @@ user-photo-headers:
     Cache-Control: 'max-age=63115200'
     
 aws-origin-server: '//s3-ap-southeast-1.amazonaws.com/'
-  

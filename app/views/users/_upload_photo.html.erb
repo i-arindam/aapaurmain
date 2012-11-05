@@ -1,4 +1,4 @@
-<%= javascript_include_tag "users/upload_photo", "users/ajax_upload" %>
+<%= javascript_include_tag "upload_photo", "ajax_upload", "jquery.Jcrop.min", "jquery.textLimit.min" %>
 <div class="alert alert-success" id="successMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
  <div class="alert alert-error" id="errorMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
 <div class="profilePicUpload clearfix">
@@ -11,13 +11,8 @@
     <span class="imageInfo">Maximum size:&nbsp;4MB</span>
     <div>Tip: For best results use a square image (150 X 150 pixels)</div>
 
-    <% if @user.photo_exists %>
-      <div class="btn btn-info" id="deletePhoto">Delete</div>
-    <% else %>
-      <div class="btn btn-info hide" id="deletePhoto">Delete</div>
-    <% end %>
+    <div class="btn btn-info" id="deletePhoto" style="display:<%= @user.photo_exists ? 'block' : 'none' %>;" >Delete</div>
     <div class="btn btn-danger" id="upload_placeholder"></div>
     <%=image_tag "indicator.gif",:id=>"indicator",:style=>"display:none;",:class=>"indicator"%>
   </div>
 </div>
-

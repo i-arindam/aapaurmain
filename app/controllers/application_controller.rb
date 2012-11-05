@@ -64,7 +64,4 @@ class ApplicationController < ActionController::Base
     Time.now.to_i % size
   end
 
-  
-  
-
 end

@@ -1,16 +1,4 @@
 module ApplicationHelper
-
-   def user_json_object(to_id=nil)
-    require 'json'
-    json_obj = {
-      
-      :session_user_id => (current_user && current_user.id),
-      :name => (current_user && current_user.name),
-     
-    }
-    json_obj.to_json
-  end
-
   def full_title(page_title)
     base_title = "Ruby on Rails Tutorial Sample App"
     if page_title.empty?

@@ -25,12 +25,7 @@
       <div id="main_content">
         <div class="profileHeader">
           <div class="profileImage">
-            <% if @user.photo_exists %>
-              <%= image_tag "https://s3-ap-southeast-1.amazonaws.com/aam-user-photos/profile-"+ @user.id.to_s %>
-            <% else %>
-              <%= image_tag "/assets/users/image_placeholder.png"%>
-            <% end %>
-
+            <%= image_tag "/assets/users/image_placeholder.png"%>
           </div>
           <div class="bioSection">
             <h1 class="name"><%= @user.name %></h1>

@@ -21,11 +21,6 @@ class AWSHelper
     return s3.delete(bucket, file)
   end
 
-  def get_file(bucket,key)
-    s3 = RightAws::S3Interface.new(@access_key, @secret_key, {:logger => $logger})
-    return s3.get(bucket,key)
-  end 
-
 
   #put_data
   #puts given data into s3 bucket with the given key name

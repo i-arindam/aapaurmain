@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020062520) do
+ActiveRecord::Schema.define(:version => 20121031154144) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -129,6 +129,27 @@ ActiveRecord::Schema.define(:version => 20121020062520) do
   end
 
   add_index "profile_viewers", ["profile_id"], :name => "index_profile_viewers_on_profile_id"
+
+  create_table "qotd_answers", :force => true do |t|
+    t.integer  "question_id",                               :null => false
+    t.string   "answer",      :limit => 160,                :null => false
+    t.integer  "answer_by",                                 :null => false
+    t.integer  "likes",                      :default => 0
+    t.integer  "dislikes",                   :default => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  create_table "qotd_questions", :force => true do |t|
+    t.boolean  "admin_generated",                 :default => true
+    t.string   "question",         :limit => 600,                      :null => false
+    t.integer  "likes",                           :default => 0
+    t.integer  "dislikes",                        :default => 0
+    t.string   "question_by_name", :limit => 50,  :default => "admin"
+    t.integer  "question_by"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
+  end
 
   create_table "questions", :force => true do |t|
     t.integer  "from_id",                    :null => false

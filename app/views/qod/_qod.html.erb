@@ -1,0 +1,40 @@
+<% content_for :stylesheet do %>
+  <% stylesheet_link_tag "qod" %>
+<% end %>
+<% content_for :js_footer do %>
+  <%= javascript_include_tag "qod" %>
+<% end %>
+<div class="qodWrapper">
+  <div class="qodContainer j-qod_container">
+    <div class="qodQuestion j-qod_question">
+      <span class="question"></span>
+      <div class="meta">
+        <span class="likes"></span>
+        <span class="dislikes"></span>
+        by <span class="by"></span>
+        <span class="when"></span>
+      </div>
+    </div>
+
+    <div class="loaderOverlay j-loader">
+      <img src="/assets/ajax-loader.gif" />
+      <span>Loading Question of the Day</span>
+    </div>
+  </div>
+  <div class="qodForm j-qod_form">
+    <form class="qodAnswerForm j-qod_answer_form" method="post">
+      <fieldset>
+        <label>Your comment</label>
+        <textarea placeholder="What do you think about the topic?" rows="4" cols="40"></textarea>
+        <input type="submit" class="btn btn-large btn-danger" value="Post Answer" />
+        <span class="charsLeft">You have <span class="counter"></span> characters left</span>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var qod = new QOD(<%= qod.id %>, <%= user_id %>);
+  });
+</script>

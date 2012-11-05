@@ -61,4 +61,11 @@ Aapaurmain::Application.routes.draw do
   get 'conversations/new' => 'conversation#create'
   get 'conversations/:id' => 'conversation#show'
   post 'conversations/:id/new_message' => 'conversation#new_message'
+
+  # Admin actions
+  match 'admin/:action' => 'admin'
+
+  # Qod actions
+  get '/qod/:id' => 'qod#show'
+  post '/qod/:id/answers/new' => 'qod#create_answer'
 end

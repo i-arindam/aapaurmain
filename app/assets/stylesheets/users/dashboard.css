@@ -3,6 +3,7 @@
   position: relative;
   left: 0px;
   top: 30px;
+  width: 50%;
 }
 
 #left_content {
@@ -138,7 +139,8 @@ ul.requestList {
 }
 
 .viewerPane ul.user-container {
-  left: 260px;
+  left: 170px;
+  top: 30px;
 }
 .span4 {
   width: 170px;
@@ -171,7 +173,7 @@ ul.mainNav {
 .mainNav li {
   position: relative;
   float: left;
-  width: 200px;
+  width: 160px;
   margin-right: 10px;
   border-radius: 5px;
 }
@@ -179,8 +181,8 @@ ul.mainNav {
 ul.mainNav li a {
   padding: 8px;
   color: white;
-  font-family: 'Oregano' cursive;
-  font-size: 17px;
+  font-family: 'Oregano';
+  font-size: 16px;
   font-weight: 700;
   line-height: 45px;
   text-decoration: none;

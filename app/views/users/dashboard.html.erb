@@ -26,7 +26,6 @@
     </script>
   </head>
   <body>
-    
     <div id="left_content">
       <span class="shortBio">
         <%= @user.name %>
@@ -38,82 +37,83 @@
     </div>
 
     <div id="box_content">
-    <div class="container dashBoardContainer profile">
-      <span class="span12 dashboardHeading">Howdy! Check out the amazing people we found for you and some who found you!</span>
-      
-      <ul class="nav nav-pills mainNav j-main_nav">
-        <li class="<%= @tab_to_show == 'in' ? 'active' : '' %>"><a href="#">Incoming Requests</a></li>
-        <li class="<%= @tab_to_show == 'out' ? 'active' : '' %>"><a href="#">Outgoing Requests</a></li>
-        <li class="<%= @tab_to_show == 'reco' ? 'active' : '' %>"><a href="#">Recommendations</a></li>
-        <li><a href="#">Your Profile Viewers</a></li>
-      </ul>
-      
-      
-      <div class="requestContainer span10 j-incoming_strip <%= @tab_to_show == 'in' ? '' : 'hide' %>">
-        <ul class="requestList incomingRequests">
-          <% @in_requests.each do |in_req| %>
-          <li class="select-thumbnails" id="<%= in_req.id %>">
-            <a href="#">
-              <img src="/assets/users/image_placeholder_small.png">
-              <h3 class="name"><%= in_req.name %></h3>
-            </a>
-          </li>
-          <% end %>
+      <div class="container dashBoardContainer profile">
+        <span class="span12 dashboardHeading">Howdy! Check out the amazing people we found for you and some who found you!</span>
+        
+        <ul class="nav nav-pills mainNav j-main_nav">
+          <li class="<%= @tab_to_show == 'in' ? 'active' : '' %>"><a href="#">Incoming Requests</a></li>
+          <li class="<%= @tab_to_show == 'out' ? 'active' : '' %>"><a href="#">Outgoing Requests</a></li>
+          <li class="<%= @tab_to_show == 'reco' ? 'active' : '' %>"><a href="#">Recommendations</a></li>
+          <li><a href="#">Your Profile Viewers</a></li>
         </ul>
-      </div>
+        
+        
+        <div class="requestContainer span10 j-incoming_strip <%= @tab_to_show == 'in' ? '' : 'hide' %>">
+          <ul class="requestList incomingRequests">
+            <% @in_requests.each do |in_req| %>
+            <li class="select-thumbnails" id="<%= in_req.id %>">
+              <a href="#">
+                <img src="/assets/users/image_placeholder_small.png">
+                <h3 class="name"><%= in_req.name %></h3>
+              </a>
+            </li>
+            <% end %>
+          </ul>
+        </div>
 
-      <div class="requestContainer span10 j-outgoing_strip <%= @tab_to_show == 'out' ? '' : 'hide' %>">
-        <ul class="requestList outgoingRequests">
-          <% @out_requests.each do |out_req| %>
-          <li class="select-thumbnails" id= '<%= out_req.id %>' >
-            <a href="#">
-              <img src="/assets/users/image_placeholder_small.png">
-              <h3 class="name"><%= out_req.name %></h3>
-            </a>
-          </li>
-          <% end %>
-        </ul>
-      </div>
+        <div class="requestContainer span10 j-outgoing_strip <%= @tab_to_show == 'out' ? '' : 'hide' %>">
+          <ul class="requestList outgoingRequests">
+            <% @out_requests.each do |out_req| %>
+            <li class="select-thumbnails" id= '<%= out_req.id %>' >
+              <a href="#">
+                <img src="/assets/users/image_placeholder_small.png">
+                <h3 class="name"><%= out_req.name %></h3>
+              </a>
+            </li>
+            <% end %>
+          </ul>
+        </div>
 
-      <div class="requestContainer span10 j-reco_strip <%= @tab_to_show == 'reco' ? '' : 'hide' %>">
-        <ul class="requestList recommendations">
-          <% @recos.each do |reco| %>
-          <li class="select-thumbnails" id= '<%= reco.id %>' >
-            <a href="#">
-              <img src="/assets/users/image_placeholder_small.png">
-              <h3 class="name"><%= reco.name %></h3>
-            </a>
-          </li>
-          <% end %>
-        </ul>
-      </div>
+        <div class="requestContainer span10 j-reco_strip <%= @tab_to_show == 'reco' ? '' : 'hide' %>">
+          <ul class="requestList recommendations">
+            <% @recos.each do |reco| %>
+            <li class="select-thumbnails" id= '<%= reco.id %>' >
+              <a href="#">
+                <img src="/assets/users/image_placeholder_small.png">
+                <h3 class="name"><%= reco.name %></h3>
+              </a>
+            </li>
+            <% end %>
+          </ul>
+        </div>
 
-      <div class="requestContainer span10 j-profile_viewer_strip hide">
-        <ul class="requestList profileViewers">
-          <% @profile_viewers.each do |prof| %>
-          <li class="select-thumbnails" id= '<%= prof[:id] %>' >
-            <a href="#">
-              <h3 class="name"><%= prof[:name] %></h3>
-              <img src="/assets/users/image_placeholder_small.png">
-            </a>
-            on <span class="viewDate"><%= prof[:viewed_on_date] %></span>
-            at <span class="viewTime"><%= prof[:viewed_on_time] %></span>
-          </li>
-          <% end %>
-        </ul>
-      </div>
+        <div class="requestContainer span10 j-profile_viewer_strip hide">
+          <ul class="requestList profileViewers">
+            <% @profile_viewers.each do |prof| %>
+            <li class="select-thumbnails" id= '<%= prof[:id] %>' >
+              <a href="#">
+                <h3 class="name"><%= prof[:name] %></h3>
+                <img src="/assets/users/image_placeholder_small.png">
+              </a>
+              on <span class="viewDate"><%= prof[:viewed_on_date] %></span>
+              at <span class="viewTime"><%= prof[:viewed_on_time] %></span>
+            </li>
+            <% end %>
+          </ul>
+        </div>
 
-      <h3 class="span6 requestLabel">&nbsp;</h3>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide' ,
-         :viewer_pane_info => @viewer_pane_info[:in_requests][:in_req] ,:id => 'in_pane' } %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
-        :viewer_pane_info => @viewer_pane_info[:out_requests][:out_req] , :id => 'out_pane'} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => '' , :viewer_pane_info => nil , :id => 'recos_pane'} %>
-      <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil , :id =>'prof_view_pane'} %>
-      
-    </div>
+        <h3 class="span6 requestLabel">&nbsp;</h3>
+        <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide' ,
+           :viewer_pane_info => @viewer_pane_info[:in_requests][:in_req] ,:id => 'in_pane' } %>
+        <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
+          :viewer_pane_info => @viewer_pane_info[:out_requests][:out_req] , :id => 'out_pane'} %>
+        <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => '' , :viewer_pane_info => nil , :id => 'recos_pane'} %>
+        <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil , :id =>'prof_view_pane'} %>
+      </div> 
     </div> <!-- box_content -->
-    <div id="right_content">&nbsp;</div>
+    
+    <%= render :partial => '/qod/qod', :locals => { :qod => QotdQuestion.last, :user_id => @user.id } %>    
+    
     <script type="text/javascript">
       $(document).ready(function() {
         var gaActions = [

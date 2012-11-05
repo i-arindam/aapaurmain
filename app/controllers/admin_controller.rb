@@ -3,9 +3,7 @@ class AdminController < ApplicationController
 
 	def approve_request
 		@user = User.find_by_id(params[:id])
-		if @user.blank?
-			render 404
-		end
+		render_404 and return if @user.blank?
 		@user.signup_status = User.APPROVED
 	end
 

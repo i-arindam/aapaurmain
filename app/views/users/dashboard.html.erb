@@ -112,7 +112,7 @@
       </div> 
     </div> <!-- box_content -->
     
-    <%= render :partial => '/qod/qod', :locals => { :qod => QotdQuestion.last, :user_id => @user.id } %>    
+    <%= render :partial => '/qod/qod', :locals => { :qod => QotdQuestion.last, :user_id => @user.id } if QotdQuestion.last %>    
     
     <script type="text/javascript">
       $(document).ready(function() {

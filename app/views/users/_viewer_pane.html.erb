@@ -21,7 +21,12 @@
     %>
       <li class="user-info" id="<%= 'user_' + user_id.to_s %>">
         <div class="imageContainer">
-          <%= image_tag "/assets/users/image_placeholder_small.png"%>
+          <% if user.photo_exists %>
+              <%= image_tag "https://s3-ap-southeast-1.amazonaws.com/aam-user-photos/profile-"+ user_id.to_s + "-thumbnail" %>
+            <% else %>
+              <%= image_tag "/assets/users/image_placeholder_small.png"%>
+            <% end %>
+         
         </div>
 
         <div class="bio">

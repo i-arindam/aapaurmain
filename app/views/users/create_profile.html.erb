@@ -11,6 +11,11 @@
       <%= javascript_include_tag "jquery.datepick.min.js" %>
     <% end %>
     <title>Create your Profile</title>
+
+     <script type="text/javascript">
+       window.user_object = <%= raw user_json_object %>;
+       
+    </script>
   </head>
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -95,6 +100,10 @@
   <body>
     <div class="container-fluid">
       
+
+    
+      <%= render :partial => 'upload_photo' %>
+
       <div class="span10 profileContainer">
         <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-horizontal"} do %>
           <fieldset>

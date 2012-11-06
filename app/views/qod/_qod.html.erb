@@ -5,7 +5,7 @@
   <%= javascript_include_tag "qod" %>
 <% end %>
 <div class="qodWrapper">
-  <div class="qodContainer j-qod_container">
+  <div class="qodContainer <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-qod_container">
     <div class="qodQuestion j-qod_question">
       <span class="question"></span>
       <div class="meta">
@@ -16,21 +16,28 @@
       </div>
     </div>
 
-    <div class="loaderOverlay j-loader">
+    <div class="loaderOverlay <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-loader">
       <img src="/assets/ajax-loader.gif" />
       <span>Loading Question of the Day</span>
     </div>
   </div>
-  <div class="qodForm j-qod_form">
-    <form class="qodAnswerForm j-qod_answer_form" method="post">
-      <fieldset>
-        <label>Your comment</label>
-        <textarea placeholder="What do you think about the topic?" rows="4" cols="40"></textarea>
-        <input type="submit" class="btn btn-large btn-danger" value="Post Answer" />
-        <span class="charsLeft">You have <span class="counter"></span> characters left</span>
-      </fieldset>
-    </form>
-  </div>
+  <% unless user_id == 0 %>
+    <div class="qodForm j-qod_form">
+      <form class="qodAnswerForm j-qod_answer_form" method="post">
+        <fieldset>
+          <label>Your comment</label>
+          <textarea placeholder="What do you think about the topic?" rows="4" cols="40"></textarea>
+          <input type="submit" class="btn btn-large btn-danger" value="Post Answer" />
+          <span class="charsLeft">You have <span class="counter"></span> characters left</span>
+        </fieldset>
+      </form>
+    </div>
+  <% else %>
+    <div class="qodCta j-qod_cta alert alert-error">
+      <strong>Like this? Join to be a part of the discussion</strong>
+      <a class="showSignup j-show_signup btn btn-large btn-success">Show me how</a>
+    </div>
+  <% end %>
 </div>
 
 <script type="text/javascript">

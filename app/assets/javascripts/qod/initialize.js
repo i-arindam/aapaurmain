@@ -13,6 +13,11 @@ QOD.prototype._init = function() {
     that._SubmitHandler();
     return false;
   });
+  $('.j-show_signup, .j-show_discussion').click(function(e) {
+    e.preventDefault();
+    $('.qodWrapper').fadeToggle(1200);
+    $('.signup, .j-qod_cta').fadeToggle(1200);
+  });
 };
 
 QOD.prototype._getInitialMessages = function() {

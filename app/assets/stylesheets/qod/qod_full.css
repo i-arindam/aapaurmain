@@ -1,6 +1,6 @@
 .qodWrapper {
   position: fixed;
-  top: 200px;
+  top: 120px;
   right: 40px;
   width: 390px;
 }
@@ -11,7 +11,13 @@
   padding: 15px;
   width: 100%;
   overflow: scroll;
-  height: 300px;
+}
+
+.qodContainer.loggedIn {
+  height: 380px;
+}
+.qodContainer.loggedOut {
+  height: 450px;
 }
 
 .qodQuestion {
@@ -21,11 +27,11 @@
   font-size: 18px;
   font-weight: 700;
   padding-left: 10px;
-  border-bottom: 3px solid;
+  border-bottom: 5px solid;
   border-bottom-color: rgba(220, 220, 220, 0.68);
   border-bottom-style: dotted;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 70px;
+  border-bottom-right-radius: 70px;
 }
 
 .qodQuestion span.question {
@@ -47,9 +53,13 @@
 }
 
 .loaderOverlay {
-  min-height: 300px;
   background: rgba(0, 0, 0, 0.6);
-  /*padding-top: 100px;*/
+}
+.loaderOverlay.loggedIn {
+  min-height: 380px;
+}
+.loaderOverlay.loggedOut {
+  min-height: 450px;
 }
 
 .loaderOverlay img {
@@ -84,6 +94,7 @@ li.qodAnswer {
   padding: 4px 2px 4px 7px;
   border-bottom: 1px solid;
   border-bottom-style: dotted;
+  word-break: break-word;
 }
 
 li.qodAnswer:first-child {
@@ -133,4 +144,16 @@ li.qodAnswer:last-child {
 .qodForm .counter.over {
   color: red;
   font-weight: 700;
+}
+
+.qodCta.alert.alert-error {
+  position: relative;
+  margin-top: 20px;
+  width: 350px;
+  left: 0px;
+  text-align: center;
+}
+
+.qodCta .showSignup {
+  margin-top: 10px;
 }

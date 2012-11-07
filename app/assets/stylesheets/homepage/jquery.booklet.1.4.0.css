@@ -46,12 +46,12 @@
 	.booklet .b-shadow-f  {right:0; top:0; position:absolute; opacity:0; background-image:url("images/shadow-top-forward.png"); background-repeat:repeat-y; background-position:100% 0;}
 	.booklet .b-shadow-b  {left:0;  top:0; position:absolute; opacity:0; background-image:url("images/shadow-top-back.png");    background-repeat:repeat-y; background-position:0 0;}
 	
-	.booklet .b-p0 {background-image:url("images/shadow.png"); background-repeat:repeat-y; background-position:100% 10px;}
-	.booklet .b-p3 {background-image:url("images/shadow.png"); background-repeat:repeat-y; background-position:0 10px;}
+	.booklet .b-p0 {background-image:url("images/homepage/shadow.png"); background-repeat:repeat-y; background-position:100% 10px;}
+	.booklet .b-p3 {background-image:url("images/homepage/shadow.png"); background-repeat:repeat-y; background-position:0 10px;}
 	
    	/* Overlay Controls */
-	.booklet .b-grab     {cursor: url("images/openhand.cur"), default;}
-	.booklet .b-grabbing {cursor: url("images/closedhand.cur"), default;}
+	.booklet .b-grab     {cursor: url("images/homepage/openhand.cur"), default;}
+	.booklet .b-grabbing {cursor: url("images/homepage/closedhand.cur"), default;}
 	
    	/* Overlay Controls */
 	.booklet .b-overlay      {top:0; position:absolute; height:100%; width:50%;}
@@ -69,8 +69,8 @@
 	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:170px; width:74px; position:relative; left:18px; top:45%;}
 	.booklet .b-arrow-next     {right:-80px;}
 	.booklet .b-arrow-prev     {left:-80px;}
-	.booklet .b-arrow-next div {background:url("images/arrow-next.png") no-repeat left top;}
-	.booklet .b-arrow-prev div {background:url("images/arrow-prev.png") no-repeat left top;}
+	.booklet .b-arrow-next div {background:url("images/homepage/arrow-next.png") no-repeat left top;}
+	.booklet .b-arrow-prev div {background:url("images/homepage/arrow-prev.png") no-repeat left top;}
 		
 /* @z-index fix (needed for older IE browsers)
 ----------------------------------------*/

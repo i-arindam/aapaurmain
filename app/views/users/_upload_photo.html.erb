@@ -1,18 +1,25 @@
-<%= javascript_include_tag "upload_photo", "ajax_upload", "jquery.Jcrop.min", "jquery.textLimit.min" %>
-<div class="alert alert-success" id="successMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
- <div class="alert alert-error" id="errorMsg" style="display:none;"><span></span><a href="#" class="closeThis" title="Close this notification">&times;</a></div>
-<div class="profilePicUpload clearfix">
+<%= javascript_include_tag "users/upload_photo", "users/ajax_upload" %>
+<div class="alert alert-success" id="successMsg" style="display:none;"><span></span><a href="#" class="close" title="Close this notification">&times;</a></div>
+ 
+<div class="profilePicUpload">
   <div class="imageThumbContainer">
-    <img class="imageThumb" src="<%= @user.photo_exists ? '//s3-ap-southeast-1.amazonaws.com/aam-user-photos/profile-'+  @user.id.to_s : 'http://placehold.it/150x150' %>"  alt='' title='' id='preview' width="150" height="150" />
+    <%= image_tag profile_pic_url(@user.id.to_s), :style=>"height:150px,width:150px" , :id=>"preview" %>
   </div>
   <div class="upload">
-    <span class="title">Select an image file on your computer</span>
-    <span class="imageInfo">Supported formats:&nbsp;jpg, png, gif</span>
-    <span class="imageInfo">Maximum size:&nbsp;4MB</span>
-    <div>Tip: For best results use a square image (150 X 150 pixels)</div>
+    <p>
+    Select an image file on your computer.
+    Supported formats:&nbsp;jpg, png, gif.
+    Maximum size:&nbsp;4MB
+    Tip: For best results use a square image (150 X 150 pixels)
+  </p>
 
-    <div class="btn btn-info" id="deletePhoto" style="display:<%= @user.photo_exists ? 'block' : 'none' %>;" >Delete</div>
+    <% if @user.photo_exists %>
+      <div class="btn btn-info" id="deletePhoto">Delete</div>
+    <% else %>
+      <div class="btn btn-info hide" id="deletePhoto">Delete</div>
+    <% end %>
     <div class="btn btn-danger" id="upload_placeholder"></div>
     <%=image_tag "indicator.gif",:id=>"indicator",:style=>"display:none;",:class=>"indicator"%>
   </div>
 </div>
+

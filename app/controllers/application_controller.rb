@@ -64,4 +64,42 @@ class ApplicationController < ActionController::Base
     Time.now.to_i % size
   end
 
+def profile_pic_url(user_id)
+    user = User.find user_id
+    if user && user.photo_exists &&  Rails.env != 'development'
+      key = $aapaurmain_conf['profile-pic']
+      profile_key = key.gsub('{{user_id}}' , user_id.to_s)
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '?' + gimme_random_value(10).to_s
+    else
+      "/assets/users/image_placeholder.png"
+    end
+end
+helper_method :profile_pic_url
+
+
+  def thumbnail_pic_url(user_id)
+    user = User.find user_id
+    if user && user.photo_exists
+      key = $aapaurmain_conf['thumbnail']
+      profile_key = key.gsub('{{user_id}}' , user_id.to_s)
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '?' + gimme_random_value(10).to_s
+    else
+      "/assets/users/image_placeholder_small.png"
+    end
+  end
+  helper_method :thumbnail_pic_url
+  
+  def original_pic_url(user_id)
+    user = User.find user_id
+    if user && user.photo_exists
+      key = $aapaurmain_conf['profile-pic-original']
+      profile_key = key.gsub('{{user_id}}' , user_id.to_s)
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '?' + gimme_random_value(10).to_s
+    else
+      "/assets/users/image_placeholder.png"
+    end
+end
+helper_method :original_pic_url
+  
+
 end

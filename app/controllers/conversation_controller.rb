@@ -18,7 +18,7 @@ class ConversationController < ApplicationController
       with_user_name = with_user.name
       snippet = conv.messages != [] ? conv.messages.last.text.truncate(95, :omission => "... ") : ""
       
-      { :with => with_user_name, :snippet => snippet, :last_time => conv.updated_at.strftime("%d %b '%y"), :id => conv.id }
+      { :with => with_user_name, :snippet => snippet, :last_time => conv.updated_at.strftime("%d %b '%y"), :id => conv.id, :user_id => with_user_id }
     end # end conversations.map
   end # End conversations
   

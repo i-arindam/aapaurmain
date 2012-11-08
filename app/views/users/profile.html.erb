@@ -25,7 +25,10 @@
       <div id="main_content">
         <div class="profileHeader">
           <div class="profileImage">
-            <%= image_tag "/assets/users/image_placeholder.png"%>
+            
+              <%= image_tag profile_pic_url(@user.id) %>
+            
+
           </div>
           <div class="bioSection">
             <h1 class="name"><%= @user.name %></h1>

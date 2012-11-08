@@ -11,7 +11,7 @@
     <% @values.each do |conv| %>
       <li class="conversation">
         <a rel="nofollow" href="conversations/<%= conv[:id] %>">
-          <img src="http://placehold.it/96x96" />
+          <%= image_tag thumbnail_pic_url(conv[:user_id]) %>
           <span class="conversationName"><%= conv[:with] %></span>
         </a>
         <div class="otherMeta">

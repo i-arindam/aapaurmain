@@ -559,7 +559,7 @@ class UsersController < ApplicationController
       render :text => {:success => false, :message => errors[:size_limit_exceeded]}.to_json and return
     end
     session_user.photo_url = img
-    render :text => {:success => true }.to_json
+    render :text => {:success => true , :url => original_pic_url(session_user.id) }.to_json
   end
   
 
@@ -568,8 +568,10 @@ class UsersController < ApplicationController
    def delete_photo
        session_user = current_user
      begin
-       session_user.delete_photo      
-       render :json => { :success => true }
+      session_user.photo_exists =false
+      session_user.save!
+      session_user.delete_photo      
+      render :json => { :success => true , :url => original_pic_url(session_user.id) }
      rescue Exception => e
        logger.error e.backtrace.join("\n")
        render :json => { :success => false, :message => 'Deleting failed. Please try again.' }

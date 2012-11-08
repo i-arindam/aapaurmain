@@ -31,8 +31,7 @@
 ################################################################################
 class User < ActiveRecord::Base
 
-  # require "aws_helper"
-  # require 'RMagick'
+  
   
   attr_accessible :email, :password, :password_confirmation, :name
  # attr_accessor :password
@@ -528,23 +527,24 @@ class User < ActiveRecord::Base
   # Upload the original picture to S3.
   # @param [IOStream] Image data to be saved
   def photo_url=(file)
-    # if RAILS_ENV == 'development'
-    #    write_attribute('photo_exists', true)
-    #    return
-    #  end
-    
+     if Rails.env == 'development'
+       write_attribute('photo_exists', true)
+       return
+     end
+    require "aws_helper"
+    require 'RMagick'
     return if file == ''
     
     profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
     profile_pic_fullpath =  profile_pic_location + "/profile-#{self.id.to_s}" 
     profile_pic_original = '/tmp/' + File.basename(profile_pic_fullpath)
 
+    
     file.rewind
     File.open(profile_pic_original, "wb") do |f|
      f.write(file.read)
     end
 
-    File.delete(file.path) rescue nil
 
     #Get the extension and mime type
     img = Magick::Image::read(profile_pic_original).first
@@ -555,45 +555,83 @@ class User < ActiveRecord::Base
     #delete existing photo
     $s3.delete_file(profile_pic_fullpath) if self.photo_exists
 
-    img_profile = img.resize(150,150)
-    img_profile.write(profile_pic_original)
-
     $s3.put_file(profile_pic_original, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
 
-    img_thumbnail = img.resize(96,96)
-    img_thumbnail.strip!
-    thumbnail_location = '/tmp/' + "profile-#{self.id.to_s}-thumbnail" 
-
-
-    img_thumbnail.write(thumbnail_location)
-    thumbnail_fullpath = profile_pic_location + "profile-#{self.id.to_s}-thumbnail" 
-    $s3.delete_file(thumbnail_fullpath) if self.photo_exists
-    $s3.put_file(thumbnail_location, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+    
+    delay.generate_photo_sizes(self.id)
     self.photo_exists = true
     self.save!
-    
-    # delete temporary files
-    FileUtils.rm(profile_pic_original)
-    FileUtils.rm(thumbnail_location)
   end
+
+  def generate_photo_sizes(user_id)
+    
+    require "aws_helper"
+    require 'RMagick'
+    begin
+      user = User.find(user_id)
+      profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
+      profile_pic_fullpath =  profile_pic_location + "/profile-#{user_id.to_s}" 
+      profile_pic_original = '/tmp/' + File.basename(profile_pic_fullpath)
+
+      profile_pic = '/tmp/' + "/profile-#{user_id.to_s}-150" 
+      thumbnail = '/tmp/' + "profile-#{user_id.to_s}-thumbnail"
+      $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
+
+        
+      
+      img = Magick::Image::read(profile_pic_original).first
+      headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
+
+      img_profile = img.resize(150,150)
+      img_profile.write(profile_pic)
+
+      $s3.delete_file(File.basename(profile_pic)) if self.photo_exists
+      $s3.put_file(profile_pic, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+
+      img_thumbnail = img.resize(96,96)
+      img_thumbnail.strip!
+      img_thumbnail.write(thumbnail)
+
+      
+       
+      thumbnail_fullpath = profile_pic_location + "/profile-#{user_id.to_s}-thumbnail" 
+      headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
+      $s3.delete_file(thumbnail_fullpath) if user.photo_exists
+      $s3.put_file(thumbnail, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+
+      FileUtils.rm(thumbnail)
+      FileUtils.rm(profile_pic)
+      FileUtils.rm(profile_pic_original)
+     
+    rescue Exception => e
+      logger.error "resizing failed for User #{user_id} : #{e.inspect}"
+      logger.error e.backtrace.join("\n")
+    end
+  end
+
+
    
   def delete_photo
-     # if RAILS_ENV == 'development'
-     #   puts "development"
-     #   write_attribute('photo_exists', false)
-     #   return
-     # end
-
+    return if Rails.env == 'development'
+    require "aws_helper"
+    require 'RMagick'
      #delete all sizes
-     profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
-     profile_pic_fullpath =  profile_pic_location + "/profile-#{self.id.to_s}"
-     profile_pic_name = "profile-#{self.id.to_s}"
-     $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
-     $s3.delete_file(profile_pic_name)
-     thumbnail_name = "profile-#{self.id.to_s}-thumbnail"
-     $s3.delete_file(thumbnail_name)
-     self.photo_exists =false
-     self.save!
+    begin 
+      $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
+      profile_pic = "profile-#{self.id.to_s}-150"
+       
+      $s3.delete_file(profile_pic)
+
+
+      thumbnail_name = "profile-#{self.id.to_s}-thumbnail"
+      $s3.delete_file(thumbnail_name)
+
+      profile_pic_original = "profile-#{self.id.to_s}"  
+      $s3.delete_file(profile_pic_original)
+    rescue
+       logger.error "deletion of profile pic failed for User #{user_id} : #{e.inspect}"
+    end
+  
   end
   
   # Queries Solr on new user create and finds out top 5 recommendations

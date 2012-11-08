@@ -11,6 +11,11 @@
       <%= javascript_include_tag "jquery.datepick.min.js" %>
     <% end %>
     <title>Create your Profile</title>
+
+     <script type="text/javascript">
+       window.user_object = <%= raw user_json_object %>;
+       
+    </script>
   </head>
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -24,6 +29,8 @@
     })(document);
 
     $(document).ready(function() {
+      var photoUploader = new ProfilePicUpload(user_object);
+
       var maxYr = (new Date()).getFullYear() - 18;
       var yrRange = '1960:' + maxYr;
       // Date picker for DOB
@@ -93,8 +100,11 @@
     });
   </script>
   <body>
-    <div class="container-fluid">
-      
+    
+    <div class="container-fluid"> 
+      <div class="picUpload">
+      <%= render :partial => 'upload_photo' %>
+      </div>
       <div class="span10 profileContainer">
         <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-horizontal"} do %>
           <fieldset>

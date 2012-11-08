@@ -21,7 +21,9 @@
     %>
       <li class="user-info" id="<%= 'user_' + user_id.to_s %>">
         <div class="imageContainer">
-          <%= image_tag "/assets/users/image_placeholder_small.png"%>
+        
+          <%= image_tag thumbnail_pic_url(user_id.to_s) %>
+         
         </div>
 
         <div class="bio">

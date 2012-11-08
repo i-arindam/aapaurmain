@@ -30,7 +30,7 @@
       <span class="shortBio">
         <%= @user.name %>
       </span>
-      <img src="/assets/users/image_placeholder.png" />
+       <%= image_tag profile_pic_url(@user.id) %>
       <span class="shortBio">
         <%= @user.short_bio || 'Thats me' %>
       </span>

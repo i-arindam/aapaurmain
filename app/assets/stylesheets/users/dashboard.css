@@ -191,6 +191,8 @@ ul.mainNav li a {
 .mainNav li.active a {
   pointer-events: none;
 }
+
+/* currently unused */
 .dashboardHeading {
   font-family: Georgia;
   font-style: italic;

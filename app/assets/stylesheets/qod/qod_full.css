@@ -1,7 +1,6 @@
 .qodWrapper {
-  position: fixed;
-  top: 120px;
-  right: 40px;
+  float: right;
+  margin: 30px 40px;
   width: 390px;
 }
 

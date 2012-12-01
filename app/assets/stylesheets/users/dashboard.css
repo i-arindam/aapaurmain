@@ -37,8 +37,7 @@
 ul.requestList {
   height: 170px;
   margin: 10px 0 0px 35px;
-  overflow: scroll;
-  width: 95%;
+  width: 100%;
   list-style: none;
   position: relative;
 }
@@ -64,6 +63,8 @@ ul.requestList {
   color: white;
   margin-left: 10px;
   width: 99%;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 .profileImage {
   float: left;

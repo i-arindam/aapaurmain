@@ -6,6 +6,8 @@
 
   $.fn.extend({
     setupHorizontalScroll : function() {
+      var currentWidth = $(this).width();
+      $(this).css({width: currentWidth+120});
       var lis = $(this).children('li');
       var leftVal = 0;
       lis.each(function( index, obj) {

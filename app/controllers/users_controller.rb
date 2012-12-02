@@ -548,8 +548,8 @@ class UsersController < ApplicationController
     img = params[:qqfile].is_a?(String) ? request.body : params[:qqfile]
     img.rewind
     errors = {
-      :invalid_format => 'Unsupported image format',
-      :size_limit_exceeded => 'Image upload failed. Maximum allowed size is 4MB'
+      :invalid_format => 'Image upload failed. Please use a valid image format.',
+      :size_limit_exceeded => 'Image upload failed. Maximum allowed size is 4MB.'
     }
 
     unless is_file_object(img) and is_image?(img)

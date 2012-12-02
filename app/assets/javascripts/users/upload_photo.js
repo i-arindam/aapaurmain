@@ -41,7 +41,7 @@ ProfilePicUpload.prototype.initAjaxUpload = function(){
   },
   onComplete: function(id, file, response) {
     if(response.success === false) {
-      that.successMsg.children(":first").text("Your profile picture has been uploaded");
+      that.successMsg.children(":first").text(response.message);
       that.successMsg.show();
       that.indicator.hide();
       that.uploadButton.show();

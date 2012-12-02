@@ -527,10 +527,10 @@ class User < ActiveRecord::Base
   # Upload the original picture to S3.
   # @param [IOStream] Image data to be saved
   def photo_url=(file)
-     if Rails.env == 'development'
-       write_attribute('photo_exists', true)
-       return
-     end
+     # if Rails.env == 'development'
+     #   write_attribute('photo_exists', true)
+     #   return
+     # end
     require "aws_helper"
     require 'RMagick'
     return if file == ''

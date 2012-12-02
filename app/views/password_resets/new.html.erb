@@ -1,4 +1,12 @@
-<%= form_tag password_resets_path, :method => :post do %>
+<%# Move to a new css file when the style tag gets big %>
+<style>
+  html,body { height: auto; }
+  form.password_reset {
+    margin: 10em auto 15em;
+    width: 250px;
+  }
+</style>
+<%= form_tag password_resets_path, :class => 'password_reset', :method => :post do %>
   <div class="field">
     <%= label_tag :email %>
     <%= text_field_tag :email, params[:email] %>

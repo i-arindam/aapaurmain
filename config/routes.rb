@@ -1,5 +1,4 @@
 Aapaurmain::Application.routes.draw do
-  get "password_resets/new"
   get "log_out" => "sessions#destroy", :as => "logout"
   get "log_in" => "sessions#new", :as => "login"
   get "sign_up" => "users#new", :as => "signup"
@@ -22,6 +21,7 @@ Aapaurmain::Application.routes.draw do
     resources :subscription
   end
   resources :sessions
+  resources :password_resets
 
   post 'users/signup' => 'users#signup'
   match '/signup/confirmation' => 'users#confirm_signup'

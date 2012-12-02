@@ -27,11 +27,14 @@
               <input type="password" class="inputFields" name="password" placeholder="Password" />
               <button type="submit" class="signin btn btn-success">Log in</button>
             </div>
-              
             <div class="rememberSection">
               <input name="remember_me" type="checkbox">
               <label class="checkbox">Remember me</label>
             </div>
+            <div class="forgotPasswordSection">
+              <p><%= link_to "Forgot Password?", new_password_reset_path %></p>
+            </div>
+
           <% end %> <!-- end for form -->
 
         <% else %>

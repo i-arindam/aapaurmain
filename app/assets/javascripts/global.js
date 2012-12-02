@@ -8,7 +8,7 @@
     setupHorizontalScroll : function() {
       var lis = $(this).children('li');
       var extra_elements = lis.length - 5; //we show upto 5 elements with the current width
-      if extra_elements > 0 {
+      if(extra_elements > 0) {
         var currentWidth = $(this).width();
         $(this).css({width: currentWidth+(120*extra_elements)});
       }

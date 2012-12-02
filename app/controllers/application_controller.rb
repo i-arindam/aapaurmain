@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
   end
   
   def verifyUploadedFileAndConvert(file)
+    puts file.class
     if  file.is_a? StringIO or file.is_a? Tempfile or file.is_a? Unicorn::TeeInput
       #opening file in wb+ since same pointer is used to 'read' later
       #todo: optimize

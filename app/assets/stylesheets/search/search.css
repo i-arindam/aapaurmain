@@ -13,11 +13,12 @@ body {
   box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   -moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
   color: white;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 ul.searchList {
   height: 170px;
   margin: 20px 0 0px 35px;
-  overflow: scroll;
   list-style: none;
   position: relative;
 }

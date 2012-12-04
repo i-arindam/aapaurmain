@@ -3,8 +3,8 @@ class QotdQuestion < ActiveRecord::Base
 
   has_many :qotd_answers, :dependent => :destroy, :foreign_key => :question_id
 
-  def latest_n_answers(n = 10)
-    self.qotd_answers.order("updated_at DESC").limit(n)
+  def latest_n_answers(n = 10, offset = 0)
+    self.qotd_answers.order("updated_at DESC").limit(n).offset(offset)
   end
 
 end

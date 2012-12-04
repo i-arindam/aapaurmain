@@ -6,6 +6,7 @@ function QOD(qodId, sessionUserId) {
 
 QOD.prototype._init = function() {
   var that = this;
+  this.offset = 0;
   this.questionBlock = $('.j-qod_container .j-qod_question');
   this.initialRenderUrl = '/qod/' + this.qodId;
   this._getInitialMessages();
@@ -18,6 +19,10 @@ QOD.prototype._init = function() {
     $('.qodWrapper').fadeToggle(1200);
     $('.signup, .j-qod_cta').fadeToggle(1200);
   });
+  $('.qodContainer').scroll(function() {
+    that._scrollHandler.apply(that, [this]);
+  });
+
 };
 
 QOD.prototype._getInitialMessages = function() {
@@ -30,9 +35,41 @@ QOD.prototype._getInitialMessages = function() {
       if(data.success) {
         that._addAndShow(data);
       }
+      that.offset += 10;
     }, error: function(data) {
     }
   });
+};
+
+QOD.prototype._getMoreMessages = function() {
+  var that = this;
+  $.ajax({
+    url: this.initialRenderUrl + "?offset=" + this.offset,
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      if(data.success) {
+        that._addMoreAnswers(data);
+      }
+
+    }, error: function(data) {
+    }
+  });
+};
+
+QOD.prototype._addMoreAnswers = function(data) {
+  var answer = data.payload.answers.user_answers;
+  var answersCount = data.payload.answers.size;
+  var that = this;
+
+  if(answersCount > 0) {
+    var answersUl = $('.j-qod_answers');
+    $.each(answer, function(i, obj) {
+      var answerLi = that._formAnswerDom(obj);
+      answerLi.appendTo(answersUl);
+    });
+    that.offset += 10;
+  }
 };
 
 QOD.prototype._addAndShow = function(data) {
@@ -108,6 +145,13 @@ QOD.prototype._SubmitHandler = function() {
       alert("Sorry answer could not be posted due to some error. Try again?");
     }
   });
+};
+
+QOD.prototype._scrollHandler = function(ele) {
+  if($(ele).scrollTop() >= $(ele)[0].scrollHeight - $(ele).innerHeight()) {
+    this._getMoreMessages();
+  } else {
+  }
 };
 
 QOD.prototype._formAnswerDom = function(obj) {

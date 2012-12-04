@@ -6,9 +6,10 @@ class QodController < ApplicationController
 
   def show
     question = QotdQuestion.find_by_id params[:id]
+    offset = params[:offset] || 0
     render :json => { :success => false, :payload => "Incorrect question probed" } and return unless question
 
-    answers = question.latest_n_answers(params[:n] || 10)
+    answers = question.latest_n_answers(params[:n] || 10, offset)
     user_answers = []
     answers.each do |an|
       user_answers.push({

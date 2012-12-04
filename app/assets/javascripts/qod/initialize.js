@@ -41,8 +41,9 @@ QOD.prototype._addAndShow = function(data) {
   this.answersCount = data.payload.answers.size;
 
   /* Write question to DOM */
+  var when = moment(new Date(this.question.when)); //TODO Check in IE once
   this.questionBlock.find('.question').text(this.question.text);
-  this.questionBlock.find('.when').text(this.question.when);
+  this.questionBlock.find('.when').text(when.format('h:mm a'));
   this.questionBlock.find('.by').text(this.question.by);
   if(this.question.likes > 0) {
     this.questionBlock.find('.likes').text(this.question.likes);
@@ -115,6 +116,7 @@ QOD.prototype._formAnswerDom = function(obj) {
   $('<span />').addClass('answerBy j-answer_by').text(obj.by)
     .appendTo($('<a />').attr('href', '/users/' + obj.by_id).attr('rel', 'nofollow')
       .addClass('answerBy j-answer_by').appendTo(answerLi));
-  $('<span />').addClass('answerTime j-answer_time').text(obj.when).appendTo(answerLi);
+  var answerTime = moment(new Date(obj.when));
+  $('<span />').addClass('answerTime j-answer_time').text(answerTime.format('h:mm a')).appendTo(answerLi);
   return answerLi;
 }

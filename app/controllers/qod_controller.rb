@@ -15,7 +15,7 @@ class QodController < ApplicationController
         :text => an.answer,
         :by => (u = User.find_by_id(an.answer_by) and u.name) || "Anon User",
         :by_id => an.answer_by,
-        :when => an.updated_at.strftime("%l:%M %P")
+        :when => an.updated_at.to_s
       })
     end
 
@@ -24,7 +24,7 @@ class QodController < ApplicationController
       :payload => {
         :question => {
           :text => question.question,
-          :when => question.updated_at.strftime("%l:%M %P"),
+          :when => question.updated_at.to_s,
           :by => question.question_by_name,
           :is_admin => question.admin_generated,
           :likes => (question.likes > 10 ? question.likes : 0),
@@ -61,7 +61,7 @@ class QodController < ApplicationController
           :text => new_answer.answer,
           :by => (u = User.find_by_id(new_answer.answer_by) and u.name) || "Anon User",
           :by_id => new_answer.answer_by,
-          :when => new_answer.updated_at.strftime("%l:%M %P")
+          :when => new_answer.updated_at.to_s
         }
       }
     }

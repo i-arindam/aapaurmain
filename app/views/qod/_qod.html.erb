@@ -2,7 +2,7 @@
   <% stylesheet_link_tag "qod" %>
 <% end %>
 <% content_for :js_footer do %>
-  <%= javascript_include_tag "qod" %>
+  <%= javascript_include_tag "qod", "moment.min" %>
 <% end %>
 <div class="qodWrapper">
   <div class="qodContainer <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-qod_container">

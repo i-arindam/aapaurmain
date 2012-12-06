@@ -16,7 +16,7 @@
             profession = user.profession
             user_id = user.id
             if !viewer_pane_info.nil?
-              info =  viewer_pane_info[user_id.to_i] 
+              info =  viewer_pane_info[user_id.to_s] 
             end
     %>
       <li class="user-info" id="<%= 'user_' + user_id.to_s %>">

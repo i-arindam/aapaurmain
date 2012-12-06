@@ -102,9 +102,9 @@
 
         <h3 class="span6 requestLabel">&nbsp;</h3>
         <%= render :partial => 'viewer_pane', :locals => {:user_collection => @in_requests, :class_name => 'hide' ,
-           :viewer_pane_info => @viewer_pane_info[:in_requests][:in_req] ,:id => 'in_pane' } %>
+           :viewer_pane_info => @viewer_pane_info[:in_requests] ,:id => 'in_pane' } %>
         <%= render :partial => 'viewer_pane', :locals => {:user_collection => @out_requests, :class_name => 'hide', 
-          :viewer_pane_info => @viewer_pane_info[:out_requests][:out_req] , :id => 'out_pane'} %>
+          :viewer_pane_info => @viewer_pane_info[:out_requests] , :id => 'out_pane'} %>
         <%= render :partial => 'viewer_pane', :locals => {:user_collection => @recos, :class_name => '' , :viewer_pane_info => nil , :id => 'recos_pane'} %>
         <%= render :partial => 'viewer_pane', :locals => {:user_collection => @profile_viewers_users, :class_name => 'hide', :viewer_pane_info => nil , :id =>'prof_view_pane'} %>
       </div> 

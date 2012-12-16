@@ -32,7 +32,15 @@ UserActions.prototype.setupActions = function() {
   this.setupDecline();
   this.setupAccept();
   this.setupWithdrawLock();
+
+  $('h3.haircut').haircut({
+    jitterPadding: 20,
+    placement: 'end'
+  });
   
+  $(window).resize(function() {
+    $('h3.haircut').stringResize();
+  });
 };
 
 UserActions.prototype.setupSend = function(){

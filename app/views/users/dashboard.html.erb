@@ -6,6 +6,7 @@
     <% end %>
     <% content_for :js_footer do %>
       <%= javascript_include_tag "application-user" %>
+      <%= javascript_include_tag "jquery.haircut" %>
     <% end %>
     <title>Lo! Your home page <%= (@user.name || "User").capitalize %></title>
     <script type="text/javascript">

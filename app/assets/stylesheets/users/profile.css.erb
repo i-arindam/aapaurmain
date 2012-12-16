@@ -97,18 +97,6 @@ div.profile span.label {
   height: 100%;
 }
 
-.lcol1:hover, .rcol2:hover {
-  -webkit-transform: rotate(-7deg);
-  -moz-transform: rotate(-7deg);
-  -o-transform: rotate(-7deg);
-}
-
-.rcol1:hover {
-  -webkit-transform: rotate(7deg);
-  -moz-transform: rotate(7deg);
-  -o-transform: rotate(7deg);
-}
-
 #box_content {
   background: inherit;
 }
@@ -208,3 +196,61 @@ div.rightCol div.group.rcol2{
 .footer {
   display: none;
 }
+
+/* Haircut styles */
+._LVhaircutExpand {
+  opacity: 0;
+  position: absolute;
+  padding: 8px 16px;
+  background: #ECEEF1;
+  background: -moz-linear-gradient(top,#ECEEF1 0,#CDCED1 100%);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ECEEF1),color-stop(100%,#CDCED1));
+  background: -webkit-linear-gradient(top,#ECEEF1 0,#CDCED1 100%);
+  background: -o-linear-gradient(top,#ECEEF1 0,#CDCED1 100%);
+  background: -ms-linear-gradient(top,#ECEEF1 0,#CDCED1 100%);
+  background: linear-gradient(to bottom,#ECEEF1 0,#CDCED1 100%);
+  border: 2px solid #ECEEF1;
+  word-wrap: break-word;
+  color: #55606F;
+  font: 16px/20px "comic sans ms";
+  margin-top: 3px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  -webkit-transition: opacity 300ms cubic-bezier(0.95,0.05,0.795,0.035),margin 300ms cubic-bezier(0.86,0,0.07,1);
+  -moz-transition: opacity 300ms cubic-bezier(0.95,0.05,0.795,0.035),margin 300ms cubic-bezier(0.86,0,0.07,1);
+  -ms-transition: opacity 300ms cubic-bezier(0.95,0.05,0.795,0.035),margin 300ms cubic-bezier(0.86,0,0.07,1);
+  -o-transition: opacity 300ms cubic-bezier(0.95,0.05,0.795,0.035),margin 300ms cubic-bezier(0.86,0,0.07,1);
+  transition: opacity 300ms cubic-bezier(0.95,0.05,0.795,0.035),margin 300ms cubic-bezier(0.86,0,0.07,1);
+  -webkit-transition-timing-function: cubic-bezier(0.86,0,0.07,1);
+  -moz-transition-timing-function: cubic-bezier(0.86,0,0.07,1);
+  -ms-transition-timing-function: cubic-bezier(0.86,0,0.07,1);
+  -o-transition-timing-function: cubic-bezier(0.86,0,0.07,1);
+  transition-timing-function: cubic-bezier(0.86,0,0.07,1);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 0 white;
+  -webkit-font-smoothing: antialiased;
+  max-width: 540px;
+}
+
+._LVshowHaircutExpand {
+  opacity: 1;
+  margin-top: 0;
+  z-index: 2;
+}
+
+h3.haircut abbr {
+  font-weight: 700;
+  font-family: "comic sans ms";
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  line-height: 18px;
+  cursor: default;
+  border-bottom: 0;
+}
+/* Haircut styles */

@@ -9,6 +9,7 @@
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "users/profile" %>
+      <%= javascript_include_tag "jquery.haircut" %>
     <% end %>
     <script type="text/javascript">
        window.user_object = <%= raw @values['json'] %>;
@@ -66,47 +67,47 @@
                     <img src="/assets/users/bag-full.png" class="profileIcon" />
                   </div>
                   <label class="span2">Profession</label>
-                  <label class="span4"><%= @user.profession %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.profession %>"><%= @user.profession %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/graduation-cap.png" class="profileIcon" />
                   <label class="span2">Education</label>
-                  <label class="span4"><%= @user.education %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.education %>"><%= @user.education %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/colored-pencils.png" class="profileIcon" />
                   <label class="span2">Hobbies</label>
-                  <label class="span4"><%= (@user.hobby.map(&:hobby)).join(",") %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.hobby.map(&:hobby)).join(",") %>"><%= (@user.hobby.map(&:hobby)).join(",") %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/shaking-hands.png" class="profileIcon" />
                   <label class="span2">Further Education Plans</label>
-                  <label class="span4"><%= @user.further_education_plans %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.further_education_plans %>"><%= @user.further_education_plans %></abbr></h3>
                 </div>	
                 <div class="row">
                   <img src="/assets/users/green-lightbulb.png" class="profileIcon" />
                   <label class="span2">Dream For Future</label>
-                  <label class="span4"><%= @user.dream_for_future %></label>	
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.dream_for_future %>"><%= @user.dream_for_future %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/microphone.png" class="profileIcon" />
                   <label class="span2">Opinion on Virginity</label>
-                  <label class="span4"><%= @user.virginity_opinion %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.virginity_opinion %>"><%= @user.virginity_opinion %></abbr></h3>
                 </div>
                  <div class="row">
                   <img src="/assets/users/clipboard-2.png" class="profileIcon" />
                   <label class="span2">My kind of marriage</label>
-                  <label class="span4"><%= @user.ideal_marriage %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= @user.ideal_marriage %>"><%= @user.ideal_marriage %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/coffee-mug.png" class="profileIcon" />
                   <label class="span2">Things that excite me</label>
-                  <label class="span4"><%= (@user.interested_in.map(&:interested)).join(",") %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.interested_in.map(&:interested)).join(",") %>"><%= (@user.interested_in.map(&:interested)).join(",") %></abbr></h3>
                 </div>
                 <div class="row">
                   <img src="/assets/users/favorite-delete.png" class="profileIcon" />
                   <label class="span2">Things that put me off</label>
-                  <label class="span4"><%= (@user.not_interested_in.map(&:not_interested)).join(",") %></label>
+                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.not_interested_in.map(&:not_interested)).join(",") %>"><%= (@user.not_interested_in.map(&:not_interested)).join(",") %></abbr></h3>
                 </div>
               </div>
             </div>
@@ -169,7 +170,7 @@
                 <div class="row">
                   <img src="/assets/users/clipboard-2.png" class="profileIcon" />
                   <label class="span2">Ideal Partner</label>
-                  <label class="span4"><%= @user.ideal_partner %></label>
+                  <h3 class="haircut"><abbr class="span4 _LVhaircutTrimmed" title="<%= @user.ideal_partner %>"><%= @user.ideal_partner %></abbr></h3>
                 </div>
               </div>
             </div>

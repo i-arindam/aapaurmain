@@ -10,15 +10,29 @@ QOD.prototype._init = function() {
   this.questionBlock = $('.j-qod_container .j-qod_question');
   this.initialRenderUrl = '/qod/' + this.qodId;
   this._getInitialMessages();
+
+  this.qodWrapper = $('.qodWrapper');
+  this.qodLink = $('.j-show_discussion');
+  this.signupWrapper = $('.signup');
+  this.signupLink = $('.j-show_signup');
+
+  this.signupLink.click(function(e) {
+    e.preventDefault();
+    that.qodWrapper.fadeOut();
+    that.signupWrapper.fadeIn();
+  });
+  this.qodLink.click(function(e) {
+    e.preventDefault();
+    that.signupWrapper.fadeOut();
+    that.qodWrapper.fadeIn();
+    // that.signupLink.fadeIn();
+  });
+
   $('form.j-qod_answer_form').submit(function() {
     that._SubmitHandler();
     return false;
   });
-  $('.j-show_signup, .j-show_discussion').click(function(e) {
-    e.preventDefault();
-    $('.qodWrapper').fadeToggle(1200);
-    $('.signup, .j-qod_cta').fadeToggle(1200);
-  });
+
   $('.qodContainer').scroll(function() {
     that._scrollHandler.apply(that, [this]);
   });
@@ -102,8 +116,8 @@ QOD.prototype._addAndShow = function(data) {
     });
   }
 
-  $('.j-qod_container .j-loader').toggle(2500);
-  this.questionBlock.show(2500);
+  $('.j-qod_container .j-loader').fadeToggle(2000);
+  this.questionBlock.show();
   answersUl.appendTo($('.j-qod_container'));
 
   var that = this;

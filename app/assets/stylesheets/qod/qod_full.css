@@ -21,7 +21,7 @@
 
 .qodQuestion {
   display: none;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
   font-family: 'Helvetica';
   font-size: 18px;
   font-weight: 700;
@@ -29,8 +29,8 @@
   border-bottom: 5px solid;
   border-bottom-color: rgba(220, 220, 220, 0.68);
   border-bottom-style: dotted;
-  border-bottom-left-radius: 70px;
-  border-bottom-right-radius: 70px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
 }
 
 .qodQuestion span.question {
@@ -53,12 +53,14 @@
 
 .loaderOverlay {
   background: rgba(0, 0, 0, 0.6);
+  position: relative;
 }
+
 .loaderOverlay.loggedIn {
-  min-height: 380px;
+  min-height: 400px;
 }
 .loaderOverlay.loggedOut {
-  min-height: 450px;
+  min-height: 470px;
 }
 
 .loaderOverlay img {
@@ -71,8 +73,15 @@
   font-size: 18px;
   font-family: 'Oregano';
   position: relative;
-  left: 20%;
+  left: 20px;
   top: 10px;
+  color: white;
+}
+
+.loaderContent {
+  position: absolute;
+  top: 42%;
+  left: 15%;
 }
 
 .answerHeading {

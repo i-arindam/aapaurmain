@@ -6,6 +6,13 @@
 <% end %>
 <div class="qodWrapper">
   <div class="qodContainer <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-qod_container">
+    <div class="loaderOverlay <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-loader">
+      <div class="loaderContent">
+        <img src="/assets/ajax-loader.gif" />
+        <span>Loading Question of the Day</span>
+      </div>
+    </div>
+    
     <div class="qodQuestion j-qod_question">
       <span class="question"></span>
       <div class="meta">
@@ -16,10 +23,6 @@
       </div>
     </div>
 
-    <div class="loaderOverlay <%= user_id == 0 ? 'loggedOut' : 'loggedIn' %> j-loader">
-      <img src="/assets/ajax-loader.gif" />
-      <span>Loading Question of the Day</span>
-    </div>
   </div>
   <% unless user_id == 0 %>
     <div class="qodForm j-qod_form">

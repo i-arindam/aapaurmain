@@ -19,6 +19,18 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+
+  def profile_pic_url(user_id)
+    user = User.find user_id
+    if user && user.photo_exists &&  Rails.env != 'development'
+      key = $aapaurmain_conf['profile-pic']
+      profile_key = key.gsub('{{user_id}}' , user_id.to_s)
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '?' + gimme_random_value(10).to_s
+    else
+      "/assets/users/image_placeholder.jpg"
+    end
+  end
+
   
   # Returns the start year from the current time
   # 18 years is the set limit.

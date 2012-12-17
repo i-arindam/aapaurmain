@@ -6,10 +6,7 @@
     <%= image_tag profile_pic_url(@user.id.to_s), :style=>"height:150px,width:150px" , :id=>"preview" %>
   </div>
   <div class="upload">
-    <p>
-    Select an image file on your computer.
-    </p>
-
+    <p>Select an image file.</p>
     <% if @user.photo_exists %>
       <div class="btn btn-info" id="deletePhoto">Delete</div>
     <% else %>

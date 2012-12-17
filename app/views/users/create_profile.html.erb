@@ -43,228 +43,53 @@
   </script>
   <body>
     
-    <div class="container-fluid"> 
-      <div class="picUpload">
-      <%= render :partial => 'upload_photo' %>
+    <div class="span11 basicProfile">
+      <div class="span2 photoContainer">
+        <%= render :partial => 'upload_photo' %>
       </div>
-      <div class="span10 profileContainer">
-        <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-horizontal"} do %>
+      <div class="span8 basicDetails">
+        <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-inline"} do %>
           <fieldset>
-            <span class="label label-inverse span9">Your Personal Information</span>
+            <table>
+              <tr>
+                <td>
+                  <label for="user[name]">Name</label>
+                  <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
+                </td>
+              
+                <td>
+                  <label for="user[dob]">Date of Birth</label>
+                  <input type="text" class="normalInput" class="datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
+                </td>
+              </tr>
+              
+              <tr>
+                <td>
+                  <label for="sex">Sex</label>
+                  <span class="controls" id="sex">
+                    <input type="radio" name="user[sex]" value="male" <%= @user.sex == 'male' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
+                    <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
+                  </span>
+                </td>
+                <td>
+                  <label for="user[location]">Location</label>
+                  <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
+                </td>
+              </tr>
+              
+              <tr>
+                <td colspan="2">
+                  <label for="user[short_bio]">Short Bio</label>
+                  <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
+                </td>
+              </tr>
+            </table>
 
-            <div class="control-group">
-              <label class="control-label" for="name">Name<strong class="must">*</strong></label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[name]" id="name" placeholder="Enter your name &hellip;" value="<%= @user.name %>" >
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="dob">Date of Birth<strong class="must">*</strong></label>
-              <div class="controls" id="dob">
-                <input type="text" class="datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label" for="sex">Sex<strong class="must">*</strong></label>
-              <div class="controls" id="sex">
-                <input type="radio" name="user[sex]" value="male" <%= @user.sex == 'male' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
-                <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
-              </div>
-            </div>
-
-            <span class="label label-inverse span9">
-              Something important about <em>you</em>
-            </span>
-
-             <div class="control-group">
-              <label class="control-label" for="shortBio">Your short bio<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" name="user[short_bio]" id="shortBio" placeholder="Five words that describe you" ><%=@user.short_bio %></textarea>
-              </div>
-            </div>
-            
-            <div class="control-group">
-              <label class="control-label" for="education">Education<strong class="must">*</strong></label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[education]" id="education" placeholder="Your highest educational qualification" value="<%=@user.education %>">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="further_education">Your plans for Further Education<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" name="user[further_education_plans]" id="further_education" placeholder="Do you have any plans for higher education. If yes then when &hellip;">
-                  <%= @user.further_education_plans and @user.further_education_plans.strip %></textarea>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="profession">Current Profession<strong class="must">*</strong></label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[profession]" id="profession" placeholder="What are you doing currently" value="<%=@user.profession %>">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="siblings">No of siblings</label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[siblings]" id="siblings" placeholder="The number of siblings" value="<%=@user.siblings %>">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="hobbies">Interests/Hobbies<strong class="must">*</strong></label>
-              <div class="controls" id="hobbies">
-                <input type="text" class="span4" name="user[hobby]" placeholder="Mention a hobby" value="<%= (@user.hobby.map(&:hobby)).join(",") %>">
-                
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="dream">Dream for Future<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" id="dream" name="user[dream_for_future]" placeholder="What do you see yourself doing in the coming time"><%= @user.dream_for_future%></textarea>
-              </div>
-            </div>
-            
-            <span class="label label-inverse span9">Specifications for the tie-up?</span>
-            
-            <div class="control-group">
-              <label class="control-label wider" for="familyPref">Family Preferences</label>
-              <div class="controls" id="familyPref">
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= family_preference_list[@user.family_preference] || 'Choose a preference' %> 
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% family_preference_list.each do |key, value| %>
-                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-                    <% end %>
-                    
-                  </ul>
-                  <input type="hidden" name="user[family_preference]" value="<%=@user.family_preference%>">
-                  <span class="help-inline">The kind of family you would like to be in</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="spousePref">Spouse Preferences</label>
-              <div class="controls" id="spousePref">
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= spouse_pref_list[@user.spouse_preference] || 'Choose a preference' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% spouse_pref_list.each do |key, value| %>
-                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[spouse_preference]" value="<%=@user.spouse_preference%>">
-                  <span class="help-inline">The kind of spouse you are comfortable with</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="settled">Your current location<strong class="must">*</strong></label>
-              <div class="controls">
-                <input type="text" class="span4" name="user[settled_in]" id="settled" placeholder="Where are you based out of" value="<%= @user.settled_in %>">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="sexualPref">Sexual Preference</label>
-              <div class="controls" id="sexualPref">
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= sexual_pref_list[@user.sexual_preference] || 'Choose a preference' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% sexual_pref_list.each do |key, value| %>
-                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[sexual_preference]" value="<%=@user.sexual_preference%>">
-                  <span class="help-inline">This will be kept private</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="virginity">Opinion on virginity<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" id="virginity" name="user[virginity_opinion]" placeholder="How does your spouse&apos;s virginity matter to you"><%=@user.virginity_opinion%></textarea>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="idealPartner">An Ideal Life Partner<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" id="idealPartner" name="user[ideal_partner]" placeholder="Five words that describe your ideal partner"><%=@user.ideal_partner%></textarea>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="idealMarriage">My marriage will be..<strong class="must">*</strong></label>
-              <div class="controls">
-                <textarea class="span4" id="idealMarriage" name="user[ideal_marriage]" placeholder="How do you see yourself getting married ?"><%=@user.ideal_marriage%></textarea>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="specificInterest">Things that excite me<strong class="must">*</strong></label>
-              <div class="controls">
-                <input id="specificInterest" type="text" name="user[interest]" class="span4" placeholder="You prefer Artists/Journalists/Software" value="<%=(@user.interested_in.map(&:interested)).join(",") %>">
-                
-              </div>
-            </div>
-            
-            <div class="control-group">
-              <label class="control-label wider" for="notSpecificInterest">Things that put me off<strong class="must">*</strong></label>
-              <div class="controls">
-                <input id="notSpecificInterest" type="text" name="user[not_interest]" class="span4" placeholder="You don&apos;t wan&apos;t Artists/Journalists/Software" value="<%= (@user.not_interested_in.map(&:not_interested)).join(",") %>">
-                
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="blogUrl">Your blog/website url</label>
-              <div class="controls">
-                
-                <input type="text" class="span4" id="blogUrl" name="user[blog_url]" placeholder="Any expression of your creative skills" value="<%=@user.blog_url%>">
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label wider" for="salary">Your Salary Range</label>
-              <div class="controls" id="salary">
-                <div class="btn-group">
-                  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <%= salary_list[@user.salary] || 'Choose a Preference' %>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <% salary_list.each do |key, value| %>
-                      <li><a href="#" data-value="<%= key %>"><%= value %></a></li>
-                    <% end %>
-                  </ul>
-                  <input type="hidden" name="user[salary]" value="<%=@user.salary%>">
-                  <span class="help-inline">Describe your salary range</span>
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-large btn-primary saveDetails">Submit</button>
+            <button type="submit" class="btn btn-large saveDetails">Update</button>
           </fieldset>
         <% end %>
       </div>
-    </div> <!-- container-fluid -->
+    </div>
 
   </body>
   <script type="text/javascript">
@@ -272,8 +97,6 @@
       $('button.saveDetails').click(function(e) {
         window._gaq.push(['_trackEvent', 'create_profile', 'detailsSubmit']);
       });
-      $.setupDropdownInputs();
-      $.setupDropdownDisplays();
     })
   </script>
   

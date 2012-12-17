@@ -7,7 +7,6 @@
     <% end %>
     <% content_for :js_footer do %>
       <%= javascript_include_tag "global" %>
-      <%= javascript_include_tag "jquery.validate.min" %>
       <%= javascript_include_tag "jquery.datepick.min.js" %>
     <% end %>
     <title>Create your Profile</title>
@@ -39,57 +38,6 @@
         dateFormat: 'dd/M/yyyy',
         pickerClass: 'mypicker',
         defaultDate: '01/Jan/1987'
-      });
-
-      // Validation for entire form
-      $('.profileContainer form').validate({
-        submitHandler: function(form) {
-          $(form).ajaxSubmit();
-        }, 
-        rules: {
-          "user[name]": {
-            required: true,
-            minlength: 4
-          },
-          "user[sex]": {
-            required: true,
-            checked: true
-          },
-          "user[short_bio]": {
-            required: true,
-            minlength: 10
-          },
-          "user[education]": "required",
-          "user[further_education_plans]": "required",
-          "user[profession]": "required",
-          "user[siblings]": "required",
-          "user[hobby]": "required",
-          "user[dream_for_future]": "required",
-          "user[settled_in]": "required",
-          "user[virginity_opinion]": "required",
-          "user[ideal_partner]": "required",
-          "user[ideal_marriage]": "required",
-          "user[interest]": "required",
-          "user[not_interest]": "required",
-        }
-      });
-
-      // Disallow form submit if validations fail
-      $('.profileContainer .saveDetails').click(function(e) {
-        var inputFields = [ "#name", "#sex input:checked", "#shortBio", "#education", "#further_education", "#profession", 
-          "#hobbies input", "#dream", "#settled", "#virginity", "#idealPartner",
-          "#idealMarriage", "#specificInterest", "#notSpecificInterest" ];
-        $.each( inputFields, function (i, v) {
-          if ( $( v ).val() === "") {
-            e.preventDefault();
-            e.stopPropagation();
-            $('<div/>').addClass('alert alert-error')
-            .html('<strong>Please fill required fields</strong><a href="#" class="close">&times;<a>')
-            .insertBefore($('.footer'));
-            return false;
-          }
-        });
-        return true;
       });
     });
   </script>

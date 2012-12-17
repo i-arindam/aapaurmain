@@ -280,22 +280,20 @@ class UsersController < ApplicationController
           }
       end
       
-      @recos = User.find_all_by_id(@user.recommended_user_ids)
+      # @recos = User.find_all_by_id(@user.recommended_user_ids)
+      # @recos = get_default_recos if @recos.length < 3
 
+      # @tab_to_show = 'reco'
       
-      @recos = get_default_recos if @recos.length < 3
-
-      @tab_to_show = 'reco'
+      # profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
+      # @profile_viewers = profile_viewer_ids.map do |p|
+      #   u = User.find_by_id(p.viewer_id)
+      #   if u
+      #     { :id => p.viewer_id, :name => u.name, :photo => u.photo_url, :viewed_on_date => p.updated_at.strftime("%d %b '%y"), :viewed_on_time => p.updated_at.strftime("%l:%M %P") }
+      #   end
+      # end
       
-      profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
-      @profile_viewers = profile_viewer_ids.map do |p|
-        u = User.find_by_id(p.viewer_id)
-        if u
-          { :id => p.viewer_id, :name => u.name, :photo => u.photo_url, :viewed_on_date => p.updated_at.strftime("%d %b '%y"), :viewed_on_time => p.updated_at.strftime("%l:%M %P") }
-        end
-      end
-      
-      @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
+      # @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
       
       @values['json'] = user_json_object()
       render :dashboard
@@ -335,14 +333,14 @@ class UsersController < ApplicationController
          @values['show-send'] = @values['show-accept'] = @values['show-withdraw'] = false
       end
 
-      # Log profile views
-      view = @user.profile_viewers.where(:viewer_id => @current_user.id)
-      unless view.blank?
-        # To update the latest time
-        view[0].touch
-      else
-        view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
-      end
+      # # Log profile views
+      # view = @user.profile_viewers.where(:viewer_id => @current_user.id)
+      # unless view.blank?
+      #   # To update the latest time
+      #   view[0].touch
+      # else
+      #   view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
+      # end
       
     else # Show my own profile
       @values['show-chat'] = false

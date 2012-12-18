@@ -1,3 +1,11 @@
+.detailsHeader {
+  font-weight: 700;
+  color: black;
+  text-align: left;
+  position: relative;
+  left: -20px;
+}
+
 .basicProfile {
   background: rgba(77, 121, 199, 0.38);
   border-radius: 10px;
@@ -5,6 +13,7 @@
   top: 50px;
   left: 18%;
   padding: 30px;
+  margin-bottom: 60px;
 }
 
 .imageThumbContainer {
@@ -22,8 +31,6 @@
   top: 50px;
   left: 20px;
   margin-right: 20px;
-  /*padding: 20px 20px 10px 20px;*/
- /* background: rgba(0, 255, 214, 0.28);*/
   border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
@@ -34,13 +41,7 @@
   display: none;
 }
 .basicDetails table {
-  /*-webkit-border-horizontal-spacing: 15px;*/
   width: 680px;
-}
-
-.basicDetails tr {
-  /*width: 100%;*/
-  /*background: red;*/
 }
 
 .basicDetails label {
@@ -87,4 +88,92 @@ button.saveDetails {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);
   -webkit-font-smoothing: antialiased;
   font-weight: 700;
+}
+
+.prioritiesContainer {
+  position: relative;
+  background: rgba(77, 121, 199, 0.38);
+  width: 93%;
+  padding: 30px;
+  border-radius: 10px;
+  margin-top: 30px;  
+}
+
+.prioritiesHeader, .prioritiesHelper {
+  margin-bottom: 10px;
+}
+
+ul.prioritiesList {
+  margin: 0;
+  position: relative;
+  left: -30px;
+}
+
+li.priority:nth-child(odd) {
+  float: left;
+}
+li.priority:nth-child(even) {
+  float: right;
+}
+
+li.priority {
+  margin: 10px 0 20px 30px;
+  border-radius: 6px;
+  list-style-type: none;
+  width: 45%;
+  height: 130px;
+  border: 1px solid black;
+  background-color: #222;
+  background: -webkit-gradient(linear,left top,left bottom,from(#555),to(#222));
+  background: -moz-linear-gradient(top,#555,#555);
+  padding: 9px 15px;
+  color: white !important;
+  -webkit-box-shadow: 0 1px 0px rgba(255, 255, 255, .25);
+  -moz-box-shadow: 0 1px 0px rgba(255, 255, 255, .25);
+  box-shadow: 0 1px 0px rgba(255, 255, 255, .25);
+}
+
+.btn-priority {
+  width: 210px;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 0;
+  border-radius: 10px;
+  height: 35px;
+  line-height: 30px;
+  margin-left: 30px;
+}
+
+li.priority .priorityValue {
+  display: none;
+  width: 95%;
+  padding: 5px 5px 5px 15px;
+  border-radius: 7px;
+  height: 40px;
+  position: relative;
+  top: 10px;
+  font-size: 16px;
+  border: 2px inset black;
+  resize: none;
+}
+
+.toggle-button {
+  position: relative;
+  top: 9px;
+}
+
+[class*=counter].safe {
+  color: green;
+}
+
+[class*=counter].over {
+  color: red;
+}
+
+.charsLeft {
+  font-weight: 700;
+  display: none;
+  position: relative;
+  top: 5px;
+  left: 5px;
 }

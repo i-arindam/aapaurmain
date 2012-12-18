@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   
 
   def current_user
-    User.find_by_auth_token!(cookies[:auth_token]) unless cookies[:auth_token]
+    User.find_by_auth_token!(cookies[:auth_token]) unless cookies[:auth_token].nil?
   end
   helper_method  :current_user
   

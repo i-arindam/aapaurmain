@@ -2,12 +2,10 @@
 <html>
   <head>
     <% content_for :stylesheet do %>
-      <%= stylesheet_link_tag "users/create_profile" %>
-      <%= stylesheet_link_tag "users/jquery.datepick" %>
+      <%= stylesheet_link_tag "users/create_profile", "users/jquery.datepick", "users/bootstrap-toggle-button" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "global" %>
-      <%= javascript_include_tag "jquery.datepick.min.js" %>
+      <%= javascript_include_tag "global", "jquery.datepick.min.js", "users/jquery.toggle.button", "qod/jquery.simplyCountable" %>
     <% end %>
     <title>Create your Profile</title>
 
@@ -39,6 +37,45 @@
         pickerClass: 'mypicker',
         defaultDate: '01/Jan/1987'
       });
+
+      $.each($('textarea'), function(i, obj) {
+        $(obj).simplyCountable({
+          counter: '.counter-' + (i + 1),
+          countType: 'characters',
+          maxCount: 140,
+          onOverCount: function(count, countable, counter) {
+            // $('.qodForm input').addClass('disabled').attr('disabled', 'disabled');
+          },
+          onSafeCount: function(count, countable, counter) {
+            // $('.qodForm input').removeClass('disabled').removeAttr('disabled');
+          }
+        });
+      });
+      
+      $('.toggle-button').toggleButtons({
+        width: 140,
+        style: {
+          enabled: "info",
+          disabled: "danger"
+        }, label: {
+          enabled: "Choose",
+          disabled: "Naah"
+        }, onChange: function (el, status, e) {
+          var siblings = el.parent().siblings();
+          $.each(siblings, function(i, obj){
+            if (obj.tagName === "A") {
+              !status && $(obj).removeClass("disabled");
+              status && $(obj).addClass("disabled");
+            } else if (obj.tagName === "TEXTAREA") {
+              !status && $(obj).show('fast').css('display', 'block');
+              status && $(obj).hide('fast');
+            } else if (obj.tagName === "SPAN") {
+              !status && $(obj).show('fast');
+              status && $(obj).hide('fast');
+            }
+          });
+        }
+      });
     });
   </script>
   <body>
@@ -50,6 +87,7 @@
       <div class="span8 basicDetails">
         <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-inline"} do %>
           <fieldset>
+            <h2 class="span5 detailsHeader">Basic Details</h2>
             <table>
               <tr>
                 <td>
@@ -89,6 +127,30 @@
           </fieldset>
         <% end %>
       </div>
+    </div>
+
+    <div class="span11 prioritiesContainer">
+      <h3 class="prioritiesHeader">Your priorities</h3>
+      <h4 class="prioritiesHelper">Choose the priorities that mean the most to you in your marriage</h4>
+
+      <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-inline"} do %>
+        <ul class="prioritiesList">
+          <%  pr_list = priorities_list
+              pr_helper = priorities_helper
+              pr_count = 0
+              pr_list.each do |k, v|
+              pr_count += 1 %>
+            <li class="priority">
+              <div class="toggle-button">
+                <input type="checkbox" checked="checked">
+              </div>
+              <a class="btn btn-success btn-priority disabled j-priority_choice"><%= v %></a>
+              <textarea class="priorityValue" name="user[<%= k %>]" placeholder="<%= pr_helper[k] %>" rows="2" cols="70" id="pri-<%= pr_count %>"></textarea>
+              <span class="charsLeft">You have <span class="counter-<%= pr_count %>"></span> characters left</span>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
 
   </body>

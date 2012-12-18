@@ -109,9 +109,11 @@ module ApplicationHelper
     list[r]
   end
 
-  
-  
+  def priorities_list
+    $priorities_list['priorities']
+  end
 
-
-
+  def priorities_helper
+    $priorities_list['helper']
+  end
 end

@@ -18,6 +18,8 @@ gem 'delayed_job_active_record'
 gem "daemons"
 gem "rmagick", '2.13.1'
 gem 'rvm-capistrano'
+gem 'hiredis', '0.4.5'
+gem 'redis', '3.0.2'
 
 group :development, :test do
   gem "rspec"

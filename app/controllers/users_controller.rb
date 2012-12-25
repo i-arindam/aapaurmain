@@ -585,4 +585,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def like_dislike_comment
+    render_404 and return unless user = current_user
+    Story.update_action_on_story(params, user)
+  end
+
+  def like_dislike_a_comment
+    render_404 and return unless user = current_user
+    Story.update_comment(params, user)
+  end
+
 end

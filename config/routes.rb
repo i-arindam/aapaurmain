@@ -68,4 +68,8 @@ Aapaurmain::Application.routes.draw do
   # Qod actions
   get '/qod/:id' => 'qod#show'
   post '/qod/:id/answers/new' => 'qod#create_answer'
+
+  # User Activity section
+  post 'story/:story_id/action/:action' => 'users#like_dislike_comment'
+  post 'story/:story_id/comment/:action' => 'users#like_dislike_a_comment'
 end

@@ -77,6 +77,9 @@ class User < ActiveRecord::Base
   MARK_MARRIED = 2
   MARRIED = 3
   
+  # Priorities field name
+  PRIORITIES = [ :relocation, :joint_family, :inlaws_interference, :further_education, :kids, :opinion_on_sex, :gender_expectations, :primary_bread_winner, :independence, :career_priority, :financial_stability, :romance, :interests, :virginity, :chivalry, :decisiveness ,:family_background ]
+  
   # Enumeration for requests sending, accepting etc
   REQUEST_SENT = $aapaurmain_conf['requests-message']['sent']
   REQUEST_WITHDRAWN = $aapaurmain_conf['requests-message']['withdrawn']
@@ -705,6 +708,70 @@ class User < ActiveRecord::Base
     RemoveUsersFromSearch.create({ :user_id => partner.id })
 
   end
+
+  # REDIS SPECIFIC OPERATIONS
+
+  # Returns the key for redis for the topic str
+  def redis_key(str)
+    "user:#{self.id}:#{str}"
+  end
+
+  # places self in each of his selected boards
+  def update_boards
+    boards_list = get_filled_boards
+    $r.multi do
+      boards_list.each do |board|
+        $r.sadd("board:#{board}", self.id)
+      end
+    end
+  end
+
+  # Returns an array of boards which he has chosen
+  def get_filled_boards
+    PRIORITIES.map do |pr|
+      pr if self[pr]
+    end.compact!
+  end
+
+  # Returns an array for each of his boards and his opinion in them
+  def get_self_hash_for_boards
+    PRIORITIES.map do |pr|
+      {:board => pr, :opinion => self[pr]} if self[pr]
+    end.compact!
+  end
+
+  # ON every user create add his hash to redis, comprising name and id
+  def after_create
+    $r.hmset(self.redis_key(:details), :name, self.name, :id, self.id)
+  end
+
+  # When one fills something in one of his boards. send to other's in same bucket's feed
+  def update_feeds_on_field_fill(field)
+    # Id of all the members in that board
+    board_members = $r.smembers("board:#{field}")
+
+    $r.multi do
+      # Increment the total no of feeds and store return value as the id of the new feed
+      new_story_id = $r.incr("story_count")
+
+      # Create feed with that id, store basic details
+      $r.hmset("story:#{new_story_id}", :by_id, self.id, :by, self.name, :text, self[field], :time, self.updated_at)
+
+      # Let the global feeds tracker know of this new feed
+      $r.rpush("global:story_ids", new_story_id)
+    end # End multi
+
+    time_to_near_sec = self.updated_at.to_i/1000
+
+    # Separating the fan-out as that might get slow, blocking other calls
+    $r.multi do
+      # For each of topics followers, add this feed id. Use "FAN-OUT ON WRITE"
+      board_members.each do |mem|
+        $r.zadd( "feed:#{mem}", time_to_near_sec, new_story_id)
+      end
+    end # End multi
+  end # End update_feeds_on_field_fill
+
 
 end
 

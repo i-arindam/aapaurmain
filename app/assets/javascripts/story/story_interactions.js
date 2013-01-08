@@ -1,78 +1,62 @@
 function StoryHandler(){
-  this.showCommentsLink = $();
-  // this.showLikesLink = $(); // @TODO: make these just selector string
-  // this.showDislikesLink = $();
-  // this.showLikesOnCommentLink = $();
-  // this.showDislikesOnCommentLink = $();
-  this.storySelector = $();
+  this.showCommentsLink = '';
+  this.storySelector = '';
+  this.storyDivSelector = '';
+  this.bindHandlerForShow = this.bindHandlerForAction = function(){};
 
-  this.LINKS_AND_URLS_FOR_SHOWING = {
-    "likes"           : { "link": 'j-show_likes',             "url": 'story/{{sid}}/get/likes' }, 
-    "dislikes"        : { "link": 'j-show_dislikes',          "url": 'story/{{sid}}/get/dislikes' },
-    "likes_comment"   : { "link": 'j-show_likes_comment',     "url": 'story/{{sid}}/get/comment/{{number}}/like' },
-    "dislikes_comment": { "link": 'j-show_dislikes_comment',  "url": 'story/{{sid}}/get/comment/{{number}}/dislike' }
-  };
-  this.REFEX_FOR_SHOWING = new RegExp(/j\-show(\w+)/);
-
-  this.LINKS_AND_URLS_FOR_USER_ACTIONS = {
-    "like"           : { "link": 'j-story_like',              "url" : 'story/{{sid}}/action/like' },
-    "dislike"        : { "link": 'j-story_dislike',           "url": 'story/{{sid}}/action/dislike' },
-    "like_comment"   : { "link": 'j-story_like_comment',      "url": 'story/{{sid}}/comment/{{number}}/like' },
-    "dislike_comment": { "link": 'j-story_dislike_comment',   "url": 'story/{{sid}}/comment/{{number}}/dislike' }
-  }; 
-  this.REGEX_FOR_USER_ACTIONS = new RegExp(/j\-story_(\w+)/);
-
-  // this.showLikesUrl = 'story/{{sid}}/get/likes';
-  // this.showDislikesUrl = 'story/{{sid}}/get/dislikes';
-  // this.showLikesCommentUrl = 'story/{{sid}}/get/comment/{{number}}/like';
-  // this.showDislikesCommentUrl = 'story/{{sid}}/get/comment/{{number}}/dislike'
-  // this.likeUrl = 'story/{{sid}}/action/like';
-  // this.dislikeUrl = 'story/{{sid}}/action/dislike';
-  // this.likeCommentUrl = 'story/{{sid}}/comment/{{number}}/like';
-  // this.dislikeCommentUrl = 'story/{{sid}}/comment/{{number}}/dislike';
-
-  this.showCommentsUrl = 'story/{{sid}}/get/comments';
+  this.LINKS_AND_URLS = [
+    { 
+      "data": [
+        { "link": 'j-show_likes',             "url": 'story/{{sid}}/get/likes' }, 
+        { "link": 'j-show_dislikes',          "url": 'story/{{sid}}/get/dislikes' },
+        { "link": 'j-show_comments',          "url": 'story/{{sid}}/get/comments' },
+        { "link": 'j-show_likes_comment',     "url": 'story/{{sid}}/get/comment/{{number}}/likes' },
+        { "link": 'j-show_dislikes_comment',  "url": 'story/{{sid}}/get/comment/{{number}}/dislikes' }
+      ],
+      "handler": this.bindHandlerForShow
+    },
+    {
+      "data": [
+        { "link": 'j-story_like',              "url": 'story/{{sid}}/action/like' },
+        { "link": 'j-story_dislike',           "url": 'story/{{sid}}/action/dislike' },
+        { "link": 'j-story_comment',           "url": 'story/{{sid}}/action/comment' },
+        { "link": 'j-story_like_comment',      "url": 'story/{{sid}}/comment/{{number}}/like' },
+        { "link": 'j-story_dislike_comment',   "url": 'story/{{sid}}/comment/{{number}}/dislike' }
+      ],
+      "handler": this.bindHandlerForAction
+    }
+  ];
+  // this.REFEX_FOR_SHOWING = new RegExp(/j\-show_(\w+)/);
+  // this.REGEX_FOR_USER_ACTIONS = new RegExp(/j\-story_(\w+)/);
   this.showMoreCommentsUrl = 'story/{{sid}}/get/more_comments';
-  this.commentUrl = 'story/{{sid}}/action/comment';
 
   this._init();
 }
 
 StoryHandler.prototype._init = function() {
   this.setupSelectors();
-  this.handlersForShowingComments();
-  this.handlersForShowingNames();
-  this.handlersForUserActions();
-
-  // Handlers for showing stuff.
-  // this.showLikesHandler();
-  // this.showDislikesHandler();
-  // this.showLikesOnCommentHandler();
-  // this.showDislikesOnCommentHandler();
-  // this.showCommentsHandler();
-
-  // Handlers for actions
-  // this.likeHandler();
-  // this.dislikeHandler();
-  // this.likeCommentHandler();
-  // this.dislikeCommentHandler();
-  this.commentSubmitHandler();
 };
 
 StoryHandler.prototype.setupSelectors = function() {
   var that = this;
-  this.SELECTORS_FOR_SHOWING_NAMES = [];
-  $.each(this.LINKS_AND_URLS_FOR_SHOWING, function(i, obj) {
-    $(document).on("click", obj.link, function(e) {
-      e.preventDefault();
-      var storyId = $(this).closest(that.storySelector).attr('data-story-id');
-      that.bindHandlerForShow(obj.url, storyId);
+  $.each(this.LINKS_AND_URLS, function(i, object) {
+    $.each(object.data, function(i, obj) {
+      $(document).on("click", obj.link, function(e) {
+        e.preventDefault();
+        var storyId = $(this).closest(that.storySelector).attr('data-story-id');
+        var commentNumber = '';
+        var thisClass = $(this).attr('class');
+        if(/comment/.test(thisClass)) {
+          commentNumber = $(that.storyDivSelector + ' ' + obj.link).index($(this));
+        }
+        object.handler(obj.url, storyId, commentNumber);
+      });
     });
   });
 };
 
-StoryHandler.prototype.bindHandlerForShow = function(url, sid) {
-  var getUrl = url.replace(/{{sid}}/, sid);
+StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
+  var getUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber);
   $.ajax({
     url: getUrl,
     type: "GET",
@@ -84,10 +68,18 @@ StoryHandler.prototype.bindHandlerForShow = function(url, sid) {
   });
 };
 
-StoryHandler.prototype.handlersForShowingComments = function() {
-
+StoryHandler.prototype.bindHandlerForAction = function(url, sid, commentNumber) {
+  var postUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber);
+  $.ajax({
+    url: postUrl,
+    type: "POST",
+    success: function(data) {
+      that.indicateInPlaceSuccess(data);
+    }, error: function(data) {
+      that.showInModal({ "message": "There was some server error. Try again in some time?"});
+    }
+  });
 };
-
 
 StoryHandler.prototype.showInModal = function(data) {
   var x = 10;

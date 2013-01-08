@@ -70,6 +70,10 @@ Aapaurmain::Application.routes.draw do
   post '/qod/:id/answers/new' => 'qod#create_answer'
 
   # User Activity section
-  post 'story/:story_id/action/:action' => 'users#like_dislike_comment'
-  post 'story/:story_id/comment/:action' => 'users#like_dislike_a_comment'
+  post 'story/:story_id/action/:action' => 'story#like_dislike_or_comment'
+  post 'story/:story_id/comment/:number/:action' => 'story#like_dislike_a_comment'
+  post 'story/create' => 'story#create_new_story'
+  get 'story/:story_id/get/:action' => 'story#get_interactions_on_story'
+  get 'story/:story_id/get/more_comments' => 'story#get_more_comments'
+  get 'story/:story_id/get/comment/:number/:action' => 'story#get_comment_faces'
 end

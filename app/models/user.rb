@@ -747,31 +747,29 @@ class User < ActiveRecord::Base
 
   # When one fills something in one of his boards. send to other's in same bucket's feed
   def update_feeds_on_field_fill(field)
-    # Id of all the members in that board
-    board_members = $r.smembers("board:#{field}")
-
-    $r.multi do
-      # Increment the total no of feeds and store return value as the id of the new feed
-      new_story_id = $r.incr("story_count")
-
-      # Create feed with that id, store basic details
-      $r.hmset("story:#{new_story_id}", :by_id, self.id, :by, self.name, :text, self[field], :time, self.updated_at)
-
-      # Let the global feeds tracker know of this new feed
-      $r.rpush("global:story_ids", new_story_id)
-    end # End multi
-
     time_to_near_sec = self.updated_at.to_i/1000
-
-    # Separating the fan-out as that might get slow, blocking other calls
     $r.multi do
-      # For each of topics followers, add this feed id. Use "FAN-OUT ON WRITE"
-      board_members.each do |mem|
-        $r.zadd( "feed:#{mem}", time_to_near_sec, new_story_id)
-      end
+      new_story_id = $r.incr("story_count")
+      $r.hmset("story:#{new_story_id}", :by_id, self.id, :by, self.name, :text, self[field], :time, time_to_near_sec)
     end # End multi
-  end # End update_feeds_on_field_fill
 
+    # Calling fan out action of news feed
+    Newsfeed.add_new_story(new_story_id, field)
+  end
+
+  def get_newsfeed(page = 1, page_length = 10)
+    start = ((page - 1) * page_length) # redis elements are 0 based
+    stop = start + page_length - 1
+    story_ids = $r.zrevrange("feed:#{self.id}", start, stop)
+    @stories = []
+    $r.multi do
+      story_ids.each do |sid|
+        story = $r.hgetall("story:#{sid}")
+        story.merge!(:photo => User.find_by_id(story['by_id']).photo_url)
+        @stories << story
+      end
+    end
+  end
 
 end
 

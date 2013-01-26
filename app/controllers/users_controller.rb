@@ -210,97 +210,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-
-  # def show_my_profile
-  #   redirect_to (:action => 'show', :parmams => {:dashboard => false}) 
-  # end
-  
-  def showme
-    
-    if @user = current_user
-
-      @values = {}
-      @values['json'] = user_json_object(@user.locked_with) if @user.status == User::LOCKED
-      
-      # Changing behaviour if user is locked, show him the mentioned template
-      # That page is significantly different from the normal view.
-      if @user.status == User::LOCKED
-        @with_user = User.find_by_id(@user.locked_with)
-        random_index = gimme_random_value($user_tips['locked_tips'].length)
-        @tip = $user_tips['locked_tips'][random_index]
- 
-        # Need to check if this user is a from or to user
-        @conversation = Conversation.find_by_from_user_id_and_to_user_id(@user.id, @user.locked_with) || Conversation.find_by_to_user_id_and_from_user_id(@user.id, @user.locked_with)
-        
-        # If they haven't talked, create the conversation here.
-        unless @conversation
-          @conversation = Conversation.create({
-              :from_user_id => @user.id,
-              :to_user_id => @user.locked_with,
-            })
-          @messages = []
-        else
-          @messages = @conversation.messages.order("created_at ASC")
-        end
- 
-        render :dashboard_locked and return
-      end
-      
-      in_requests_ids = @user.incoming_requests.collect(&:from_id)
-      @in_requests = User.find_all_by_id(in_requests_ids)
-
-      @tab_to_show = 'in' unless @in_requests.blank?
-
-      @viewer_pane_info = {}
-      @viewer_pane_info[:in_requests] = {}
-      in_requests_ids.each do |in_req|
-        request = Request.find_by_from_id_and_to_id(in_req, @user.id)
-        if request
-          @viewer_pane_info[:in_requests][in_req.to_s] = 
-          {
-            :show_accept => request.status == Request::ASKED , :show_decline => request.status == Request::ASKED, :show_send => false , :show_withdraw => false , 
-            :show_withdraw_lock => request.status == Request::ACCEPTED
-          }
-        end
-      end
-      
-    
-      out_requests_ids = @user.outgoing_requests.collect(&:to_id)
-      @out_requests = User.find_all_by_id(out_requests_ids)
-
-      @tab_to_show = 'out' unless @out_requests.blank? or defined?(@tab_to_show)
-
-      @viewer_pane_info[:out_requests] = {}
-      out_requests_ids.each do |out_req|
-        request = Request.find_by_from_id_and_to_id(@user.id,out_req)
-          @viewer_pane_info[:out_requests][out_req.to_s] = 
-          {
-            :show_accept => false , :show_decline => false, :show_send => request.nil? , :show_withdraw => request && request.status == Request::ASKED,
-            :show_withdraw_lock => request && request.status == Request::ACCEPTED
-          }
-      end
-      
-      # @recos = User.find_all_by_id(@user.recommended_user_ids)
-      # @recos = get_default_recos if @recos.length < 3
-
-      # @tab_to_show = 'reco'
-      
-      # profile_viewer_ids = @user.profile_viewers.order("updated_at DESC").limit(20)
-      # @profile_viewers = profile_viewer_ids.map do |p|
-      #   u = User.find_by_id(p.viewer_id)
-      #   if u
-      #     { :id => p.viewer_id, :name => u.name, :photo => u.photo_url, :viewed_on_date => p.updated_at.strftime("%d %b '%y"), :viewed_on_time => p.updated_at.strftime("%l:%M %P") }
-      #   end
-      # end
-      
-      # @profile_viewers_users = User.find_all_by_id(profile_viewer_ids.collect(&:viewer_id))
-      
-      @values['json'] = user_json_object()
-      render :dashboard
-    else
-      render :text => "Please login first"
-    end
-  end
     
   def show
     
@@ -360,7 +269,6 @@ class UsersController < ApplicationController
   
   
   def signup
-    debugger
     params[:user] = {
       :name => params[:name],
       :email => params[:email],
@@ -426,21 +334,14 @@ class UsersController < ApplicationController
   end
 
   def get_user_hash_from_signup_confirm_key(key)
-    
     unescaped_key = URI.unescape key
     json_hash = Base64.decode64 unescaped_key
     hash = JSON.parse json_hash
   end
   
-  def create_profile
-    @user = User.find_by_id(params[:id])
-    # render_404 and return unless @user == current_user
-  end
-
   def edit_profile
     @user = current_user
     render_404 and return unless @user
-    render :create_profile
   end
   
   def update

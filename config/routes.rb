@@ -13,7 +13,6 @@ Aapaurmain::Application.routes.draw do
   match '/pricing', to: 'payment#pricing'
   match '/privacy', to: 'static_pages#privacy'
   
-  match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'
 
   resources :users do
@@ -24,10 +23,7 @@ Aapaurmain::Application.routes.draw do
 
   post 'users/signup' => 'users#signup'
   match '/signup/confirmation' => 'users#confirm_signup'
-  match '/users/:id/create_profile' => 'users#create_profile'
-  # match '/users/:id/update' => 'users#update'
-  # match '/users/:id/edit_profile' => 'users#edit_profile'
-  
+  match '/users/:id/create_profile' => 'users#create_profile'  
   
   # Request actions
   post 'users/create_request' => 'users#create_request'

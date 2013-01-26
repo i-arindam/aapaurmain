@@ -40,8 +40,8 @@
         <% else %>
           <% user = current_user %>
           <ul class="nav nav-pills nav-actions">
-            <li class="j-dashboard"><%= link_to "Dashboard", :controller => "users", :action => "showme", :id => user.id %></li>
-            <li class="j-edit_profile"><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile", :id => user.id %></li>
+            <li class="j-dashboard"><%= link_to "Dashboard", :controller => "users", :action => "home"%></li>
+            <li class="j-edit_profile"><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile" %></li>
             <li class="j-messages"><%= link_to "Messages", conversations_path if user.status == 1 %></li>
           </ul>
 

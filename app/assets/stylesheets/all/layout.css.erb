@@ -1,12 +1,227 @@
-/* universal */
-
-html {
-  overflow-y: scroll;
+/* Reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
-
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
 body {
-  padding-top: 90px;
+  line-height: 16px;
+  font-family: 'lucida_sansregular', Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #696a68;
+  background: #fff;
 }
+ol, ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+
+/* IE6 */
+* * html .clearfix {
+  height: 1%;
+}
+/* IE7 */
+*:first-child + html .clearfix {
+  min-height: 1%;
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dancing Script'), local('DancingScript'), url("<%= asset_path '/assets/fonts/dancing script.woff' %>") format('woff');
+} 
+
+@font-face {
+  font-family: 'lucida_sansregular';
+  src: url("<%= asset_path '/assets/fonts/lsans-webfont.eot' %>") format('woff');
+  src: url("<%= asset_path '/assets/fonts/lsans-webfont.eot?#iefix' %>") format('embedded-opentype'), url("<%= asset_path '/assets/fonts/lsans-webfont.woff' %>") format('woff'), url("<%= asset_path '/assets/fonts/lsans-webfont.ttf' %>") format('truetype'), url("<%= asset_path '/assets/fonts/lsans-webfont.svg#lucida_sansregular' %>") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'lucida_sansdemibold_roman';
+  src: url("<%= asset_path '/assets/fonts/lsansd-webfont.eot' %>") format('embedded-opentype');
+  src: url("<%= asset_path '/assets/fonts/lsansd-webfont.eot?#iefix' %>") format('embedded-opentype'), url("<%= asset_path '/assets/fonts/lsansd-webfont.woff' %>") format('woff'), url("<%= asset_path '/assets/fonts/lsansd-webfont.ttf' %>") format('truetype'), url("<%= asset_path '/assets/fonts/lsansd-webfont.svg#lucida_sansdemibold_roman' %>") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* layout */
+/* Header */
+.page {
+
+}
+.header {
+  background: url("<%= image_path 'header-bg.png' %>") repeat-x;
+}
+.logo {
+  left: 0;
+  margin: 4px 0 0 87px;
+  position: absolute;
+  top: -24px;
+  width: 100px;
+}
+.nav {
+  float: left;
+  margin:0 0 3px 203px;
+  border-left: 1px solid #676766;
+}
+.nav ul li {
+  float: left;
+  border-left: 1px solid #c0c0bf;
+  border-right: 1px solid #676766;
+  padding: 17px 26px;
+}
+.nav ul li.last {
+  border-right: none;
+}
+.nav ul li a {
+  color: #fff;
+  font-family: 'trebuchet ms';
+  font-size: 16px;
+  text-transform: uppercase;
+  display: block;
+}
+.info-right {
+  float: right;
+  margin: 0 30px 0 0;
+}
+.info-right li {
+  float: left;
+}
+.link-search, .message, .link-setting, .msg-count, .icon-twitter, .icon-fb, .icon-blog {
+  background: url("<%= image_path 'sprite_layout.png' %>") no-repeat;
+  display: block;
+}
+.link-search {
+  width: 35px;
+  height: 35px;
+  text-indent: -9999px;
+  margin: 9px 50px 0 0;
+}
+.link-setting {
+  margin: 12px;
+  width: 26px;
+  height: 26px;
+  text-indent: -9999px;
+  background-position: 0 -80px;
+}
+.message {
+  margin: 15px 20px;
+  width: 26px;
+  height: 20px;
+  background-position: 0 -37px;
+  position: relative;
+}
+.msg-count {
+  display: block;
+  position: absolute;
+  left: 20px;
+  top: -9px;
+  background-position: 0 -60px;
+  color: #787878;
+  font-size: 10px;
+  text-align: center;
+  width: 20px;
+  height: 19px;
+  line-height: 13px;
+}
+.link-profile {
+  margin: 11px 14px 0 0;
+  display: block;
+  overflow: hidden;
+}
+.link-profile img {
+  float: left;
+}
+.link-profile span {
+  padding: 9px 0 0 16px;
+  color: #4e4b4a;
+  font-size: 13px;
+  display: block;
+  float: left;
+}
+.separator {
+  border-left: 1px solid #c0c0bf;
+  border-right: 1px solid #676766;
+  height: 50px;
+  width: 0;
+}
+/* footer */
+.footer {
+  background: #9f9c9c;
+}
+.footer-content {
+  max-width: 712px;
+  margin: 0 auto;
+  padding: 10px 15px 57px;
+}
+.footer-content ul {
+  margin: 0
+}
+.footer-content ul li {
+  display: block;
+  float: left;
+  margin: 0 2% 0 0;
+  width: 23%;
+}
+.footer-content ul li.last {
+  float: right;
+  margin: 0;
+  width: 44%;
+}
+.footer-content ul li li {
+  width: 100%;
+  margin: 0;
+  margin: 3px 0;
+}
+.footer-content ul li a {
+  color: #e8e8e8;
+  font-size: 12px;
+}
+.footer-content ul li h3 {
+  color: #f2f1f1;
+  font-size: 14px;
+  margin: 0 0 6px;
+}
+.social-wrap {
+  margin: 32px 0 13px;
+}
+.social-links {
+  float: right;
+}
+.icon-twitter, .icon-fb, .icon-blog {
+  margin: 0 0 0 14px;
+  width: 30px;
+  height: 30px;
+  text-indent: -9999px;
+  float: left;
+}
+.icon-twitter {
+  background-position: -48px -111px;
+}
+.icon-fb {
+  background-position: -48px -141px;
+}
+.icon-blog {
+  background-position: -48px -172px;
+}
+.copy-right {
+  text-align: right;
+  color: #e8e8e8;
+  font-size: 12px;
+}
+
+/* footer end */
 
 section {
   overflow: auto;
@@ -83,15 +298,17 @@ header .navbar-inner .container {
   width: 1110px;
 }
 
+.login-form {
+  top: 4px;
+}
+
 .rememberSection {
-  bottom: 5px;
   display: inline-block;
   left: 160px;
   position: relative;
 }
 
 .forgotPasswordSection {
-  bottom:5px;
   display: inline-block;
   left: 240px;
   position: relative;
@@ -114,16 +331,6 @@ header .navbar-inner .container {
   border-radius: 4px;
 }
 
-#logo {
-  float: left;
-  width: 97px;
-  height: 130px;
-  margin-right: 10px;
-  position: relative;
-  top: -25px;
-  background-image: url('<%= image_path "logo-chota.png" %>') !important;
-  margin-left: -50px;
-}
 
 /* footer */
 
@@ -346,25 +553,6 @@ span.orText {
   color: white;
   text-decoration: none;
 }
-
-.footer ul li:nth-child(1):hover {
-  background-color: #FFA500;
-}
-
-.footer ul li:nth-child(2):hover {
-  background-color: #8A2BE2;
-}
-
-.footer ul li:nth-child(3):hover {
-  background-color: #008000;
-}
-
-@font-face {
-  font-family: 'Dancing Script';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Dancing Script'), local('DancingScript'), url("<%= asset_path '/assets/fonts/dancing script.woff' %>") format('woff');
-} 
 
 .flash-error{
   width: 80%;

@@ -1,63 +1,72 @@
-<header class="navbar navbar-fixed-top">
-  <img src="/assets/beta.png" class="betaImg"/>
-  <div class="navbar-inner">
-    <div class="container">
-      <a href="/" id="logo"></a>
-      <% if show_search? %>
-        <form class="navbar-search pull-left" method="get" action="/search/keyword_search">
-          <input name="searchfrom" type="hidden" value="header">
-          <input class="search-query search-bar" name="q" id="search_query_top" type="text" placeholder="Fire off keywords like Guitar, Music, Painter&hellip;"  autocomplete="off">
-          <div class="suggestionContainer"></div>
-          <span class="orText">OR</span>
-          <a class="btn-large btn-primary advSearch" href="/search/keyword_search?q=*">Help Me Search</a>
-        </form>
-      <% end %>
-        
-      <nav>
-        <% if show_login? %>
-
-          <ul class="nav nav-pills nav-actions">
-            <li class="j-about_us"><%= link_to "About Us", :controller => "static_pages", :action => "about" %></li>
-            <li class="j-how_it_works"><%= link_to "How It Works",  :controller => "static_pages", :action => "how_it_works" %></li>
-            
-          </ul>
-          <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right') do %>
-            <div class="controls">
-              <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
-              <input type="password" class="inputFields" name="password" placeholder="Password" />
-              <button type="submit" class="signin btn btn-success">Log in</button>
-            </div>
-            <div class="rememberSection">
-              <input name="remember_me" type="checkbox">
-              <label class="checkbox">Remember me</label>
-            </div>
-            <div class="forgotPasswordSection">
-              <p><%= link_to "Forgot Password?", new_password_reset_path %></p>
-            </div>
-
-          <% end %> <!-- end for form -->
-
-        <% else %>
-          <% user = current_user %>
-          <ul class="nav nav-pills nav-actions">
-            <li class="j-dashboard"><%= link_to "Dashboard", :controller => "users", :action => "home"%></li>
-            <li class="j-edit_profile"><%= link_to "Edit Profile",  :controller => "users", :action => "edit_profile" %></li>
-            <li class="j-messages"><%= link_to "Messages", conversations_path if user.status == 1 %></li>
-          </ul>
-
-          <ul class="nav nav-dropdown">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.name %><b class="caret"></b></a>
-              <ul class="dropdown-menu dontToggle"> 
-                <li class="j-my_profile"><%= link_to "My Profile",  :controller => "users", :action => "show", :id => user.id %></li>
-                <li class="j-log_out"><%= link_to "Log out", logout_path %></li>
-              </ul>
-            </li>
-          </ul>
-            
-        <% end %> <!-- end of if-else -->
-      </nav>
-    </div>
+<div class="header clearfix">
+  <div class="logo">
+    <h1><a href="#"><img src="assets/logo.png" alt="Purplerock" /></a></h1>
   </div>
+  <div class="nav clearfix">
+    <ul>
+      <li>
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">About us</a>
+      </li>
+      <li>
+        <a href="#">How it works</a>
+      </li>
+      <li>
+        <a href="#">Faq</a>
+      </li>
+      <li class="last">
+        <a href="#">Talk to us</a>
+      </li>
+    </ul>
+  </div>
+  <div class="info-right">
+    <ul class="clearfix">
+      <% unless show_login? %>
+      <li>
+        <% user = current_user %>
+        <ul class="nav nav-dropdown">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="assets/user-xsmall.png" /><span><%= current_user.name %><b class="caret"></b></span></a>
+            <ul class="dropdown-menu dontToggle"> 
+              <li class="j-my_profile"><%= link_to "My Profile",  :controller => "users", :action => "show", :id => user.id %></li>
+              <li class="j-log_out"><%= link_to "Log out", logout_path %></li>
+            </ul>
+          </li>
+        </ul>
 
-</header>
+      </li>
+      <li class="separator">
+        &nbsp;
+      </li>
+      <li>
+        <div class="message">
+          <span class="msg-count">2</span>
+        </div>
+      </li>
+      <li class="separator">
+        &nbsp;
+      </li>
+      <li>
+        <a href="#" class="link-setting">Settings</a>
+      </li>
+      <% else %>
+        <%= form_tag(sessions_path, :class => 'form-horizontal form-inline pull-right login-form') do %>
+          <div class="controls">
+            <input type="text" class="inputFields" id="inputIcon" name="email" placeholder="Email" />
+            <input type="password" class="inputFields" name="password" placeholder="Password" />
+            <button type="submit" class="signin btn btn-success">Log in</button>
+          </div>
+          <div class="rememberSection">
+            <input name="remember_me" type="checkbox">
+            <label class="checkbox">Remember me</label>
+          </div>
+          <div class="forgotPasswordSection">
+            <p><%= link_to "Forgot Password?", new_password_reset_path %></p>
+          </div>
+        <% end %> <!-- end for form -->
+      <% end %>
+    </ul>
+  </div>
+</div><!-- Header -->

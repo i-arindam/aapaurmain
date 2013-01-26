@@ -116,4 +116,13 @@ module ApplicationHelper
   def priorities_helper
     $priorities_list['helper']
   end
+
+  def panels_with_casing
+    panels_list = $priorities_list['priorities'].keys
+    panels = []
+    panels_list.each do |p|
+      panels.push(p.gsub("_", " ").camelize)
+    end
+    panels
+  end
 end

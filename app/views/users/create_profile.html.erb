@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "users/create_profile", "users/jquery.datepick", "users/bootstrap-toggle-button" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "global", "jquery.datepick.min.js", "users/jquery.toggle.button", "qod/jquery.simplyCountable" %>
+      <%= javascript_include_tag "global", "jquery.datepick.min.js"%>
     <% end %>
     <title>Create your Profile</title>
 
@@ -38,125 +38,63 @@
         defaultDate: '01/Jan/1987'
       });
 
-      $.each($('textarea'), function(i, obj) {
-        $(obj).simplyCountable({
-          counter: '.counter-' + (i + 1),
-          countType: 'characters',
-          maxCount: 140,
-          onOverCount: function(count, countable, counter) {
-            // $('.qodForm input').addClass('disabled').attr('disabled', 'disabled');
-          },
-          onSafeCount: function(count, countable, counter) {
-            // $('.qodForm input').removeClass('disabled').removeAttr('disabled');
-          }
-        });
-      });
-      
-      $('.toggle-button').toggleButtons({
-        width: 140,
-        style: {
-          enabled: "info",
-          disabled: "danger"
-        }, label: {
-          enabled: "Choose",
-          disabled: "Naah"
-        }, onChange: function (el, status, e) {
-          var siblings = el.parent().siblings();
-          $.each(siblings, function(i, obj){
-            if (obj.tagName === "A") {
-              !status && $(obj).removeClass("disabled");
-              status && $(obj).addClass("disabled");
-            } else if (obj.tagName === "TEXTAREA") {
-              !status && $(obj).show('fast').css('display', 'block');
-              status && $(obj).hide('fast');
-            } else if (obj.tagName === "SPAN") {
-              !status && $(obj).show('fast');
-              status && $(obj).hide('fast');
-            }
-          });
-        }
-      });
     });
   </script>
   <body>
     
-    <div class="span11 basicProfile">
+    <div class="span11 mainContainer basicProfile">
       <div class="span2 photoContainer">
         <%= render :partial => 'upload_photo' %>
       </div>
       <div class="span8 basicDetails">
-        <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-inline"} do %>
-          <fieldset>
-            <h2 class="span5 detailsHeader">Basic Details</h2>
-            <table>
-              <tr>
-                <td>
-                  <label for="user[name]">Name</label>
-                  <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
-                </td>
-              
-                <td>
-                  <label for="user[dob]">Date of Birth</label>
-                  <input type="text" class="normalInput" class="datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
-                </td>
-              </tr>
-              
-              <tr>
-                <td>
-                  <label for="sex">Sex</label>
-                  <span class="controls" id="sex">
-                    <input type="radio" name="user[sex]" value="male" <%= @user.sex == 'male' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
-                    <input type="radio" name="user[sex]" value="female" <%= @user.sex == 'female' ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
-                  </span>
-                </td>
-                <td>
-                  <label for="user[location]">Location</label>
-                  <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
-                </td>
-              </tr>
-              
-              <tr>
-                <td colspan="2">
-                  <label for="user[short_bio]">Short Bio</label>
-                  <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
-                </td>
-              </tr>
-            </table>
+        <%= form_for @user, :url => "/update", :html => { :method => :post, :class => "form-inline"} do %>
+        <fieldset>
+        <h2 class="span5 detailsHeader">Basic Details</h2>
+        <table>
+          <tr>
+            <td>
+              <label for="user[name]">Name</label>
+              <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
+            </td>
+          
+            <td>
+              <label for="user[dob]">Date of Birth</label>
+              <input type="text" class="normalInput datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
+            </td>
+          </tr>
+          
+          <tr>
+            <td>
+              <label for="sex">Sex</label>
+              <span class="controls" id="sex">
+                <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
+                <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
+              </span>
+            </td>
+            <td>
+              <label for="user[location]">Location</label>
+              <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
+            </td>
+          </tr>
+          
+          <tr>
+            <td colspan="2">
+              <label for="user[short_bio]">Short Bio</label>
+              <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
+            </td>
+          </tr>
+        </table>
 
-            <button type="submit" class="btn btn-large saveDetails">Update</button>
-          </fieldset>
+        <button type="submit" class="btn btn-large saveBasicDetails">Update</button>
+        </fieldset>
         <% end %>
       </div>
-    </div>
-
-    <div class="span11 prioritiesContainer">
-      <h3 class="prioritiesHeader">Your priorities</h3>
-      <h4 class="prioritiesHelper">Choose the priorities that mean the most to you in your marriage</h4>
-
-      <%= form_for @user, :url => "/users/#{@user.id}/update", :html => { :class => "form-inline"} do %>
-        <ul class="prioritiesList">
-          <%  pr_list = priorities_list
-              pr_helper = priorities_helper
-              pr_count = 0
-              pr_list.each do |k, v|
-              pr_count += 1 %>
-            <li class="priority">
-              <div class="toggle-button">
-                <input type="checkbox" checked="checked">
-              </div>
-              <a class="btn btn-success btn-priority disabled j-priority_choice"><%= v %></a>
-              <textarea class="priorityValue" name="user[<%= k %>]" placeholder="<%= pr_helper[k] %>" rows="2" cols="70" id="pri-<%= pr_count %>"></textarea>
-              <span class="charsLeft">You have <span class="counter-<%= pr_count %>"></span> characters left</span>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
     </div>
 
   </body>
   <script type="text/javascript">
     $(function(){
-      $('button.saveDetails').click(function(e) {
+      $('button.saveBasicDetails').click(function(e) {
         window._gaq.push(['_trackEvent', 'create_profile', 'detailsSubmit']);
       });
     })

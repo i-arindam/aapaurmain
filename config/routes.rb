@@ -15,8 +15,7 @@ Aapaurmain::Application.routes.draw do
   
   match 'users/showme' => 'users#showme'
   get 'users/:id/more_info' => 'users#more_info'
-  match '/users/:id/update' => 'users#update'
-  
+
   resources :users do
     resources :subscription
   end
@@ -26,8 +25,8 @@ Aapaurmain::Application.routes.draw do
   post 'users/signup' => 'users#signup'
   match '/signup/confirmation' => 'users#confirm_signup'
   match '/users/:id/create_profile' => 'users#create_profile'
-  match '/users/:id/update' => 'users#update'
-  match '/users/:id/edit_profile' => 'users#edit_profile'
+  # match '/users/:id/update' => 'users#update'
+  # match '/users/:id/edit_profile' => 'users#edit_profile'
   
   
   # Request actions
@@ -76,4 +75,10 @@ Aapaurmain::Application.routes.draw do
   get 'story/:story_id/get/:action' => 'story#get_interactions_on_story'
   get 'story/:story_id/get/more_comments' => 'story#get_more_comments'
   get 'story/:story_id/get/comment/:number/:action' => 'story#get_comment_faces'
+
+
+  # New routes
+  get 'home' => 'users#home'
+  get '/edit_profile' => 'users#edit_profile'
+  post '/update' => 'users#update'
 end

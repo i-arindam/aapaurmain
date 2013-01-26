@@ -6,16 +6,6 @@
   left: -20px;
 }
 
-.basicProfile {
-  background: rgba(77, 121, 199, 0.38);
-  border-radius: 10px;
-  position: relative;
-  top: 50px;
-  left: 18%;
-  padding: 30px;
-  margin-bottom: 60px;
-}
-
 .imageThumbContainer {
   position: relative;
   float: left;
@@ -69,7 +59,7 @@
   margin-top: 7px;
 }
 
-button.saveDetails {
+button.saveBasicDetails {
   position: relative;
   left: 40%;
   top: 20px;
@@ -177,3 +167,57 @@ li.priority .priorityValue {
   top: 5px;
   left: 5px;
 }
+
+.mainContainer {
+  background: rgba(77, 121, 199, 0.38);
+  border-radius: 10px;
+  position: relative;
+  top: 50px;
+  left: 18%;
+  padding: 30px;
+  margin-bottom: 60px;
+}
+
+.priorities {
+  display: none;
+}
+
+.hexagon {
+  width: 100px;
+  height: 55px;
+  background: red;
+  position: relative;
+}
+.hexagon:before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 25px solid red;
+}
+.hexagon:after {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 25px solid red;
+}
+  
+ul.panelsList {
+  list-style: none;
+}
+
+ul.panelsList li {
+  list-style-type: none;
+  position: absolute;
+  float: left;
+}
+

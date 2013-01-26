@@ -360,6 +360,7 @@ class UsersController < ApplicationController
   
   
   def signup
+    debugger
     params[:user] = {
       :name => params[:name],
       :email => params[:email],
@@ -377,7 +378,7 @@ class UsersController < ApplicationController
       
       send_confirmation_link user
       flash[:success] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
-      redirect_to "/users/#{user.id}/create_profile"
+      redirect_to "/edit_profile"
     else
       render "#{failure_render_path}"
     end
@@ -437,14 +438,14 @@ class UsersController < ApplicationController
   end
 
   def edit_profile
-    @user = User.find_by_id(params[:id])
-    render_404 and return unless @user == current_user
+    @user = current_user
+    render_404 and return unless @user
     render :create_profile
   end
   
   def update
-    @user = User.find_by_id(params[:id])
-    render_404 and return unless @user == current_user
+    @user = current_user
+    render_404 and return unless @user
     uhash = params[:user]
     success, message = true, ""
     
@@ -454,58 +455,10 @@ class UsersController < ApplicationController
     
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
     
-    @user.dob = dob
-    @user.siblings = uhash[:siblings].to_i rescue nil
-    fields = User::USER_FIELDS_LIST
-    fields.each do |f|
-      @user[f.to_s] = uhash[f] if uhash[f]
-    end
-
-    hobbies = (params[:user][:hobby]).split(",")
-    # old_hobbies = @user.hobby.map(&:hobby)
-    # changed_hobbies = hobbies-old_hobbies
-
-    #ugly hack for updating values
-    @user.hobby.destroy_all
-    @user.interested_in.destroy_all
-    @user.not_interested_in.destroy_all
-    
-    unless hobbies.blank?
-      hobbies.each do |h|
-        uh = Hobby.new
-        uh.user_id = @user.id
-        uh.hobby = h
-        uh.save
-      end
-    end
-
-    interested = (params[:user][:interest]).split(",")
-    unless interested.blank?
-      interested.each do |i|
-        ui = InterestedIn.new
-        ui.user_id = @user.id
-        ui.interested = i
-        ui.save
-      end
-    end
-
-    not_interested = (params[:user][:not_interest]).split(",")
-    unless not_interested.blank?
-      not_interested.each do |i|
-        ni = NotInterestedIn.new
-        ni.user_id = @user.id
-        ni.not_interested = i
-        ni.save
-      end
-    end
-    
-
-    @user.setup_recos_on_create unless Rails.env == 'development'
-    @user.add_to_search_index unless Rails.env == 'development'
+    @user.update_attributes(uhash)
 
     @user.save
-    
-    redirect_to "/users/#{@user.id}"
+    redirect_to "/home"
   end
   
   def more_info
@@ -564,7 +517,7 @@ class UsersController < ApplicationController
 
    # Handles the ajax 'delete' request from 'My Photo' page
    def delete_photo
-       session_user = current_user
+     session_user = current_user
      begin
       session_user.photo_exists =false
       session_user.save!
@@ -583,6 +536,11 @@ class UsersController < ApplicationController
     else
       return User.find_all_by_id([1, 2, 3, 4, 6, 7, 13])
     end
+  end
+
+  def home
+    @user = current_user
+    render :dashboard
   end
 
 end

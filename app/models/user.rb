@@ -134,7 +134,12 @@ class User < ActiveRecord::Base
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
-  
+  has_many :user_panels
+  has_many :panels, :through => :user_panels
+
+  has_many :following
+  has_many :followers
+
   def add_to_search_index
     if self.changed.include?(SEARCH_INDEX_FIELDS)
 
@@ -769,6 +774,14 @@ class User < ActiveRecord::Base
         @stories << story
       end
     end
+  end
+
+  def get_boards(top_n = 3)
+    return 10
+  end
+
+  def get_display_objects(ids)
+    users = User.find_all_by_id(ids)[0..5]
   end
 
 end

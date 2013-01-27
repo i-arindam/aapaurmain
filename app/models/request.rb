@@ -64,4 +64,15 @@ class Request < ActiveRecord::Base
     end
   end
   
+  def self.requests_sent_to_me(my_id)
+    reqs = Request.find_all_by_to_id(my_id) rescue nil
+    reqs.delete_if { |r| [WITHDRAWN, DECLINED].include?(r.status) }
+    reqs
+  end
+
+  def self.requests_sent_by_me(my_id)
+    reqs = Request.find_all_by_from_id(my_id) rescue nil
+    reqs.delete_if { |r| [WITHDRAWN, DECLINED].include?(r.status) }
+    reqs
+  end
 end

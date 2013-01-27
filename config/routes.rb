@@ -74,7 +74,32 @@ Aapaurmain::Application.routes.draw do
 
 
   # New routes
-  get 'home' => 'users#home'
+  match 'home' => 'users#home'
   get '/edit_profile' => 'users#edit_profile'
   post '/update' => 'users#update'
+
+  # Left panel links
+  match '/my/boards' => 'users#my_boards'
+  match '/my/requests/:direction' => 'users#show_requests'
+  match '/people/i/like' => 'users#people_i_follow'
+  match '/people/like/me' => 'users#people_follow_me'
+  match '/my/top/stories' => 'users#top_stories'
+
+  # Per user links
+  post '/request/:user/send' => 'users#create_request'
+  post '/request/:user/cancel' => 'users#withdraw_request'
+  post '/request/:user/accept' => 'users#accept_request'
+  post '/request/:user/decline' => 'users#decline_request'
+
+  post '/follow/user/:id' => 'users#follow_user'
+  post '/follow/user/:id' => 'users#unfollow_user'
+  post '/rate/profile/:id/:star' => 'users#rate_profile'
+  match '/persona/:id' => 'users#show'
+
+  # Ajax links. These come from list pages and/or full profile page
+  get '/boards/all/:id/:for_user_id' => 'users#get_all_boards_info'
+  get '/questions/top/:for_user_id' => 'users#get_top_questions'
+  get '/questions/all/:for_user_id' => 'users#get_all_questions'
+  get '/stories/top/:for_user_id' => 'users#get_top_stories'
+  get '/stories/all/:for_user_id' => 'users#get_all_stories'
 end

@@ -444,4 +444,55 @@ class UsersController < ApplicationController
     render :dashboard
   end
 
+  def my_boards
+    @user = current_user
+    render_401 and return unless @user
+    @boards = @user.get_boards
+  end
+
+  def show_requests
+    @user = current_user
+    render_401 and return unless @user
+    base_method = (params[:direction] == "in" ? :requests_sent_to_me : :requests_sent_by_me)
+    user_id = (params[:direction] == "in" ? 'from_id' : 'to_id')
+    reqs = Request.send(base_method, @user.id)
+
+    @res = []
+    reqs.each do |r|
+      @res.push({
+        :from => r[user_id],
+        :request => r.inspect
+      })
+    end
+  end
+
+  def people_i_follow
+    @user = current_user
+    render_401 and return unless @user
+    @following = User.get_display_objects(@user.followings)
+    render :my_followings
+  end
+
+  def people_follow_me
+    @user = current_user
+    render_401 and return unless @user
+    @follower = User.get_display_objects(@user.followers)
+    render :my_followers
+  end
+
+  def top_stories
+
+  end
+
+  def follow_user
+
+  end
+
+  def unfollow_user
+
+  end
+
+  def rate_profile
+
+  end
 end

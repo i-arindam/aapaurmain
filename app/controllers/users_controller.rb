@@ -546,11 +546,63 @@ class UsersController < ApplicationController
     
   end
 
+  # If top story ids are not already in redis, compute it here and insert
+  # else use it. Redis gets updated with background job every few hours. @todo.
   def get_top_stories
-    
+    user = current_user
+    render_401 and return unless user
+    desired_user = User.find_by_id(params[:for_user_id])
+    render_404 and return unless desired_user
+
+    story_ids = $r.lrange("user:#{desired_user.id}:popular_stories", 0, -1)
+    if story_ids.nil?
+      stories_of_desired_user = $r.lrange("user:#{desired_user.id}:story_ids", 0, -1)
+      if stories_of_desired_user.nil?
+        top_stories = {
+          :success => true,
+          :stories => nil
+        }
+        render :json => top_stories and return
+      end
+
+      popularity_hash = {}
+      $r.multi do
+        stories_of_desired_user.each do |st_id|
+          # top_stories_buildup[st_id] = {}
+          comments_count, likes_count = $r.llen("story:#{st_id}:comments"), $r.llen("story:#{st_id}:likes")
+          a, b = [comments_count, likes_count].max, [comments_count, likes_count].min
+          story_popularity = ( a * 2 + b ) / ( a + b )
+          popularity_hash[st_id] = story_popularity
+        end
+      end
+
+      # Next op will give a 2d array : [ [k,v], [k,v], [k,v] ] where the v's are in descending order
+      array_in_descending_order = popularity_hash.sort_by { |k, v| v }.reverse!
+
+      # This one is taken from SO. Pure blindness I say
+      story_ids = Hash[*array_in_descending_order.flatten].keys[0..4]
+      $r.rpush("user:#{desired_user.id}:popular_stories", story_ids)
+    end
+    stories = Story.get_stories(story_ids)
+    render :json => {
+      :success => true,
+      :stories => stories
+    }
   end
 
   def get_all_stories
-    
+    user = current_user
+    render_401 and return unless user
+    desired_user = User.find_by_id(params[:for_user_id])
+    render_404 and return unless desired_user
+
+    story_ids = []
+    story_ids = $r.lrange("user:#{desired_user.id}:story_ids", 0, 9)
+    stories = Story.get_stories(story_ids)
+    render :json => {
+      :success => true,
+      :stories => stories
+    }
   end
+
 end

@@ -72,4 +72,25 @@ class Story < ActiveRecord::Base
     $r.lrange("story:#{sid}:comments:#{comment_number}:dislikes", 0, -1)
   end
 
+  # @param [Array] sids
+  #         list of ids of stories to be shown
+  # @return [Array of Hash]
+  #         Array of stories in the order asked.
+  # Each element in the array is a hash containing all count and text info of the story
+  def self.get_stories(sids)
+    stories = []
+    sids.each do |sid|
+      story = {}
+      $r.multi do
+        story['core'] = $r.hgetall("story:#{sid}")
+        story['numbers'] = {}
+        story['numbers']['claps'] = $r.llen("story:#{sid}:claps")
+        story['numbers']['boos'] = $r.llen("story:#{sid}:boos")
+        story['numbers']['comments'] = $r.llen("story:#{sid}:comments")
+      end
+      stories.push(story)
+    end
+    stories
+  end
+
 end

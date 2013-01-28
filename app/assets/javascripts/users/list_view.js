@@ -9,24 +9,24 @@ ListView.prototype._initStructures = function() {
   this.activeUserId = this.config.sessionUserId;
   this.firstUserId = this.config.firstUserId;
   
-  this.commonBoardsContainer = $('ul.common-boards');
-  this.remainingBoardsContainer = $('ul.remaining-boards');
+  this.commonPanelsContainer = $('ul.common-panels');
+  this.remainingPanelsContainer = $('ul.remaining-panels');
   this.topStoriesContainer = $('ul.top-stories');
   this.questionsContainer = $('ul.questions');
 
-  this.boardsLoader = $('.boardsLoader');
+  this.PanelsLoader = $('.PanelsLoader');
   this.storiesLoader = $('.storiesLoader');
   this.questionsLoader = $('.questionsLoader');
 
   this.storyDom = this.config.storyDom;
 
-  this.boardsData = this.questionsData = this.topStoriesData = {};
+  this.PanelsData = this.questionsData = this.topStoriesData = {};
 
   this.OBJECTS_HASH = {
-    'board': {
-      'url': '/boards/all/{{sessionUserId}}/{{forUserId}}',
-      'result': this.boardsData,
-      'callback': this.paintBoardsSectionFor
+    'panel': {
+      'url': '/panels/all/{{sessionUserId}}/{{forUserId}}',
+      'result': this.PanelsData,
+      'callback': this.paintPanelsSectionFor
     },
     'question': {
       'url': '/questions/all/{{forUserId}}',
@@ -49,7 +49,7 @@ ListView.prototype.getAllData = function() {
   setTimeout(function() {
     $.each(userIds, function(i, uid) {
       setTimeout(function() {
-        that.getDataFor('board', uid);
+        that.getDataFor('panel', uid);
         that.getDataFor('question', uid);
         that.getDataFor('story', uid);
       }, 100);
@@ -67,6 +67,7 @@ ListView.prototype.getDataFor = function(object, uid, useCallback) {
   $.ajax({
     url: getUrl,
     type: "GET",
+    dataType: "json",
     success: function(data) {
       resultSet.uid = data;
       if(useCallback) {
@@ -89,18 +90,18 @@ ListView.prototype.bindDisplayChange = function() {
 };
 
 ListView.prototype.clearContentAndShowLoader = function() {
-  this.commonBoardsContainer.children('li.common-board').remove();
-  this.remainingBoardsContainer.children('li.remaining-board').remove();
+  this.commonPanelsContainer.children('li.common-panel').remove();
+  this.remainingPanelsContainer.children('li.remaining-panel').remove();
   this.questionsContainer.children('li.question').remove();
   this.topStoriesContainer.children('li.top-story').remove();
 
-  this.boardsLoader.appendTo(this.commonBoardsContainer).show();
+  this.PanelsLoader.appendTo(this.commonPanelsContainer).show();
   this.questionsLoader.appendTo(this.questionsContainer).show();
   this.storiesLoader.appendTo(this.topStoriesContainer).show();
 };
 
 ListView.prototype.refreshDisplayFor = function(uid) {
-  this.boardsData.uid ? this.paintBoardsSectionFor(uid) : this.retryAndPaintFor('board', uid);
+  this.PanelsData.uid ? this.paintPanelsSectionFor(uid) : this.retryAndPaintFor('panel', uid);
   this.questionsData.uid ? this.paintQuestionsSectionFor(uid) : this.retryAndPaintFor('question', uid);
   this.topStoriesData.uid ? this.paintTopStoriesSectionFor(uid) : this.retryAndPaintFor('story', uid);
 };
@@ -109,20 +110,20 @@ ListView.prototype.retryAndPaintFor = function(obj, uid) {
   this.getDataFor(obj, uid, true);
 };
 
-ListView.prototype.paintBoardsSectionFor = function(uid) {
-  var data = this.questionsData.uid, that = this, commonBoardLi, remainingBoardLi;
-  this.boardsLoader.fadeOut();
+ListView.prototype.paintPanelsSectionFor = function(uid) {
+  var data = this.questionsData.uid, that = this, commonPanelLi, remainingPanelLi;
+  this.PanelsLoader.fadeOut();
 
-  $.each(data.commonBoards, function(i, cb) {
-    commonBoardLi = $('<li/>').addClass('common-board');
-    $('<a/>').addClass('board-link').appendTo(commonBoardLi);
-    commonBoardLi.appendTo(that.commonBoardsContainer);
+  $.each(data.commonPanels, function(i, cb) {
+    commonPanelLi = $('<li/>').addClass('common-panel');
+    $('<a/>').addClass('panel-link').appendTo(commonPanelLi);
+    commonPanelLi.appendTo(that.commonPanelsContainer);
   });
 
-  $.each(data.remainingBoards, function(i, rb) {
-    remainingBoardLi = $('<li/>').addClass('remaining-board');
-    $('<a/>').addClass('board-link').appendTo(remainingBoardLi);
-    remainingBoardLi.appendTo(that.remainingBoardsContainer);
+  $.each(data.remainingPanels, function(i, rb) {
+    remainingPanelLi = $('<li/>').addClass('remaining-panel');
+    $('<a/>').addClass('panel-link').appendTo(remainingPanelLi);
+    remainingPanelLi.appendTo(that.remainingPanelsContainer);
   });
 };
 

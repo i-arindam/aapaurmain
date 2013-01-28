@@ -79,11 +79,11 @@ Aapaurmain::Application.routes.draw do
   post '/update' => 'users#update'
 
   # Left panel links
-  match '/my/boards' => 'users#my_boards'
+  match '/my/panels' => 'users#my_panels'
   match '/my/requests/:direction' => 'users#show_requests'
   match '/people/i/like' => 'users#people_i_follow'
   match '/people/like/me' => 'users#people_follow_me'
-  match '/my/top/stories' => 'users#top_stories'
+  match '/my/top/stories' => 'users#my_top_stories'
 
   # Per user links
   post '/request/:user/send' => 'users#create_request'
@@ -91,13 +91,13 @@ Aapaurmain::Application.routes.draw do
   post '/request/:user/accept' => 'users#accept_request'
   post '/request/:user/decline' => 'users#decline_request'
 
-  post '/follow/user/:id' => 'users#follow_user'
-  post '/follow/user/:id' => 'users#unfollow_user'
-  post '/rate/profile/:id/:star' => 'users#rate_profile'
+  post '/follow/user/:id/:type' => 'users#follow_user', :defaults => { :type => 0 }
+  post '/unfollow/user/:id' => 'users#unfollow_user'
+  post '/rate/profile/:id/:star' => 'users#rate_profile', :defaults => { :star => 1 }
   match '/persona/:id' => 'users#show'
 
   # Ajax links. These come from list pages and/or full profile page
-  get '/boards/all/:id/:for_user_id' => 'users#get_all_boards_info'
+  get '/panels/all/:id/:for_user_id' => 'users#get_all_panels_info'
   get '/questions/top/:for_user_id' => 'users#get_top_questions'
   get '/questions/all/:for_user_id' => 'users#get_all_questions'
   get '/stories/top/:for_user_id' => 'users#get_top_stories'

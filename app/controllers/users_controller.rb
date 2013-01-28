@@ -444,10 +444,10 @@ class UsersController < ApplicationController
     render :dashboard
   end
 
-  def my_boards
+  def my_panels
     @user = current_user
     render_401 and return unless @user
-    @boards = @user.get_boards
+    @panels = @user.get_panels
   end
 
   def show_requests
@@ -480,19 +480,77 @@ class UsersController < ApplicationController
     render :my_followers
   end
 
-  def top_stories
+  def my_top_stories
 
   end
 
+  # Ajax endpoints
   def follow_user
+    user = current_user
+    render_401 and return unless user
+    following_user = User.find_by_id(params[:id])
+    render_404 and return unless following_user
 
+    u = UserFollow.create({
+      :my_id => user.id,
+      :user_id => params[:id].to_i
+      :follow_type => params[:type].to_i
+    })
+    render :json => {
+      :success => !! u
+    }
   end
 
   def unfollow_user
+    user = current_user
+    render_401 and return unless user
+    unfollowing_user = User.find_by_id(params[:id])
+    render_404 and return unless unfollowing_user
 
+    follow_record = UserFollow.find_by_my_id_and_user_id(user.id, params[:id].to_i)
+    follow_record.destroy
+    render :json => { :success => true }
   end
 
   def rate_profile
+    user = current_user
+    render_401 and return unless user
+    rating_profile = User.find_by_id(params[:id])
+    render_404 and return unless rating_profile
 
+    rated = ProfileRating.find_or_create_by_my_id_and_user_id(user.id, params[:id].to_i)
+    rated.rating = params[:star]
+    rated.save
+    render :json => { :success => true }
+  end
+
+  def get_all_panels_info
+    user = User.find_by_id(params[:id])
+    render_404 and return unless (user and user == current_user)
+    other_user = User.find_by_id(params[:for_user_id])
+    $r.multi do
+      common_panels = $r.sinter("user:#{other_user.id}:panels", "user:#{user.id}:panels")
+      remaining_panels = $r.sdiff("user:#{other_user.id}:panels", "user:#{user.id}:panels")
+    end
+    render :json => {
+      :commonPanels => common_panels,
+      :remainingPanels => remaining_panels
+    }
+  end
+
+  def get_top_questions
+
+  end
+
+  def get_all_questions
+    
+  end
+
+  def get_top_stories
+    
+  end
+
+  def get_all_stories
+    
   end
 end

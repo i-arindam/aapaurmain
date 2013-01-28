@@ -776,7 +776,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_boards(top_n = 3)
+  def get_panels(top_n = 3)
     return 10
   end
 

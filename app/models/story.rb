@@ -43,16 +43,16 @@ class Story < ActiveRecord::Base
     $r.multi do
       sid = $r.incr("story_count")
       $r.hmset("story:#{sid}", :by, user.name, :by_id, user.id, :text, params[:text], :time, time)
-      # $r.lpush("user:#{user.id}:feed", sid)
+      $r.sadd("story:#{sid}:panels", params[:panels])
     end
     sid
   end
 
-  def self.get_likes(sid)
+  def self.get_claps(sid)
     $r.lrange("story:#{sid}:likes", 0, -1).to_json
   end
 
-  def self.get_dislikes(sid)
+  def self.get_boos(sid)
     $r.lrange("story:#{sid}:dislikes", 0, -1).to_json
   end
 
@@ -64,11 +64,11 @@ class Story < ActiveRecord::Base
     $r.lrange("story:#{sid}:comments", 10, -1).to_json
   end
 
-  def self.get_likes_on_comment(sid, comment_number)
+  def self.get_claps_on_comment(sid, comment_number)
     $r.lrange("story:#{sid}:comments:#{comment_number}:likes", 0, -1)
   end
 
-  def self.get_dislikes_on_comment(sid, comment_number)
+  def self.get_boos_on_comment(sid, comment_number)
     $r.lrange("story:#{sid}:comments:#{comment_number}:dislikes", 0, -1)
   end
 

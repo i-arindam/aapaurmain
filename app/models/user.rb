@@ -1,40 +1,5 @@
-#################################################################################
-# This class represents users
-#
-# @attr [Fixnum(11)] id
-# @attr [String(50)] name
-# @attr [Date] dob
-# @attr [String] sex
-# @attr [Fixnum(6)] family_preference
-# @attr [Float] height
-# @attr [Fixnum(6)] spouse_preference
-# @attr [Fixnum(20)] spouse_salary
-# @attr [String(500)] further_education_plans
-# @attr [String(500)] spouse_further_education
-# @attr [String(500)] settle_else
-# @attr [Fixnum(6)] sexual_preference
-# @attr [String(500)] virginity_opinion
-# @attr [String(500)] ideal_marriage
-# @attr [Fixnum(20)] salary
-# @attr [String(500)] hobbies
-# @attr [Fixnum(6)] siblings
-# @attr [Fixnum(6)] profession
-# @attr [String(500)] dream_for_future
-# @attr [String(500)] interested_in
-# @attr [String(500)] not_interested_in
-# @attr [String(255)] settled_in
-# @attr [true, false] dont_search
-# @attr [Date] hidden_since
-# @attr [DateTime] created_at
-# @attr [DateTime] updated_at
-#
-################################################################################
 class User < ActiveRecord::Base
-
-  
-  
   attr_accessible :email, :password, :password_confirmation, :name, :sex, :dob, :location, :short_bio
- # attr_accessor :password
   has_secure_password
   
   validates :password, :presence => true, :on => :create
@@ -745,11 +710,6 @@ class User < ActiveRecord::Base
     end.compact!
   end
 
-  # ON every user create add his hash to redis, comprising name and id
-  def after_create
-    $r.hmset(self.redis_key(:details), :name, self.name, :id, self.id)
-  end
-
   # When one fills something in one of his boards. send to other's in same bucket's feed
   def update_feeds_on_field_fill(field)
     time_to_near_sec = self.updated_at.to_i/1000
@@ -784,6 +744,9 @@ class User < ActiveRecord::Base
     users = User.find_all_by_id(ids)[0..5]
   end
 
+  def indicate_participation_in(panels)
+    $r.sadd("user:#{self.id}:panels", panels)
+  end
 end
 
 

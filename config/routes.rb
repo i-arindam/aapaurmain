@@ -71,7 +71,8 @@ Aapaurmain::Application.routes.draw do
   get 'story/:story_id/get/:action' => 'story#get_interactions_on_story'
   get 'story/:story_id/get/more_comments' => 'story#get_more_comments'
   get 'story/:story_id/get/comment/:number/:action' => 'story#get_comment_faces'
-
+  match 'panel/:name' => 'panel#show'
+  get 'panel/:name/get/more/:start/:num' => 'panel#show_more_stories'
 
   # New routes
   match 'home' => 'users#home'

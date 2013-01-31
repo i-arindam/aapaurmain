@@ -1,16 +1,14 @@
 class Newsfeed < ActiveRecord::Base
-  # attr_accessible :title, :body
 
-  def self.add_story_to_feed(story_id, board)
-    users_to_publish = $r.hget("board:#{board}:members")
-
-    # This action also adds the story to the owner's feed.
-    # @todo: Optimization to disregard certain kinds of trivial stories
+  def self.add_story_to_feeds(story_id, panels)
     $r.multi do
-      users_to_publish.each do |following_user_id|
-        $r.lpush("feed:#{following_user_id}", story_id)
-      end
-    end # End multi
+      panels.each do |panel|
+        user_ids = $r.smembers("panel:#{panel}:members")
+        user_ids.each do |uid|
+          $r.lpush("feed:#{uid}", sid)
+        end
+      end # End panels.each
+    end # End r.multi
   end
 
 end

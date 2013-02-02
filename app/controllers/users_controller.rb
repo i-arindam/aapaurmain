@@ -560,9 +560,8 @@ class UsersController < ApplicationController
       popularity_hash = {}
       $r.multi do
         stories_of_desired_user.each do |st_id|
-          # top_stories_buildup[st_id] = {}
-          comments_count, likes_count = $r.llen("story:#{st_id}:comments"), $r.llen("story:#{st_id}:likes")
-          a, b = [comments_count, likes_count].max, [comments_count, likes_count].min
+          comments_count, claps_count = $r.llen("story:#{st_id}:comments"), $r.llen("story:#{st_id}:claps")
+          a, b = [comments_count, claps_count].max, [comments_count, claps_count].min
           story_popularity = ( a * 2 + b ) / ( a + b )
           popularity_hash[st_id] = story_popularity
         end
@@ -572,7 +571,7 @@ class UsersController < ApplicationController
       array_in_descending_order = popularity_hash.sort_by { |k, v| v }.reverse!
 
       # This one is taken from SO. Pure blindness I say
-      story_ids = Hash[*array_in_descending_order.flatten].keys[0..4]
+      story_ids = Hash[*array_in_descending_order.flatten].keys[0..1]
       $r.rpush("user:#{desired_user.id}:popular_stories", story_ids)
     end
     stories = Story.get_stories(story_ids)

@@ -99,8 +99,13 @@ Aapaurmain::Application.routes.draw do
 
   # Ajax links. These come from list pages and/or full profile page
   get '/panels/all/:id/:for_user_id' => 'users#get_all_panels_info'
-  get '/questions/top/:for_user_id' => 'users#get_top_questions'
-  get '/questions/all/:for_user_id' => 'users#get_all_questions'
   get '/stories/top/:for_user_id' => 'users#get_top_stories'
   get '/stories/all/:for_user_id' => 'users#get_all_stories'
+
+  # Questions actions
+  match '/question/create' => 'short_question#new_question'
+  post '/question/save' => 'short_question#create_a_question'
+  post '/question/:id/answer/:choice' => 'short_question#answer_a_question'
+  get '/questions/latest/:for_user_id/:num' => 'short_question#get_answers_for', :defaults => { :num => 2 }
+  get '/questions/more/:for_user_id/:start/:num' => 'short_question#get_answers_for', :defaults => { :start => 3, :num => 5 }
 end

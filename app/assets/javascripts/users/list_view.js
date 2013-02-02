@@ -29,7 +29,7 @@ ListView.prototype._initStructures = function() {
       'callback': this.paintPanelsSectionFor
     },
     'question': {
-      'url': '/questions/all/{{forUserId}}',
+      'url': '/questions/latest/{{forUserId}}/2',
       'result': this.questionsData,
       'callback': this.paintQuestionsSectionFor
     },
@@ -131,10 +131,10 @@ ListView.prototype.paintQuestionsSectionFor = function(uid) {
   var data = this.questionsData.uid, questionLi, that = this;
   this.questionsLoader.fadeOut();
 
-  $.each(data.questions, function(i, q) {
+  $.each(data.answers, function(i, an) {
     questionLi = $('<li/>').addClass('question');
-    $('<span>').addClass('question-body').text(q.question).appendTo(questionLi);
-    $('<span>').addClass('answer-body').text(q.answer).appendTo(questionLi);
+    $('<span>').addClass('question-body').text(an.q).appendTo(questionLi);
+    $('<span>').addClass('answer-body').text(an.a).appendTo(questionLi);
     questionLi.appendTo(that.questionsContainer);
   });
 };

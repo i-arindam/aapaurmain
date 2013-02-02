@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217174241) do
+ActiveRecord::Schema.define(:version => 20130131163632) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -61,6 +61,12 @@ ActiveRecord::Schema.define(:version => 20121217174241) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "followings", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "locks", :force => true do |t|
     t.integer "one_id",                                    :null => false
     t.integer "another_id",                                :null => false
@@ -82,6 +88,16 @@ ActiveRecord::Schema.define(:version => 20121217174241) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
+
+  create_table "profile_ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "my_id",                                  :null => false
+    t.integer  "rating",     :limit => 1, :default => 0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "profile_ratings", ["my_id", "user_id"], :name => "index_profile_ratings_on_my_id_and_user_id", :unique => true
 
   create_table "profile_updates", :force => true do |t|
     t.text     "profile"
@@ -146,6 +162,36 @@ ActiveRecord::Schema.define(:version => 20121217174241) do
 
   add_index "requests", ["from_id"], :name => "index_requests_on_from_id"
   add_index "requests", ["to_id"], :name => "index_requests_on_to_id"
+
+  create_table "short_answers", :force => true do |t|
+    t.integer  "short_question_id"
+    t.integer  "choice_num"
+    t.string   "text",              :limit => 1000
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "short_answers", ["short_question_id", "choice_num"], :name => "index_short_answers_on_short_question_id_and_choice_num"
+  add_index "short_answers", ["short_question_id"], :name => "index_short_answers_on_short_question_id"
+
+  create_table "short_questions", :force => true do |t|
+    t.string   "text",             :limit => 1000,                      :null => false
+    t.integer  "by_id"
+    t.string   "by",                               :default => "admin", :null => false
+    t.string   "belongs_to_topic", :limit => 50
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+  end
+
+  create_table "user_follows", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "my_id",                                   :null => false
+    t.integer  "follow_type", :limit => 1, :default => 0
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+  end
+
+  add_index "user_follows", ["my_id", "user_id"], :name => "index_user_follows_on_my_id_and_user_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :null => false

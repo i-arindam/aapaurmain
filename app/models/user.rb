@@ -90,19 +90,12 @@ class User < ActiveRecord::Base
     :sexual_preference, :virginity_opinion, :profession, :dream_for_future, :settled_in
   ]
   
-  # has_many :recommendation, :dependent => destroy
   has_one :subscription
-  has_many :hobby, :dependent => :destroy
-  has_many :interested_in, :dependent => :destroy
-  has_many :not_interested_in, :dependent => :destroy
 
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
-  has_many :user_panels
-  has_many :panels, :through => :user_panels
-
-  has_many :following
+  has_many :followings
   has_many :followers
 
   def add_to_search_index

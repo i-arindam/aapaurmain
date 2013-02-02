@@ -493,7 +493,7 @@ class UsersController < ApplicationController
 
     u = UserFollow.create({
       :my_id => user.id,
-      :user_id => params[:id].to_i
+      :user_id => params[:id].to_i,
       :follow_type => params[:type].to_i
     })
     render :json => {
@@ -536,14 +536,6 @@ class UsersController < ApplicationController
       :commonPanels => common_panels,
       :remainingPanels => remaining_panels
     }
-  end
-
-  def get_top_questions
-
-  end
-
-  def get_all_questions
-    
   end
 
   # If top story ids are not already in redis, compute it here and insert

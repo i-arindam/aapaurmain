@@ -156,3 +156,27 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 #   For each of the listed panels
 #     select all users of that panel
 #     for each user add this story id in his feed
+
+
+# --------------------------------------------------------
+# QUESTION ANSWERS SECTION
+# --------------------------------------------------------
+
+# user:user_id:questions => [
+#   {
+#     :qid => id,
+#     :answer => choice
+#   },
+#   {
+#     :qid => id,
+#     :answer => choice
+#   },
+#   ...
+# ]
+
+# question:question_id:answers => {
+#   :num_choices => int,
+#   :choice1 => int,
+#   :choice2 => int,
+#   ...
+# }

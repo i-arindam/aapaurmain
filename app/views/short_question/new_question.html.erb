@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :stylesheet do %>
+      <%= stylesheet_link_tag "create_question" %>
+    <% end %>
+    <title>Create a Question</title>
+  </head>
+
+  <body>
+    <script>
+      $(document).ready(function() {
+      });
+    </script>
+    <div class="span12 questionContainer">
+      <div class="question-details">
+        <div class="answerType">
+          <div class="text-helper">Choose answer type</div>
+          <input type="radio" name="type" class="answerType" value="radio" checked>Radio
+          <input type="radio" name="type" class="answerType" value="checkbox">Checkbox
+        </div>
+
+        <div class="text-helper">Enter number of answers</div>
+        <input type="text" class="answer-number" name="answer-number" placeholder="enter the number of answers" /><br/>
+        <input type="submit" class="btn btn-large btn-success createQs" value="Create Question"></button>
+      </div>
+
+      <div class="actual-question">
+        <form url="/question/create" method="post">
+          <fieldset>
+            <div class="text-helper">Question</div>
+            <textarea name="text" class="questionBody" placeholder="New question" rows="2" cols="70"></textarea>
+
+            <div class="answers radio-type"></div>
+            <div class="answers checkbox-type"></div>
+          </fieldset>
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>

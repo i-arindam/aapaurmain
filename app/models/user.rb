@@ -733,7 +733,7 @@ class User < ActiveRecord::Base
     return 10
   end
 
-  def get_display_objects(ids)
+  def self.get_display_objects(ids)
     users = User.find_all_by_id(ids)[0..5]
   end
 

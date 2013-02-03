@@ -1,0 +1,33 @@
+<% content_for :stylesheet do %>
+  <%= stylesheet_link_tag "users/left_nav" %>
+<% end %>
+<div class="profile-wrap">
+  <div class="profile-photo">
+    <img src="/assets/users/user-medium.jpg" alt="user" />
+  </div>
+  <p class="user-name">
+    Jonathan Doe
+  </p>
+  <div class="left-nav">
+    <ul>
+      <li>
+        <a href="#" class="btn"><span class="boards">Boards I Follow</span></a>
+      </li>
+      <li>
+        <a href="#" class="btn"><span class="incoming-req">Incoming Requests</span></a>
+      </li>
+      <li>
+        <a href="#" class="btn"><span class="outgoing-req">Outgoing Requests</span></a>
+      </li>
+      <li>
+        <a href="#" class="btn"><span class="people-follow">People I Follow</span></a>
+      </li>
+      <li>
+        <a href="#" class="btn"><span class="my-followers">My Followers</span></a>
+      </li>
+      <li>
+        <a href="#" class="btn"><span class="top-story">My Top Stories</span></a>
+      </li>
+    </ul>
+  </div>
+</div>

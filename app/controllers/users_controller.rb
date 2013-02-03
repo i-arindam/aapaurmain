@@ -453,8 +453,9 @@ class UsersController < ApplicationController
   def show_requests
     @user = current_user
     render_401 and return unless @user
-    base_method = (params[:direction] == "in" ? :requests_sent_to_me : :requests_sent_by_me)
-    user_id = (params[:direction] == "in" ? 'from_id' : 'to_id')
+    @direction = params[:direction]
+    base_method = (@direction == "in" ? :requests_sent_to_me : :requests_sent_by_me)
+    user_id = (@direction == "in" ? 'from_id' : 'to_id')
     reqs = Request.send(base_method, @user.id)
 
     @res = []

@@ -1,6 +1,6 @@
 <div class="header clearfix">
   <div class="logo">
-    <h1><a href="#"><img src="assets/logo.png" alt="Purplerock" /></a></h1>
+    <h1><a href="#"><img src="/assets/logo.png" alt="Purplerock" /></a></h1>
   </div>
   <div class="nav clearfix">
     <ul>
@@ -25,17 +25,7 @@
     <ul class="clearfix">
       <% unless show_login? %>
       <li>
-        <% user = current_user %>
-        <ul class="nav nav-dropdown">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="assets/user-xsmall.png" /><span><%= current_user.name %><b class="caret"></b></span></a>
-            <ul class="dropdown-menu dontToggle"> 
-              <li class="j-my_profile"><%= link_to "My Profile",  :controller => "users", :action => "show", :id => user.id %></li>
-              <li class="j-log_out"><%= link_to "Log out", logout_path %></li>
-            </ul>
-          </li>
-        </ul>
-
+        <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="/assets/user-xsmall.png" /><span><%= current_user.name %></span></a>
       </li>
       <li class="separator">
         &nbsp;

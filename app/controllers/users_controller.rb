@@ -465,6 +465,9 @@ class UsersController < ApplicationController
         :request => r.inspect
       })
     end
+    
+    first_user_id = !!@res[0] && @res[0][:from]
+    get_top_stories_for(first_user_id, :show_requests)
   end
 
   def people_i_follow
@@ -539,17 +542,20 @@ class UsersController < ApplicationController
     }
   end
 
-  # If top story ids are not already in redis, compute it here and insert
-  # else use it. Redis gets updated with background job every few hours. @todo.
   def get_top_stories
     user = current_user
     render_401 and return unless user
     desired_user = User.find_by_id(params[:for_user_id])
     render_404 and return unless desired_user
+    get_top_stories_for(desired_user.id)
+  end
 
-    story_ids = $r.lrange("user:#{desired_user.id}:popular_stories", 0, -1)
+  # If top story ids are not already in redis, compute it here and insert
+  # else use it. Redis gets updated with background job every few hours. @todo.
+  def get_top_stories_for(desired_user_id, render_template = nil)
+    story_ids = $r.lrange("user:#{desired_user_id}:popular_stories", 0, -1)
     if story_ids.nil?
-      stories_of_desired_user = $r.lrange("user:#{desired_user.id}:story_ids", 0, -1)
+      stories_of_desired_user = $r.lrange("user:#{desired_user_id}:story_ids", 0, -1)
       if stories_of_desired_user.nil?
         top_stories = {
           :success => true,
@@ -575,11 +581,14 @@ class UsersController < ApplicationController
       story_ids = Hash[*array_in_descending_order.flatten].keys[0..1]
       $r.rpush("user:#{desired_user.id}:popular_stories", story_ids)
     end
-    stories = Story.get_stories(story_ids)
-    render :json => {
-      :success => true,
-      :stories => stories
-    }
+    @stories = Story.get_stories(story_ids)
+    respond_to do |format|
+      format.html { render render_template and return } 
+      format.json { render :json => {
+        :success => true,
+        :stories => @stories
+      } and return }
+    end
   end
 
   def get_all_stories

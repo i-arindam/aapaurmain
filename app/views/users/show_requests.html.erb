@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "list" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list" %>
+      <%= javascript_include_tag "application-list", "users/list_view" %>
     <% end %>
     <title>Requests <%= @direction == "in" ? " for ": " from " %> you</title>
     <script type="text/javascript">
@@ -19,9 +19,8 @@
         var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })(document);
 
-      jQuery(document).ready(function() {
-
-        jQuery('#allinone_carousel_charming').allinone_carousel({
+      $(document).ready(function() {
+        $('#allinone_carousel_charming').allinone_carousel({
           skin : 'charming',
           width : 760,
           height : 380,
@@ -38,7 +37,11 @@
           playMovieMarginTop : 0,
           bottomNavMarginBottom : -10
         });
-
+        var user_ids = <%= @user_ids %>;
+        var lv = new ListView({ 
+          'userIds': user_ids,
+          'sessionUserId' : <%= @user.id %>
+        });
       });
     </script>
   </head>
@@ -742,159 +745,8 @@
               </div>
             </div>
             <div class="center-container">
-              <ul class="blog-container">
-                <li>
-                  <div class="blog-user-wrap">
-                    <div class="blog-user">
-                      <img src="/assets/users/user-small.jpg" alt="user" />
-                    </div>
-                  </div>
-                  <div class="blog-content">
-                    <div class="blog-tit clearfix">
-                      <h3>Arindam Chakraborty</h3>
-                      <p>
-                        12 Sep 2012
-                      </p>
-                      <div class="paper-roll">
-                        &nbsp;
-                      </div>
-                      <div class="arrow-left">
-                        &nbsp;
-                      </div>
-                    </div>
-                    <div class="blog-inner">
-                      <div class="blog clearfix">
-                        <div class="blog-img">
-                          <img src="/assets/users/blog-1.jpg" alt="BLog" />
-                        </div>
-                        <div class="blog-text">
-                          <p>
-                            One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide. moment.
-                          </p>
-                        </div>
-                      </div>
-                      <div class="like-area clearfix">
-                        <a href="#" class="link-like"></a><span>35</span>
-                        <a href="#" class="link-dislike"></a><span>5</span>
-                        <div class="comment-count">
-                          25
-                        </div>
-                      </div>
-                      <div class="comment-area">
-                        <a href="#" class="comment-link active">10 Comments</a>
-                        <ul>
-                          <li>
-                            <div class="clearfix">
-                              <div class="comment-user">
-                                <img src="/assets/users/user-3.jpg" alt="user" />
-                              </div>
-                              <div class="comment">
-                                <div class="comment-prsn clearfix">
-                                  <p>
-                                    Aridnam Chakraborty
-                                  </p>
-                                  <span>20 Sep 2012</span>
-                                </div>
-                                <p>
-                                  The bedding was hardly able to cover it and seemed ready to slide.......
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="clearfix">
-                              <div class="comment-user">
-                                <img src="/assets/users/user-3.jpg" alt="user" />
-                              </div>
-                              <div class="comment">
-                                <div class="comment-prsn clearfix">
-                                  <p>
-                                    Aridnam Chakraborty
-                                  </p>
-                                  <span>20 Sep 2012</span>
-                                </div>
-                                <p>
-                                  The bedding was hardly able to cover it and seemed ready to slide.......
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="comment-wrap">
-                          <textarea class="comment-box"></textarea>
-                          <label class="cmt-lbl">Add a comment....</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="blog-user-wrap">
-                    <div class="blog-user">
-                      <img src="/assets/users/user-small.jpg" alt="user" />
-                    </div>
-                  </div>
-                  <div class="blog-content">
-                    <div class="blog-tit clearfix">
-                      <h3>Arindam Chakraborty</h3>
-                      <p>
-                        20 Oct 2012
-                      </p>
-                      <div class="paper-roll">
-                        &nbsp;
-                      </div>
-                      <div class="arrow-left">
-                        &nbsp;
-                      </div>
-                    </div>
-                    <div class="blog-inner">
-                      <div class="blog clearfix">
-                        <div class="blog-img">
-                          <img src="/assets/users/blog-1.jpg" alt="BLog" />
-                        </div>
-                        <div class="blog-text">
-                          <p>
-                            Following the events of last week, in which a crazed western lowland gorilla ruthlessly murdered 21 people in a local shopping plaza after escaping from the San Diego Zoo, sources across the moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.....
-                          </p>
-                        </div>
-                      </div>
-                      <div class="like-area clearfix">
-                        <a href="#" class="link-like"></a><span>15</span>
-                        <a href="#" class="link-dislike"></a><span>3</span>
-                        <div class="comment-count">
-                          12
-                        </div>
-                      </div>
-                      <div class="comment-area">
-                        <a href="#" class="comment-link">3 Comments</a>
-                        <ul>
-                          <li>
-                            <div class="clearfix">
-                              <div class="comment-user">
-                                <img src="/assets/users/user-3.jpg" alt="user" />
-                              </div>
-                              <div class="comment">
-                                <div class="comment-prsn clearfix">
-                                  <p>
-                                    Aridnam Chakraborty
-                                  </p>
-                                  <span>22 Oct 2012</span>
-                                </div>
-                                <p>
-                                  Wishing you all a Happy New Year . Here's to 2013!........
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                        <div class="comment-wrap">
-                          <textarea class="comment-box"></textarea>
-                          <label class="cmt-lbl">Add a comment....</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+              <ul class="story-container">
+                <%= render :partial => "/stories_loader" %>
               </ul>
             </div>
           </div>
@@ -903,26 +755,9 @@
           <div class="rit-content">
             <div class="board-wrap">
               <div class="tit-wrap">
-                <h2><span class="board-tit">Boards</span></h2>
-              </div>
-              <ul>
-                <li>
-                  <p class="shared-by">
-                    Common Boards shared by John Joe and Jonathan Doe
-                  </p>
-                  <p class="datas">
-                    Board 01 , Board 02, Board 05 and Board 07
-                  </p>
-                </li>
-                <li>
-                  <p class="shared-by">
-                    See other boards
-                  </p>
-                  <p class="datas">
-                    Board 15 , Board 20,  Board 25, Board 06, Board 12, Board 15,
-                  </p>
-                </li>
-              </ul>
+                <h2><span class="board-tit">Panels</span></h2>
+              </div>              
+              <%= render :partial => "/panels_loader" %>
             </div>
             <div class="qa-wrap">
               <div class="new-label"><img src="/assets/users/new.png" alt="new" />
@@ -930,34 +765,7 @@
               <div class="tit-wrap">
                 <h2><span class="board-tit">Q &amp; A</span></h2>
               </div>
-              <ul>
-                <li>
-                  <div class="user-left">
-                    <img src="/assets/users/user-1.jpg" alt="user" />
-                  </div>
-                  <div class="qn-right">
-                    <p class="shared-by">
-                      Children need something to do when they're potty training, right?
-                    </p>
-                    <p class="datas">
-                      A new product for parents of children being potty trained features an  iPad docking station.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <div class="user-left">
-                    <img src="/assets/users/user-2.jpg" alt="user" />
-                  </div>
-                  <div class="qn-right">
-                    <p class="shared-by">
-                      Frontier on the Big Bang Theory ?
-                    </p>
-                    <p class="datas">
-                      Star Trek the Next Generation costume is your favorite
-                    </p>
-                  </div>
-                </li>
-              </ul>
+              <%= render :partial => "/questions_loader" %>
             </div>
           </div>
         </div>

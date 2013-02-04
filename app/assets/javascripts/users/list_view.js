@@ -1,24 +1,40 @@
 function ListView(config) {
   this.config = config;
+  this._getDomPartials();
   this._initStructures();
   this.getAllData();
   this.bindDisplayChange();
 }
 
+ListView.prototype._getDomPartials = function() {
+  var getUrl = "/get/dom/all", that = this;
+  $.ajax({
+    url: getUrl,
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      that.storyDom = $(data.story_partial);
+      that.questionDom = $(data.question_partial);
+      that.panelDom = $(data.panel_partial);
+    }, error: function(data) {
+      setTimeout(function() {
+        that._getDomPartials();
+      }, 50);
+    }
+  });
+};
+
 ListView.prototype._initStructures = function() {  
   this.activeUserId = this.config.sessionUserId;
-  this.firstUserId = this.config.firstUserId;
+  this.firstUserId = this.config.userIds[0];
   
-  this.commonPanelsContainer = $('ul.common-panels');
-  this.remainingPanelsContainer = $('ul.remaining-panels');
-  this.topStoriesContainer = $('ul.top-stories');
+  this.panelsContainer = $('ul.panels');
+  this.topStoriesContainer = $('ul.story-container');
   this.questionsContainer = $('ul.questions');
 
-  this.PanelsLoader = $('.PanelsLoader');
-  this.storiesLoader = $('.storiesLoader');
-  this.questionsLoader = $('.questionsLoader');
-
-  this.storyDom = this.config.storyDom;
+  this.PanelsLoader = $('div.panels-loader');
+  this.storiesLoader = $('div.top-stories-loader');
+  this.questionsLoader = $('div.questions-loader');
 
   this.PanelsData = this.questionsData = this.topStoriesData = {};
 
@@ -69,12 +85,15 @@ ListView.prototype.getDataFor = function(object, uid, useCallback) {
     type: "GET",
     dataType: "json",
     success: function(data) {
-      resultSet.uid = data;
+      resultSet[uid] = data;
+      if(uid === that.firstUserId) {
+        callbackHandler.call(that, uid);
+      }
       if(useCallback) {
-        that.trigger(callbackHandler, uid);
+        that.call(callbackHandler, uid);
       }
     }, error: function(data) {
-      resultSet.uid = nil;
+      resultSet[uid] = null;
     }
   });
 };
@@ -90,14 +109,13 @@ ListView.prototype.bindDisplayChange = function() {
 };
 
 ListView.prototype.clearContentAndShowLoader = function() {
-  this.commonPanelsContainer.children('li.common-panel').remove();
-  this.remainingPanelsContainer.children('li.remaining-panel').remove();
-  this.questionsContainer.children('li.question').remove();
-  this.topStoriesContainer.children('li.top-story').remove();
+  this.panelsContainer.remove();
+  this.questionsContainer.remove();
+  this.topStoriesContainer.children('li.story').remove();
 
-  this.PanelsLoader.appendTo(this.commonPanelsContainer).show();
-  this.questionsLoader.appendTo(this.questionsContainer).show();
-  this.storiesLoader.appendTo(this.topStoriesContainer).show();
+  this.PanelsLoader.appendTo(this.panelsContainer).fadeIn();
+  this.questionsLoader.appendTo(this.questionsContainer).fadeIn();
+  this.storiesLoader.appendTo(this.topStoriesContainer).fadeIn();
 };
 
 ListView.prototype.refreshDisplayFor = function(uid) {
@@ -111,49 +129,44 @@ ListView.prototype.retryAndPaintFor = function(obj, uid) {
 };
 
 ListView.prototype.paintPanelsSectionFor = function(uid) {
-  var data = this.questionsData.uid, that = this, commonPanelLi, remainingPanelLi;
+  var data = this.questionsData[uid], that = this, commonPanelLi, remainingPanelLi;
+  var commonPanels = data.commonPanels.join(", "), otherPanels = data.remainingPanels.join(", ");
   this.PanelsLoader.fadeOut();
 
-  $.each(data.commonPanels, function(i, cb) {
-    commonPanelLi = $('<li/>').addClass('common-panel');
-    $('<a/>').addClass('panel-link').appendTo(commonPanelLi);
-    commonPanelLi.appendTo(that.commonPanelsContainer);
-  });
+  var panelDom = that.panelDom.clone();
+  panelDom.find('.shared-by span.other-user').text(that.usersData[uid].name);
+  panelDom.find('.common-panels').text(commonPanels);
+  panelDom.find('.other-panels').text(otherPanels);
 
-  $.each(data.remainingPanels, function(i, rb) {
-    remainingPanelLi = $('<li/>').addClass('remaining-panel');
-    $('<a/>').addClass('panel-link').appendTo(remainingPanelLi);
-    remainingPanelLi.appendTo(that.remainingPanelsContainer);
-  });
+  panelDom.appendTo(that.panelsContainer);
 };
 
 ListView.prototype.paintQuestionsSectionFor = function(uid) {
-  var data = this.questionsData.uid, questionLi, that = this;
+  var data = this.questionsData[uid], that = this;
   this.questionsLoader.fadeOut();
 
+  var questionDom = this.questionDom.find('li.question');
   $.each(data.answers, function(i, an) {
-    questionLi = $('<li/>').addClass('question');
-    $('<span>').addClass('question-body').text(an.q).appendTo(questionLi);
-    $('<span>').addClass('answer-body').text(an.a).appendTo(questionLi);
-    questionLi.appendTo(that.questionsContainer);
+    var qLi = questionDom.clone();
+    qLi.find('.q-text').text(an.q);
+    qLi.find('.a-text').text(an.a);
+    qLi.appendTo(that.questionsContainer);
   });
 };
 
 ListView.prototype.paintTopStoriesSectionFor = function(uid) {
-  var data = this.topStoriesData.uid, that = this;
-  var storyDiv, storyContentDiv;
+  var data = this.topStoriesData[uid], that = this;
   this.storiesLoader.fadeOut();
 
   $.each(data.stories, function(i, s) {
-    storyDom.find('span.author-name').text(s.by);
-    storyDom.find('span.story-time').text(s.when);
-    storyDom.find('div.story-content').text(s.text);
-    storyDom.find('span.clap-count').text(s.clap_count);
-    storyDom.find('span.boo-count').text(s.boo_count);
-    storyDom.find('span.comment-count').text(s.comment_count);
+    var storyDom = that.storyDom.clone();
+    storyDom.find('.story-creator').text(s.by);
+    storyDom.find('.story-time').text(s.when);
+    storyDom.find('.story-text').text(s.text);
+    storyDom.find('.story-claps').text(s.clap_count);
+    storyDom.find('.story-boos').text(s.boo_count);
+    storyDom.find('.story-comments').text(s.comment_count);
     
-    storyLi = $('<li/>').addClass('top-story');
-    storyDom.wrap(storyLi);
-    storyLi.appendTo(that.topStoriesContainer);
+    storyDom.appendTo(that.topStoriesContainer);
   });
 };

@@ -465,9 +465,8 @@ class UsersController < ApplicationController
         :request => r.inspect
       })
     end
-    
-    first_user_id = !!@res[0] && @res[0][:from]
-    get_top_stories_for(first_user_id, :show_requests)
+    @user_ids = []
+    @res.each { |r| @user_ids.push(r[:from]) }
   end
 
   def people_i_follow
@@ -532,13 +531,15 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:id])
     render_404 and return unless (user and user == current_user)
     other_user = User.find_by_id(params[:for_user_id])
+    common_panels = remaining_panels = []
     $r.multi do
       common_panels = $r.sinter("user:#{other_user.id}:panels", "user:#{user.id}:panels")
       remaining_panels = $r.sdiff("user:#{other_user.id}:panels", "user:#{user.id}:panels")
     end
+
     render :json => {
-      :commonPanels => common_panels,
-      :remainingPanels => remaining_panels
+      :commonPanels => common_panels.value,
+      :remainingPanels => remaining_panels.value
     }
   end
 
@@ -606,4 +607,11 @@ class UsersController < ApplicationController
     }
   end
 
+  def get_all_dom_partials
+    render :json => {
+      :story_partial => render_to_string(:partial => "/story"),
+      :question_partial => render_to_string(:partial => "/questions"),
+      :panel_partial => render_to_string(:partial => "/panels")
+    }
+  end
 end

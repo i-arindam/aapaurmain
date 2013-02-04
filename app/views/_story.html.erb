@@ -1,0 +1,60 @@
+<% content_for :stylesheet do %>
+<%= stylesheet_link_tag "stories" %>
+<% end %>
+<li class="story">
+  <div class="story-user-wrap">
+    <div class="story-user">
+      <img src="/assets/users/user-small.jpg" alt="" />
+    </div>
+  </div>
+  <div class="story-content">
+    <div class="story-tit clearfix">
+      <h3 class="story-creator">&nbsp;</h3>
+      <p class="story-time">&nbsp;</p>
+      <div class="paper-roll">&nbsp;</div>
+      <div class="arrow-left">&nbsp;</div>
+    </div>
+    <div class="story-inner">
+      <div class="story clearfix">
+        <div class="story-img">
+          <img src="/assets/users/blog-1.jpg" />
+        </div>
+        <div class="story-text">
+          <p class="story-text">&nbsp;</p>
+        </div>
+      </div>
+      <div class="like-area clearfix">
+        <a href="#" class="link-like"></a><span class="story-claps">&nbsp;</span>
+        <a href="#" class="link-dislike"></a><span class="story-boos">&nbsp;</span>
+        <div class="story-comments">
+          &nbsp;
+        </div>
+      </div>
+      <div class="comment-area hide">
+        <a href="#" class="comment-link active"><span class="comment-count">&nbsp;</span> Comments</a>
+        <ul>
+          <li>
+            <div class="clearfix">
+              <div class="comment-user">
+                <img src="/assets/users/user-3.jpg" class="comment-user-img" alt="user" />
+              </div>
+              <div class="comment">
+                <div class="comment-prsn clearfix">
+                  <p class="comment-creator">&nbsp;</p>
+                  <span class="comment-time">&nbsp;</span>
+                </div>
+                <p class="comment-text">
+                  &nbsp;
+                </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="comment-wrap">
+          <textarea class="comment-box"></textarea>
+          <label class="cmt-lbl">Add a comment....</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

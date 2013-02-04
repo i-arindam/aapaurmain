@@ -108,4 +108,7 @@ Aapaurmain::Application.routes.draw do
   post '/question/:id/answer/:choice' => 'short_question#answer_a_question'
   get '/questions/latest/:for_user_id/:num' => 'short_question#get_answers_for', :defaults => { :num => 2 }
   get '/questions/more/:for_user_id/:start/:num' => 'short_question#get_answers_for', :defaults => { :start => 3, :num => 5 }
+
+  # Ajax endpoints for dom content
+  get '/get/dom/all' => 'users#get_all_dom_partials'
 end

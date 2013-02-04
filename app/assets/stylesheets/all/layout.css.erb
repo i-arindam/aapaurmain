@@ -32,6 +32,14 @@ a {
 *:first-child + html .clearfix {
   min-height: 1%;
 }
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
 
 @font-face {
   font-family: 'Dancing Script';

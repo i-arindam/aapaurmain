@@ -458,15 +458,16 @@ class UsersController < ApplicationController
     user_id = (@direction == "in" ? 'from_id' : 'to_id')
     reqs = Request.send(base_method, @user.id)
 
-    @res = []
+    @objects = []
     reqs.each do |r|
-      @res.push({
+      @objects.push({
         :from => r[user_id],
+        :from_user => User.find_by_id(r[user_id]),
         :request => r.inspect
       })
     end
     @user_ids = []
-    @res.each { |r| @user_ids.push(r[:from]) }
+    @objects.each { |r| @user_ids.push(r[:from]) }
   end
 
   def people_i_follow

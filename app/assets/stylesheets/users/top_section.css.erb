@@ -1,0 +1,128 @@
+/* slider */
+.slider-box {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 15px;
+  background: #f0f0f0;
+}
+.user-box, .user-inform, .text-blk {
+  float: left;
+}
+.blog-box {
+  width: 38%;
+}
+.blog-box {
+  float: right;
+}
+.blg-tit {
+  font-size: 12px;
+  color: #4e4b4a;
+}
+.blg-ct {
+  color: #7c7c7c;
+  font-size: 11px;
+}
+.user-box img {
+  width: 100% !important;
+  height: auto !important;
+}
+.box-contents {
+  width: 59%;
+  margin: 0 2% 0 0;
+  float: left;
+}
+.user-box {
+  background: #fff;
+  border: 1px solid #c3c3c3;
+  padding: 10px 13px 20px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.box-contents:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.user-inform {
+  width: 40%;
+  margin: 118px 0 0;
+  text-align: center;
+}
+.user-inform p {
+  color: #262626;
+  font-size: 13px;
+  font-family: 'lucida_sansdemibold_roman';
+}
+.text-blk {
+  margin: 0 0 0 3%;
+  width: 57%;
+}
+.profile-bg {
+  position: absolute;
+  top: -1px;
+  left: 26px;
+  width: 89px;
+  padding: 30px 16px 13px 8px;
+  background: url("<%= image_path 'users/profile-bg.png' %>") no-repeat;
+}
+.text-blk p {
+  color: #4e4b4a;
+  font-style: italic;
+  font-size: 13px;
+}
+.blog-box h3 {
+  color: #4e4b4a;
+  font-size: 14px;
+  font-family: 'lucida_sansdemibold_roman';
+  text-transform: uppercase;
+}
+.blog-box ul li {
+  padding: 7px 4px;
+  border-bottom: 1px solid #ccccc6;
+}
+.blog-box ul li.last {
+  border: none;
+}
+.btn-wraper {
+  margin: 20px 0 0 0;
+}
+.button {
+  display: block;
+  border-right: 1px solid #edecec;
+  border-bottom: 1px solid #edecec;
+  color: #fff;
+  font-size: 12px;
+  font-family: 'lucida_sansdemibold_roman';
+  box-shadow: 1px 1px #b6b6b6;
+  border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  background: #8f8c89;
+}
+.button:hover {
+  color: #fff;
+}
+.btn-wraper a {
+  float: left;
+  margin: 0 13px 0 0;
+  width: 136px;
+}
+.send-req, .follow-user, .rate-profile {
+  background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 9px -200px;
+  display: block;
+  padding: 8px 0 8px 28px;
+}
+.follow-user {
+  background-position: 9px -230px;
+  padding-left: 40px;
+}
+.rate-profile {
+  background-position: 4px -260px;
+  padding-left: 34px;
+}
+/* slider ends */

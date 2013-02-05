@@ -50,16 +50,16 @@
       <div class="row-fluid">
         <div class="span9 clearfix">
           <div class="col-one">
-            <%= render :partial => "users/left_nav" %>
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
           </div>
           <div class="col-two">
             <div id="containingDiv">
               <div id="allinone_carousel_charming">
                 <div class="myloader"></div>
                 <ul class="allinone_carousel_list">
-                  <% @objects.each do |req_obj| %>
+                  <% @objects.each do |obj| %>
                   <li>
-                    <%= render :partial => "users/top_section", :locals => { :request => req_obj } %>
+                    <%= render :partial => "users/top_section", :locals => { :user => obj[:user], :request => obj[:request] } %>
                   </li>
                   <% end %>
                 </ul>

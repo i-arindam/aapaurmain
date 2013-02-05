@@ -212,52 +212,48 @@ class UsersController < ApplicationController
   end
     
   def show
-    
-    render_404 and return unless current_user
+    render_401 and return unless current_user
     @values = {}
     render_404 and return unless params[:id]
     @current_user = current_user
     @user = User.find_by_id(params[:id]) 
     render_404 and return unless @user
     
-    if @current_user.id != params[:id].to_i     # View other user's profile
-      #Check if the logged in user has sent request to this user. Show buttons accordingly
-      sent_request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
-      @values['show-send'] = true if sent_request.nil? 
+    #Check if the logged in user has sent request to this user. Show buttons accordingly
+    sent_request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
+    @values['show-send'] = true if sent_request.nil? 
 
-      if sent_request
-        @values['show-withdraw'] =  true if sent_request.status == Request::ASKED   
-        @values['show-send'] =  false if sent_request.status == Request::DECLINED  
-      end
-    
-      #Check if the logged in user has received request from this user. Show buttons accordingly
-      received_request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
-      if received_request 
-        @values['show-accept'] = @values['show-decline'] =  (received_request.status == Request::ASKED)  
-        @values['show-send'] =  false  
-      end
-      
-      if (sent_request and sent_request.status == Request::ACCEPTED) or (received_request and received_request.status == Request::ACCEPTED)
-         @values['show-chat'] = @values['show-withdraw-lock'] = true
-         @values['show-send'] = @values['show-accept'] = @values['show-withdraw'] = false
-      end
-
-      # # Log profile views
-      # view = @user.profile_viewers.where(:viewer_id => @current_user.id)
-      # unless view.blank?
-      #   # To update the latest time
-      #   view[0].touch
-      # else
-      #   view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
-      # end
-      
-    else # Show my own profile
-      @values['show-chat'] = false
-      @values['show-send'] = @values['show-accept'] = @values['show-withdraw'] = @values['show-withdraw-lock'] = false 
-      @values['show-cta'] = true
+    if sent_request
+      @values['show-withdraw'] =  true if sent_request.status == Request::ASKED   
+      @values['show-send'] =  false if sent_request.status == Request::DECLINED  
+    end
+  
+    #Check if the logged in user has received request from this user. Show buttons accordingly
+    received_request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
+    if received_request 
+      @values['show-accept'] = @values['show-decline'] =  (received_request.status == Request::ASKED)  
+      @values['show-send'] =  false  
     end
     
-    @values['json'] = user_json_object(params[:id])
+    # # Log profile views
+    # view = @user.profile_viewers.where(:viewer_id => @current_user.id)
+    # unless view.blank?
+    #   # To update the latest time
+    #   view[0].touch
+    # else
+    #   view = @user.profile_viewers.create({ :viewer_id => @current_user.id })
+    # end
+
+    # Panels object
+    common_panels, remaining_panels = Panel.get_common_and_other_panels_for(@user.id, @current_user.id)
+    @panels = { :common_panels => common_panels, :remaining_panels => remaining_panels}
+
+    # Questions object
+    @answers = ShortQuestion.get_latest_n_answers_for(@user.id, 2, 0)
+
+    # Stories object
+    @stories = Story.get_n_stories_for(@user.id, 10, 0)
+
     render :profile
   end
   
@@ -461,13 +457,10 @@ class UsersController < ApplicationController
     @objects = []
     reqs.each do |r|
       @objects.push({
-        :from => r[user_id],
-        :from_user => User.find_by_id(r[user_id]),
+        :user => User.find_by_id(r[user_id]),
         :request => r.inspect
       })
     end
-    @user_ids = []
-    @objects.each { |r| @user_ids.push(r[:from]) }
   end
 
   def people_i_follow
@@ -532,11 +525,7 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:id])
     render_404 and return unless (user and user == current_user)
     other_user = User.find_by_id(params[:for_user_id])
-    common_panels = remaining_panels = []
-    $r.multi do
-      common_panels = $r.sinter("user:#{other_user.id}:panels", "user:#{user.id}:panels")
-      remaining_panels = $r.sdiff("user:#{other_user.id}:panels", "user:#{user.id}:panels")
-    end
+    common_panels, remainingPanels = Panel.get_common_and_other_panels_for(other_user.id, user.id)
 
     render :json => {
       :commonPanels => common_panels.value,
@@ -599,9 +588,20 @@ class UsersController < ApplicationController
     desired_user = User.find_by_id(params[:for_user_id])
     render_404 and return unless desired_user
 
-    story_ids = []
-    story_ids = $r.lrange("user:#{desired_user.id}:story_ids", 0, 9)
-    stories = Story.get_stories(story_ids)
+    stories = Story.get_n_stories_for(desired_user.id, 10, 0)
+    render :json => {
+      :success => true,
+      :stories => stories
+    }
+  end
+
+  def get_more_stories
+    user = current_user
+    render_401 and return unless user
+    desired_user = User.find_by_id(params[:for_user_id])
+    render_404 and return unless desired_user
+
+    stories = Story.get_n_stories_for(desired_user.id, 10, params[:start].to_i)
     render :json => {
       :success => true,
       :stories => stories

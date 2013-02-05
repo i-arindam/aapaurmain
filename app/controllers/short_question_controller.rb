@@ -60,15 +60,7 @@ class ShortQuestionController < ApplicationController
     prospect = User.find_by_id(params[:for_user_id])
     render_404 and return unless prospect
 
-    answers = []
-    questions_answered = $r.lrange("user:#{prospect.id}:questions", params[:start] || 0, params[:num])
-    questions_answered.each do |an_answer|
-      q, a = ShortQuestion.find_by_id(an_answer.qid), ShortAnswer.find_by_short_question_id_and_choice_num(an_answer.qid.to_i, an_answer.answer.to_i)
-      answers.push({
-        :q => q,
-        :a => a
-      })
-    end
+    answers = ShortQuestion.get_top_n_answers_for(prospect.id, params[:num], params[:start])
     render :json => {
       :success => true,
       :answers => answers

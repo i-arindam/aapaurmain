@@ -9,175 +9,561 @@
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "users/profile" %>
-      <%= javascript_include_tag "jquery.haircut" %>
     <% end %>
-    <script type="text/javascript">
-       window.user_object = <%= raw @values['json'] %>;
-       $(function() {
-         var actions = new UserActions();
-       });
-    </script>
   </head>
   <body>
-    
-
-    <div id="left_content">&nbsp;</div>
-    <div id="box_content">
-      <div id="main_content">
-        <div class="profileHeader">
-          <div class="profileImage">
-            
-              <%= image_tag profile_pic_url(@user.id) %>
-            
-
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <%= render :partial => "/left_nav", :locals => { :user => @current_user } %>
           </div>
-          <div class="bioSection">
-            <h1 class="name"><%= @user.name %></h1>
-            <h3 class="shortBio"><%= @user.short_bio || 'Thats me' %></h3>
-          </div>
-          
-          <div class="profileActions">
-            
-            <% @values['show-send'] ? '' : class_to_add="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add%> btn btn-danger btn-large j-send-request <%= @values['show-cta'] ? 'showCta' : '' %>" value="Send Request" id="send-<%= @user.id %>"/>
+          <div class="col-two">
+            <div class="center-container">
+              <div class="individual-pro">
+                <div class="clearfix">
+                  <div class="box-lt">
+                    <div class="user-box clearfix">
+                      <div class="profile-bg-large">
+                        <img src="images/user-slide-large.jpg" alt="user" />
+                      </div>
+                      <div class="prof-name">
+                        <p>
+                          Jonathan Doe
+                        </p>
+                      </div>
+                      <div class="prof-txt">
+                        <p>
+                          " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla, sem sit amet pharetra blandit, velit lectus rhoncus orci, dapibus pulvinar elit dui eget tortor. Aenean mollis porttitor nisi in imperdiet. Nunc et sapien diam, eget dapibus nisl. Sed ultricies lectus eget felis sodales laoreet lacinia dolor cursus. Nullam nec augue lorem, id scelerisque orci. "
+                        </p>
+                      </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="btn-wraper clearfix">
+                      <a href="#" class="button"><span class="send-req">Send Request</span></a>
+                      <a href="#" class="button"><span class="follow-user">Follow User</span></a>
+                      <a href="#" class="button last"><span class="rate-profile">Rate the profile</span></a>
+                    </div>
+                  </div>
+                  <div class="box-rt blog-lt">
+                    <h3>Recent Blogs</h3>
+                    <ul>
+                      <li>
+                        <p class="blg-tit">
+                          Title of the most recent blog
+                        </p>
+                        <p class="blg-ct">
+                          August 02, 2012
+                        </p>
+                      </li>
+                      <li>
+                        <p class="blg-tit">
+                          Title of the most author
+                        </p>
+                        <p class="blg-ct">
+                          September 20, 2012
+                        </p>
+                      </li>
+                      <li>
+                        <p class="blg-tit">
+                          Title of the most recent blog
+                        </p>
+                        <p class="blg-ct">
+                          August 02, 2012
+                        </p>
+                      </li>
+                      <li>
+                        <p class="blg-tit">
+                          Title of the most author
+                        </p>
+                        <p class="blg-ct">
+                          September 20, 2012
+                        </p>
+                      </li>
+                      <li class="last">
+                        <p class="blg-tit">
+                          Another Sample blog post
+                        </p>
+                        <p class="blg-ct">
+                          December 15, 2012
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
 
-            <% @values['show-withdraw'] ? '' : class_to_add_1="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_1%> btn btn-danger btn-large j-withdraw-request" value="Withdraw Request" id="withdraw-<%= @user.id %>" />
-
-            <% @values['show-accept']  ? '' : class_to_add_2="hide" %>
-              <input type="button" data-toggle="modal" data-target="#myModal" class="<%=class_to_add_2%> btn btn-success btn-large j-accept-request" value="Accept Request" id="accept-<%= @user.id %>" />
-
-            <% @values['show-decline'] ? '' : class_to_add_3="hide" %>
-              <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_3%> btn btn-danger btn-large j-decline-request" value="Decline Request" id="decline-<%= @user.id %>" />
-
-              <% @values['show-withdraw-lock'] ? '' : class_to_add_4="hide" %>
-                <input type="button" data-toggle="modal"  data-target="#myModal" class="<%=class_to_add_4%> btn btn-danger btn-large j-withdraw-lock" value="Withdraw Lock" id="lock-<%= @user.id %>" />
+              </div>
+              <ul class="blog-container">
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-f-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Arpita Chakraborty</h3>
+                      <p>
+                        25 Dec 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-2.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>20</span>
+                        <a href="#" class="link-dislike"></a><span>8</span>
+                        <div class="comment-count">
+                          10
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">3 Comments</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-4.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Dipanshu
+                                  </p>
+                                  <span>25 Dec 2012</span>
+                                </div>
+                                <p>
+                                  Lorem Ipsum is that it has a more-or-less normal distribution of letters.......
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Arindam Chakraborty</h3>
+                      <p>
+                        10 Nov 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-3.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur,
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>10</span>
+                        <a href="#" class="link-dislike"></a><span>1</span>
+                        <div class="comment-count">
+                          8
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">2 Comments</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-5.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Aripita Chakraborty
+                                  </p>
+                                  <span>15 Nov 2012</span>
+                                </div>
+                                <p>
+                                  All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks........
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Dipanshu</h3>
+                      <p>
+                        10 Sep 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-4.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>5</span>
+                        <a href="#" class="link-dislike"></a><span>1</span>
+                        <div class="comment-count">
+                          4
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">1 Comment</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-3.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Aripita Chakraborty
+                                  </p>
+                                  <span>15 Sep 2012</span>
+                                </div>
+                                <p>
+                                  Cras elit dolor, bibendum id vehicula ut, placerat ac mauris. In mollis........
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-f-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Arpita Chakraborty</h3>
+                      <p>
+                        25 Dec 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-2.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>20</span>
+                        <a href="#" class="link-dislike"></a><span>8</span>
+                        <div class="comment-count">
+                          10
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">3 Comments</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-4.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Dipanshu
+                                  </p>
+                                  <span>25 Dec 2012</span>
+                                </div>
+                                <p>
+                                  Lorem Ipsum is that it has a more-or-less normal distribution of letters.......
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Arindam Chakraborty</h3>
+                      <p>
+                        10 Nov 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-3.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur,
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>10</span>
+                        <a href="#" class="link-dislike"></a><span>1</span>
+                        <div class="comment-count">
+                          8
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">2 Comments</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-5.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Aripita Chakraborty
+                                  </p>
+                                  <span>15 Nov 2012</span>
+                                </div>
+                                <p>
+                                  All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks........
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="blog-user-wrap">
+                    <div class="blog-user">
+                      <img src="images/user-small.jpg" alt="user" />
+                    </div>
+                  </div>
+                  <div class="blog-content">
+                    <div class="blog-tit clearfix">
+                      <h3>Dipanshu</h3>
+                      <p>
+                        10 Sep 2012
+                      </p>
+                      <div class="paper-roll">
+                        &nbsp;
+                      </div>
+                      <div class="arrow-left">
+                        &nbsp;
+                      </div>
+                    </div>
+                    <div class="blog-inner">
+                      <div class="blog clearfix">
+                        <div class="blog-img">
+                          <img src="images/blog-4.jpg" alt="BLog" />
+                        </div>
+                        <div class="blog-text">
+                          <p>
+                            Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                          </p>
+                        </div>
+                      </div>
+                      <div class="like-area clearfix">
+                        <a href="#" class="link-like"></a><span>5</span>
+                        <a href="#" class="link-dislike"></a><span>1</span>
+                        <div class="comment-count">
+                          4
+                        </div>
+                      </div>
+                      <div class="comment-area">
+                        <a href="#" class="comment-link">1 Comment</a>
+                        <ul>
+                          <li>
+                            <div class="clearfix">
+                              <div class="comment-user">
+                                <img src="images/user-3.jpg" alt="user" />
+                              </div>
+                              <div class="comment">
+                                <div class="comment-prsn clearfix">
+                                  <p>
+                                    Aripita Chakraborty
+                                  </p>
+                                  <span>15 Sep 2012</span>
+                                </div>
+                                <p>
+                                  Cras elit dolor, bibendum id vehicula ut, placerat ac mauris. In mollis........
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                        <div class="comment-wrap">
+                          <textarea class="comment-box"></textarea>
+                          <label class="cmt-lbl">Add a comment....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-
-        <div class="container profile">
-          <div class="leftCol">
-            <div class="group col lcol2">
-              <div class="row heading">
-                <span><em>Stuff that is important</em></span>
+        <div class="span3">
+          <div class="rit-content">
+            <div class="board-wrap">
+              <div class="tit-wrap">
+                <h2><span class="board-tit">Boards</span></h2>
               </div>
-              <div class="values">
-                <div class="row">
-                  <div class="image">
-                    <img src="/assets/users/bag-full.png" class="profileIcon" />
+              <ul>
+                <li>
+                  <p class="shared-by">
+                    Common Boards shared by John Joe and Jonathan Doe
+                  </p>
+                  <p class="datas">
+                    Board 01 , Board 02, Board 05 and Board 07
+                  </p>
+                </li>
+                <li>
+                  <p class="shared-by">
+                    See other boards
+                  </p>
+                  <p class="datas">
+                    Board 15 , Board 20,  Board 25, Board 06, Board 12, Board 15,
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="qa-wrap">
+              <div class="new-label"><img src="images/new.png" alt="new" />
+              </div>
+              <div class="tit-wrap">
+                <h2><span class="board-tit">Q &amp; A</span></h2>
+              </div>
+              <ul>
+                <li>
+                  <div class="user-left">
+                    <img src="images/user-1.jpg" alt="user" />
                   </div>
-                  <label class="span2">Profession</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.profession %>"><%= @user.profession %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/graduation-cap.png" class="profileIcon" />
-                  <label class="span2">Education</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.education %>"><%= @user.education %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/colored-pencils.png" class="profileIcon" />
-                  <label class="span2">Hobbies</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.hobby.map(&:hobby)).join(",") %>"><%= (@user.hobby.map(&:hobby)).join(",") %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/shaking-hands.png" class="profileIcon" />
-                  <label class="span2">Further Education Plans</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.further_education_plans %>"><%= @user.further_education_plans %></abbr></h3>
-                </div>	
-                <div class="row">
-                  <img src="/assets/users/green-lightbulb.png" class="profileIcon" />
-                  <label class="span2">Dream For Future</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.dream_for_future %>"><%= @user.dream_for_future %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/microphone.png" class="profileIcon" />
-                  <label class="span2">Opinion on Virginity</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.virginity_opinion %>"><%= @user.virginity_opinion %></abbr></h3>
-                </div>
-                 <div class="row">
-                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
-                  <label class="span2">My kind of marriage</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= @user.ideal_marriage %>"><%= @user.ideal_marriage %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/coffee-mug.png" class="profileIcon" />
-                  <label class="span2">Things that excite me</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.interested_in.map(&:interested)).join(",") %>"><%= (@user.interested_in.map(&:interested)).join(",") %></abbr></h3>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/favorite-delete.png" class="profileIcon" />
-                  <label class="span2">Things that put me off</label>
-                  <h3 class="haircut"><abbr class="span4" title="<%= (@user.not_interested_in.map(&:not_interested)).join(",") %>"><%= (@user.not_interested_in.map(&:not_interested)).join(",") %></abbr></h3>
-                </div>
-              </div>
+                  <div class="qn-right">
+                    <p class="shared-by">
+                      Children need something to do when they're potty training, right?
+                    </p>
+                    <p class="datas">
+                      A new product for parents of children being potty trained features an  iPad docking station.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div class="user-left">
+                    <img src="images/user-2.jpg" alt="user" />
+                  </div>
+                  <div class="qn-right">
+                    <p class="shared-by">
+                      Frontier on the Big Bang Theory ?
+                    </p>
+                    <p class="datas">
+                      Star Trek the Next Generation costume is your favorite
+                    </p>
+                  </div>
+                </li>
+              </ul>
             </div>
-          </div> <!-- left col -->
-      
-          <div class="rightCol">
+          </div>
+        </div>
+      </div>
+    </div><!-- Container -->
 
-            <div class="group col rcol1">
-              <div class="row heading">
-                <span><em>I Me Myself(Main)</em></span>
-              </div>
-              <div class="values">
-                <div class="row">
-                  <img src="/assets/users/date.png" class="profileIcon">
-                  <label class="span2 h4">Date Of Birth</label>
-                  <label class="span4"><%= @user.dob and @user.dob.strftime("%d %b %Y") %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/cash.png" class="profileIcon">
-                  <label class="span2 h4">Salary</label>
-                  <label class="span4"><%= salary_list[@user.salary] %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/globe.png" class="profileIcon">
-                  <label class="span2">Settled In</label>
-                  <label class="span4"><%= @user.settled_in %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/users-2.png" class="profileIcon">
-                  <label class="span2">Siblings</label>
-                  <label class="span4"><%= @user.siblings %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/users.png" class="profileIcon">
-                  <label class="span2 h4">Sex</label>
-                  <label class="span4"><%= @user.sex %></label>
-                </div>
-              </div>
-            </div>
-            <div class="group col rcol2">
-              <div class="row heading">
-                <span><em>Aap (My thoughts about you)</em></span>
-              </div>
-              <div class="values">
-                <div class="row">
-                  <img src="/assets/users/green-power-outlet.png" class="profileIcon">
-                  <label class="span2">Spouse Preference</label>
-                  <label class="span4"><%= spouse_pref_list[@user.spouse_preference] %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/apple.png" class="profileIcon">
-                  <label class="span2">Sexual Preference</label>
-                  <label class="span4"><%= sexual_pref_list[@user.sexual_preference] %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/flowchart.png" class="profileIcon">
-                  <label class="span2">Family Preference</label>
-                  <label class="span4"><%= family_preference_list[@user.family_preference] %></label>
-                </div>
-                <div class="row">
-                  <img src="/assets/users/clipboard-2.png" class="profileIcon" />
-                  <label class="span2">Ideal Partner</label>
-                  <h3 class="haircut"><abbr class="span4 _LVhaircutTrimmed" title="<%= @user.ideal_partner %>"><%= @user.ideal_partner %></abbr></h3>
-                </div>
-              </div>
-            </div>
-          </div><!-- right col -->
-      
-        </div> <!-- container profile -->
-      </div> <!-- main_content -->
-    </div> <!-- box_content -->
   </body>
 </html>

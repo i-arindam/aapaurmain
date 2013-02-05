@@ -77,7 +77,10 @@ class Story < ActiveRecord::Base
   # @return [Array of Hash]
   #         Array of stories in the order asked.
   # Each element in the array is a hash containing all count and text info of the story
-  def self.get_stories(sids)
+  def self.get_n_stories_for(user_id, n = 2, start = 0)
+    sids = []
+    sids = $r.lrange("user:#{user_id}:story_ids", start, n)
+
     stories = []
     sids.each do |sid|
       story = {}
@@ -88,7 +91,7 @@ class Story < ActiveRecord::Base
         story['numbers']['boos'] = $r.llen("story:#{sid}:boos")
         story['numbers']['comments'] = $r.llen("story:#{sid}:comments")
       end
-      stories.push(story)
+      stories.push(story.value)
     end
     stories
   end

@@ -60,7 +60,7 @@ class ShortQuestionController < ApplicationController
     prospect = User.find_by_id(params[:for_user_id])
     render_404 and return unless prospect
 
-    answers = ShortQuestion.get_top_n_answers_for(prospect.id, params[:num], params[:start])
+    answers = ShortQuestion.get_latest_n_answers_for(prospect.id, params[:num], params[:start])
     render :json => {
       :success => true,
       :answers => answers

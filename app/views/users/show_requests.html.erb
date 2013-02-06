@@ -2,7 +2,7 @@
 <html>
   <head>
     <% content_for :stylesheet do %>
-      <%= stylesheet_link_tag "list" %>
+      <%= stylesheet_link_tag "list", "right_bar" %>
     <% end %>
     <% content_for :js_footer do %>
       <%= javascript_include_tag "application-list", "users/list_view" %>
@@ -86,7 +86,9 @@
               <div class="tit-wrap">
                 <h2><span class="board-tit">Q &amp; A</span></h2>
               </div>
+              <ul class="questions">
               <%= render :partial => "/questions_loader" %>
+              <ul class="questions">
             </div>
           </div>
         </div>

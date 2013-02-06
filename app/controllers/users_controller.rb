@@ -455,11 +455,13 @@ class UsersController < ApplicationController
     reqs = Request.send(base_method, @user.id)
 
     @objects = []
+    @user_ids = []
     reqs.each do |r|
       @objects.push({
         :user => User.find_by_id(r[user_id]),
         :request => r.inspect
       })
+      @user_ids.push(r[user_id])
     end
   end
 
@@ -525,11 +527,11 @@ class UsersController < ApplicationController
     user = User.find_by_id(params[:id])
     render_404 and return unless (user and user == current_user)
     other_user = User.find_by_id(params[:for_user_id])
-    common_panels, remainingPanels = Panel.get_common_and_other_panels_for(other_user.id, user.id)
+    common_panels, remaining_panels = Panel.get_common_and_other_panels_for(other_user.id, user.id)
 
     render :json => {
-      :commonPanels => common_panels.value,
-      :remainingPanels => remaining_panels.value
+      :commonPanels => common_panels,
+      :remainingPanels => remaining_panels
     }
   end
 

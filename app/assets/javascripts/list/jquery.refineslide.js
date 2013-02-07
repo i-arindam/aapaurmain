@@ -670,7 +670,7 @@
 
     ,custom: function() {
       if(this.RS.nextAnimIndex < 0) this.RS.nextAnimIndex = this.customAnims.length - 1;
-      if(this.RS.nextAnimIndex === this.custom.length) this.RS.nextAnimIndex = 0;
+      if(this.RS.nextAnimIndex === this.customAnims.length) this.RS.nextAnimIndex = 0;
       // Pick the next item in the list of transitions provided by user.
       this[this.customAnims[this.RS.nextAnimIndex]]();
     }

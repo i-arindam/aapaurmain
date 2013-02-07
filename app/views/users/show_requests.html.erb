@@ -20,23 +20,16 @@
       })(document);
 
       $(document).ready(function() {
-        $('#allinone_carousel_charming').allinone_carousel({
-          skin : 'charming',
-          width : 760,
-          height : 380,
-          responsive : true,
-          autoPlay : 1000000,
-          resizeImages : true,
-          autoHideBottomNav : false,
-          showElementTitle : false,
-          verticalAdjustment : 50,
-          showPreviewThumbs : false,
-          // easing:'easeOutBounce',
-          numberOfVisibleItems : 3,
-          nextPrevMarginTop : 23,
-          playMovieMarginTop : 0,
-          bottomNavMarginBottom : -10
+        $('.allinone_carousel_list').refineSlide({
+          transition: 'custom',
+          customTransitions: ['fade', 'slideH', 'slideV', 'cubeH', 'cubeV', 'scale'],
+          autoPlay: false,
+          keyNav: true,
+          transitionDuration: 500,
+          arrowTemplate: '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>',
+          controls: 'arrows'
         });
+
         var user_ids = <%= @user_ids %>;
         var lv = new ListView({ 
           'userIds': user_ids,

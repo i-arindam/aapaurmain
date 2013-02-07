@@ -11,4 +11,9 @@ class Newsfeed < ActiveRecord::Base
     end # End r.multi
   end
 
+  def self.get_initial_feed_for(user_id)
+    story_ids = $r.lrange("feed:#{user_id}", 0 , 9)
+    Story.get_stories(story_ids)
+  end
+
 end

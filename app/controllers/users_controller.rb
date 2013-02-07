@@ -617,4 +617,13 @@ class UsersController < ApplicationController
       :panel_partial => render_to_string(:partial => "/panels")
     }
   end
+
+  def my_dashboard
+    @user = current_user
+    render_401 and return unless @user
+
+    @stories = Newsfeed.get_initial_feed_for(@user.id)
+    @questions = ShortQuestion.get_latest_question_for(@user.id)
+  end
+
 end

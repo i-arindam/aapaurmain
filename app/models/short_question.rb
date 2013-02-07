@@ -15,4 +15,7 @@ class ShortQuestion < ActiveRecord::Base
     answers
   end
 
+  def self.get_latest_question_for(user_id)
+    
+  end
 end

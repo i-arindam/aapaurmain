@@ -80,6 +80,8 @@ Aapaurmain::Application.routes.draw do
   post '/update' => 'users#update'
 
   # Left panel links
+  match '/dashboard' => 'users#my_dashboard'
+
   match '/my/panels' => 'users#my_panels'
   match '/my/requests/:direction' => 'users#show_requests'
   match '/people/i/like' => 'users#people_i_follow'

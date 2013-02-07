@@ -80,7 +80,10 @@ class Story < ActiveRecord::Base
   def self.get_n_stories_for(user_id, n = 2, start = 0)
     sids = []
     sids = $r.lrange("user:#{user_id}:story_ids", start, n)
+    stories = self.get_stories(sids)
+  end
 
+  def self.get_stories(sids)
     stories = []
     sids.each do |sid|
       story = {}

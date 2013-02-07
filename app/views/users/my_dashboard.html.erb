@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :head do %>
+      <title>Your homepage <%= @user.name%></title>
+    <% end %>
+    <% content_for :stylesheet do%>
+      <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav" %>
+    <% end %>
+    <%= content_for :js_footer do %>
+      <%= javascript_include_tag "users/profile" %>
+    <% end %>
+  </head>
+  <body>
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+          </div>
+          <div class="col-two">
+            <div class="center-container">
+              <div class="feeds-container">
+                <div class="feeds-wrap">
+                  <textarea class="feeds-box" placeholder="Share something?"></textarea>
+                </div>
+                <div class="feed-btns clearfix">
+                  <a href="#" class="btn"><span class="active-feed">Active Feed</span></a>
+                  <a href="#" class="btn"><span class="short-feed">Shortlisted Feed</span></a>
+                  <a href="#" class="btn"><span class="loc-feed">Feed by Location</span></a>
+                </div>
+              </div>
+              <!-- feeds-container ends -->
+
+              <ul class="blog-container">
+                <% @stories.each do |story| %>
+                <%= render :partial => "/story", :locals => { :story => story } %>
+                <% end %>
+              </ul> <!-- stories section ends -->
+
+            </div> <!-- center-container ends -->
+          </div> <!-- col-two ends -->
+        </div> <!-- span9 ends -->
+
+        <!-- right content -->
+        <div class="span3">
+          <div class="qa-content">
+            <div class="qa-wrap">
+              <div class="new-label"><img src="/assets/users/new.png" alt="new" />
+              </div>
+              <div class="tit-wrap">
+                <h2><span class="board-tit">Q &amp; A</span></h2>
+              </div>
+              <ul class="questions">
+              <%= render :partial => "/questions", :locals => { :questions => @questions } %>
+              </ul>
+            </div>
+          </div> <!-- qa-content ends -->
+
+      </div> <!-- row-fluid ends -->
+    </div> <!-- container ends -->
+  </body>
+</html>

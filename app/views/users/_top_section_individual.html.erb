@@ -6,69 +6,43 @@
     <div class="box-lt">
       <div class="user-box clearfix">
         <div class="profile-bg-large">
-          <img src="/assets/users/user-slide-large.jpg" alt="user" />
+          <img src="/assets/users/user-slide-large.jpg" alt="<%= user.name %>" />
         </div>
         <div class="prof-name">
-          <p>
-            Jonathan Doe
-          </p>
+          <p><%= user.name %></p>
         </div>
         <div class="prof-txt">
-          <p>
-            " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla, sem sit amet pharetra blandit, velit lectus rhoncus orci, dapibus pulvinar elit dui eget tortor. Aenean mollis porttitor nisi in imperdiet. Nunc et sapien diam, eget dapibus nisl. Sed ultricies lectus eget felis sodales laoreet lacinia dolor cursus. Nullam nec augue lorem, id scelerisque orci. "
-          </p>
+          <p><%= user.short_bio || "Just another user" %></p>
         </div>
       </div>
       <div class="clear"></div>
       <div class="btn-wraper clearfix">
-        <a href="#" class="button"><span class="send-req">Send Request</span></a>
-        <a href="#" class="button"><span class="follow-user">Follow User</span></a>
-        <a href="#" class="button last"><span class="rate-profile">Rate the profile</span></a>
+        <a href="#" class="btn btn-success send-req">Send Request</a>
+        <a href="#" class="btn btn-success follow-user">Follow User</a>
+        <a href="#" class="btn btn-success last rate-profile">Rate the profile</a>
       </div>
     </div>
     <div class="box-rt blog-lt">
-      <h3>Recent Blogs</h3>
-      <ul>
+      <h3>Basic details</h3>
+      <ul class="basic-details">
+        <% if user.dob %>
         <li>
-          <p class="blg-tit">
-            Title of the most recent blog
-          </p>
-          <p class="blg-ct">
-            August 02, 2012
-          </p>
+          <p class="blg-tit">Happy B&apos;day</p>
+          <p class="blg-ct"><%= user.dob.strftime("%d %b %Y") %></p>
         </li>
+        <% end %>
+        <% if user.sex %>
         <li>
-          <p class="blg-tit">
-            Title of the most author
-          </p>
-          <p class="blg-ct">
-            September 20, 2012
-          </p>
+          <p class="blg-tit">Is a </p>
+          <p class="blg-ct"><%= user.sex == 0 ? "Male": "Female" %></p>
         </li>
-        <li>
-          <p class="blg-tit">
-            Title of the most recent blog
-          </p>
-          <p class="blg-ct">
-            August 02, 2012
-          </p>
-        </li>
-        <li>
-          <p class="blg-tit">
-            Title of the most author
-          </p>
-          <p class="blg-ct">
-            September 20, 2012
-          </p>
-        </li>
+        <% end %>
+        <% if user.location %>
         <li class="last">
-          <p class="blg-tit">
-            Another Sample blog post
-          </p>
-          <p class="blg-ct">
-            December 15, 2012
-          </p>
+          <p class="blg-tit">Lives in</p>
+          <p class="blg-ct"><%= user.location %></p>
         </li>
+        <% end %>
       </ul>
     </div>
   </div>

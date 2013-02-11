@@ -737,11 +737,13 @@ class User < ActiveRecord::Base
     users = User.find_all_by_id(ids)[0..5]
   end
 
+  # Add the list of panels to this users panel set
+  # Add this user in all the panels membership
   def indicate_participation_in(panels)
     $r.multi do 
       $r.sadd("user:#{self.id}:panels", panels)
       panels.each do |panel|
-        $r.sadd("panels:#{panel}:members", self.id)
+        $r.sadd("panel:#{panel}:members", self.id)
       end
     end
   end

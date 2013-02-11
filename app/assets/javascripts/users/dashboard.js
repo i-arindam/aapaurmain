@@ -71,6 +71,10 @@ Dashboard.prototype.setupPostAction = function() {
         type: "POST",
         success: function(data) {
           $('textarea.feeds-box').val('');
+          $('ul.tags li>a.selected').removeClass('selected');
+          that.postButton.addClass('disabled');
+          that.statusIndicator.removeClass('label-info').addClass('label-warning').text(that.todoText);
+
           $('div.panels-holder').slideUp('fast');
           $(data.story).prependTo($('ul.blog-container')).slideDown(1000);
         }, error: function(data) {

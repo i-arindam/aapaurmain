@@ -39,6 +39,8 @@ class Story < ActiveRecord::Base
     $r.lpush("story:#{story_id}:comments:#{comment_number}:#{action}", new_action.to_json)
   end
 
+  # Add new story. Increment story count
+  # Add all panels to this story panels set
   def self.add_new_story(params, user)
     sid = $r.incr("story_count")
     time = Time.new

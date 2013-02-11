@@ -1,10 +1,11 @@
 class Newsfeed < ActiveRecord::Base
 
+  # Add story id to each members of all panels
   def self.add_story_to_feeds(story_id, panels)
     panels.each do |panel|
       user_ids = $r.smembers("panel:#{panel}:members")
       user_ids.each do |uid|
-        $r.lpush("feed:#{uid}", sid)
+        $r.lpush("feed:#{uid}", story_id)
       end
     end # End panels.each
   end

@@ -32,8 +32,8 @@ class StoryController < ApplicationController
     render_404 and return unless @user = current_user
     new_story_id = Story.add_new_story(params, @user)
 
-    Newsfeed.add_story_to_feeds(new_story_id, params[:panels])
     @user.indicate_participation_in(params[:panels])
+    Newsfeed.add_story_to_feeds(new_story_id, params[:panels])
     Panel.add_new_story_to(params[:panels], new_story_id)
     
     render :json => {

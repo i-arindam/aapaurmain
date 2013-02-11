@@ -1,5 +1,6 @@
 class Panel < ActiveRecord::Base
 
+  # Add new story to each panels story set
   def self.add_new_story_to(panels, sid)
     $r.pipelined do
       panels.each do |panel|

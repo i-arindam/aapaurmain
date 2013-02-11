@@ -4,13 +4,13 @@
 <li class="story">
   <div class="story-user-wrap">
     <div class="story-user">
-      <img src="/assets/users/user-small.jpg" alt="<%= story['by'] %>" />
+      <img src="/assets/users/user-small.jpg" alt="<%= story['by'] %>" href="/users/<%= story['by_id'] %>" />
     </div>
   </div>
   <div class="story-content">
     <div class="story-tit clearfix">
       <h3 class="story-creator"><%= story['by'] %></h3>
-      <p class="story-time"><%= story['time'] %></p>
+      <p class="story-time"><%= distance_of_time_in_words_to_now(story['time']) %> ago</p>
       <div class="paper-roll">&nbsp;</div>
       <div class="arrow-left">&nbsp;</div>
     </div>

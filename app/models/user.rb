@@ -738,8 +738,14 @@ class User < ActiveRecord::Base
   end
 
   def indicate_participation_in(panels)
-    $r.sadd("user:#{self.id}:panels", panels)
+    $r.multi do 
+      $r.sadd("user:#{self.id}:panels", panels)
+      panels.each do |panel|
+        $r.sadd("panels:#{panel}:members", self.id)
+      end
+    end
   end
+
 end
 
 

@@ -40,8 +40,9 @@ class Story < ActiveRecord::Base
   end
 
   def self.add_new_story(params, user)
+    sid = $r.incr("story_count")
+    time = Time.new
     $r.multi do
-      sid = $r.incr("story_count")
       $r.hmset("story:#{sid}", :by, user.name, :by_id, user.id, :text, params[:text], :time, time)
       $r.sadd("story:#{sid}:panels", params[:panels])
     end
@@ -89,12 +90,16 @@ class Story < ActiveRecord::Base
       story = {}
       $r.multi do
         story['core'] = $r.hgetall("story:#{sid}")
-        story['numbers'] = {}
-        story['numbers']['claps'] = $r.llen("story:#{sid}:claps")
-        story['numbers']['boos'] = $r.llen("story:#{sid}:boos")
-        story['numbers']['comments'] = $r.llen("story:#{sid}:comments")
+        story['claps'] = $r.llen("story:#{sid}:claps")
+        story['boos'] = $r.llen("story:#{sid}:boos")
+        story['comments'] = $r.llen("story:#{sid}:comments")
       end
-      stories.push(story.value)
+      story.each do |k,v|
+        story[k] = v.value
+      end
+      story.merge!(story['core'])
+      story.delete("core")
+      stories.push(story)
     end
     stories
   end

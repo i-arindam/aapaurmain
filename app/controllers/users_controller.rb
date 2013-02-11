@@ -560,7 +560,7 @@ class UsersController < ApplicationController
       popularity_hash = {}
       $r.multi do
         stories_of_desired_user.each do |st_id|
-          comments_count, claps_count = $r.llen("story:#{st_id}:comments"), $r.llen("story:#{st_id}:claps")
+          comments_count, claps_count = $r.llen("story:#{st_id}:comments").value, $r.llen("story:#{st_id}:claps").value
           a, b = [comments_count, claps_count].max, [comments_count, claps_count].min
           story_popularity = ( a * 2 + b ) / ( a + b )
           popularity_hash[st_id] = story_popularity

@@ -31,9 +31,14 @@ class StoryController < ApplicationController
   def create_new_story
     render_404 and return unless @user = current_user
     new_story_id = Story.add_new_story(params, @user)
+
     Newsfeed.add_story_to_feeds(new_story_id, params[:panels])
     @user.indicate_participation_in(params[:panels])
     Panel.add_new_story_to(params[:panels], new_story_id)
+    
+    render :json => {
+      :story => render_to_string(:partial => "/story", :locals => { :story => Story.get_stories([new_story_id])[0] } )
+    }
   end
 
   def get_interactions_on_story
@@ -46,7 +51,7 @@ class StoryController < ApplicationController
   end
 
   def get_comment_faces
-    base_action = "get_#{params[:action]_on_comment}"
+    base_action = "get_#{params[:action]}_on_comment"
     res = Story.send(base_action, params[:story_id], params[:number])
     res.map do |r|
       r.merge!(:photo => User.find_by_id(r['by_id']).photo_url)

@@ -1,6 +1,3 @@
-<% content_for :stylesheet do %>
-<%= stylesheet_link_tag "stories" %>
-<% end %>
 <li class="story">
   <div class="story-user-wrap">
     <div class="story-user">
@@ -24,7 +21,7 @@
         <a href="#" class="link-like"></a><span class="story-claps"><%= story['claps'] %></span>
         <a href="#" class="link-dislike"></a><span class="story-boos"><%= story['boos'] %></span>
         <div class="comment-count">
-          <%= story['comments'] %>
+          <a href="#" class="link-comemnt"></a><span class="story-comments"><%= story['comments'] %></span>
         </div>
       </div>
       <div class="comment-area">

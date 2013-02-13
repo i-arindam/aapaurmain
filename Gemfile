@@ -1,10 +1,9 @@
 source :rubygems
-source 'http://rubygems.org'
 
 gem 'rails', '3.2.6'
 gem 'rake'
 gem "cached_model", '1.3.1'
-gem "json", '1.7.5'
+gem "json", '1.7.7'
 gem "capistrano", '2.13.4'
 gem "unicorn", '4.3.1'
 gem "mysql", '2.8.1'

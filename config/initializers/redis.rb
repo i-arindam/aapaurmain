@@ -11,20 +11,20 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 # 4) story:story_id - hash. kind of immutable. Read only
 # Story detail. All static data
 
-# 5) story:story_id:claps - list
-# Clap details for each story_id
+# 5) story:story_id:claps - set
+# user ids of actors
 
-# 6) story:story_id:boos - list
-# Boo details for each story_id
+# 6) story:story_id:boos - set
+# user ids of actors
 
 # 7) story:story_id:comments - list
 # List of comments for each story_id
 
-# 8) story:story_id:comments:comment_id:claps - list
-# Clap details of each comment
+# 8) story:story_id:comments:comment_id:claps - set
+# user ids of actors
 
-# 9) story:story_id:comments:comment_id:boos - list
-# Boo details of each comment
+# 9) story:story_id:comments:comment_id:boos - set
+# user ids of actors
 
 # 10) panel:topic:members - Set
 # List of users in each panel. Reference place
@@ -63,27 +63,13 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 #   ]
 
 
-# 5) story:story_id:claps => [ # List, newer entries LPUSHed, shows recent values first
-#     {
-#       :by => string,
-#       :by_id => string
-#     },
-#     {
-#       :by => string,
-#       :by_id => string
-#     }, ...
+# 5) story:story_id:claps => [ # set of user ids
+#     user1, user2, user3 ...
 #   ]
 
 
 # 6) story:story_id:boos => [ # List, newer entries LPUSHed, shows recent values first
-#     {
-#       :by => string,
-#       :by_id => string
-#     },
-#     {
-#       :by => string,
-#       :by_id => string
-#     }, ...
+#     user1, user2, user3 ...
 #   ]
 
 # 7) story:story_id:comments => [ # List, newer entries RPUSHed. Helps retrievals in desired order
@@ -102,26 +88,12 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 #   ] # End of comment details
 
 # 8) story:story_id:comments:comment_id:claps => [ newer entries LPUSHed, so that fresher values are shown first
-#         {
-#           :by => string,
-#           :by_id => string
-#         },
-#         {
-#           :by => string,
-#           :by_id => string
-#         }
-#       ], # End of comment like details
+#     user1, user2, user3 ...
+#    ], # End of comment like details
 
 # 9) story:story_id:comments:comment_id:boos => [ newer entries LPUSHed, so that fresher values are shown first
-#         {
-#           :by => string,
-#           :by_id => string
-#         },
-#         {
-#           :by => string,
-#           :by_id => string
-#         }
-#       ] # End of comment dislike details
+#     user1, user2, user3 ...
+#    ] # End of comment dislike details
 
 # 10) panel:panel_name:members - set => [
 #     user_id1,

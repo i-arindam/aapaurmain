@@ -6,22 +6,13 @@ class Story < ActiveRecord::Base
   #   Passed params from view
   # @param [Object::User] acting_user
   #   Current user who did action
-  def self.update_action_on_story(params, acting_user)
+  def self.update_action_on_story(params, acting_user_id)
     story_id, action = params[:story_id], params[:work].pluralize
-    new_action = {
-      :by => acting_user.name,
-      :by_id => acting_user.id
-    }
+    already_acted = $r.sismember("story:#{story_id}:action", acting_user.id)
 
-    if action == :comments
-      new_action.merge!({
-        :text => params[:text],
-        :time => params[:time]  
-      })
-      $r.rpush("story:#{story_id}:#{action}", new_action.to_json)
-    else
-      $r.lpush("story:#{story_id}:#{action}", new_action.to_json)
-    end
+    return false if already_acted
+    $r.sadd("story:#{story_id}:action", acting_user_id)
+    return true
   end
 
   # Update the like, dislike, comment action on story
@@ -29,14 +20,13 @@ class Story < ActiveRecord::Base
   #   Passed params from view
   # @param [Object::User] acting_user
   #   Current user who did action
-  def self.update_comment(params, acting_user)
+  def self.update_comment(params, acting_user_id)
     story_id, action, comment_number = params[:story_id], params[:action].pluralize, params[:number]
-    new_action = {
-      :by => acting_user.name,
-      :by_id => acting_user.id
-    }
+    already_acted = $r.sismember("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user.id)
 
-    $r.lpush("story:#{story_id}:comments:#{comment_number}:#{action}", new_action)
+    return false if already_acted
+    $r.sadd("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
+    return true
   end
 
   # Add new story. Increment story count

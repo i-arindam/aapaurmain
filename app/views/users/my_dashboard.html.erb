@@ -28,20 +28,22 @@
             <div class="center-container">
               <div class="feeds-container">
                 <div class="feeds-wrap">
-                  <textarea class="feeds-box" placeholder="Share something?"></textarea>
                   <div class="panels-holder hide">
                     <div class="info-cum-cancel">
                       <span class="panels-warning label label-warning">
                         You have to select at least 1 of the below panels to be able to post a status
                       </span>
-                      <a href="#" class="cancel-update pull-right">Cancel</a>
                     </div>
                     <ul class="tags">
                     <% priorities_list.each do |panel_name, panel_text| %>
                       <li><a href="#" data-panel="<%= panel_name %>"><%= panel_text %></a></li>
                     <% end %>
                     </ul>
-                    <input type="submit" class="btn btn-danger disabled post-status" value="Go for it" />                    
+                  </div>
+                  <textarea class="feeds-box" placeholder="Share something?"></textarea>
+                  <div class="go-or-not hide">
+                    <input type="submit" class="btn btn-danger disabled post-status" value="Go for it" />
+                    <a href="#" class="cancel-update">Cancel</a>
                   </div>
                 </div>
                 <div class="feed-btns clearfix">

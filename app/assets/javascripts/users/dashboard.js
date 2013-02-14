@@ -19,6 +19,7 @@ Dashboard.prototype.initNewStatus = function() {
   $('textarea.feeds-box').bind('focusin', function() {
     $(this).animate({'height': '100px'}, 'fast');
     that.tagsSection.slideDown('fast');
+    $('.go-or-not').show();
   });
   $('textarea.feeds-box').bind('focusout', function() {
     $(this).animate({'height': '30px'}, 'fast');
@@ -26,6 +27,7 @@ Dashboard.prototype.initNewStatus = function() {
   $('.cancel-update').click(function(e) {
     e.preventDefault();
     that.tagsSection.slideUp('fast');
+    $('.go-or-not').hide();
   });
 };
 

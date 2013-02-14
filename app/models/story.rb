@@ -8,10 +8,10 @@ class Story < ActiveRecord::Base
   #   Current user who did action
   def self.update_action_on_story(params, acting_user_id)
     story_id, action = params[:story_id], params[:work].pluralize
-    already_acted = $r.sismember("story:#{story_id}:action", acting_user.id)
+    already_acted = $r.sismember("story:#{story_id}:#{action}", acting_user_id)
 
     return false if already_acted
-    $r.sadd("story:#{story_id}:action", acting_user_id)
+    $r.sadd("story:#{story_id}:#{action}", acting_user_id)
     return true
   end
 
@@ -22,7 +22,7 @@ class Story < ActiveRecord::Base
   #   Current user who did action
   def self.update_comment(params, acting_user_id)
     story_id, action, comment_number = params[:story_id], params[:action].pluralize, params[:number]
-    already_acted = $r.sismember("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user.id)
+    already_acted = $r.sismember("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
 
     return false if already_acted
     $r.sadd("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
@@ -42,11 +42,11 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_claps(sid)
-    $r.lrange("story:#{sid}:claps", 0, -1)
+    $r.smembers("story:#{sid}:claps")
   end
 
   def self.get_boos(sid)
-    $r.lrange("story:#{sid}:boos", 0, -1)
+    $r.smembers("story:#{sid}:boos")
   end
 
   def self.get_comments(sid)
@@ -58,11 +58,11 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_claps_on_comment(sid, comment_number)
-    $r.lrange("story:#{sid}:comments:#{comment_number}:claps", 0, -1)
+    $r.smembers("story:#{sid}:comments:#{comment_number}:claps")
   end
 
   def self.get_boos_on_comment(sid, comment_number)
-    $r.lrange("story:#{sid}:comments:#{comment_number}:boos", 0, -1)
+    $r.smembers("story:#{sid}:comments:#{comment_number}:boos")
   end
 
   # @param [Array] sids
@@ -82,8 +82,8 @@ class Story < ActiveRecord::Base
       story = {}
       $r.multi do
         story['core'] = $r.hgetall("story:#{sid}")
-        story['claps'] = $r.llen("story:#{sid}:claps")
-        story['boos'] = $r.llen("story:#{sid}:boos")
+        story['claps'] = $r.scard("story:#{sid}:claps")
+        story['boos'] = $r.scard("story:#{sid}:boos")
         story['comments'] = $r.llen("story:#{sid}:comments")
       end
       story.each do |k,v|

@@ -748,6 +748,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.get_display_items_for_modal(uids)
+    users = User.find_all_by_id(uids)
+    result = []
+    users.each do |u|
+      result.push({
+        :name => u.name,
+        :id => u.id,
+        :pic => u.photo_url
+      })
+    end
+    result.to_json
+  end
+
 end
 
 

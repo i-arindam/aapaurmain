@@ -65,7 +65,7 @@ StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
     success: function(data) {
       that.showInModal(data);
     }, error: function(data) {
-      that.showInModal({ "message": "There was some server error. Try again in some time?"});
+      that.showErrorInModal({ "msg": "There was some server error. Try again in some time?"});
     }
   });
 };
@@ -79,23 +79,27 @@ StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, comme
     data: { 'work': action },
     dataType: "json",
     success: function(data) {
-      that.indicateInPlaceSuccess(data, sid, selector, commentNumber);
+      data.success ? 
+      that.indicateInPlaceSuccess(sid, selector, commentNumber) :
+      that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again"});
     }, error: function(data) {
-      that.showInModal({ "message": "There was some server error. Try again in some time?"});
+      that.showErrorInModal({ "msg": "There was some server error. Try again in some time?"});
     }
   });
 };
 
 StoryHandler.prototype.showInModal = function(data) {
-  var personsToShow = data.persons;
-  var objectsToShow = [];
-  for(var i = 0 ; i < personsToShow.length; i++) {
-    objectsToShow[i] = JSON.parse(personsToShow[i]);
-  }
+  var personsToShow = JSON.parse(data.persons);
+  var deafultPic = '/images/users/user-small.jpg';
+
 };
 
-StoryHandler.prototype.indicateInPlaceSuccess = function(data, sid, selector, commentNumber) {
+StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, commentNumber) {
   var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
   var toUpdate = story.find(selector);
   toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
+};
+
+StoryHandler.prototype.showErrorInModal = function(data) {
+  alert(data.msg);
 };

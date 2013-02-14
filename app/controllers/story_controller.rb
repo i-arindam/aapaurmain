@@ -8,7 +8,7 @@ class StoryController < ApplicationController
 
   def like_dislike_a_comment
     render_404 and return unless user = current_user
-    res = Story.update_comment(params, user)
+    res = Story.update_comment(params, user.id)
     render :json => { :success => res }
   end
 
@@ -45,7 +45,9 @@ class StoryController < ApplicationController
 
   def get_persons_on_story_actions
     base_action = "get_#{params[:t]}"
-    persons = Story.send(base_action, params[:story_id])
+    user_ids = Story.send(base_action, params[:story_id])
+    persons = User.get_display_items_for_modal(user_ids)
+
     render :json => {
       :success => true,
       :persons => persons
@@ -58,10 +60,13 @@ class StoryController < ApplicationController
 
   def get_comment_faces
     base_action = "get_#{params[:action]}_on_comment"
-    res = Story.send(base_action, params[:story_id], params[:number])
-    res.map do |r|
-      r.merge!(:photo => User.find_by_id(r['by_id']).photo_url)
-    end.to_json
+    user_ids = Story.send(base_action, params[:story_id], params[:number])
+    persons = User.get_display_items_for_modal(user_ids)
+
+    render :json => {
+      :success => true,
+      :persons => persons
+    }
   end
 
 end

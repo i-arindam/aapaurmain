@@ -8,12 +8,13 @@
       <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/profile", "users/dashboard" %>
+      <%= javascript_include_tag "users/dashboard", "story" %>
     <% end %>
   </head>
   <script type="text/javascript">
     $(document).ready(function() {
-      var dashboard = new Dashboard();
+      window.dashboard = new Dashboard();
+      window.si = new StoryHandler();
     });
   </script>
   <body>

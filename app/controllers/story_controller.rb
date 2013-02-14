@@ -3,6 +3,7 @@ class StoryController < ApplicationController
   def like_dislike_or_comment
     render_404 and return unless user = current_user
     Story.update_action_on_story(params, user)
+    render :json => { :success => true }
   end
 
   def like_dislike_a_comment
@@ -41,9 +42,13 @@ class StoryController < ApplicationController
     }
   end
 
-  def get_interactions_on_story
-    base_action = "get_#{params[:action]}"
-    Story.send(base_action, params[:story_id])
+  def get_persons_on_story_actions
+    base_action = "get_#{params[:t]}"
+    persons = Story.send(base_action, params[:story_id])
+    render :json => {
+      :success => true,
+      :persons => persons
+    }
   end
 
   def get_more_comments

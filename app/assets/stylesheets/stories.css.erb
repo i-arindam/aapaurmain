@@ -98,18 +98,23 @@
 .comment-count-wrap {
   float: right;
 }
-.link-like {
+.link-like, .link-like-comment {
   background-position: -50px -52px;
   height: 23px;
   width: 18px;
 }
-.link-dislike {
+.link-dislike, .link-dislike-comment {
   background-position: -50px -84px;
   height: 23px;
   width: 18px;
 }
 .comment-area {
   padding: 17px 25px;
+}
+.link-like-comment, .link-dislike-comment {
+  float: left;
+  background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 0 0;
+  display: block;
 }
 .comment-link {
   background: url("<%= image_path 'users/arrow-sprite.png' %>") no-repeat scroll right 5px;
@@ -187,5 +192,15 @@
 }
 .comment-box {
   height: 34px;
+}
+.comment-text {
+  width: 80%;
+  float: left;
+  background: red;
+}
+.comment-like-area {
+  float: right;
+  width: 15%;
+  background: green;
 }
 /* Story end */

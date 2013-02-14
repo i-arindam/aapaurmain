@@ -7,13 +7,13 @@ class Story < ActiveRecord::Base
   # @param [Object::User] acting_user
   #   Current user who did action
   def self.update_action_on_story(params, acting_user)
-    story_id, action = params[:story_id], params[:action].pluralize
+    story_id, action = params[:story_id], params[:work].pluralize
     new_action = {
       :by => acting_user.name,
       :by_id => acting_user.id
     }
 
-    if action == :comment
+    if action == :comments
       new_action.merge!({
         :text => params[:text],
         :time => params[:time]  
@@ -36,7 +36,7 @@ class Story < ActiveRecord::Base
       :by_id => acting_user.id
     }
 
-    $r.lpush("story:#{story_id}:comments:#{comment_number}:#{action}", new_action.to_json)
+    $r.lpush("story:#{story_id}:comments:#{comment_number}:#{action}", new_action)
   end
 
   # Add new story. Increment story count
@@ -52,27 +52,27 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_claps(sid)
-    $r.lrange("story:#{sid}:likes", 0, -1).to_json
+    $r.lrange("story:#{sid}:claps", 0, -1)
   end
 
   def self.get_boos(sid)
-    $r.lrange("story:#{sid}:dislikes", 0, -1).to_json
+    $r.lrange("story:#{sid}:boos", 0, -1)
   end
 
   def self.get_comments(sid)
-    $r.lrange("story:#{sid}:comments", 0, 9).to_json
+    $r.lrange("story:#{sid}:comments", 0, 9)
   end
 
   def self.get_all_comments(sid)
-    $r.lrange("story:#{sid}:comments", 10, -1).to_json
+    $r.lrange("story:#{sid}:comments", 10, -1)
   end
 
   def self.get_claps_on_comment(sid, comment_number)
-    $r.lrange("story:#{sid}:comments:#{comment_number}:likes", 0, -1)
+    $r.lrange("story:#{sid}:comments:#{comment_number}:claps", 0, -1)
   end
 
   def self.get_boos_on_comment(sid, comment_number)
-    $r.lrange("story:#{sid}:comments:#{comment_number}:dislikes", 0, -1)
+    $r.lrange("story:#{sid}:comments:#{comment_number}:boos", 0, -1)
   end
 
   # @param [Array] sids
@@ -100,6 +100,7 @@ class Story < ActiveRecord::Base
         story[k] = v.value
       end
       story.merge!(story['core'])
+      story.merge!({'id' => sid})
       story.delete("core")
       stories.push(story)
     end

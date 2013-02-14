@@ -1,27 +1,27 @@
 function StoryHandler(){
   this.showCommentsLink = '';
-  this.storySelector = '';
+  this.storySelector = 'li.story';
   this.storyDivSelector = '';
-  this.bindHandlerForShow = this.bindHandlerForAction = function(){};
+  var that = this;
 
   this.LINKS_AND_URLS = [
     { 
       "data": [
-        { "link": 'j-show_likes',             "url": 'story/{{sid}}/get/likes' }, 
-        { "link": 'j-show_dislikes',          "url": 'story/{{sid}}/get/dislikes' },
-        { "link": 'j-show_comments',          "url": 'story/{{sid}}/get/comments' },
-        { "link": 'j-show_likes_comment',     "url": 'story/{{sid}}/get/comment/{{number}}/likes' },
-        { "link": 'j-show_dislikes_comment',  "url": 'story/{{sid}}/get/comment/{{number}}/dislikes' }
+        { "link": '.j-show-claps',             "url": 'story/{{sid}}/get?t=claps' }, 
+        { "link": '.j-show-boos',              "url": 'story/{{sid}}/get?t=boos' },
+        { "link": '.j-show-comments',          "url": 'story/{{sid}}/get?t=comments' },
+        { "link": '.j-show-comment-claps',     "url": 'story/{{sid}}/get/comment/{{number}}/likes' },
+        { "link": '.j-show-comment-boos',      "url": 'story/{{sid}}/get/comment/{{number}}/dislikes' }
       ],
       "handler": this.bindHandlerForShow
     },
     {
       "data": [
-        { "link": 'j-story_like',              "url": 'story/{{sid}}/action/like' },
-        { "link": 'j-story_dislike',           "url": 'story/{{sid}}/action/dislike' },
-        { "link": 'j-story_comment',           "url": 'story/{{sid}}/action/comment' },
-        { "link": 'j-story_like_comment',      "url": 'story/{{sid}}/comment/{{number}}/like' },
-        { "link": 'j-story_dislike_comment',   "url": 'story/{{sid}}/comment/{{number}}/dislike' }
+        { "link": '.link-like',              "url": 'story/{{sid}}/do?action=clap',             "update": ".story-claps" },
+        { "link": '.link-dislike',           "url": 'story/{{sid}}/do?action=boo',              "update": ".story-boos" },
+        // { "link": 'j-story_comment',        "url": 'story/{{sid}}/action/comment' },
+        { "link": '.link-like-comment',      "url": 'story/{{sid}}/comment/{{number}}/like',    "update": ".comment-claps" },
+        { "link": '.link-dislike-comment',   "url": 'story/{{sid}}/comment/{{number}}/dislike', "update": ".comment-boos" }
       ],
       "handler": this.bindHandlerForAction
     }
@@ -34,6 +34,7 @@ function StoryHandler(){
 }
 
 StoryHandler.prototype._init = function() {
+  
   this.setupSelectors();
 };
 
@@ -49,17 +50,18 @@ StoryHandler.prototype.setupSelectors = function() {
         if(/comment/.test(thisClass)) {
           commentNumber = $(that.storyDivSelector + ' ' + obj.link).index($(this));
         }
-        object.handler(obj.url, storyId, commentNumber);
+        object.handler.call(that, obj.url, storyId, obj.update, commentNumber);
       });
     });
   });
 };
 
 StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
-  var getUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber);
+  var getUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
   $.ajax({
     url: getUrl,
     type: "GET",
+    dataType: "json",
     success: function(data) {
       that.showInModal(data);
     }, error: function(data) {
@@ -68,13 +70,16 @@ StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
   });
 };
 
-StoryHandler.prototype.bindHandlerForAction = function(url, sid, commentNumber) {
-  var postUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber);
+StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, commentNumber) {
+  var postUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
+  var action = postUrl.match(/do\?action=(\w+)/)[1];
   $.ajax({
     url: postUrl,
     type: "POST",
+    data: { 'work': action },
+    dataType: "json",
     success: function(data) {
-      that.indicateInPlaceSuccess(data);
+      that.indicateInPlaceSuccess(data, sid, selector, commentNumber);
     }, error: function(data) {
       that.showInModal({ "message": "There was some server error. Try again in some time?"});
     }
@@ -82,5 +87,15 @@ StoryHandler.prototype.bindHandlerForAction = function(url, sid, commentNumber) 
 };
 
 StoryHandler.prototype.showInModal = function(data) {
-  var x = 10;
+  var personsToShow = data.persons;
+  var objectsToShow = [];
+  for(var i = 0 ; i < personsToShow.length; i++) {
+    objectsToShow[i] = JSON.parse(personsToShow[i]);
+  }
+};
+
+StoryHandler.prototype.indicateInPlaceSuccess = function(data, sid, selector, commentNumber) {
+  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
+  var toUpdate = story.find(selector);
+  toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
 };

@@ -2,7 +2,12 @@ class StoryController < ApplicationController
 
   def like_dislike_or_comment
     render_404 and return unless user = current_user
-    res = Story.update_action_on_story(params, user.id)
+    res = ''
+    if params[:work] == "comment"
+      res = Story.add_comment(params, user)
+    else
+      res = Story.update_action_on_story(params, user.id)
+    end
     render :json => { :success => res }
   end
 

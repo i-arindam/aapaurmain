@@ -1,5 +1,6 @@
 $r = Redis.new(:host => 'localhost', :port => 6379)
 
+# NOTE: All writes to REDIS HAS TO BE in json format
 # --------------------------------------------------------
 # LIST OF NAMESPACES
 # --------------------------------------------------------

@@ -19,23 +19,28 @@ function StoryHandler(){
       "data": [
         { "link": '.link-like',              "url": 'story/{{sid}}/do?action=clap',             "update": ".story-claps" },
         { "link": '.link-dislike',           "url": 'story/{{sid}}/do?action=boo',              "update": ".story-boos" },
-        // { "link": 'j-story_comment',        "url": 'story/{{sid}}/action/comment' },
+        { "link": '.submit-comment',         "url": 'story/{{sid}}/do?action=comment',          "update": ".story-comments" },
         { "link": '.link-like-comment',      "url": 'story/{{sid}}/comment/{{number}}/like',    "update": ".comment-claps" },
         { "link": '.link-dislike-comment',   "url": 'story/{{sid}}/comment/{{number}}/dislike', "update": ".comment-boos" }
       ],
       "handler": this.bindHandlerForAction
     }
   ];
-  // this.REFEX_FOR_SHOWING = new RegExp(/j\-show_(\w+)/);
-  // this.REGEX_FOR_USER_ACTIONS = new RegExp(/j\-story_(\w+)/);
   this.showMoreCommentsUrl = 'story/{{sid}}/get/more_comments';
 
   this._init();
 }
 
 StoryHandler.prototype._init = function() {
-  
   this.setupSelectors();
+  $('.comment-box').live('focusin', function() {
+    $(this).animate({'height': '100px'}, 'fast');
+    $(this).siblings('.submit-comment').show();
+  });
+  /*$('.comment-box').live('focusout', function() {
+    $(this).animate({'height': '34px'}, 'fast');
+    $(this).siblings('.submit-comment').hide();
+  });*/
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -73,17 +78,24 @@ StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
 StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, commentNumber) {
   var postUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
   var action = postUrl.match(/do\?action=(\w+)/)[1];
+  var postData = { 'work' : action };
+  if(action === "comment") {
+    postData['text'] = $('li.story[data-story-id=' + sid + ']').find('.comment-box').val();
+  }
   $.ajax({
     url: postUrl,
     type: "POST",
-    data: { 'work': action },
+    data: postData,
     dataType: "json",
     success: function(data) {
-      data.success ? 
-      that.indicateInPlaceSuccess(sid, selector, commentNumber) :
-      that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again"});
+      if(data.success) { 
+        that.indicateInPlaceSuccess(sid, selector, commentNumber);
+        action === "comment" && that.addNewComment(sid);
+      } else {
+        that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again" });
+      }
     }, error: function(data) {
-      that.showErrorInModal({ "msg": "There was some server error. Try again in some time?"});
+      that.showErrorInModal({ "msg": "There was some server error. Try again in some time?" });
     }
   });
 };
@@ -102,4 +114,8 @@ StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, commentN
 
 StoryHandler.prototype.showErrorInModal = function(data) {
   alert(data.msg);
+};
+
+StoryHandler.prototype.addNewComment = function(sid) {
+
 };

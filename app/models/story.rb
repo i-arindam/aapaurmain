@@ -15,6 +15,18 @@ class Story < ActiveRecord::Base
     return true
   end
 
+  def self.add_comment(params, user)
+    story_id, text, time = params[:story_id], params[:text], Time.new
+    comment_object = {
+      :by => user.name,
+      :by_id => user.id,
+      :text => text,
+      :when => time
+    }
+    $r.lpush("story:#{story_id}:comments", comment_object.to_json)
+    return true
+  end
+
   # Update the like, dislike, comment action on story
   # @param [Hash] params
   #   Passed params from view

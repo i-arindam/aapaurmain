@@ -23,9 +23,10 @@ class Story < ActiveRecord::Base
       :text => text,
       :when => time
     }
+
     $r.multi do
-      $r.lpush("story:#{story_id}:comments", comment_object.to_json)
-      comment_object = $r.lindex("story:#{story_id}:comments", 0)
+      $r.rpush("story:#{story_id}:comments", comment_object.to_json)
+      comment_object = $r.lindex("story:#{story_id}:comments", -1)
     end
     JSON.parse(comment_object.value)
   end
@@ -64,8 +65,19 @@ class Story < ActiveRecord::Base
     $r.smembers("story:#{sid}:boos")
   end
 
-  def self.get_comments(sid)
-    $r.lrange("story:#{sid}:comments", 0, 9)
+  def self.get_comments(sid, start, stop)
+    comments = $r.lrange("story:#{sid}:comments", start, stop)
+    comments.collect! do |c|
+      JSON.parse(c)
+    end
+    final_comments, i = [], 0
+    comments.each do |h|
+      h['claps'] = $r.scard("story:#{sid}:comment:#{i}:claps") || 0
+      h['boos'] = $r.scard("story:#{sid}:comment:#{i}:boos") || 0
+      final_comments.push(h)
+      i += 1
+    end
+    final_comments
   end
 
   def self.get_all_comments(sid)

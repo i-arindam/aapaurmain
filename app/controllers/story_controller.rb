@@ -5,8 +5,10 @@ class StoryController < ApplicationController
     res = {}
     if params[:work] == "comment"
       comment = Story.add_comment(params, user)
-      res['comment_template'] = render_to_string(:partial => '/story_comment', :locals => { :comment => comment })
+      comment['when'] = decorate_redis_time(comment['when'])
+      res['template'] = render_to_string(:partial => '/story_comment')
       res['success'] = true
+      res['comment'] = comment
     else
       res = { :success => Story.update_action_on_story(params, user.id) }
     end
@@ -52,13 +54,20 @@ class StoryController < ApplicationController
 
   def get_persons_on_story_actions
     base_action = "get_#{params[:t]}"
-    user_ids = Story.send(base_action, params[:story_id])
-    persons = User.get_display_items_for_modal(user_ids)
-
-    render :json => {
-      :success => true,
-      :persons => persons
-    }
+    res = {}
+    if params[:t] == "comments"
+      res['template'] = render_to_string(:partial => '/story_comment')
+      comments = Story.get_comments(params[:story_id], params[:start].to_i, params[:end].to_i)
+      comments.each do |c|
+        c['when'] = decorate_redis_time(c['when'])
+      end
+      res['comments'] = comments
+    else
+      user_ids = Story.send(base_action, params[:story_id])
+      res['persons'] = User.get_display_items_for_modal(user_ids)
+    end
+    res['success'] = true
+    render :json => res.to_json
   end
 
   def get_more_comments

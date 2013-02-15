@@ -9,7 +9,7 @@ function StoryHandler(){
       "data": [
         { "link": '.j-show-claps',             "url": 'story/{{sid}}/get?t=claps' }, 
         { "link": '.j-show-boos',              "url": 'story/{{sid}}/get?t=boos' },
-        { "link": '.j-show-comments',          "url": 'story/{{sid}}/get?t=comments' },
+        // { "link": '.j-show-comments, .link-comment',          "url": 'story/{{sid}}/get/comments' },
         { "link": '.j-show-comment-claps',     "url": 'story/{{sid}}/get/comment/{{number}}/likes' },
         { "link": '.j-show-comment-boos',      "url": 'story/{{sid}}/get/comment/{{number}}/dislikes' }
       ],
@@ -35,8 +35,14 @@ StoryHandler.prototype._init = function() {
   this.setupSelectors();
   $('.comment-box').live('focusin', function() {
     $(this).animate({'height': '100px'}, 'fast');
-    $(this).siblings('.submit-comment').show();
+    $(this).siblings('.comment-actions').slideDown('fast');
   });
+  $('.cancel-comment').live('click', function(e) {
+    e.preventDefault();
+    $(this).parent('.comment-actions').slideUp('fast');
+    $(this).parent().siblings('.comment-box').animate({ 'height': '34px'}, 'fast');
+  });
+  this.setupShowComments();
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -113,13 +119,54 @@ StoryHandler.prototype.showErrorInModal = function(data) {
 };
 
 StoryHandler.prototype.addNewComment = function(data, sid) {
-  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
-  var commentBox = story.find('.comment-box');
-  commentBox.val('');
+  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']'), commentBox = story.find('.comment-box');
   var commentsUl = story.find('ul.comments');
-  var newComment = $(data.comment_template);
-  newComment.find('.comment-claps').text(0);
-  newComment.find('.comment-boos').text(0);
-  newComment.appendTo(commentsUl);
-  commentsUl.removeClass('hide');
+  commentBox.val('');
+  commentsUl.show();
+  this.addCommentToDisplay(commentsUl, data.template, data.comment);
+};
+
+StoryHandler.prototype.setupShowComments = function() {
+  var that = this;
+  $('.j-show-comments, .link-comment').live('click', function(e) {
+    e.preventDefault();
+    var story = $(this).parents('li.story');
+    var sid = story.attr('data-story-id');
+    var getCommentsUrl = "story/" + sid + "/get?t=comments";
+    $.ajax({
+      url: getCommentsUrl,
+      type: "GET",
+      dataType: "json",
+      data: { 'start': 0, 'end': 9 },
+      success: function(data) {
+        that.showReceivedComments(data, sid);
+      }, error: function(data) {
+        that.showErrorInModal({ 'msg': "Couldn't fetch the comments. Try again? "});
+      }
+    });
+  });
+};
+
+StoryHandler.prototype.showReceivedComments = function(data, sid) {
+  var commentsToShow = data.comments, commentTemplate = data.template, that = this;
+  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
+  var ul = story.find('ul.comments');
+  ul.slideDown('fast');
+  ul.children('li').remove();
+  $.each(commentsToShow, function(i, obj) {
+    that.addCommentToDisplay(ul, commentTemplate, obj);
+  });
+};
+
+StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
+  var newComment = $(template);
+
+  newComment.find('.comment-user-img').attr('alt', comment.by);
+  newComment.find('.comment-creator').text(comment.by);
+  newComment.find('.comment-time').text(comment.when + 'ago');
+  newComment.find('.comment-text').text(comment.text);
+  newComment.find('.comment-claps').text(comment.claps || 0);
+  newComment.find('.comment-boos').text(comment.boos || 0);
+  
+  newComment.hide().appendTo(ul).show('fast'); // add animation
 };

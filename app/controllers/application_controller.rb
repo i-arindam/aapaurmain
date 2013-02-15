@@ -91,8 +91,15 @@ class ApplicationController < ActionController::Base
     else
       "/assets/users/image_placeholder.png"
     end
-end
-helper_method :original_pic_url
-  
+  end
+  helper_method :original_pic_url
+
+  def decorate_redis_time(time_in_string)
+    decorate_time(Time.parse(time_in_string))
+  end
+
+  def decorate_time(time)
+    view_context.distance_of_time_in_words_to_now(time)
+  end
 
 end

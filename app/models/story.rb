@@ -23,8 +23,11 @@ class Story < ActiveRecord::Base
       :text => text,
       :when => time
     }
-    $r.lpush("story:#{story_id}:comments", comment_object.to_json)
-    return true
+    $r.multi do
+      $r.lpush("story:#{story_id}:comments", comment_object.to_json)
+      comment_object = $r.lindex("story:#{story_id}:comments", 0)
+    end
+    JSON.parse(comment_object.value)
   end
 
   # Update the like, dislike, comment action on story

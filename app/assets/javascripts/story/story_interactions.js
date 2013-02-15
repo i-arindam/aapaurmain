@@ -37,10 +37,6 @@ StoryHandler.prototype._init = function() {
     $(this).animate({'height': '100px'}, 'fast');
     $(this).siblings('.submit-comment').show();
   });
-  /*$('.comment-box').live('focusout', function() {
-    $(this).animate({'height': '34px'}, 'fast');
-    $(this).siblings('.submit-comment').hide();
-  });*/
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -90,7 +86,7 @@ StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, comme
     success: function(data) {
       if(data.success) { 
         that.indicateInPlaceSuccess(sid, selector, commentNumber);
-        action === "comment" && that.addNewComment(sid);
+        action === "comment" && that.addNewComment(data, sid);
       } else {
         that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again" });
       }
@@ -116,6 +112,14 @@ StoryHandler.prototype.showErrorInModal = function(data) {
   alert(data.msg);
 };
 
-StoryHandler.prototype.addNewComment = function(sid) {
-
+StoryHandler.prototype.addNewComment = function(data, sid) {
+  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
+  var commentBox = story.find('.comment-box');
+  commentBox.val('');
+  var commentsUl = story.find('ul.comments');
+  var newComment = $(data.comment_template);
+  newComment.find('.comment-claps').text(0);
+  newComment.find('.comment-boos').text(0);
+  newComment.appendTo(commentsUl);
+  commentsUl.removeClass('hide');
 };

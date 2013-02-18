@@ -168,5 +168,5 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
   
-  newComment.hide().appendTo(ul).show('fast'); // add animation
+  newComment.hide().delay(500).appendTo(ul).fadeIn('slow'); // add animation
 };

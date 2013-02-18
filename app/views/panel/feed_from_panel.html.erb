@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :head do %>
+      <title>Stories for panel <%= priorities_list[@panel] %></title>
+    <% end %>
+    <% content_for :stylesheet do%>
+      <%= stylesheet_link_tag "users/dashboard", "users/left_nav", "stories" %>
+    <% end %>
+    <%= content_for :js_footer do %>
+      <%= javascript_include_tag "story" %>
+    <% end %>
+  </head>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      window.si = new StoryHandler();
+    });
+  </script>
+  <body>
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+          </div>
+          <div class="col-two">
+            <div class="center-container">
+              <ul class="blog-container">
+                <% @stories.each do |story| %>
+                <%= render :partial => "/story", :locals => { :story => story, :panels => story['panels'] } %>
+                <% end %>
+              </ul> <!-- stories section ends -->
+
+            </div> <!-- center-container ends -->
+          </div> <!-- col-two ends -->
+        </div> <!-- span9 ends -->
+      </div> <!-- row-fluid ends -->
+    </div> <!-- container ends -->
+  </body>
+</html>

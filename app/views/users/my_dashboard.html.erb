@@ -56,7 +56,7 @@
 
               <ul class="blog-container">
                 <% @stories.each do |story| %>
-                <%= render :partial => "/story", :locals => { :story => story } %>
+                <%= render :partial => "/story", :locals => { :story => story, :panels => story['panels'] } %>
                 <% end %>
               </ul> <!-- stories section ends -->
 

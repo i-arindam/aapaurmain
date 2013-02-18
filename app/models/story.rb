@@ -112,6 +112,7 @@ class Story < ActiveRecord::Base
         story['claps'] = $r.scard("story:#{sid}:claps")
         story['boos'] = $r.scard("story:#{sid}:boos")
         story['comments'] = $r.llen("story:#{sid}:comments")
+        story['panels'] = $r.smembers("story:#{sid}:panels")
       end
       story.each do |k,v|
         story[k] = v.value

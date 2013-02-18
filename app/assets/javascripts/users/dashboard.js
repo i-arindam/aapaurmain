@@ -33,7 +33,7 @@ Dashboard.prototype.initNewStatus = function() {
 
 Dashboard.prototype.setupPanelsSelection = function() {
   var that = this;
-  this.panels = $('ul.tags li');
+  this.panels = $('.feeds-container ul.tags li');
   this.panels.click(function(e) {
     e.preventDefault();
     $(this).children('a').toggleClass('selected');

@@ -12,6 +12,8 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 # 4) story:story_id - hash. kind of immutable. Read only
 # Story detail. All static data
 
+# story:story_id:panels => set of panels for each story
+
 # 5) story:story_id:claps - set
 # user ids of actors
 

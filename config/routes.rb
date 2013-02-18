@@ -90,6 +90,8 @@ Aapaurmain::Application.routes.draw do
   match '/people/like/me' => 'users#people_follow_me'
   match '/my/top/stories' => 'users#my_top_stories'
 
+  # Panels pages
+  match '/panels/:name' => 'panel#show'
   # Per user links
   post '/request/:user/send' => 'users#create_request'
   post '/request/:user/cancel' => 'users#withdraw_request'

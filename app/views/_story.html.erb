@@ -25,6 +25,17 @@
           <p class="story-text"><%= story['text'] %></p>
         </div>
       </div>
+      <div class="panels-area">
+        <% if panels %>
+        <span class="panel-mark">Marked as:</span>
+        <ul class="tags">
+        <% panel_lookup = priorities_list %>
+        <% panels.each do |panel| %>
+          <li><a href="/panels/<%= panel %>" ><%= panel_lookup[panel] %></a></li>          
+        <% end %>
+        </ul>
+        <% end %>
+      </div>
       <div class="like-area clearfix">
         <a href="#" class="link-like"></a><a href="#" class="j-show-claps"><span class="story-claps"><%= story['claps'] %></span></a>
         <a href="#" class="link-dislike"></a><a href="#" class="j-show-boos"><span class="story-boos"><%= story['boos'] %></span></a>

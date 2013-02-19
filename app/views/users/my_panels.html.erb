@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :head do %>
+      <title>Your panels <%= @user.name%></title>
+    <% end %>
+    <% content_for :stylesheet do%>
+      <%= stylesheet_link_tag "users/left_nav" %>
+    <% end %>
+    <style>
+      ul.tags {
+        position: relative;
+        padding: 30px;
+        top: 40%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+          </div>
+          <div class="col-two">
+            <div class="center-container">
+              <ul class="tags">
+              <% @panels.each do |panel| %>
+                <li class="panel"><a class="panel-link" href="/panels/<%= panel %>"><%= priorities_list[panel] %></a></li>
+              <% end %>
+              </ul>
+            </div> <!-- center-container -->
+          </div> <!-- col-two -->
+        </div> <!-- span 9 -->
+      </div> <!-- row-fluid -->
+    </div> <!-- container -->
+  </body>
+</html>

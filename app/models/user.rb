@@ -729,8 +729,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def get_panels(top_n = 3)
-    return 10
+  def get_panels
+    $r.smembers("user:#{self.id}:panels")
   end
 
   def self.get_display_objects(ids)

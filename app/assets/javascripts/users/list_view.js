@@ -3,8 +3,26 @@ function ListView(config) {
   this._getDomPartials();
   this._initStructures();
   this.getAllData();
-  this.bindDisplayChange();
+  this.initSlider();
 }
+
+ListView.prototype.initSlider = function() {
+  var that = this;
+
+  $(this.config.sliderElement).refineSlide({
+    transition: 'custom',
+    customTransitions: [ 'cubeH', 'cubeV'],
+    autoPlay: false,
+    keyNav: true,
+    transitionDuration: 500,
+    arrowTemplate: '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>',
+    controls: 'arrows',
+    afterChange: function() {
+      $('.rs-prev, .rs-next').addClass('disable-action');
+      that.bindDisplayChange(this.slider);
+    }
+  });  
+};
 
 ListView.prototype._getDomPartials = function() {
   var getUrl = "/get/dom/all", that = this;
@@ -17,9 +35,7 @@ ListView.prototype._getDomPartials = function() {
       that.questionDom = $(data.question_partial);
       that.panelDom = $(data.panel_partial);
     }, error: function(data) {
-      setTimeout(function() {
-        that._getDomPartials();
-      }, 50);
+      var x = 10;
     }
   });
 };
@@ -28,20 +44,22 @@ ListView.prototype._initStructures = function() {
   this.activeUserId = this.config.sessionUserId;
   this.firstUserId = this.config.userIds[0];
   
-  this.panelsContainer = $('div.board-wrap');
+  this.panelsContainer = $('ul.panels');
   this.topStoriesContainer = $('ul.story-container');
-  this.questionsContainer = $('div.qa-wrap');
+  this.questionsContainer = $('ul.questions');
 
-  this.PanelsLoader = $('div.panels-loader');
+  this.panelsLoader = $('div.panels-loader');
   this.storiesLoader = $('div.top-stories-loader');
   this.questionsLoader = $('div.questions-loader');
 
-  this.PanelsData = this.questionsData = this.topStoriesData = {};
+  this.panelsData = {};
+  this.questionsData = {};
+  this.topStoriesData = {};
 
   this.OBJECTS_HASH = {
     'panel': {
       'url': '/panels/all/{{sessionUserId}}/{{forUserId}}',
-      'result': this.PanelsData,
+      'result': this.panelsData,
       'callback': this.paintPanelsSectionFor
     },
     'question': {
@@ -98,30 +116,31 @@ ListView.prototype.getDataFor = function(object, uid, useCallback) {
   });
 };
 
-ListView.prototype.bindDisplayChange = function() {
-  var that = this;
-  $('div.leftNav').click(function(e) {
-    setTimeout(function() {
-      that.clearContentAndShowLoader();
-      that.refreshDisplayFor(10);
-    }, 100);
-  });
+ListView.prototype.bindDisplayChange = function(slider) {
+  var that = this, showingElement = slider.currentPlace;
+  var currentLi = $(this.config.sliderElement).children('li').get(showingElement);
+  var newUserId = $(currentLi).attr('data-id');
+  setTimeout(function() {
+    that.clearContentAndShowLoader();
+    that.refreshDisplayFor(newUserId);
+  }, 100);
 };
 
 ListView.prototype.clearContentAndShowLoader = function() {
-  this.panelsContainer.remove();
-  this.questionsContainer.remove();
-  this.topStoriesContainer.children('li.story').remove();
+  this.panelsContainer.children().remove();
+  this.questionsContainer.children().remove();
+  this.topStoriesContainer.children().remove();
 
-  this.PanelsLoader.appendTo(this.panelsContainer).fadeIn();
+  this.panelsLoader.appendTo(this.panelsContainer).fadeIn();
   this.questionsLoader.appendTo(this.questionsContainer).fadeIn();
   this.storiesLoader.appendTo(this.topStoriesContainer).fadeIn();
 };
 
 ListView.prototype.refreshDisplayFor = function(uid) {
-  this.PanelsData.uid ? this.paintPanelsSectionFor(uid) : this.retryAndPaintFor('panel', uid);
-  this.questionsData.uid ? this.paintQuestionsSectionFor(uid) : this.retryAndPaintFor('question', uid);
-  this.topStoriesData.uid ? this.paintTopStoriesSectionFor(uid) : this.retryAndPaintFor('story', uid);
+  this.panelsData[uid] ? this.paintPanelsSectionFor(uid) : this.retryAndPaintFor('panel', uid);
+  this.questionsData[uid] ? this.paintQuestionsSectionFor(uid) : this.retryAndPaintFor('question', uid);
+  this.topStoriesData[uid] ? this.paintTopStoriesSectionFor(uid) : this.retryAndPaintFor('story', uid);
+  $('.rs-next, .rs-prev').removeClass('disable-action');
 };
 
 ListView.prototype.retryAndPaintFor = function(obj, uid) {
@@ -129,45 +148,45 @@ ListView.prototype.retryAndPaintFor = function(obj, uid) {
 };
 
 ListView.prototype.paintPanelsSectionFor = function(uid) {
-  var data = this.questionsData[uid], that = this, commonPanelLi, remainingPanelLi;
-  var commonPanels = data.commonPanels.join(", "), otherPanels = data.remainingPanels.join(", ");
-  this.PanelsLoader.fadeOut();
+  var data = this.panelsData[uid], that = this, commonPanelLi, remainingPanelLi;
+  var commonPanels = data.commonPanels && data.commonPanels.join(", ");
+  var otherPanels = data.remainingPanels && data.remainingPanels.join(", ");
+  this.panelsLoader.hide();
 
-  if(commonPanels === "" && otherPanels === "") {
-    $('<h3/>').addClass('no-content').text("Sorry no content found for this user").appendTo(this.panelsContainer);
-  } else {
-    var panelDom = that.panelDom.clone();
+  if(commonPanels && otherPanels) {
+    var panelDom = this.panelDom.clone();
     panelDom.find('.shared-by span.other-user').text('');
     panelDom.find('.common-panels').text(commonPanels);
     panelDom.find('.other-panels').text(otherPanels);
 
-    panelDom.appendTo(that.panelsContainer);
+    panelDom.appendTo(this.panelsContainer);
+  } else {
+    $('<h3/>').addClass('no-content').text("Sorry no panels info found for this user").appendTo(this.panelsContainer);
   }
 };
 
 ListView.prototype.paintQuestionsSectionFor = function(uid) {
   var data = this.questionsData[uid], that = this;
-  this.questionsLoader.fadeOut();
+  this.questionsLoader.hide();
 
   if(data.answers.length === 0) {
-    $('<h3/>').addClass('no-content').text("Sorry no content found for this user").appendTo(this.questionsContainer);
+    $('<h3/>').addClass('no-content').text("Sorry no questions found for this user").appendTo(this.questionsContainer);
   } else {
-    var questionDom = this.questionDom.find('li.question');
     $.each(data.answers, function(i, an) {
-      var qLi = questionDom.clone();
-      qLi.find('.q-text').text(an.q);
-      qLi.find('.a-text').text(an.a);
-      qLi.appendTo(that.questionsContainer);
+      var questionDom = that.questionDom.clone();
+      questionDom.find('.q-text').text(an.q);
+      questionDom.find('.a-text').text(an.a);
+      questionDom.appendTo(that.questionsContainer);
     });
   }
 };
 
 ListView.prototype.paintTopStoriesSectionFor = function(uid) {
   var data = this.topStoriesData[uid], that = this;
-  this.storiesLoader.fadeOut();
+  this.storiesLoader.hide();
 
   if(data.stories.length === 0) {
-    $('<h3/>').addClass('no-content').text("Sorry no content found for this user").appendTo(this.topStoriesContainer);    
+    $('<h3/>').addClass('no-content').text("Sorry no stories found for this user").appendTo(this.topStoriesContainer);    
   } else {
     $.each(data.stories, function(i, s) {
       var storyDom = that.storyDom.clone();

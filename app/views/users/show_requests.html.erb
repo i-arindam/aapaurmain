@@ -20,20 +20,11 @@
       })(document);
 
       $(document).ready(function() {
-        $('.allinone_carousel_list').refineSlide({
-          transition: 'custom',
-          customTransitions: [ 'cubeH', 'cubeV'],
-          autoPlay: false,
-          keyNav: true,
-          transitionDuration: 500,
-          arrowTemplate: '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>',
-          controls: 'arrows'
-        });
-
         var user_ids = <%= @user_ids %>;
         var lv = new ListView({ 
           'userIds': user_ids,
-          'sessionUserId' : <%= @user.id %>
+          'sessionUserId': <%= @user.id %>,
+          'sliderElement': '.allinone_carousel_list'
         });
       });
     </script>
@@ -51,7 +42,7 @@
                 <div class="myloader"></div>
                 <ul class="allinone_carousel_list">
                   <% @objects.each do |obj| %>
-                  <li>
+                  <li class="person" data-id="<%= obj[:user].id %>">
                     <%= render :partial => "users/top_section", :locals => { :user => obj[:user], :request => obj[:request] } %>
                   </li>
                   <% end %>
@@ -70,8 +61,10 @@
             <div class="board-wrap">
               <div class="tit-wrap">
                 <h2><span class="board-tit">Panels</span></h2>
-              </div>              
+              </div>
+              <ul class="panels">
               <%= render :partial => "/panels_loader" %>
+              </ul>
             </div>
             <div class="qa-wrap">
               <div class="new-label"><img src="/assets/users/new.png" alt="new" />
@@ -81,7 +74,7 @@
               </div>
               <ul class="questions">
               <%= render :partial => "/questions_loader" %>
-              <ul class="questions">
+              </ul>
             </div>
           </div>
         </div>

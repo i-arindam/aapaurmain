@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :head do %>
+      <title>One fine story</title>
+    <% end %>
+    <% content_for :stylesheet do%>
+      <%= stylesheet_link_tag "users/left_nav", "stories" %>
+    <% end %>
+    <%= content_for :js_footer do %>
+      <%= javascript_include_tag "story" %>
+    <% end %>
+  </head>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      window.sh = new StoryHandler();
+    });
+  </script>
+  <body>
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <% if @user %>
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+            <% end %>
+          </div>
+          <div class="col-two">
+            <div class="center-container">
+              <%= render :partial => "/story", :locals => { :story => @story, :panels => @story['panels'] } %>
+            </div>
+          </div> <!-- col-two -->
+
+        </div> <!-- span9 -->
+      </div> <!-- row-fluid -->
+    </div> <!-- container -->
+  
+  </body>
+</html>

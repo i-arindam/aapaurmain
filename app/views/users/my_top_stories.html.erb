@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% content_for :stylesheet do %>
+      <%= stylesheet_link_tag "list", "right_bar", "stories" %>
+    <% end %>
+    <% content_for :js_footer do %>
+      <%= javascript_include_tag "application-list", "users/list_view" %>
+    <% end %>
+    <title><%= @title %></title>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-35891488-1']);
+      _gaq.push(['_trackPageview', '<%= @direction %>Requests']);
+
+      (function(d) {
+        var ga = d.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })(document);
+
+      $(document).ready(function() {
+        if( <%= @has_data %> ) {
+          var lv = new ListView({ 
+            'userIds': <%= @user_ids %>,
+            'sessionUserId': <%= @user.id %>,
+            'sliderElement': '.allinone_carousel_list'
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container clearfix">
+      <div class="row-fluid">
+        <div class="span9 clearfix">
+          <div class="col-one">
+            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+          </div>
+          <div class="col-two">

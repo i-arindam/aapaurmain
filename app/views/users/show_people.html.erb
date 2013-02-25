@@ -7,7 +7,7 @@
     <% content_for :js_footer do %>
       <%= javascript_include_tag "application-list", "users/list_view" %>
     <% end %>
-    <title>Requests <%= @direction == "in" ? " for ": " from " %> you</title>
+    <title><%= @title %></title>
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-35891488-1']);
@@ -20,12 +20,13 @@
       })(document);
 
       $(document).ready(function() {
-        var user_ids = <%= @user_ids %>;
-        var lv = new ListView({ 
-          'userIds': user_ids,
-          'sessionUserId': <%= @user.id %>,
-          'sliderElement': '.allinone_carousel_list'
-        });
+        if( <%= @has_data %> ) {
+          var lv = new ListView({ 
+            'userIds': <%= @user_ids %>,
+            'sessionUserId': <%= @user.id %>,
+            'sliderElement': '.allinone_carousel_list'
+          });
+        }
       });
     </script>
   </head>
@@ -37,6 +38,13 @@
             <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
           </div>
           <div class="col-two">
+            <% unless @has_data %>
+            <div class="hero-unit">
+              <span class="sorry-message">Sorry nobody found</span>
+              <span class="next-steps"><%= @next_steps %><span>
+            </div>
+            <% else %>
+
             <div id="containingDiv">
               <div id="allinone_carousel_charming">
                 <div class="myloader"></div>
@@ -54,8 +62,12 @@
                 <%= render :partial => "/stories_loader" %>
               </ul>
             </div>
-          </div>
-        </div>
+            <% end %>
+
+          </div> <!-- col-two -->
+        </div> <!-- span9 -->
+        
+        <% if @has_data %>
         <div class="span3">
           <div class="rit-content">
             <div class="board-wrap">
@@ -76,8 +88,10 @@
               <%= render :partial => "/questions_loader" %>
               </ul>
             </div>
-          </div>
-        </div>
+          </div> <!-- qa-wrap -->
+        </div> <!-- span3 -->
+        <% end %>
+        
       </div>
     </div><!-- Container -->
   </body>

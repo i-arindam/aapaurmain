@@ -125,4 +125,9 @@ module ApplicationHelper
     end
     panels
   end
+
+  def message_for_no_people(type)
+    render_to_string(:partial => "no_message_for_#{type}")
+  end
+
 end

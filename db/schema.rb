@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131163632) do
+ActiveRecord::Schema.define(:version => 20130221183518) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -60,12 +60,6 @@ ActiveRecord::Schema.define(:version => 20130131163632) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "followings", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "locks", :force => true do |t|
     t.integer "one_id",                                    :null => false
@@ -185,13 +179,14 @@ ActiveRecord::Schema.define(:version => 20130131163632) do
 
   create_table "user_follows", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "my_id",                                   :null => false
-    t.integer  "follow_type", :limit => 1, :default => 0
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.integer  "following_user_id",                             :null => false
+    t.integer  "follow_type",       :limit => 1, :default => 0
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
-  add_index "user_follows", ["my_id", "user_id"], :name => "index_user_follows_on_my_id_and_user_id", :unique => true
+  add_index "user_follows", ["following_user_id", "user_id"], :name => "index_user_follows_on_following_user_id_and_user_id", :unique => true
+  add_index "user_follows", ["user_id", "following_user_id"], :name => "index_user_follows_on_user_id_and_following_user_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :null => false

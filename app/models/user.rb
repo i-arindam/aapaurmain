@@ -95,8 +95,7 @@ class User < ActiveRecord::Base
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
-  has_many :followings
-  has_many :followers
+  has_many :user_follows, :dependent => :destroy
 
   def add_to_search_index
     if self.changed.include?(SEARCH_INDEX_FIELDS)

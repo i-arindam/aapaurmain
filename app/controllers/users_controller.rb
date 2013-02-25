@@ -449,12 +449,17 @@ class UsersController < ApplicationController
   def show_requests
     @user = current_user
     render_401 and return unless @user
-    @direction = params[:direction]
-    base_method = (@direction == "in" ? :requests_sent_to_me : :requests_sent_by_me)
-    user_id = (@direction == "in" ? 'from_id' : 'to_id')
+    direction = params[:direction]
+
+    @title, base_method, user_id = if direction == 'in'
+      ["Requests for you", :requests_sent_to_me, 'from_id']
+    else
+      ["Requests for you", :requests_sent_by_me, 'to_id']
+    end
+
     reqs = Request.send(base_method, @user.id)
 
-    @objects = []
+    @objects = [] #get_users_and_requests_object()
     @user_ids = []
     reqs.each do |r|
       @objects.push({
@@ -463,20 +468,36 @@ class UsersController < ApplicationController
       })
       @user_ids.push(r[user_id])
     end
+    @has_data = @user_ids.length > 0
+    @next_steps = render_to_string(:partial => "/next_steps_requests_#{direction}")
+
+    render :show_people
   end
 
   def people_i_follow
     @user = current_user
     render_401 and return unless @user
-    @following = User.get_display_objects(@user.followings)
-    render :my_followings
+    @title = 'People you like'
+    @user_ids = @user.user_follows.collect(&:following_user_id)
+    users = User.find_all_by_id(@user_ids)
+    @has_data = users.length > 0
+    @objects = get_display_for_list_page(users, @user)
+    @next_steps = render_to_string(:partial => "/next_steps_my_followings")
+
+    render :show_people
   end
 
   def people_follow_me
     @user = current_user
     render_401 and return unless @user
-    @follower = User.get_display_objects(@user.followers)
-    render :my_followers
+    @title = 'People who like you'
+    @user_ids = UserFollow.find_all_by_following_user_id(@user.id).collect(&:user_id)
+    users = User.find_all_by_id(@user_ids)
+    @has_data = users.length > 0    
+    @objects = get_display_for_list_page(users, @user)
+    @next_steps = render_to_string(:partial => "/next_steps_my_followers")
+
+    render :show_people
   end
 
   def my_top_stories
@@ -490,13 +511,9 @@ class UsersController < ApplicationController
     following_user = User.find_by_id(params[:id])
     render_404 and return unless following_user
 
-    u = UserFollow.create({
-      :my_id => user.id,
-      :user_id => params[:id].to_i,
-      :follow_type => params[:type].to_i
-    })
+    follow = user.user_follows.create(:following_user_id => params[:id].to_i)
     render :json => {
-      :success => !! u
+      :success => !! follow
     }
   end
 
@@ -506,7 +523,7 @@ class UsersController < ApplicationController
     unfollowing_user = User.find_by_id(params[:id])
     render_404 and return unless unfollowing_user
 
-    follow_record = UserFollow.find_by_my_id_and_user_id(user.id, params[:id].to_i)
+    follow_record = user.user_follows.where(:following_user_id => params[:id])
     follow_record.destroy
     render :json => { :success => true }
   end

@@ -27,8 +27,7 @@
       </div>
       <div class="panels-area">
         <% if defined?(panels) && !panels.blank? %>
-        <span class="panel-mark">Marked as:</span>
-        <ul class="tags">
+        <ul class="story-tags">
         <% panel_lookup = priorities_list %>
         <% panels.each do |panel| %>
           <li><a href="/panels/<%= panel %>" ><%= panel_lookup[panel] %></a></li>          

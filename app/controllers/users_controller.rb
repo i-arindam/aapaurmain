@@ -9,30 +9,18 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request will be sent
   def create_request
-    
-    from_user = User.find_by_id(params[:from_id])
-    render_404 and return unless from_user and from_user == current_user
-    to_user = User.find_by_id(params[:to_id])
-    
+    from_user = current_user
+    render_404 and return unless from_user
+    to_user = User.find_by_id(params[:user_id])
     render_404 and return unless to_user
 
-    r = Request.find_by_from_id_and_to_id(from_user.id,to_user.id)
-    if r.nil?
-      success = from_user.create_new_request(to_user) 
-      message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
-    elsif r.status == Request::DECLINED
-      success = false
-      message = User::REQUEST_NOT_SENT
-    elsif r.status == Request::WITHDRAWN      
-      success = Request.set_as_asked(to_user.id,from_user.id)
-      message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
-    end 
+    success = from_user.create_new_request(to_user)
+    message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
+    message.gsub!('{{user}}', to_user.name)
 
-    m=message.gsub('{{user}}', to_user.name)
-    
     render :json => {
       :success => success,
-      :message => m
+      :message => message
     }
   end
   
@@ -43,22 +31,19 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] from_id
   # => The id of the user who had sent the request
   def accept_request
-    
-    to_user = User.find_by_id(params[:to_id])
-    render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
-    from_user = User.find_by_id(params[:from_id])
-    
+    render_401 and return unless current_user
+    req = Request.find_by_id(params[:id])
+    render_404 and return unless req
+    from_user = User.find_by_id(req.from_id)
     render_404 and return unless from_user
-    success = to_user.accept_request_from(from_user)
-    
-    User.remove_both_users_on_lock(to_user, from_user) if success
 
+    success = current_user.accept_request_from(from_user)
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
-    m=message.gsub!('{{user}}', to_user.name)
+    message.gsub!('{{user}}', from_user.name)
     
     render :json => {
       :success => success,
-      :message => m
+      :message => message
     }
   end
   
@@ -70,20 +55,19 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] to_id
   # => id of the user to whom the request was sent
   def withdraw_request
-    
-    from_user = User.find_by_id(params[:from_id])
-    render_404 and return unless from_user and from_user == current_user
-    to_user = User.find_by_id(params[:to_id])
-    
+    render_401 and return unless current_user
+    req = Request.find_by_id(params[:id])
+    render_404 and return unless req
+    to_user = User.find_by_id(req.to_id)
     render_404 and return unless to_user
-    
-    success = from_user.withdraw_request_to(to_user)
+
+    success = current_user.withdraw_request_to(to_user)
     message = (success ? User::REQUEST_WITHDRAWN : User::REQUEST_FAILED)
-    m = message.gsub('{{user}}', to_user.name)
+    message!.gsub('{{user}}', to_user.name)
     
     render :json => {
       :success => success,
-      :message => m
+      :message => message
     }
   end
   
@@ -95,21 +79,21 @@ class UsersController < ApplicationController
   # @param [Fixnum(11)] from_id
   # => The id of the user who had sent the request
   def decline_request
-    to_user = User.find_by_id(params[:to_id])
-    render_404 and return unless to_user and to_user == current_user and to_user.has_active_subscription?
-    from_user = User.find_by_id(params[:from_id])
-    
+    render_401 and return unless current_user
+    req = Request.find_by_id(params[:id])
+    render_404 and return unless req
+    from_user = User.find_by_id(req.from_id)
     render_404 and return unless from_user
-    success = to_user.decline_request_from(from_user)
+
+    success = current_user.decline_request_from(from_user)
     
     message = (success ? User::REQUEST_DECLINED : User::REQUEST_FAILED)
-    m=message.gsub('{{user}}', from_user.name)
+    message!.gsub('{{user}}', from_user.name)
     
     render :json => {
       :success => success,
-      :message => m
+      :message => message
     }
-    
   end
   
   ### REQUESTS ACTION ENDS ###
@@ -212,29 +196,14 @@ class UsersController < ApplicationController
   end
     
   def show
-    render_401 and return unless current_user
+    render_401 and return unless @current_user = current_user
     @values = {}
     render_404 and return unless params[:id]
-    @current_user = current_user
     @user = User.find_by_id(params[:id]) 
     render_404 and return unless @user
     
     #Check if the logged in user has sent request to this user. Show buttons accordingly
-    sent_request = Request.find_by_from_id_and_to_id(@current_user.id, @user.id)
-    @values['show-send'] = true if sent_request.nil? 
-
-    if sent_request
-      @values['show-withdraw'] =  true if sent_request.status == Request::ASKED   
-      @values['show-send'] =  false if sent_request.status == Request::DECLINED  
-    end
-  
-    #Check if the logged in user has received request from this user. Show buttons accordingly
-    received_request = Request.find_by_from_id_and_to_id(@user.id, @current_user.id)
-    if received_request 
-      @values['show-accept'] = @values['show-decline'] =  (received_request.status == Request::ASKED)  
-      @values['show-send'] =  false  
-    end
-    
+    @request = Request.get_request_values(@current_user.id, @user.id)
     # # Log profile views
     # view = @user.profile_viewers.where(:viewer_id => @current_user.id)
     # unless view.blank?
@@ -464,7 +433,7 @@ class UsersController < ApplicationController
     reqs.each do |r|
       @objects.push({
         :user => User.find_by_id(r[user_id]),
-        :request => r.inspect
+        :request => r.get_for_display(direction)
       })
       @user_ids.push(r[user_id])
     end

@@ -2,7 +2,7 @@
 requests-message:
   sent: 'Your request to {{user}} has been sent.'
   accepted: 'Your request from {{user}} has been accepted.'
-  declined: 'Your request to {{user}} has been declined.'
+  declined: 'Your request from {{user}} has been declined.'
   failed: 'Sorry the system could not register that request. Can you please try again?'
   withdrawn: 'Your request to {{user}} has been withdrawn.'
   not-sent: 'Sorry,the request cannot be sent due to users personal settings.'

@@ -105,12 +105,9 @@ class ApplicationController < ActionController::Base
   def get_display_for_list_page(users, main_user)
     objects = []
     users.each do |u|
-      in_reqs = Request.find_by_from_id_and_to_id(u.id, main_user.id)
-      out_reqs = Request.find_by_from_id_and_to_id(main_user.id, u.id)
-      req = in_reqs & out_reqs
       objects.push({
         :user => u,
-        :request => req.inspect
+        :request => Request.get_request_values(main_user, u)
       })
     end
     objects

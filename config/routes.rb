@@ -15,9 +15,7 @@ Aapaurmain::Application.routes.draw do
   
   get 'users/:id/more_info' => 'users#more_info'
 
-  resources :users do
-    resources :subscription
-  end
+  resources :users
   resources :sessions
   resources :password_resets
 
@@ -26,10 +24,6 @@ Aapaurmain::Application.routes.draw do
   match '/users/:id/create_profile' => 'users#create_profile'  
   
   # Request actions
-  post 'users/create_request' => 'users#create_request'
-  post 'users/withdraw_request' => 'users#withdraw_request'
-  post 'users/accept_request' => 'users#accept_request'
-  post 'users/decline_request' => 'users#decline_request'
   post 'users/:id/upload_photo' => 'users#upload_photo'
   post 'users/:id/delete_photo' => 'users#delete_photo'
   post 'users/:id/show_viewers' => 'users#show_viewers'
@@ -94,10 +88,10 @@ Aapaurmain::Application.routes.draw do
   # Panels pages
   match '/panels/:name' => 'panel#show'
   # Per user links
-  post '/request/:user/send' => 'users#create_request'
-  post '/request/:user/cancel' => 'users#withdraw_request'
-  post '/request/:user/accept' => 'users#accept_request'
-  post '/request/:user/decline' => 'users#decline_request'
+  post '/request/:user_id/send' => 'users#create_request'
+  post '/request/:id/cancel' => 'users#withdraw_request'
+  post '/request/:id/accept' => 'users#accept_request'
+  post '/request/:id/decline' => 'users#decline_request'
 
   post '/follow/user/:id/:type' => 'users#follow_user', :defaults => { :type => 0 }
   post '/unfollow/user/:id' => 'users#unfollow_user'

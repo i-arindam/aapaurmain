@@ -1,6 +1,9 @@
 <% content_for :stylesheet do %>
 <%= stylesheet_link_tag "users/top_section_individual" %>
 <% end %>
+<% content_for :js_footer do %>
+<%= javascript_include_tag "users/request_actions" %>
+<% end %>
 <div class="individual-pro">
   <div class="clearfix">
     <div class="box-lt">
@@ -17,7 +20,7 @@
       </div>
       <div class="clear"></div>
       <div class="btn-wraper clearfix">
-        <a href="#" class="btn btn-success send-req">Send Request</a>
+        <a href="<%= request['href'] %>" class="btn btn-success req-button" data-special="<%= request['special'] %>"><%= request['text'] %></a>
         <a href="#" class="btn btn-success follow-user">Follow User</a>
         <a href="#" class="btn btn-success last rate-profile">Rate the profile</a>
       </div>

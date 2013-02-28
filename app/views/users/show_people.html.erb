@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "list", "right_bar", "stories" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list", "users/list_view" %>
+      <%= javascript_include_tag "application-list", "users/list_view", "users/request_actions" %>
     <% end %>
     <title><%= @title %></title>
     <script type="text/javascript">
@@ -26,6 +26,7 @@
             'sessionUserId': <%= @user.id %>,
             'sliderElement': '.allinone_carousel_list'
           });
+          var requestActions = new RequestActions();
         }
       });
     </script>

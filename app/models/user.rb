@@ -90,8 +90,6 @@ class User < ActiveRecord::Base
     :sexual_preference, :virginity_opinion, :profession, :dream_for_future, :settled_in
   ]
   
-  has_one :subscription
-
   has_many :profile_viewers, :foreign_key => "profile_id", :dependent => :destroy
   # Every profile view is logged in DB. Used for analaytics services
 
@@ -356,12 +354,12 @@ class User < ActiveRecord::Base
       req = Request.new
       req.from_id = self.id
       req.to_id = b.id
-      req.asked_date = Time.now.to_date
+      req.asked_date = Time.now
       req.save!
     rescue
       return false
     end
-   self.deliver_notifications(:request_sent, [b])
+    self.deliver_notifications(:request_sent, [b])
     return true
   end
   
@@ -373,25 +371,18 @@ class User < ActiveRecord::Base
   def accept_request_from(from_user)
     begin
       Request.set_as_accepted(self.id, from_user.id)
-      lock = Lock.new
-      lock.one_id = self.id
-      lock.another_id = from_user.id
-      lock.creation_date = Time.now.to_date
-      lock.save!
-      
-      a=self
-      b=from_user
+
+      a = self
+      b = from_user
       # Making both users aware that they are locked.
       a.status = LOCKED
       b.status = LOCKED
-      a.locked_since = b.locked_since = Time.now.to_date
+      a.locked_since = b.locked_since = Time.now
       a.locked_with = b.id
       b.locked_with = a.id
       
       a.save!
       b.save!
-        
-      
     rescue
       return false
     end

@@ -6,10 +6,11 @@ li.story {
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
+  margin-bottom: 10px;
 }
 li.story:hover {
   background: #333;
-  box-shadow: 14px 6px 9px #555;
+  box-shadow: 9px 9px 12px #777;
   border-radius: 5px;
 }
 .story-container li:after {
@@ -65,7 +66,6 @@ li.story:hover {
 }
 .story-time a.story-link {
   color: #000;
-  text-decoration: none;
 }
 .story-tit p {
   color: #7c7c7c;
@@ -122,6 +122,9 @@ li.story:hover {
   background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 0 0;
   display: block;
 }
+.story-boos:hover, .story-claps:hover, .story-comments:hover {
+  text-decoration: underline;
+}
 .comment-count {
   background-position: -48px -24px;
   padding: 5px 0 2px 25px;
@@ -145,7 +148,7 @@ li.story:hover {
 }
 .link-like-comment, .link-dislike-comment {
   float: left;
-  background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 0 0;
+  background-image: url("<%= image_path 'sprite_layout.png' %>");
   display: block;
 }
 .comment-link {

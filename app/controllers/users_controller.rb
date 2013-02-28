@@ -438,7 +438,7 @@ class UsersController < ApplicationController
       @user_ids.push(r[user_id])
     end
     @has_data = @user_ids.length > 0
-    @next_steps = render_to_string(:partial => "/next_steps_requests_#{direction}")
+    @next_steps = render_to_string(:partial => "users/next_steps_requests_#{direction}")
 
     render :show_people
   end
@@ -451,7 +451,7 @@ class UsersController < ApplicationController
     users = User.find_all_by_id(@user_ids)
     @has_data = users.length > 0
     @objects = get_display_for_list_page(users, @user)
-    @next_steps = render_to_string(:partial => "/next_steps_my_followings")
+    @next_steps = render_to_string(:partial => "users/next_steps_my_followings")
 
     render :show_people
   end
@@ -464,7 +464,7 @@ class UsersController < ApplicationController
     users = User.find_all_by_id(@user_ids)
     @has_data = users.length > 0    
     @objects = get_display_for_list_page(users, @user)
-    @next_steps = render_to_string(:partial => "/next_steps_my_followers")
+    @next_steps = render_to_string(:partial => "users/next_steps_my_followers")
 
     render :show_people
   end

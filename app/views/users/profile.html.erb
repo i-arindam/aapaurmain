@@ -5,7 +5,7 @@
       <title>This is <%= @user.name%></title>
     <% end %>
     <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories", "users/common-style-users" %>
+      <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "users/profile" %>
@@ -13,6 +13,14 @@
     <script type="text/javascript">
       $(function() {
         var requestActions = new RequestActions();
+        var profile = new UserProfile({
+          'currentUserId': <%= @current_user.id %>,
+          'forUserId' : <%= @user.id %>,
+          'forUserName': "<%= @user.name %>",
+          'commonPanelSelector': '.board-wrap .datas.common-panels',
+          'remainingPanelSelector': '.board-wrap .datas.other-panels',
+          'nameSelector': '.shared-by span.other-user'
+        });
       });
     </script>
   </head>

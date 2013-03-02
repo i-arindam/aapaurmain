@@ -1,237 +1,49 @@
-function UserActions() {
-  this.setupActions();
-  
-};
+function UserProfile(config) {
+  this._init(config);
+}
 
-UserActions.prototype.requestStates = { 
-  'newRequestSent' : {
-    'selector' : '.j-send-request',
-    'classToAdd' : 'j-withdraw-request btn-danger',
-    'classToRemove' : 'btn-success j-send-request',
-    'newTitle' : 'Withdraw Request',
-  },
-  'requestWithdrawn' : {
-    'selector' : '.j-withdraw-request',
-    'classToAdd' : 'j-send-request btn-success',
-    'classToRemove' : 'btn-danger j-withdraw-request',
-    'newTitle' : 'Send Request'
-  },
-  'requestAccepted' : {
-    'selector' : '.j-accept-request',
-    'classToAdd' : 'j-withdraw-lock btn-danger',
-    'classToRemove' : 'btn-success j-accept-request',
-    'newTitle' : 'Withdraw Lock'
-  },
-  
-  
-};
-
-UserActions.prototype.setupActions = function() {
-  this.setupSend();
-  this.setupWithdraw();
-  this.setupDecline();
-  this.setupAccept();
-  this.setupWithdrawLock();
-
-  $('h3.haircut').haircut({
-    jitterPadding: 20,
-    placement: 'end'
-  });
-  
-  $(window).resize(function() {
-    $('h3.haircut').stringResize();
-  });
-};
-
-UserActions.prototype.setupSend = function(){
+UserProfile.prototype._init = function(config) {
   var that = this;
-  $('.j-send-request').live('click',function(evt){
-    that.actionButton = this;
-    evt.preventDefault();
-    evt.stopPropagation();
-    var to_id = user_object.to_user_id || this.id.split("-")[1]
-    bootbox.confirm(user_object.send_request_text, function(confirmed) {
-                        console.log("Confirmed: "+confirmed);
-                        if (confirmed){
+  this.currentUserId = config.currentUserId, this.forUserId = config.forUserId, this.userName = config.forUserName;
+  this.commonPanelsContainer = $(config.commonPanelSelector);
+  this.remainingPanelsContainer = $(config.remainingPanelSelector);
+  this.userNameDom = $(config.nameSelector);
 
-      $.ajax({
-        url : 'create_request' ,
-        data : {
-          "from_id" : user_object.session_user_id,
-          "to_id" : to_id
-        }, type : 'POST',
-        dataType : 'json',
-        success : function(data){
-          console.log('success');
-          bootbox.alert(data.message);
-          $('#withdraw-'+to_id).show();
-          $('#send-'+to_id).hide();
-          $('#decline-'+to_id).hide();
-          $('#accept-'+to_id).hide();
-          $('#lock-'+to_id).hide();
-          //that.setupRequestButton(that.requestStates.newRequestSent,that.actionButton);
-        }, error : function(data){
-          bootbox.alert(data.message);
-        }
-      });
+  $.ajax({
+    url: "/panels/all/" + that.currentUserId + "/" + that.forUserId,
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      that.commonPanels = data.commonPanels;
+      that.remainingPanels = data.remainingPanels;
+      that.panelsDictionary = data.panelsDictionary;
+      that.populatePanels();
     }
-    });
   });
+  this.populateQuestions();
 };
 
-UserActions.prototype.setupWithdraw = function(){
-  var that = this;
-  $('.j-withdraw-request').live('click',function(evt){
-    that.actionButton = this;
-    evt.preventDefault();
-    evt.stopPropagation();
-    var to_id = user_object.to_user_id || this.id.split("-")[1];
-    bootbox.confirm(user_object.withdraw_request_text, function(confirmed) {
-                        console.log("Confirmed: "+confirmed);
-      if (confirmed){
-        $.ajax({
-          url : 'withdraw_request' ,
-          data :  {
-            "from_id" : user_object.session_user_id,
-            "to_id" : to_id
-          },
-          type : 'POST' ,
-          dataType : 'json',
-          success : function(data){
-            console.log('success');
-            bootbox.alert(data.message);
-            $('#send-'+to_id).show();
-            $('#withdraw-'+to_id).hide();
-            $('#decline-'+to_id).hide();
-            $('#accept-'+to_id).hide();
-            $('#lock-'+to_id).hide();
-            //that.setupRequestButton(that.requestStates.requestWithdrawn,that.actionButton);
-          }, error : function(data){
-            bootbox.alert(data.message);
-          }
-        });
-      }
-    });
+UserProfile.prototype.populatePanels = function() {
+  var ul = $('<ul>').addClass('story-tags'), that = this;
+  $.each(this.commonPanels, function(i, cp) {
+    var li = $('<li><a></a></li>');
+    li.children('a').attr('href', cp);
+    li.children('a').text(that.panelsDictionary[cp]);
+    li.appendTo(ul);
   });
+  ul.appendTo(this.commonPanelsContainer);
+
+  ul = $('<ul>').addClass('story-tags');
+  $.each(this.remainingPanels, function(i, rp) {
+    var li = $('<li><a></a></li>');
+    li.children('a').attr('href', rp);
+    li.children('a').text(that.panelsDictionary[rp]);
+    li.appendTo(ul);
+  });
+  ul.appendTo(this.remainingPanelsContainer);
+  this.userNameDom.text(this.userName);
 };
 
-UserActions.prototype.setupAccept = function(){
-  var that = this;
-  $('.j-accept-request').live('click',function(evt){
-    that.actionButton = this;
-    var to_id = user_object.to_user_id || this.id.split("-")[1];
-    evt.preventDefault();
-    evt.stopPropagation();
-    bootbox.confirm(user_object.accept_request_text, function(confirmed) {
-                          console.log("Confirmed: "+confirmed);
-      if (confirmed){
-        $.ajax({
-          url : 'accept_request' ,
-          data :  {
-            "from_id" : to_id,
-            "to_id" : user_object.session_user_id
-          },
-          type : 'POST' ,
-          dataType : 'json',
-          success : function(data){
-            console.log('success');
-            bootbox.alert(data.message);
-            $('#send-'+to_id).hide();
-            $('#withdraw-'+to_id).hide();
-            $('#decline-'+to_id).hide();
-            $('#accept-'+to_id).hide();
-            $('#lock-'+to_id).show();
-            //that.setupRequestButton(that.requestStates.requestAccepted, that.actionButton);
-          }, error : function(data){
-            bootbox.alert(data.message);
-          }
-        });
-      }
-    });    
-  });
+UserProfile.prototype.populateQuestions = function() {
+
 };
-
-UserActions.prototype.setupDecline = function(){
-  var that = this;
-  $('.j-decline-request').live('click',function(evt){
-
-    that.actionButton = this;
-    var to_id = user_object.to_user_id || this.id.split("-")[1];
-    evt.preventDefault();
-    evt.stopPropagation();
-    bootbox.confirm(user_object.decline_request_text, function(confirmed) {
-                          console.log("Confirmed: "+confirmed);
-      if (confirmed){
-        $.ajax({
-          url : 'decline_request' ,
-          data :  {
-            "to_id" : user_object.session_user_id,
-            "from_id" : to_id
-          },
-          type : 'POST' ,
-          dataType : 'json',
-          success : function(data){
-            console.log('success');
-            bootbox.alert(data.message);
-            $('#send-'+to_id).hide();
-            $('#withdraw-'+to_id).hide();
-            $('#decline-'+to_id).hide();
-            $('#accept-'+to_id).hide();
-            $('#lock-'+to_id).hide();
-            //that.actionButton.hide();
-           // that.hide();
-          }, error : function(data){
-            bootbox.alert(data.message);
-          }
-        });
-      }
-    });
-  });
-};
-
-UserActions.prototype.setupWithdrawLock = function(){
-  var that = this;
-  $('.j-withdraw-lock').live('click',function(evt){
-    that.actionButton = this;
-    var to_id = user_object.to_user_id || this.id.split("-")[1];
-    evt.preventDefault();
-    evt.stopPropagation();
-    bootbox.confirm(user_object.withdraw_lock_text, function(confirmed) {
-                          console.log("Confirmed: "+confirmed);
-      if (confirmed){    
-        $.ajax({
-          url : 'withdraw_lock' ,
-          data :  {
-            "from_id" : user_object.session_user_id,
-            "to_id" : to_id
-          },
-          type : 'POST' ,
-          dataType : 'json',
-          success : function(data){
-            console.log('success');
-            bootbox.alert(data.message);
-            $('#send-'+to_id).hide();
-            $('#withdraw-'+to_id).hide();
-            $('#decline-'+to_id).hide();
-            $('#accept-'+to_id).hide();
-            $('#lock-'+to_id).hide();
-          }, error : function(data){
-            bootbox.alert(data.message);
-          }
-        });
-      }
-    });
-  });
-  
-};
-
-UserActions.prototype.setupRequestButton = function(requestObject, selector){
-  var requestButton = $(selector); 
-  requestButton.attr({
-    'value' : requestObject.newTitle          
-  });
-
-  requestButton.addClass(requestObject.classToAdd); 
-  requestButton.removeClass(requestObject.classToRemove);
-};
-

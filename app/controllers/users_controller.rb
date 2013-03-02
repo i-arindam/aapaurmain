@@ -222,6 +222,7 @@ class UsersController < ApplicationController
 
     # Stories object
     @stories = Story.get_n_stories_for(@user.id, 10, 0)
+    @panels_lookup = $priorities_list['priorities'].to_json
 
     render :profile
   end
@@ -517,7 +518,8 @@ class UsersController < ApplicationController
 
     render :json => {
       :commonPanels => common_panels,
-      :remainingPanels => remaining_panels
+      :remainingPanels => remaining_panels,
+      :panelsDictionary => $priorities_list['priorities']
     }
   end
 
@@ -611,6 +613,10 @@ class UsersController < ApplicationController
 
     @stories = Newsfeed.get_initial_feed_for(@user.id)
     @questions = ShortQuestion.get_latest_question_for(@user.id)
+  end
+
+  def panel_lookup
+    render :json => $priorities_list['priorities']
   end
 
 end

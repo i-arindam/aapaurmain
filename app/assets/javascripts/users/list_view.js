@@ -161,9 +161,9 @@ ListView.prototype.retryAndPaintFor = function(obj, uid) {
 };
 
 ListView.prototype.paintPanelsSectionFor = function(uid) {
-  if(this.constructedPanelDom && this.constructedPanelDom[uid] ) {
+  if(this.constructedDomForPanels && this.constructedDomForPanels[uid] ) {
     this.panelsLoader.hide();
-    this.constructedPanelDom[uid].appendTo(this.panelsContainer);
+    this.constructedDomForPanels[uid].appendTo(this.panelsContainer);
     return;
   } 
   var data = this.panelsData[uid], that = this, commonPanelLi, remainingPanelLi;
@@ -200,23 +200,34 @@ ListView.prototype.paintPanelsSectionFor = function(uid) {
     domObj = $('<h3/>').addClass('no-content').text("Sorry no panels info found for " + uname);
   }
   domObj.appendTo(this.panelsContainer);
-  if(!this.constructedPanelDom){
-    this.constructedPanelDom = {};
-  }
-  this.constructedPanelDom[uid] = domObj;
+  this.constructedDomForPanels = this.constructedDomForPanels || {};
+  this.constructedDomForPanels[uid] = domObj;
 };
 
 ListView.prototype.paintQuestionsSectionFor = function(uid) {
-  var data = this.questionsData[uid], that = this, uname = this.userInfo[uid];
+  var that = this;
+  if(that.constructedDomForQuestions && that.constructedDomForQuestions[uid]) {
+    this.questionsLoader.hide();
+    $.each(this.constructedDomForQuestions[uid], function(i, q) {
+      q.appendTo(that.questionsContainer);
+    });
+    return;
+  }
+
+  this.constructedDomForQuestions = this.constructedDomForQuestions || {};
+  var data = this.questionsData[uid], uname = this.userInfo[uid];
   this.questionsLoader.hide();
 
   if(data.answers.length === 0) {
     $('<h3/>').addClass('no-content').text("Sorry no questions found for " + uname).appendTo(this.questionsContainer);
   } else {
+    this.constructedDomForQuestions[uid] = [];
     $.each(data.answers, function(i, an) {
       var questionDom = that.questionDom.clone();
       questionDom.find('.q-text').text(an.q);
       questionDom.find('.a-text').text(an.a);
+
+      that.constructedDomForQuestions[uid].push(questionDom);
       questionDom.appendTo(that.questionsContainer);
     });
   }
@@ -232,9 +243,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
     return;
   }
 
-  if(!this.constructedDomForStories) {
-    this.constructedDomForStories = {};
-  }
+  this.constructedDomForStories = this.constructedDomForStories || {};
   var data = this.topStoriesData[uid], uname = this.userInfo[uid];
   this.storiesLoader.hide();
 

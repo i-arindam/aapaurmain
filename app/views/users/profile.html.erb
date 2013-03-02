@@ -63,7 +63,9 @@
                 <h2><span class="board-tit">Q &amp; A</span></h2>
               </div>
               <ul class="questions">
-                <%= render :partial => "/questions", :locals => { :questions => @questions, :user => @user } %>
+                <% @questions.each do |question| %>
+                <%= render :partial => "/questions", :locals => { :question => question, :user => @user } %>
+                <% end %>
               </ul>
             </div>
           </div>

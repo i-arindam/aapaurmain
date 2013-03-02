@@ -223,20 +223,33 @@ ListView.prototype.paintQuestionsSectionFor = function(uid) {
 };
 
 ListView.prototype.paintTopStoriesSectionFor = function(uid) {
-  var data = this.topStoriesData[uid], that = this, uname = this.userInfo[uid];
+  var that = this;
+  if(this.constructedDomForStories && this.constructedDomForStories[uid]) {
+    this.storiesLoader.hide();
+    $.each(this.constructedDomForStories[uid], function(i, sDom) {
+      sDom.appendTo(that.topStoriesContainer);
+    });
+    return;
+  }
+
+  if(!this.constructedDomForStories) {
+    this.constructedDomForStories = {};
+  }
+  var data = this.topStoriesData[uid], uname = this.userInfo[uid];
   this.storiesLoader.hide();
 
   if(data.stories.length === 0) {
     $('<h3/>').addClass('no-content').text("Sorry no stories found for " + uname).appendTo(this.topStoriesContainer);    
   } else {
+    this.constructedDomForStories[uid] = [];
     $.each(data.stories, function(i, s) {
       var storyDom = that.storyDom.clone();
       storyDom.find('.story-creator').text(s.by);
       storyDom.find('.story-time').text(s.when);
       storyDom.find('.story-text').text(s.text);
-      storyDom.find('.story-claps').text(s.clap_count);
-      storyDom.find('.story-boos').text(s.boo_count);
-      storyDom.find('.story-comments').text(s.comment_count);
+      storyDom.find('.story-claps').text(s.claps);
+      storyDom.find('.story-boos').text(s.boos);
+      storyDom.find('.story-comments').text(s.comments);
 
       var panelsUl = storyDom.find('ul.story-tags');
 
@@ -246,6 +259,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
         li.appendTo(panelsUl);
       });
       
+      that.constructedDomForStories[uid].push(storyDom);
       storyDom.appendTo(that.topStoriesContainer);
     });
   }

@@ -38,6 +38,9 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 # 12) user:user_id:popular_stories
 # List of popular stories for each user.
 
+# 12) user:user_id:stories - list (newer entries LPUSHed)
+# List in order of time of all stories of user
+
 # 13) panel:topic:stories - list
 # List of stories in this panel
 

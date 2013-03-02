@@ -130,4 +130,17 @@ module ApplicationHelper
     render_to_string(:partial => "no_message_for_#{type}")
   end
 
+  def dummy_user
+    User.find_by_id 1
+  end
+
+  def default_image(user, size = 'small')
+    default_path = case size
+    when 'small'
+      "/assets/users/user-xsmall.png"
+    when 'medium'
+      "/assets/users/user-small.jpg"
+    end
+    image_path(default_path)
+  end
 end

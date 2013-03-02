@@ -53,6 +53,7 @@ class Story < ActiveRecord::Base
     $r.multi do
       $r.hmset("story:#{sid}", :by, user.name, :by_id, user.id, :text, params[:text], :time, time)
       $r.sadd("story:#{sid}:panels", params[:panels])
+      $r.lpush("user:#{user.id}:stories", sid)
     end
     sid
   end
@@ -99,7 +100,7 @@ class Story < ActiveRecord::Base
   # Each element in the array is a hash containing all count and text info of the story
   def self.get_n_stories_for(user_id, n = 2, start = 0)
     sids = []
-    sids = $r.lrange("user:#{user_id}:story_ids", start, n)
+    sids = $r.lrange("user:#{user_id}:stories", start, n)
     stories = self.get_stories(sids)
   end
 

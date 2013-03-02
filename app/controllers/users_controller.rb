@@ -218,7 +218,7 @@ class UsersController < ApplicationController
     @panels = { :common_panels => common_panels, :remaining_panels => remaining_panels}
 
     # Questions object
-    @answers = ShortQuestion.get_latest_n_answers_for(@user.id, 2, 0)
+    @questions = ShortQuestion.get_latest_n_answers_for(@user.id, 2, 0)
 
     # Stories object
     @stories = Story.get_n_stories_for(@user.id, 10, 0)

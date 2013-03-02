@@ -630,44 +630,7 @@ class User < ActiveRecord::Base
     self.recommended_user_ids = user_ids.join(",") unless user_ids.empty?
   end
 
-  # When I and 'partner' enter into lock, system should remove both 
-  # from all search and recommendation indexes.
-  # Also, both of our requests are to be destroyed.
-  # @param [User] me 
-  #   self. I have accepted the request. This distinction is needed
-  # @param [User] partner
-  #   The person with which I am locked. The user whose request got accepted
-  def self.remove_both_users_on_lock(me, partner)
-    # Delete all requests sent by either of us
-    
-    req = Request.find_all_by_from_id(me.id)
-    req.delete_if {|x| x.to_id = partner.id}
-    req.each do |r|
-      r.delete
-    end
-
-    req = Request.find_all_by_from_id(partner.id)
-    req.delete_if {|x| x.to_id = me.id}
-    req.each do |r|
-      r.delete
-    end
-
-    # Not touching any requests sent to either of us, since
-    # those who had sent requests to me, can only withdraw.
-    # In x days, the requests will expire anyways. 
-
-    # Adding both users to remove table. It will be consumed periodically
-    RemoveUsersFromSearch.create({ :user_id => me.id })
-    RemoveUsersFromSearch.create({ :user_id => partner.id })
-
-  end
-
   # REDIS SPECIFIC OPERATIONS
-
-  # Returns the key for redis for the topic str
-  def redis_key(str)
-    "user:#{self.id}:#{str}"
-  end
 
   # places self in each of his selected boards
   def update_boards

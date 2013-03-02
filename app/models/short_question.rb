@@ -5,8 +5,9 @@ class ShortQuestion < ActiveRecord::Base
     answers = []
     questions_answered = $r.lrange("user:#{user_id}:questions", start, n)
     questions_answered.each do |an_answer|
-      q = ShortQuestion.find_by_id(an_answer.qid)
-      a = ShortAnswer.find_by_short_question_id_and_choice_num(q.id, an_answer.answer.to_i)
+      an_answer = JSON.parse(an_answer)
+      q = ShortQuestion.find_by_id(an_answer['qid'])
+      a = ShortAnswer.find_by_short_question_id_and_choice_num(q.id, an_answer['answer'].to_i)
       answers.push({
         :q => q.text,
         :a => a.text

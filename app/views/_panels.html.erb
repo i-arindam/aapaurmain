@@ -1,12 +1,26 @@
+<% panels_info = panels_info || { :common_panels => [], :remaining_panels => [] }
+   user = user || dummy_user %>
 <li class="common-panels">
   <p class="shared-by">
-    Common Boards shared by <b>you</b> and <span class="other-user">&nbsp;</span>
+    Common Boards shared by <b>you</b> and <span class="other-user"><%= user.name %></span>
   </p>
-  <p class="datas common-panels">&nbsp;</p>
+  <p class="datas common-panels">
+    <ul class="story-tags">
+    <% panels_info[:common_panels].each do |panel| %>
+      <li><a href="/panels/<%= panel %>" ><%= panel %></a></li>
+    <% end %>
+    </ul>
+  </p>
 </li>
 <li class="other-panels">
   <p class="shared-by">
-    <span class="other-user">&nbsp;</span>&apos;s other panels
+    <span class="other-user"><%= user.name %></span>&apos;s other panels
   </p>
-  <p class="datas other-panels">&nbsp;</p>
+  <p class="datas other-panels">
+    <ul class="story-tags">
+    <% panels_info[:remaining_panels].each do |panel| %>
+      <li><a href="/panels/<%= panel %>" ><%= panel %></a></li>          
+    <% end %>
+    </ul>
+  </p>
 </li>

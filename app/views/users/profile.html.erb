@@ -5,7 +5,7 @@
       <title>This is <%= @user.name%></title>
     <% end %>
     <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav" %>
+      <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories", "users/common-style-users" %>
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "users/profile" %>
@@ -43,7 +43,9 @@
               <div class="tit-wrap">
                 <h2><span class="board-tit">Panels</span></h2>
               </div>
-              <%= render :partial => "/panels", :locals => { :panels_info => @panels } %>
+              <ul class="panels">
+                <%= render :partial => "/panels", :locals => { :panels_info => @panels, :user => @user } %>
+              </ul>
             </div>
 
             <div class="qa-wrap">
@@ -53,7 +55,7 @@
                 <h2><span class="board-tit">Q &amp; A</span></h2>
               </div>
               <ul class="questions">
-              <%= render :partial => "/questions", :locals => { :questions => @questions } %>
+                <%= render :partial => "/questions", :locals => { :questions => @questions, :user => @user } %>
               </ul>
             </div>
           </div>

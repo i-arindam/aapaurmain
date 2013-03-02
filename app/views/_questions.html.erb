@@ -1,9 +1,13 @@
+<% questions = questions || [] 
+   user = user || dummy_user %>
+<% questions.each do |q| %>
 <li class="question">
   <div class="user-left">
-    <img src="/assets/users/user-1.jpg" alt="user" />
+    <img src="<%= user.photo_url || default_image(user, 'small') %>" alt="<%= user.name %>" />
   </div>
   <div class="qn-right">
-    <p class="shared-by q-text">&nbsp;</p>
-    <p class="datas a-text">&nbsp;</p>
+    <p class="shared-by q-text"><%= q[:q] %></p>
+    <p class="datas a-text"><%= q[:a] %></p>
   </div>
 </li>
+<% end %>

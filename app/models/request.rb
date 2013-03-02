@@ -110,6 +110,10 @@ class Request < ActiveRecord::Base
       values['text'] = 'Request once declined'
       values['href'] = '#'
       values['special'] = 'declined'
+    elsif self.accepted? # These 2 are in lock state
+      values['text'] = 'Break Lock'
+      values['href'] = '#'
+      values['special'] = 'break_lock'
     end
   end
 
@@ -121,6 +125,10 @@ class Request < ActiveRecord::Base
       values['text'] = 'Request once sent'
       values['href'] = '#'
       values['special'] = 'withdrawn'
+    elsif self.accepted? # These 2 are in lock state
+      values['text'] = 'Break Lock'
+      values['href'] = '#'
+      values['special'] = 'break_lock'
     end
   end
 
@@ -138,8 +146,8 @@ class Request < ActiveRecord::Base
     end
 
     if req && req.accepted? # These 2 are in lock state
-      values['request-text'] = 'You two are awesome'
-      values['request-href'] = '#'
+      values['text'] = 'Break Lock'
+      values['href'] = '#'
       values['special'] = 'break_lock'
     end
 

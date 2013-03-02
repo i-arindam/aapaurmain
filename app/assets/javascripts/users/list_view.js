@@ -20,8 +20,20 @@ ListView.prototype.initSlider = function() {
     afterChange: function() {
       $('.rs-prev, .rs-next').addClass('disable-action');
       that.bindDisplayChange(this.slider);
+    },
+    onInit: function() {
+      that.storeUserDetails();
     }
   });  
+};
+
+ListView.prototype.storeUserDetails = function() {
+  var lis = $(this.config.sliderElement).children('li'), that = this;
+  this.userInfo = {};
+  $.each(lis, function(i, dom) {
+    var uid = $(dom).attr('data-user-id'), uname = $(dom).attr('data-user-name');
+    that.userInfo[uid] = uname;
+  });
 };
 
 ListView.prototype._getDomPartials = function() {
@@ -34,6 +46,7 @@ ListView.prototype._getDomPartials = function() {
       that.storyDom = $(data.story_partial);
       that.questionDom = $(data.question_partial);
       that.panelDom = $(data.panel_partial);
+      that.panelsDictionary = data.panels;
     }, error: function(data) {
       var x = 10;
     }
@@ -43,7 +56,7 @@ ListView.prototype._getDomPartials = function() {
 ListView.prototype._initStructures = function() {  
   this.activeUserId = this.config.sessionUserId;
   this.firstUserId = this.config.userIds[0];
-  
+
   this.panelsContainer = $('ul.panels');
   this.topStoriesContainer = $('ul.story-container');
   this.questionsContainer = $('ul.questions');
@@ -119,7 +132,7 @@ ListView.prototype.getDataFor = function(object, uid, useCallback) {
 ListView.prototype.bindDisplayChange = function(slider) {
   var that = this, showingElement = slider.currentPlace;
   var currentLi = $(this.config.sliderElement).children('li').get(showingElement);
-  var newUserId = $(currentLi).attr('data-id');
+  var newUserId = $(currentLi).attr('data-user-id');
   setTimeout(function() {
     that.clearContentAndShowLoader();
     that.refreshDisplayFor(newUserId);
@@ -148,29 +161,57 @@ ListView.prototype.retryAndPaintFor = function(obj, uid) {
 };
 
 ListView.prototype.paintPanelsSectionFor = function(uid) {
+  if(this.constructedPanelDom && this.constructedPanelDom[uid] ) {
+    this.panelsLoader.hide();
+    this.constructedPanelDom[uid].appendTo(this.panelsContainer);
+    return;
+  } 
   var data = this.panelsData[uid], that = this, commonPanelLi, remainingPanelLi;
-  var commonPanels = data.commonPanels && data.commonPanels.join(", ");
-  var otherPanels = data.remainingPanels && data.remainingPanels.join(", ");
-  this.panelsLoader.hide();
+  var commonPanels = data.commonPanels;
+  var otherPanels = data.remainingPanels;
+  var uname = this.userInfo[uid];
+  var domObj = this.panelDom.clone();
+  var commonPanelDom = domObj.find('.datas.common-panels');
+  var otherPanelDom = domObj.find('.datas.other-panels');
+  var cLiUl = $('<ul/>').addClass('story-tags'), oLiUl = cLiUl.clone();
 
-  if(commonPanels && otherPanels) {
-    var panelDom = this.panelDom.clone();
-    panelDom.find('.shared-by span.other-user').text('');
-    panelDom.find('.common-panels').text(commonPanels);
-    panelDom.find('.other-panels').text(otherPanels);
-
-    panelDom.appendTo(this.panelsContainer);
-  } else {
-    $('<h3/>').addClass('no-content').text("Sorry no panels info found for this user").appendTo(this.panelsContainer);
+  domObj.find('.shared-by span.other-user').text(uname);
+  
+  if(commonPanels) {
+    $.each(commonPanels, function(i, cp) {
+      var li = $('<li><a></a></li>');
+      li.children('a').attr('href', '/panels/' + cp);
+      li.children('a').text(that.panelsDictionary[cp]);
+      li.appendTo(cLiUl);
+    });
+    cLiUl.appendTo(commonPanelDom);
   }
+  if(otherPanels) {
+    $.each(otherPanels, function(i, rp) {
+      var li = $('<li><a></a></li>');
+      li.children('a').attr('href', '/panels/' + rp);
+      li.children('a').text(that.panelsDictionary[rp]);
+      li.appendTo(oLiUl);
+    });
+    oLiUl.appendTo(otherPanelDom);
+  }
+  this.panelsLoader.hide();
+  if(!commonPanels && !remainingPanels) {
+    domObj = $('<h3/>').addClass('no-content').text("Sorry no panels info found for " + uname);
+  }
+  domObj.appendTo(this.panelsContainer);
+  if(!this.constructedPanelDom){
+    this.constructedPanelDom = {};
+  }
+  this.constructedPanelDom[uid] = domObj;
 };
 
 ListView.prototype.paintQuestionsSectionFor = function(uid) {
-  var data = this.questionsData[uid], that = this;
+  var data = this.questionsData[uid], that = this, uname = this.userInfo[uid];
   this.questionsLoader.hide();
 
   if(data.answers.length === 0) {
-    $('<h3/>').addClass('no-content').text("Sorry no questions found for this user").appendTo(this.questionsContainer);
+    $('<h3/>').addClass('no-content').text("Sorry no questions found for " + uname).appendTo(this.questionsContainer);
   } else {
     $.each(data.answers, function(i, an) {
       var questionDom = that.questionDom.clone();
@@ -182,11 +223,11 @@ ListView.prototype.paintQuestionsSectionFor = function(uid) {
 };
 
 ListView.prototype.paintTopStoriesSectionFor = function(uid) {
-  var data = this.topStoriesData[uid], that = this;
+  var data = this.topStoriesData[uid], that = this, uname = this.userInfo[uid];
   this.storiesLoader.hide();
 
   if(data.stories.length === 0) {
-    $('<h3/>').addClass('no-content').text("Sorry no stories found for this user").appendTo(this.topStoriesContainer);    
+    $('<h3/>').addClass('no-content').text("Sorry no stories found for " + uname).appendTo(this.topStoriesContainer);    
   } else {
     $.each(data.stories, function(i, s) {
       var storyDom = that.storyDom.clone();

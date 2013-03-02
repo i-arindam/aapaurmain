@@ -51,7 +51,7 @@
                 <div class="myloader"></div>
                 <ul class="allinone_carousel_list">
                   <% @objects.each do |obj| %>
-                  <li class="person" data-id="<%= obj[:user].id %>">
+                  <li class="person" data-user-id="<%= obj[:user].id %>" data-user-name="<%= obj[:user].name %>">
                     <%= render :partial => "users/top_section", :locals => { :user => obj[:user], :request => obj[:request] } %>
                   </li>
                   <% end %>

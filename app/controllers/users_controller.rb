@@ -600,7 +600,8 @@ class UsersController < ApplicationController
     render :json => {
       :story_partial => render_to_string(:partial => "/story"),
       :question_partial => render_to_string(:partial => "/questions"),
-      :panel_partial => render_to_string(:partial => "/panels")
+      :panel_partial => render_to_string(:partial => "/panels"),
+      :panels => $priorities_list['priorities']
     }
   end
 

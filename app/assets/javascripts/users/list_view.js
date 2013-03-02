@@ -237,6 +237,14 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
       storyDom.find('.story-claps').text(s.clap_count);
       storyDom.find('.story-boos').text(s.boo_count);
       storyDom.find('.story-comments').text(s.comment_count);
+
+      var panelsUl = storyDom.find('ul.story-tags');
+
+      $.each(s.panels, function(i, p) {
+        var li = $('<li/>');
+        $('<a>').attr('href', '/panels/' + p).text(that.panelsDictionary[p]).appendTo(li);
+        li.appendTo(panelsUl);
+      });
       
       storyDom.appendTo(that.topStoriesContainer);
     });

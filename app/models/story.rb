@@ -121,6 +121,7 @@ class Story < ActiveRecord::Base
       story.merge!(story['core'])
       story.merge!({'id' => sid})
       story.delete("core")
+      story['text'].gsub!("\n", "<br/>")
       stories.push(story)
     end
     stories

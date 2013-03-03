@@ -8,11 +8,12 @@
       <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/profile" %>
+      <%= javascript_include_tag "users/profile", "story" %>
     <% end %>
     <script type="text/javascript">
       $(function() {
         var requestActions = new RequestActions();
+        var sh = new StoryHandler();
         var profile = new UserProfile({
           'currentUserId': <%= @current_user.id %>,
           'forUserId' : <%= @user.id %>,

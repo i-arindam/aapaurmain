@@ -129,6 +129,11 @@ StoryHandler.prototype.setupShowComments = function() {
   var that = this;
   $('.j-show-comments, .link-comment').live('click', function(e) {
     e.preventDefault();
+    var closestComments = $(this).parents('.like-area').siblings('.comment-area').children('ul.comments');
+    if(closestComments.is(':visible')) {
+      closestComments.slideUp('fast');
+      return;
+    }
     var story = $(this).parents('li.story');
     var sid = story.attr('data-story-id');
     var getCommentsUrl = "/story/" + sid + "/get?t=comments";

@@ -1,9 +1,9 @@
 function ListView(config) {
   this.config = config;
+  this.initSlider();
   this._getDomPartials();
   this._initStructures();
   this.getAllData();
-  this.initSlider();
 }
 
 ListView.prototype.initSlider = function() {
@@ -86,6 +86,9 @@ ListView.prototype._initStructures = function() {
       'callback': this.paintTopStoriesSectionFor
     }
   };
+
+  this.writeFollowingStatus();
+  this.setupFollowActions();
 };
 
 ListView.prototype.getAllData = function() {
@@ -272,4 +275,62 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
       storyDom.appendTo(that.topStoriesContainer);
     });
   }
+};
+
+ListView.prototype.writeFollowingStatus = function() {
+  var that = this;
+  $.ajax({
+    url: '/get/follow/statuses',
+    data: { 'user_ids': this.config.userIds },
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      for(var uid in data) {
+        if(data.hasOwnProperty(uid)){
+          var follows = data[uid];
+          var targetLi = $(that.config.sliderElement).children('li').filter('[data-user-id=' + uid + ']');
+          var thisUsersName = targetLi.attr('data-user-name');
+          targetLi.find('.link-follow-user').attr('data-user-id', uid);
+          if(follows) {
+            targetLi.find('.link-follow-user').addClass('unfollow');
+            targetLi.find('.link-follow-user').children('span').text('Unfollow ' + thisUsersName);
+          } else {
+            targetLi.find('.link-follow-user').addClass('follow');
+            targetLi.find('.link-follow-user').children('span').text('Follow ' + thisUsersName);
+          }
+        }
+      }
+    }
+  });
+};
+
+ListView.prototype.setupFollowActions = function() {
+  var that = this;
+  
+  $('.link-follow-user.follow, .link-follow-user.unfollow').live('click', function(e) {
+    e.preventDefault();
+    var btn = $(this);
+    var destUserId = btn.attr('data-user-id'), destUserName = btn.parents('li').attr('data-user-name');
+    var action = (btn.hasClass('follow') ? 'follow' : 'unfollow');
+    var actionInSentence = action.charAt(0).toUpperCase() + action.slice(1);
+    var ok = confirm(actionInSentence + " " + destUserName + "'s activities?");
+    if(ok) {
+      $.ajax({
+        url: '/' + action + '/user/' + destUserId,
+        type: "POST",
+        success: function(data) {
+          var msg;
+          if(action === 'follow') {
+            msg = "Awesome. You can now find " + destUserName + " in your dashboard and through the left panel";
+            btn.children('span').text('Unfollow ' + destUserName);
+          } else {
+            msg = "You can no longer keep track of " + destUserName;
+            btn.children('span').text('Follow ' + destUserName);
+          }
+          alert(msg);
+          btn.toggleClass('follow unfollow');
+        }
+      });
+    }
+  });
 };

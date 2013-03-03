@@ -475,6 +475,20 @@ class UsersController < ApplicationController
   end
 
   # Ajax endpoints
+
+  def get_follow_statuses
+    render_401 and return unless user = current_user
+    target_users = params[:user_ids]
+    render_404 and return if target_users.nil?
+
+    res = {}
+    target_users.each do |t|
+      following = UserFollow.find_by_user_id_and_following_user_id(user.id, t)
+      res[t] = !! following
+    end
+    render :json => res
+  end
+
   def follow_user
     user = current_user
     render_401 and return unless user
@@ -493,8 +507,8 @@ class UsersController < ApplicationController
     unfollowing_user = User.find_by_id(params[:id])
     render_404 and return unless unfollowing_user
 
-    follow_record = user.user_follows.where(:following_user_id => params[:id])
-    follow_record.destroy
+    follow_record = user.user_follows.where(:following_user_id => params[:id]).first
+    follow_record && follow_record.destroy
     render :json => { :success => true }
   end
 

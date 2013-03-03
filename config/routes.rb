@@ -93,7 +93,8 @@ Aapaurmain::Application.routes.draw do
   post '/request/:id/accept' => 'users#accept_request'
   post '/request/:id/decline' => 'users#decline_request'
 
-  post '/follow/user/:id/:type' => 'users#follow_user', :defaults => { :type => 0 }
+  get '/get/follow/statuses' => 'users#get_follow_statuses'
+  post '/follow/user/:id' => 'users#follow_user', :defaults => { :type => 0 }
   post '/unfollow/user/:id' => 'users#unfollow_user'
   post '/rate/profile/:id/:star' => 'users#rate_profile', :defaults => { :star => 1 }
   match '/persona/:id' => 'users#show'

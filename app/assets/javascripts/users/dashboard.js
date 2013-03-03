@@ -54,7 +54,10 @@ Dashboard.prototype.checkPanelsSelection = function() {
 
 Dashboard.prototype.setupPostAction = function() {
   var that = this;
-  $('input.post-status:not(:disabled)').live('click', function(e) {
+  $('input.post-status').live('click', function(e) {
+    if($(this).hasClass('disabled')) {
+      return;
+    }
     e.preventDefault();
     if($('textarea.feeds-box').val() === "") {
       alert("Oops. You have to post something right?");

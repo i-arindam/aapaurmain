@@ -69,7 +69,9 @@ class Story < ActiveRecord::Base
   def self.get_comments(sid, start, stop)
     comments = $r.lrange("story:#{sid}:comments", start, stop)
     comments.collect! do |c|
-      JSON.parse(c)
+      com = JSON.parse(c)
+      com['text'].gsub!("\n", "<br/>")
+      com
     end
     final_comments, i = [], 0
     comments.each do |h|

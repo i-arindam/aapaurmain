@@ -171,8 +171,8 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
 
   newComment.find('.comment-user-img').attr('alt', comment.by);
   newComment.find('.comment-creator').text(comment.by);
-  newComment.find('.comment-time').text(comment.when + 'ago');
-  newComment.find('.comment-text').text(comment.text);
+  newComment.find('.comment-time').text(comment.when + ' ago');
+  newComment.find('.comment-text').html(comment.text);
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
   

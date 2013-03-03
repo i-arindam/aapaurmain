@@ -90,7 +90,6 @@ ListView.prototype._initStructures = function() {
   this.writeFollowingStatus();
   this.setupFollowActions();
   this.writeRatings();
-  this.setupRatings();
 };
 
 ListView.prototype.getAllData = function() {
@@ -148,6 +147,7 @@ ListView.prototype.clearContentAndShowLoader = function() {
   this.panelsContainer.children().remove();
   this.questionsContainer.children().remove();
   this.topStoriesContainer.children().remove();
+  $('.rate-hint, .star, .ratings').hide();
 
   this.panelsLoader.appendTo(this.panelsContainer).fadeIn();
   this.questionsLoader.appendTo(this.questionsContainer).fadeIn();
@@ -158,7 +158,9 @@ ListView.prototype.refreshDisplayFor = function(uid) {
   this.panelsData[uid] ? this.paintPanelsSectionFor(uid) : this.retryAndPaintFor('panel', uid);
   this.questionsData[uid] ? this.paintQuestionsSectionFor(uid) : this.retryAndPaintFor('question', uid);
   this.topStoriesData[uid] ? this.paintTopStoriesSectionFor(uid) : this.retryAndPaintFor('story', uid);
-  $('.rs-next, .rs-prev').removeClass('disable-action');
+  setTimeout(function() {
+    $('.rs-next, .rs-prev').removeClass('disable-action');
+  }, 1000);
 };
 
 ListView.prototype.retryAndPaintFor = function(obj, uid) {
@@ -365,13 +367,19 @@ ListView.prototype.writeRatings = function() {
         click: function(score, evt) {
           that.rateProfile(score, $(this).parents('li').attr('data-user-id'));
         }
-      }); //{
+      });
+      that.bindRateClickAction();
     }
   });
 };
 
-ListView.prototype.setupRatings = function() {
+ListView.prototype.bindRateClickAction = function() {
   var that = this;
+  $('.link-rate-profile').on('click', function(e) {
+    e.preventDefault();
+    var targetLi = $(this).parents('li');
+    targetLi.find('.rate-hint, .ratings, .star').fadeIn(700);
+  });
 };
 
 ListView.prototype.rateProfile = function(score, uid) {

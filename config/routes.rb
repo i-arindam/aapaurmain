@@ -60,7 +60,7 @@ Aapaurmain::Application.routes.draw do
 
   # User Activity section
   post 'story/:story_id/do' => 'story#like_dislike_or_comment'
-  post 'story/:story_id/comment/:number/:action' => 'story#like_dislike_a_comment'
+  post 'story/:story_id/comment/:number/do' => 'story#like_dislike_a_comment'
   post 'story/create' => 'story#create_new_story'
   match 'story/:id' => 'story#show'
 

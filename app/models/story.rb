@@ -37,7 +37,7 @@ class Story < ActiveRecord::Base
   # @param [Object::User] acting_user
   #   Current user who did action
   def self.update_comment(params, acting_user_id)
-    story_id, action, comment_number = params[:story_id], params[:action].pluralize, params[:number]
+    story_id, action, comment_number = params[:story_id], params[:work].pluralize, params[:number]
     already_acted = $r.sismember("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
 
     return false if already_acted
@@ -73,8 +73,8 @@ class Story < ActiveRecord::Base
     end
     final_comments, i = [], 0
     comments.each do |h|
-      h['claps'] = $r.scard("story:#{sid}:comment:#{i}:claps") || 0
-      h['boos'] = $r.scard("story:#{sid}:comment:#{i}:boos") || 0
+      h['claps'] = $r.scard("story:#{sid}:comments:#{i}:claps") || 0
+      h['boos'] = $r.scard("story:#{sid}:comments:#{i}:boos") || 0
       final_comments.push(h)
       i += 1
     end

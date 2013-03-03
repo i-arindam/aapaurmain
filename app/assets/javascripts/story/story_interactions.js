@@ -9,8 +9,8 @@ function StoryHandler(){
       "data": [
         { "link": '.j-show-claps',             "url": '/story/{{sid}}/get?t=claps' }, 
         { "link": '.j-show-boos',              "url": '/story/{{sid}}/get?t=boos' },
-        { "link": '.j-show-comment-claps',     "url": '/story/{{sid}}/get/comment/{{number}}/likes' },
-        { "link": '.j-show-comment-boos',      "url": '/story/{{sid}}/get/comment/{{number}}/dislikes' }
+        { "link": '.j-show-comment-claps',     "url": '/story/{{sid}}/get/comment/{{number}}?t=claps' },
+        { "link": '.j-show-comment-boos',      "url": '/story/{{sid}}/get/comment/{{number}}?t=boos' }
       ],
       "handler": this.bindHandlerForShow
     },
@@ -19,8 +19,8 @@ function StoryHandler(){
         { "link": '.link-like',              "url": '/story/{{sid}}/do?action=clap',             "update": ".story-claps" },
         { "link": '.link-dislike',           "url": '/story/{{sid}}/do?action=boo',              "update": ".story-boos" },
         { "link": '.submit-comment',         "url": '/story/{{sid}}/do?action=comment',          "update": ".story-comments" },
-        { "link": '.link-like-comment',      "url": '/story/{{sid}}/comment/{{number}}/like',    "update": ".comment-claps" },
-        { "link": '.link-dislike-comment',   "url": '/story/{{sid}}/comment/{{number}}/dislike', "update": ".comment-boos" }
+        { "link": '.link-like-comment',      "url": '/story/{{sid}}/comment/{{number}}/do?action=clap',    "update": ".comment-claps" },
+        { "link": '.link-dislike-comment',   "url": '/story/{{sid}}/comment/{{number}}/do?action=boo', "update": ".comment-boos" }
       ],
       "handler": this.bindHandlerForAction
     }
@@ -108,8 +108,12 @@ StoryHandler.prototype.showInModal = function(data) {
 };
 
 StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, commentNumber) {
-  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']');
-  var toUpdate = story.find(selector);
+  var story = $(this.storySelector).filter('[data-story-id=' + sid + ']'), toUpdate;
+  if(selector.indexOf('comment-') !== -1) {
+    toUpdate = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
+  } else {
+    toUpdate = story.find(selector);
+  }
   toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
 };
 

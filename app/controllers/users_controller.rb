@@ -489,6 +489,23 @@ class UsersController < ApplicationController
     render :json => res
   end
 
+  def get_ratings
+    render_401 and return unless user = current_user
+    target_users = params[:user_ids]
+    render_404 and return if target_users.nil?
+
+    res = {}
+    target_users.each do |t|
+      u = User.find_by_id(t) rescue nil
+      next if u.nil?
+      res[u.id] = {
+        :num_ratings => u.num_ratings,
+        :avg_rating => u.avg_rating
+      }
+    end
+    render :json => res
+  end
+
   def follow_user
     user = current_user
     render_401 and return unless user
@@ -518,10 +535,16 @@ class UsersController < ApplicationController
     rating_profile = User.find_by_id(params[:id])
     render_404 and return unless rating_profile
 
-    rated = ProfileRating.find_or_create_by_my_id_and_user_id(user.id, params[:id].to_i)
-    rated.rating = params[:star]
-    rated.save
-    render :json => { :success => true }
+    old_avg = rating_profile.avg_rating
+    old_ct = rating_profile.num_ratings
+    rating_profile.avg_rating = ( old_avg * old_ct + params[:score].to_i) / ( old_ct + 1)
+    rating_profile.num_ratings += 1
+    rating_profile.save
+    render :json => { 
+      :success => true,
+      :new_avg => rating_profile.avg_rating.round(2),
+      :new_count => rating_profile.num_ratings
+    }
   end
 
   def get_all_panels_info

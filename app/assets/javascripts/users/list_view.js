@@ -89,6 +89,8 @@ ListView.prototype._initStructures = function() {
 
   this.writeFollowingStatus();
   this.setupFollowActions();
+  this.writeRatings();
+  this.setupRatings();
 };
 
 ListView.prototype.getAllData = function() {
@@ -279,6 +281,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
 
 ListView.prototype.writeFollowingStatus = function() {
   var that = this;
+  var lis = $(that.config.sliderElement).children('li');
   $.ajax({
     url: '/get/follow/statuses',
     data: { 'user_ids': this.config.userIds },
@@ -288,7 +291,7 @@ ListView.prototype.writeFollowingStatus = function() {
       for(var uid in data) {
         if(data.hasOwnProperty(uid)){
           var follows = data[uid];
-          var targetLi = $(that.config.sliderElement).children('li').filter('[data-user-id=' + uid + ']');
+          var targetLi = lis.filter('[data-user-id=' + uid + ']');
           var thisUsersName = targetLi.attr('data-user-name');
           targetLi.find('.link-follow-user').attr('data-user-id', uid);
           if(follows) {
@@ -331,6 +334,60 @@ ListView.prototype.setupFollowActions = function() {
           btn.toggleClass('follow unfollow');
         }
       });
+    }
+  });
+};
+
+ListView.prototype.writeRatings = function() {
+  var that = this;
+  var lis = $(this.config.sliderElement).children('li');
+  $.ajax({
+    url: '/get/user/ratings',
+    type: "GET",
+    dataType: "json",
+    data: {'user_ids': this.config.userIds },
+    success: function(data) {
+      for(var rate in data) {
+        if(data.hasOwnProperty(rate)) {
+          var targetLi = lis.filter('[data-user-id=' + rate + ']');
+          targetLi.find('.avg-rate').text(data[rate].avg_rating);
+          targetLi.find('.num-rate').text(data[rate].num_ratings);
+          targetLi.find('.star').attr('data-score', data[rate].avg_rating);
+        }
+      }
+      $('.star').raty({
+        path: '/assets/users/',
+        size: 48,
+        target: '.rate-hint',
+        targetKeep: true,
+        targetText: '--',
+        hints: ['Not great', 'Ok', 'Cool', 'Awesome', 'Superrrr'],
+        click: function(score, evt) {
+          that.rateProfile(score, $(this).parents('li').attr('data-user-id'));
+        }
+      }); //{
+    }
+  });
+};
+
+ListView.prototype.setupRatings = function() {
+  var that = this;
+};
+
+ListView.prototype.rateProfile = function(score, uid) {
+  var that = this, rateData = {};
+  var postUrl = '/rate/profile/' + uid + '/' + score;
+
+  $.ajax({
+    url: postUrl,
+    type: "POST",
+    dataType: "json",
+    data: rateData,
+    success: function(data) {
+      var targetLi = $(that.config.sliderElement).children('li').filter('[data-user-id=' + uid + ']');
+      targetLi.find('.avg-rate').text(data.new_avg);
+      targetLi.find('.num-rate').text(data.new_count);
+      targetLi.find('.star').raty('readOnly', true);
     }
   });
 };

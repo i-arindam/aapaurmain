@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221183518) do
+ActiveRecord::Schema.define(:version => 20130303174000) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -82,16 +82,6 @@ ActiveRecord::Schema.define(:version => 20130221183518) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
-
-  create_table "profile_ratings", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "my_id",                                  :null => false
-    t.integer  "rating",     :limit => 1, :default => 0
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "profile_ratings", ["my_id", "user_id"], :name => "index_profile_ratings_on_my_id_and_user_id", :unique => true
 
   create_table "profile_updates", :force => true do |t|
     t.text     "profile"
@@ -189,13 +179,13 @@ ActiveRecord::Schema.define(:version => 20130221183518) do
   add_index "user_follows", ["user_id", "following_user_id"], :name => "index_user_follows_on_user_id_and_following_user_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :null => false
-    t.string   "name",                   :limit => 150, :null => false
+    t.string   "email",                                                                                :null => false
+    t.string   "name",                   :limit => 150,                                                :null => false
     t.date     "dob"
     t.string   "location"
     t.string   "password_reset_token"
     t.date     "password_reset_sent_at"
-    t.string   "password_digest",                       :null => false
+    t.string   "password_digest",                                                                      :null => false
     t.string   "auth_token"
     t.integer  "sex",                    :limit => 1
     t.string   "relocation",             :limit => 140
@@ -222,8 +212,10 @@ ActiveRecord::Schema.define(:version => 20130221183518) do
     t.date     "locked_since"
     t.integer  "locked_with"
     t.boolean  "status"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                                                           :null => false
+    t.datetime "updated_at",                                                                           :null => false
+    t.integer  "num_ratings",                                                         :default => 0
+    t.decimal  "avg_rating",                            :precision => 4, :scale => 2, :default => 0.0
   end
 
   add_index "users", ["auth_token"], :name => "index_users_on_auth_token"

@@ -105,30 +105,32 @@ class Request < ActiveRecord::Base
   def get_display_for_incoming_requests(values)
     if self.sent?
       values['text'] = 'Accept'
-      values['href'] = "/request/#{self.id}/accept"
+      values['href'] = "#request_accept"
+      values['special'] = "/request/#{self.id}/accept"
     elsif self.declined?
       values['text'] = 'Request once declined'
-      values['href'] = '#'
-      values['special'] = 'declined'
+      values['href'] = '#request_declined'
+      # values['special'] = 'declined'
     elsif self.accepted? # These 2 are in lock state
       values['text'] = 'Break Lock'
-      values['href'] = '#'
-      values['special'] = 'break_lock'
+      values['href'] = '#request_break'
+      # values['special'] = 'break_lock'
     end
   end
 
   def get_display_for_outgoing_requests(values)
     if self.sent?
       values['text'] = 'Withdraw'
-      values['href'] = "/request/#{self.id}/cancel"
+      values['href'] = "#request_withdraw"
+      values['special'] = "/request/#{self.id}/cancel"
     elsif self.withdrawn?
       values['text'] = 'Request once sent'
-      values['href'] = '#'
-      values['special'] = 'withdrawn'
+      values['href'] = '#request_sent'
+      # values['special'] = 'withdrawn'
     elsif self.accepted? # These 2 are in lock state
       values['text'] = 'Break Lock'
-      values['href'] = '#'
-      values['special'] = 'break_lock'
+      values['href'] = '#request_break'
+      # values['special'] = 'break_lock'
     end
   end
 

@@ -95,95 +95,14 @@ class UsersController < ApplicationController
       :message => message
     }
   end
+
+  def break_lock
+    
+  end
   
   ### REQUESTS ACTION ENDS ###
   
   ### POST LOCK STATE STARTS ###
-  
-  # Fired when one Withdraws one of his locks
-  # Inactivates the lock and updates the state of the user
-  # @param [Fixnum(11)] id
-  # => The id of the user who is withdrawing the lock
-  # @param [Fixnum(11)] lock_id
-  # => The id of the lock being withdrawn
-  def withdraw_lock
-    withdrawing_user = User.find_by_id(params[:from_id])
-    render_404 and return unless withdrawing_user and withdrawing_user == current_user
-    
-    lock = Lock.find_by_one_id(params[:from_id])
-    lock = Lock.find_by_another_id(params[:from_id]) if lock.nil?
-    render_404 and return unless lock and lock.is_active? and (lock.one_id == params[:from_id].to_i || lock.another_id == params[:from_id].to_i)
-    
-    lock.update_withdrawn
-    to_user = User.find_by_id(params[:to_id])
-   
-    
-    withdrawing_user.update_status_post_lock_withdraw
-    to_user.update_status_post_lock_withdraw
-    withdrawing_user.decline_request_from(to_user)
-    success = to_user.decline_request_from(withdrawing_user)
-    
-    message = (success ? User::REJECT_REQUEST_SENT : User::REJECT_REQUEST_FAILED_TO_SAVE)
-    m=message.gsub('{{user}}', to_user.name)
-
-    render :json => {
-      :success => success,
-      :message => m
-    }
-    
-  end
-  
-  # One of the user in a locked state comes and updates status as successfull Marriage.
-  # Notifications and confirmation sent to the other user to verify this.
-  # @param [Fixnum(11)] id
-  # => The id of the user changing the state
-  # @return [JsonObject] denoting the 
-  # => success of the request, and
-  # => the corresponding message
-  def request_confirm_locked
-    notifying_user = User.find_by_id(params[:id])
-    render_404 and return unless notifying_user and notifying_user == current_user
-    
-    to_approve_user = User.find_by_id(notifying_user.locked_with)
-    render_404 and return unless to_approve_user and to_approve_user.status == User::LOCKED and to_approve_user.locked_with == params[:id]
-    
-    success = notifying_user.request_mark_as_married
-    message = (success ? User::SUCCESS_REQUEST_SENT : User::SUCCESS_REQUEST_FAILED_TO_SAVE)
-    m=message.gsub('{{user}}', to_approve_user.name)
-    
-    to_approve_user.send_request_for_successful_lock if success
-
-    render :json => {
-      :success => success,
-      :message => m
-    }
-  end
-  
-  # When one person has notified of the success and the other confirms it
-  # Store them as couple and mark their married_date
-  # Also creates a new entry in couples table
-  # @param [Fixnum(11)] id
-  # => The id of the user who confirmed the request
-  # @return [JsonObject] denoting the 
-  # => success of the request, and
-  # => the corresponding message
-  def confirm_success
-    accepting_user = User.find_by_id(params[:id])
-    render_404 and return unless accepting_user and accepting_user == current_user
-    
-    requesting_user = User.find_by_id(accepting_user.locked_with)
-    render_404 and return unless requesting_user and requesting_user.status == User::MARK_MARRIED and requesting_user.locked_with == accepting_user.id
-    
-    success = User.mark_as_married(requesting_user, accepting_user)
-    
-    message = (success ? User::SUCCESS_REQUEST_ACCEPTED : User::SUCCESS_REQUEST_FAILED_TO_SAVE)
-    m=message.gsub('{{user}}', to_approve_user.name)
-
-    render :json => {
-      :success => success,
-      :message => m
-    }
-  end
   
   ### POST LOCK STATE STARTS ###
   

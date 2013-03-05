@@ -29,14 +29,6 @@ Aapaurmain::Application.routes.draw do
   post 'users/:id/show_viewers' => 'users#show_viewers'
   
   
-  # Post lock actions
-  post 'users/withdraw_lock' => 'users#withdraw_lock'
-  post 'users/:id/locks/:lock_id/withdraw' => 'users#withdraw_lock'
-  post 'users/:id/locks/:lock_id/finalize' => 'users#finalize_lock'
-  post 'users/:id/lock/request_confirm' => 'users#request_confirm_locked'
-  post 'users/:id/lock/confirm_success' => 'users#confirm_success'
-  
-
   # Search actions
   get 'search/keyword_search' => 'search#keyword_search'
   post '/search/advanced_search' => 'search#advanced_search'
@@ -87,11 +79,13 @@ Aapaurmain::Application.routes.draw do
 
   # Panels pages
   match '/panels/:name' => 'panel#show'
+  
   # Per user links
   post '/request/:user_id/send' => 'users#create_request'
   post '/request/:id/cancel' => 'users#withdraw_request'
   post '/request/:id/accept' => 'users#accept_request'
   post '/request/:id/decline' => 'users#decline_request'
+  post '/request/:id/break' => 'users#break_lock'
 
   get '/get/follow/statuses' => 'users#get_follow_statuses'
   post '/follow/user/:id' => 'users#follow_user', :defaults => { :type => 0 }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130303174000) do
+ActiveRecord::Schema.define(:version => 20130305180157) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -60,19 +60,6 @@ ActiveRecord::Schema.define(:version => 20130303174000) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
-  create_table "locks", :force => true do |t|
-    t.integer "one_id",                                    :null => false
-    t.integer "another_id",                                :null => false
-    t.date    "creation_date"
-    t.date    "date"
-    t.date    "withdraw_date"
-    t.date    "finalize_date"
-    t.integer "status",        :limit => 1, :default => 0
-  end
-
-  add_index "locks", ["another_id"], :name => "index_locks_on_another_id"
-  add_index "locks", ["one_id"], :name => "index_locks_on_one_id"
 
   create_table "messages", :force => true do |t|
     t.integer  "conversation_id",                 :null => false

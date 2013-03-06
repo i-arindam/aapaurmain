@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "list", "right_bar", "stories", "users/colorbox" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list", "users/list_view", "users/request_actions", "users/jquery.raty.min", "jquery.colorbox-min" %>
+      <%= javascript_include_tag "application-list", "users/list_view", "story/story_interaction", "users/request_actions", "users/jquery.raty.min", "jquery.colorbox-min", "jquery.timeago" %>
     <% end %>
     <title><%= @title %></title>
     <script type="text/javascript">

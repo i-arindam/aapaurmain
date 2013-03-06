@@ -26,7 +26,9 @@
             'sessionUserId': <%= @user.id %>,
             'sliderElement': '.allinone_carousel_list'
           });
-          var requestActions = new RequestActions();
+          var requestActions = new RequestActions({
+            'userSelector': '.rs-slider li'
+          });
         }
       });
     </script>

@@ -14,14 +14,18 @@ class UsersController < ApplicationController
     to_user = User.find_by_id(params[:user_id])
     render_404 and return unless to_user
 
-    success = from_user.create_new_request(to_user)
+    success, req_id = from_user.create_new_request(to_user)
     message = (success ? User::REQUEST_SENT : User::REQUEST_FAILED)
     message.gsub!('{{user}}', to_user.name)
-
-    render :json => {
+    return_val = {
       :success => success,
-      :message => message
+      :message => message,
+      :post_text => "Withdraw Request",
+      :post_href => '#request_withdraw',
+      :post_special => "/request/#{req_id}/cancel"
     }
+
+    render :json => return_val
   end
   
   # Accepts a request sent to me from another user
@@ -40,11 +44,15 @@ class UsersController < ApplicationController
     success = current_user.accept_request_from(from_user)
     message = (success ? User::REQUEST_ACCEPTED : User::REQUEST_FAILED)
     message.gsub!('{{user}}', from_user.name)
-    
-    render :json => {
+    return_val = {
       :success => success,
-      :message => message
+      :message => message,
+      :post_text => "Break Lock",
+      :post_href => '#request_break',
+      :post_special => "/request/#{params[:id]}/break"
     }
+    
+    render :json => return_val
   end
   
   
@@ -64,11 +72,15 @@ class UsersController < ApplicationController
     success = current_user.withdraw_request_to(to_user)
     message = (success ? User::REQUEST_WITHDRAWN : User::REQUEST_FAILED)
     message!.gsub('{{user}}', to_user.name)
-    
-    render :json => {
+    return_val = {
       :success => success,
-      :message => message
+      :message => message,
+      :post_text => "Send Request",
+      :post_href => '#request_send',
+      :post_special => "/request/#{req.to_id}/send"
     }
+    
+    render :json => return_val
   end
   
   
@@ -88,23 +100,38 @@ class UsersController < ApplicationController
     success = current_user.decline_request_from(from_user)
     
     message = (success ? User::REQUEST_DECLINED : User::REQUEST_FAILED)
-    message!.gsub('{{user}}', from_user.name)
-    
-    render :json => {
+    message.gsub!('{{user}}', from_user.name)
+    return_val = {
       :success => success,
-      :message => message
+      :message => message,
+      :post_text => "Send Request",
+      :post_href => '#request_send',
+      :post_special => "/request/#{from_user.id}/send"
     }
+
+    render :json => return_val
   end
 
   def break_lock
-    
+    render_401 and return unless current_user
+    req = Request.find_by_id(params[:id])
+    render_404 and return unless req
+    other_user_id = (req.from_id == current_user.id ? 'to_id' : 'from_id')
+    other_user = User.find_by_id(req[other_user_id])
+    render_404 and return unless other_user
+
+    success = current_user.break_lock_with(other_user, params[:id])
+    return_val = {
+      :success => success,
+      :post_text => "Send Request",
+      :post_href => '#request_send',
+      :post_special => "/request/#{other_user.id}/send"
+    }
+
+    render :json => return_val
   end
   
   ### REQUESTS ACTION ENDS ###
-  
-  ### POST LOCK STATE STARTS ###
-  
-  ### POST LOCK STATE STARTS ###
   
   def create
     try_and_create("new")

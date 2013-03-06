@@ -1,4 +1,5 @@
-function RequestActions() {
+function RequestActions(config) {
+  this.config = config;
   this._init();
 }
 
@@ -9,44 +10,52 @@ RequestActions.prototype._init = function() {
 };
 
 RequestActions.prototype.bindClickActions = function() {
-  var that = this, action, name;
+  var that = this, action, name, linkToFollow, uid;
   this.buttons.on('click', function(e) {
     e.preventDefault();
     action = $(this).attr('href');
     name = $(this).attr('data-user-name');
-    var div = $(action);
-    div.find('span.user-name').text(name);
+    linkToFollow = $(this).attr('data-special')
+    uid = $(this).parents('li').attr('data-user-id');
+    
+    $(action).find('span.user-name').text(name);
     $(this).colorbox({
       inline: true,
-      width: "50%"
+      width: "50%",
+      onClosed: function() {
+        that.userSaidYesOrNoTo(linkToFollow, uid);
+      }
     });
-    that.trackUserActionOn(action);
   });
-};
 
-RequestActions.prototype.makeBackendCall = function(url) {
-  var that = this;
-  $.ajax({
-    url: url,
-    type: "POST",
-    success: function(data) {
-      alert(data.message);
-    }, error: function(data) {
-      alert("Server Error");
-    }
-  });
-};
-
-RequestActions.prototype.userSaidYesOrNoTo = function(action, confirm) {
-  var that = this;
-};
-
-RequestActions.prototype.trackUserActionOn = function(action) {
-  var that = this;
   $('.request_outer input[type=button]').on('click', function(e) {
     e.preventDefault();
-    var confirm = $(this).hasClass("yes");
+    that.confirm = $(this).hasClass("yes");
     $.colorbox.close();
-    that.userSaidYesOrNoTo(action, confirm);
-  });
+  });  
+};
+
+RequestActions.prototype.userSaidYesOrNoTo = function(link, uid) {
+  var that = this;
+  if(this.confirm) {
+    $.ajax({
+      url: link,
+      type: "POST",
+      dataType: "json",
+      success: function(data) {
+        that.updateButton(data, uid);
+      }, error: function() {
+        alert("Server Error. Looking into it.");
+      }
+    });
+  }
+};
+
+RequestActions.prototype.updateButton = function(data, uid) {
+  var li = $(this.config.userSelector).filter('[data-user-id=' + uid + ']');
+  var buttonToUpdate = li.find('a.req-button');
+
+  buttonToUpdate.attr('href', data.post_href);
+  buttonToUpdate.attr('data-special', data.post_special);
+  buttonToUpdate.find('span').text(data.post_text);
 };

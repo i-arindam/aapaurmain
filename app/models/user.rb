@@ -204,6 +204,7 @@ class User < ActiveRecord::Base
   end
   
   # Updates the status to available after withdraws a lock
+
   def update_status_post_lock_withdraw
     begin
       locked_with = self.locked_with
@@ -360,7 +361,7 @@ class User < ActiveRecord::Base
       return false
     end
     self.deliver_notifications(:request_sent, [b])
-    return true
+    return [true, req.id]
   end
   
   # Marks the request between self and from_user as accepted
@@ -420,6 +421,21 @@ class User < ActiveRecord::Base
     return true
   end
   
+  def break_lock_with(other_user, rid)
+    begin
+      self.status = AVAILABLE
+      self.locked_with = nil
+      other_user.locked_with = nil
+      other_user.status = AVAILABLE
+      self.save!
+      other_user.save!
+      req = Request.find_by_id(rid)
+      req && req.destroy
+    rescue
+      return false
+    end
+    return true
+  end
   
   ### REQUEST SECTION ENDS ###
 

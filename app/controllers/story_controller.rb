@@ -6,6 +6,7 @@ class StoryController < ApplicationController
     if params[:work] == "comment"
       comment = Story.add_comment(params, user)
       comment['when'] = decorate_redis_time(comment['when'])
+      comment['text'].gsub!("\n", "<br/>")
       res['template'] = render_to_string(:partial => '/story_comment')
       res['success'] = true
       res['comment'] = comment

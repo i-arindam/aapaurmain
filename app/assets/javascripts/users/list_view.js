@@ -260,7 +260,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
     this.constructedDomForStories[uid] = [];
     $.each(data.stories, function(i, s) {
       var storyDom = that.storyDom.clone();
-      storyDom.find('li.story').attr('data-story-id', s.id);
+      storyDom.attr('data-story-id', s.id);
       storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
       storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
       storyDom.find('.story-creator').text(s.by);

@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "list", "right_bar", "stories", "users/colorbox" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list", "users/list_view", "story/story_interaction", "users/request_actions", "users/jquery.raty.min", "jquery.colorbox-min", "jquery.timeago" %>
+      <%= javascript_include_tag "application-list", "users/list_view", "story/story_interactions", "users/request_actions", "users/jquery.raty.min", "jquery.colorbox-min", "jquery.timeago" %>
     <% end %>
     <title><%= @title %></title>
     <script type="text/javascript">
@@ -26,6 +26,7 @@
             'sessionUserId': <%= @user.id %>,
             'sliderElement': '.allinone_carousel_list'
           });
+          var sh = new StoryHandler();
           var requestActions = new RequestActions({
             'userSelector': '.rs-slider li'
           });

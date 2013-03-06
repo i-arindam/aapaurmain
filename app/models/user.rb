@@ -94,6 +94,7 @@ class User < ActiveRecord::Base
   # Every profile view is logged in DB. Used for analaytics services
 
   has_many :user_follows, :dependent => :destroy
+  has_many :profile_ratings, :dependent => :destroy
 
   def add_to_search_index
     if self.changed.include?(SEARCH_INDEX_FIELDS)

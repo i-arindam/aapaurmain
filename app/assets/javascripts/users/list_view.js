@@ -351,21 +351,27 @@ ListView.prototype.writeRatings = function() {
     dataType: "json",
     data: {'user_ids': this.config.userIds },
     success: function(data) {
+      var isReadOnly = false;
       for(var rate in data) {
         if(data.hasOwnProperty(rate)) {
           var targetLi = lis.filter('[data-user-id=' + rate + ']');
           targetLi.find('.avg-rate').text(data[rate].avg_rating);
           targetLi.find('.num-rate').text(data[rate].num_ratings);
-          targetLi.find('.star').attr('data-score', data[rate].avg_rating);
+          targetLi.find('.star').attr('data-score', data[rate].rated);
+          isReadOnly = typeof data[rate].rated !== 'undefined';
         }
       }
       $('.star').raty({
         path: '/assets/users/',
+        score: function() {
+          return $(this).attr('data-score');
+        },
         size: 48,
         target: '.rate-hint',
         targetKeep: true,
         targetText: '--',
         hints: ['Not great', 'Ok', 'Cool', 'Awesome', 'Superrrr'],
+        readOnly: isReadOnly,
         click: function(score, evt) {
           that.rateProfile(score, $(this).parents('li').attr('data-user-id'));
         }

@@ -90,6 +90,7 @@ Aapaurmain::Application.routes.draw do
   get '/get/follow/statuses' => 'users#get_follow_statuses'
   post '/follow/user/:id' => 'users#follow_user', :defaults => { :type => 0 }
   post '/unfollow/user/:id' => 'users#unfollow_user'
+
   post '/rate/profile/:id/:score' => 'users#rate_profile', :defaults => { :star => 1 }
   get '/get/user/ratings' => 'users#get_ratings'
   match '/persona/:id' => 'users#show'

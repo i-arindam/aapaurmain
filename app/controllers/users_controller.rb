@@ -435,23 +435,6 @@ class UsersController < ApplicationController
     render :json => res
   end
 
-  def get_ratings
-    render_401 and return unless user = current_user
-    target_users = params[:user_ids]
-    render_404 and return if target_users.nil?
-
-    res = {}
-    target_users.each do |t|
-      u = User.find_by_id(t) rescue nil
-      next if u.nil?
-      res[u.id] = {
-        :num_ratings => u.num_ratings,
-        :avg_rating => u.avg_rating
-      }
-    end
-    render :json => res
-  end
-
   def follow_user
     user = current_user
     render_401 and return unless user
@@ -475,21 +458,54 @@ class UsersController < ApplicationController
     render :json => { :success => true }
   end
 
+  def get_ratings
+    render_401 and return unless user = current_user
+    target_users = params[:user_ids]
+    render_404 and return if target_users.nil?
+
+    res = {}
+    target_users.each do |t|
+      u = User.find_by_id(t) rescue nil
+      next if u.nil?
+      their_ratings = ProfileRating.find_by_rated_user_id_and_user_id(t, user.id)
+      res[u.id] = {
+        :num_ratings => u.num_ratings,
+        :avg_rating => u.avg_rating,
+        :rated => their_ratings && their_ratings.score
+      }
+    end
+    render :json => res
+  end
+
   def rate_profile
     user = current_user
     render_401 and return unless user
-    rating_profile = User.find_by_id(params[:id])
-    render_404 and return unless rating_profile
+    target_user = User.find_by_id(params[:id])
+    render_404 and return unless target_user
+    old_avg = target_user.avg_rating
+    old_ct = target_user.num_ratings
+    old_rating = old_avg * old_ct
+    score = params[:score].to_i
 
-    old_avg = rating_profile.avg_rating
-    old_ct = rating_profile.num_ratings
-    rating_profile.avg_rating = ( old_avg * old_ct + params[:score].to_i) / ( old_ct + 1)
-    rating_profile.num_ratings += 1
-    rating_profile.save
+    rating = user.profile_ratings.where(:rated_user_id => params[:id]).first
+    unless rating.blank?
+      new_avg = (old_rating - (rating.score - score)) / old_ct
+      new_ct = old_ct
+      rating.score = score
+    else
+      rating = user.profile_ratings.create(:rated_user_id => params[:id], :score => score)
+      new_ct = old_ct + 1
+      new_avg = (old_rating + score)/new_ct
+    end
+    rating.save!
+
+    target_user.avg_rating = new_avg
+    target_user.num_ratings = new_ct
+    target_user.save!
     render :json => { 
       :success => true,
-      :new_avg => rating_profile.avg_rating.round(2),
-      :new_count => rating_profile.num_ratings
+      :new_avg => new_avg.round(2),
+      :new_count => new_ct
     }
   end
 

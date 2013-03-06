@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130305180157) do
+ActiveRecord::Schema.define(:version => 20130306180104) do
 
   create_table "add_users_to_searches", :force => true do |t|
     t.string   "name",                    :limit => 50,                 :null => false
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(:version => 20130305180157) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
+
+  create_table "profile_ratings", :force => true do |t|
+    t.integer  "user_id",                                   :null => false
+    t.integer  "rated_user_id",                             :null => false
+    t.integer  "score",         :limit => 1, :default => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "profile_ratings", ["rated_user_id", "user_id"], :name => "index_profile_ratings_on_rated_user_id_and_user_id", :unique => true
 
   create_table "profile_updates", :force => true do |t|
     t.text     "profile"

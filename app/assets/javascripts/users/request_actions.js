@@ -22,6 +22,7 @@ RequestActions.prototype.bindClickActions = function() {
     $(this).colorbox({
       inline: true,
       width: "50%",
+      title: "AapAurMain",
       onClosed: function() {
         that.userSaidYesOrNoTo(linkToFollow, uid);
       }

@@ -151,11 +151,8 @@ class User < ActiveRecord::Base
   #   Symbol for the event 
   def deliver_notifications(event, args = [])
     #return if Rails.env == 'development'
-     event = CONTACT_TEMPLATES[event]
-    #   Notification.send_notification(event[:notif], args << self) if event[:notif]
-    UserMailer.delay.send_mail({:template => event[:mail] , :subject => event[:subject], :user_array => args << self}) if event[:mail]
-    #   SmsDelivery.send_sms(event[:sms], args << self) if event[:sms] and self.is_phone_notif_allowed?
-    #   self.send(event[:operation].to_sym, args << self) if event[:operation]
+    event = CONTACT_TEMPLATES[event]
+    UserMailer.delay.send_mail({:template => event[:mail] , :subject => event[:subject], :user_array => args << self}) if event[:mail] && !Rails.env.development?
   end
   
   # Checks if phone notification is allowed for the user

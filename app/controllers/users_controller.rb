@@ -71,7 +71,7 @@ class UsersController < ApplicationController
 
     success = current_user.withdraw_request_to(to_user)
     message = (success ? User::REQUEST_WITHDRAWN : User::REQUEST_FAILED)
-    message!.gsub('{{user}}', to_user.name)
+    message.gsub!('{{user}}', to_user.name)
     return_val = {
       :success => success,
       :message => message,

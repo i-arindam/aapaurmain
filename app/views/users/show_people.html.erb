@@ -27,8 +27,10 @@
             'sliderElement': '.allinone_carousel_list'
           });
           var sh = new StoryHandler();
-          var requestActions = new RequestActions({
-            'userSelector': '.rs-slider li'
+          var userActions = new UserActions({
+            'userSelector': '.rs-slider li',
+            'userIds': <%= @user_ids %>,
+            'sliderElement': '.allinone_carousel_list'
           });
         }
       });

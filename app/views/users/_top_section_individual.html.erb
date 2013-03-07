@@ -1,5 +1,5 @@
 <% content_for :stylesheet do %>
-<%= stylesheet_link_tag "users/top_section_individual" %>
+<%= stylesheet_link_tag "users/top_section_individual", "users/colorbox" %>
 <% end %>
 <% content_for :js_footer do %>
 <%= javascript_include_tag "users/request_actions" %>
@@ -20,9 +20,21 @@
       </div>
       <div class="clear"></div>
       <div class="btn-wraper clearfix">
-        <a href="<%= request['href'] %>" class="btn btn-success req-button" data-special="<%= request['special'] %>"><%= request['text'] %></a>
-        <a href="#" class="btn btn-success follow-user">Follow User</a>
-        <a href="#" class="btn btn-success last rate-profile">Rate the profile</a>
+        <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
+          <span class="send-req"><%= request['text'] %></span>
+        </a>
+        <a href="#" class="button link-follow-user <%= @follow_class %>" data-user-id="<%= @user.id %>">
+          <span class="follow-user">Follow User</span>
+        </a>
+        <a href="#" class="button link-rate-profile">
+          <span class="rate-profile">Rate the profile</span>
+        </a>
+        <div class="ratings hide">
+          <span class="avg-rate"><%= user.avg_rating %></span>
+          (<span class="num-rate"><%= user.num_ratings %></span> ratings.)
+        </div>
+        <div class="star hide" data-score="<%= @rated_score %>"></div>
+        <span class="rate-hint hide">&nbsp;</span>        
       </div>
     </div>
     <div class="box-rt blog-lt">

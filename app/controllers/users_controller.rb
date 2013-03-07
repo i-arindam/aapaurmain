@@ -165,6 +165,9 @@ class UsersController < ApplicationController
 
     # Questions object
     @questions = ShortQuestion.get_latest_n_answers_for(@user.id, 2, 0)
+    @follow_class = (@current_user.user_follows.where(:following_user_id => @user.id).first ? "unfollow" : "follow")
+    rated = @current_user.profile_ratings.where(:rated_user_id => @user.id).first
+    @rated_score = (rated ? rated.score : 0)
 
     # Stories object
     @stories = Story.get_n_stories_for(@user.id, 10, 0)

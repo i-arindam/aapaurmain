@@ -8,11 +8,17 @@
       <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/profile", "story" %>
+      <%= javascript_include_tag "users/profile", "story", "jquery.colorbox-min", "users/jquery.raty.min" %>
     <% end %>
     <script type="text/javascript">
       $(function() {
-        var requestActions = new RequestActions();
+        var userActions = new UserActions({
+          'userSelector': '.rs-slider li',
+          'sliderElement': '.allinone_carousel_list',
+          'singleUser': true,
+          'userId': <%= @user.id %>,
+          'userName': "<%= @user.name %>"
+        });
         var sh = new StoryHandler();
         var profile = new UserProfile({
           'currentUserId': <%= @current_user.id %>,
@@ -74,6 +80,6 @@
 
       </div>
     </div><!-- Container -->
-
+    <%= render :partial => "users/request_messages" %>
   </body>
 </html>

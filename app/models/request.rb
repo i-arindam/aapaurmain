@@ -144,15 +144,9 @@ class Request < ActiveRecord::Base
       req.get_display_for_incoming_requests(values)
     else # No request b/w these 2 ever existed
       values['text'] = 'Send Request'
-      values['href'] = "/request/#{other}/send"
+      values['special'] = "/request/#{other}/send"
+      values['href'] = '#request_send'
     end
-
-    if req && req.accepted? # These 2 are in lock state
-      values['text'] = 'Break Lock'
-      values['href'] = '#'
-      values['special'] = 'break_lock'
-    end
-
     values
   end
 

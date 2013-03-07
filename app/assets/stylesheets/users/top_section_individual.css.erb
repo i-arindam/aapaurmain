@@ -71,6 +71,31 @@
   top: -3px;
   width: 114px;
 }
+.btn-wraper {
+  margin: 20px 0 0 0;
+}
+.button {
+  display: block;
+  border-right: 1px solid #edecec;
+  border-bottom: 1px solid #edecec;
+  color: #fff;
+  font-size: 12px;
+  font-family: 'lucida_sansdemibold_roman';
+  box-shadow: 1px 1px #b6b6b6;
+  border-radius: 1px;
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  background: #8f8c89;
+}
+.button:hover {
+  color: #fff;
+}
+.btn-wraper a {
+  float: left;
+  margin: 0 13px 0 0;
+  width: auto;
+  padding-right: 10px;
+}
 .btn-wraper a.last {
   margin: 0;
 }
@@ -80,7 +105,7 @@
   width: 136px;
   min-width: 136px;
 }
-.req-button, .follow-user, .rate-profile {
+.send-req, .follow-user, .rate-profile {
   background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 9px -200px;
   display: block;
   padding: 8px 0 8px 28px;
@@ -94,3 +119,26 @@
   padding-left: 34px;
 }
 /* Profile individual ends */
+.star {
+  position: relative;
+  left: 53%;
+  top: 10px;
+  display: none;
+}
+.rate-hint {
+  position: relative;
+  left: 55%;
+  top: 10px;
+  display: none;
+}
+.ratings {
+  position: relative;
+  top: 7px;
+  font-size: 14px;
+  display: none;
+}
+.star img{
+  width: 28px;
+  height: 28px;
+  display: inline;
+}

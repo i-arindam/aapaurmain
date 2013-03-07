@@ -6,13 +6,20 @@ function UserActions(config) {
 UserActions.prototype._init = function() {
   this.buttons = $('.req-button');
 
-  this.bindClickActions();
-  this.writeFollowingStatus();
-  this.setupFollowActions();
-  this.writeRatings();
+  this.bindClickForRequestActions();
+  
+  if(this.config.singleUser) {
+    this.setupFollowActions();
+    this.setupRaty();
+    this.bindRateClickAction();
+  } else {
+    this.writeFollowingStatus();
+    this.setupFollowActions();
+    this.writeRatings();
+  }
 };
 
-UserActions.prototype.bindClickActions = function() {
+UserActions.prototype.bindClickForRequestActions = function() {
   var that = this, action, name, linkToFollow, uid;
   this.buttons.on('click', function(e) {
     e.preventDefault();
@@ -39,8 +46,13 @@ UserActions.prototype.bindClickActions = function() {
   });  
 };
 
+UserActions.prototype.initForSingleUser = function() {
+
+};
+
 UserActions.prototype.userSaidYesOrNoTo = function(link, uid) {
   var that = this;
+  uid = uid || this.config.userId;
   if(this.confirm) {
     $.ajax({
       url: link,
@@ -56,8 +68,13 @@ UserActions.prototype.userSaidYesOrNoTo = function(link, uid) {
 };
 
 UserActions.prototype.updateButton = function(data, uid) {
-  var li = $(this.config.userSelector).filter('[data-user-id=' + uid + ']');
-  var buttonToUpdate = li.find('a.req-button');
+  var li, buttonToUpdate;
+  if(this.config.singleUser) {
+    buttonToUpdate = $('.req-button');
+  } else {
+    li = $(this.config.userSelector).filter('[data-user-id=' + uid + ']');
+    buttonToUpdate = li.find('a.req-button');
+  }
 
   buttonToUpdate.attr('href', data.post_href);
   buttonToUpdate.attr('data-special', data.post_special);
@@ -98,7 +115,8 @@ UserActions.prototype.setupFollowActions = function() {
   $('.link-follow-user.follow, .link-follow-user.unfollow').live('click', function(e) {
     e.preventDefault();
     var btn = $(this);
-    var destUserId = btn.attr('data-user-id'), destUserName = btn.parents('li').attr('data-user-name');
+    var destUserId = btn.attr('data-user-id');
+    var destUserName = btn.parents('li').attr('data-user-name') || that.config.userName;
     var action = (btn.hasClass('follow') ? 'follow' : 'unfollow');
     var actionInSentence = action.charAt(0).toUpperCase() + action.slice(1);
     var ok = confirm(actionInSentence + " " + destUserName + "'s activities?");
@@ -141,31 +159,40 @@ UserActions.prototype.writeRatings = function() {
           targetLi.find('.star').attr('data-score', data[rate].rated);
         }
       }
-      $('.star').raty({
-        path: '/assets/users/',
-        score: function() {
-          return $(this).attr('data-score');
-        },
-        size: 48,
-        target: '.rate-hint',
-        targetKeep: true,
-        targetText: '--',
-        hints: ['Not great', 'Ok', 'Cool', 'Awesome', 'Kick Ass'],
-        click: function(score, evt) {
-          that.rateProfile(score, $(this).parents('li').attr('data-user-id'));
-        }
-      });
+      that.setupRaty();
       that.bindRateClickAction();
     }
   });
+};
+
+UserActions.prototype.setupRaty = function() {
+  var that = this;
+  $('.star').raty({
+    path: '/assets/users/',
+    score: function() {
+      return $(this).attr('data-score');
+    },
+    size: 48,
+    target: '.rate-hint',
+    targetKeep: true,
+    targetText: '--',
+    hints: ['Not great', 'Ok', 'Cool', 'Awesome', 'Kick Ass'],
+    click: function(score, evt) {
+      that.rateProfile(score, $(this).parents('li').attr('data-user-id') || that.config.userId);
+    }
+  });  
 };
 
 UserActions.prototype.bindRateClickAction = function() {
   var that = this;
   $('.link-rate-profile').on('click', function(e) {
     e.preventDefault();
-    var targetLi = $(this).parents('li');
-    targetLi.find('.rate-hint, .ratings, .star').fadeIn(700);
+    if(that.config.singleUser) {
+      $('.rate-hint, .ratings, .star').fadeIn(700);
+    } else {
+      var targetLi = $(this).parents('li');
+      targetLi.find('.rate-hint, .ratings, .star').fadeIn(700);
+    }
   });
 };
 
@@ -179,10 +206,14 @@ UserActions.prototype.rateProfile = function(score, uid) {
     dataType: "json",
     data: rateData,
     success: function(data) {
-      var targetLi = $(that.config.sliderElement).children('li').filter('[data-user-id=' + uid + ']');
-      targetLi.find('.avg-rate').text(data.new_avg);
-      targetLi.find('.num-rate').text(data.new_count);
-      targetLi.find('.star').raty('readOnly', true);
+      var target;
+      if(that.config.singleUser) {
+        target = $('.ratings');
+      } else {
+        target = $(that.config.sliderElement).children('li').filter('[data-user-id=' + uid + ']');
+      }
+      target.find('.avg-rate').text(data.new_avg);
+      target.find('.num-rate').text(data.new_count);
     }
   });
 };

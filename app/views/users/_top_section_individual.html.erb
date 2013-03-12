@@ -23,8 +23,8 @@
         <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
           <span class="send-req"><%= request['text'] %></span>
         </a>
-        <a href="#" class="button link-follow-user <%= @follow_class %>" data-user-id="<%= @user.id %>">
-          <span class="follow-user">Follow User</span>
+        <a href="#<%= @follow_class %>_user" class="button link-follow-user <%= @follow_class %>" data-user-id="<%= @user.id %>">
+          <span class="follow-user"><%= @follow_class.capitalize %> <%= @user.name %></span>
         </a>
         <a href="#" class="button link-rate-profile">
           <span class="rate-profile">Rate the profile</span>

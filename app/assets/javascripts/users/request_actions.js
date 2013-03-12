@@ -46,10 +46,6 @@ UserActions.prototype.bindClickForRequestActions = function() {
   });  
 };
 
-UserActions.prototype.initForSingleUser = function() {
-
-};
-
 UserActions.prototype.userSaidYesOrNoTo = function(link, uid) {
   var that = this;
   uid = uid || this.config.userId;
@@ -115,30 +111,56 @@ UserActions.prototype.setupFollowActions = function() {
   $('.link-follow-user.follow, .link-follow-user.unfollow').live('click', function(e) {
     e.preventDefault();
     var btn = $(this);
-    var destUserId = btn.attr('data-user-id');
-    var destUserName = btn.parents('li').attr('data-user-name') || that.config.userName;
-    var action = (btn.hasClass('follow') ? 'follow' : 'unfollow');
-    var actionInSentence = action.charAt(0).toUpperCase() + action.slice(1);
-    var ok = confirm(actionInSentence + " " + destUserName + "'s activities?");
-    if(ok) {
-      $.ajax({
-        url: '/' + action + '/user/' + destUserId,
-        type: "POST",
-        success: function(data) {
-          var msg;
-          if(action === 'follow') {
-            msg = "Awesome. You can now find " + destUserName + " in your dashboard and through the left panel";
-            btn.children('span').text('Unfollow ' + destUserName);
-          } else {
-            msg = "You can no longer keep track of " + destUserName;
-            btn.children('span').text('Follow ' + destUserName);
-          }
-          alert(msg);
-          btn.toggleClass('follow unfollow');
-        }
-      });
-    }
+    var uid = btn.attr('data-user-id');
+    that.destUserName = btn.parents('li').attr('data-user-name') || that.config.userName;
+    that.action = (btn.hasClass('follow') ? 'follow' : 'unfollow');
+    that.actionText = (btn.hasClass('follow') ? 'Follow' : 'Unfollow');
+    that.linkToFollow = '/' + that.action + '/user/' + uid;
+
+    $($(this).attr('href')).find('span.user-name').text(that.destUserName);
+    btn.colorbox({
+      inline: true,
+      width: "50%",
+      title: "AapAurMain",
+      onClosed: function() {
+        that.showPostFollowMessage();
+      }
+    });
   });
+
+  $('.request_outer input[type=button]').on('click', function(e) {
+    e.preventDefault();
+    that.confirmFollow = $(this).hasClass("yes");
+    var srcObject = $.colorbox.element();
+
+    that.userFollowedOrNot(srcObject);
+  });  
+};
+
+UserActions.prototype.showPostFollowMessage = function() {
+  $.colorbox({
+    html: this.postMessage,
+    width: "50%",
+    title: "AapAurMain"
+  });
+};
+
+UserActions.prototype.userFollowedOrNot = function(jqObj) {
+  var that = this;
+  if(this.confirmFollow) {
+    $.ajax({
+      url: that.linkToFollow,
+      type: "POST",
+      success: function(data) {
+        var messageDialog = $('#' + that.action + '_post_message');
+        messageDialog.find('span.user-name').text(that.destUserName);
+        that.postMessage = messageDialog.html();
+        jqObj.toggleClass('follow unfollow');
+        jqObj.find('span.follow-user').text(data.btn_text);
+        jqObj.attr('href', data.btn_href);
+      }
+    });
+  }  
 };
 
 UserActions.prototype.writeRatings = function() {

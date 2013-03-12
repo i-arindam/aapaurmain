@@ -446,7 +446,9 @@ class UsersController < ApplicationController
 
     follow = user.user_follows.create(:following_user_id => params[:id].to_i)
     render :json => {
-      :success => !! follow
+      :success => !! follow,
+      :btn_text => "Unfollow #{following_user.name}",
+      :btn_href => '#unfollow_user'
     }
   end
 
@@ -458,7 +460,11 @@ class UsersController < ApplicationController
 
     follow_record = user.user_follows.where(:following_user_id => params[:id]).first
     follow_record && follow_record.destroy
-    render :json => { :success => true }
+    render :json => { 
+      :success => true,
+      :btn_text => "Follow #{unfollowing_user.name}",
+      :btn_href => '#follow_user'
+    }
   end
 
   def get_ratings

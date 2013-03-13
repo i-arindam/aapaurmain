@@ -597,7 +597,22 @@ class UsersController < ApplicationController
     stories = Story.get_n_stories_for(desired_user.id, 10, params[:start].to_i)
     render :json => {
       :success => true,
-      :stories => stories
+      :stories => stories,
+      :story_partial => render_to_string(:partial => "/story")
+    }
+  end
+
+  def get_more_stories_for_dashboard
+    user = current_user
+    render_401 and return unless user
+    passed_user = User.find_by_id(params[:for_user_id])
+    render_401 and return unless user == passed_user
+
+    stories = Newsfeed.get_more_feed_for(user.id, params[:start])
+    render :json => {
+      :success => true,
+      :stories => stories,
+      :story_partial => render_to_string(:partial => "/story")
     }
   end
 

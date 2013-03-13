@@ -1,4 +1,5 @@
-function StoryHandler(){
+function StoryHandler(config){
+  this.config = config;
   this.showCommentsLink = '';
   this.storySelector = 'li.story';
   this.storyDivSelector = '';
@@ -41,7 +42,20 @@ StoryHandler.prototype._init = function() {
     $(this).parent('.comment-actions').slideUp('fast');
     $(this).parent().siblings('.comment-box').animate({ 'height': '34px'}, 'fast');
   });
+
+  var that = this;
+  $.ajax({
+    url: "/panels/dictionary",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      that.panelsDictionary = data;
+    }, error: function() {
+      that.panelsDictionary = {};
+    }
+  });
   this.setupShowComments();
+  this.setupMoreStories();
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -178,3 +192,57 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   
   newComment.hide().delay(500).appendTo(ul).fadeIn('slow'); // add animation
 };
+
+StoryHandler.prototype.setupMoreStories = function() {
+  var that = this;
+  $('a.more-stories').on('click', function(e) {
+    e.preventDefault();
+    var moreClicker = $(this);
+    moreClicker.find('img').show();
+    
+    var storiesShown = $('li.story').length, linkForMoreStories;
+    linkForMoreStories = '/stories/more/' + that.config.forUserId + ( that.config.dashboard ? '/for_dashboard/' : '/' ) + storiesShown;
+    
+    $.ajax({
+      url: linkForMoreStories,
+      type: "GET",
+      dataType: "json",
+      success: function(data) {
+        var sDoms = [];
+        for(var i = 0, len = data.stories.length; i < len; i++ ) {
+          var storyDom = $(data.story_partial).clone();
+          var s = data.stories[i];
+
+          storyDom.attr('data-story-id', s.id);
+          storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
+          storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
+          storyDom.find('.story-creator').text(s.by);
+          storyDom.find('p.story-text').html(s.text);
+          storyDom.find('.story-claps').text(s.claps);
+          storyDom.find('.story-boos').text(s.boos);
+          storyDom.find('.story-comments').text(s.comments);
+
+          var panelsUl = storyDom.find('ul.story-tags');
+
+          $.each(s.panels, function(i, p) {
+            var li = $('<li/>');
+            $('<a>').attr('href', '/panels/' + p).text(that.panelsDictionary[p]).appendTo(li);
+            li.appendTo(panelsUl);
+          });
+          sDoms.push(storyDom);
+        } // for
+        
+        moreClicker.find('img').hide();
+        var storiesUl = $(that.config.storiesContainer);
+        $.each(sDoms, function(i, s) {
+          setTimeout(function() {
+            s.appendTo(storiesUl).hide();
+            s.slideDown('slow');
+          }, 100);
+        });
+      }, error: function(data) {
+        moreClicker.find('img').hide();
+      }
+    });
+  });
+}

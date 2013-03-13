@@ -77,6 +77,7 @@ Aapaurmain::Application.routes.draw do
   match '/my/top/stories' => 'users#my_top_stories'
 
   # Panels pages
+  get '/panels/dictionary' => 'users#panel_lookup'  
   match '/panels/:name' => 'panel#show'
   
   # Per user links
@@ -99,6 +100,7 @@ Aapaurmain::Application.routes.draw do
   get '/stories/top/:for_user_id' => 'users#get_top_stories'
   get '/stories/all/:for_user_id' => 'users#get_all_stories'
   get '/stories/more/:for_user_id/:start' => 'users#get_more_stories', :defaults => {:start => 10}
+  get '/stories/more/:for_user_id/for_dashboard/:start' => 'users#get_more_stories_for_dashboard', :defaults => { :start => 10 }
 
   # Questions actions
   match '/question/create' => 'short_question#new_question'

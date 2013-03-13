@@ -8,13 +8,17 @@
       <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story" %>
+      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago" %>
     <% end %>
   </head>
   <script type="text/javascript">
     $(document).ready(function() {
       window.dashboard = new Dashboard();
-      window.sh = new StoryHandler();
+      window.sh = new StoryHandler({
+        'dashboard': true,
+        'forUserId': <%= @user.id %>,
+        'storiesContainer': 'ul.blog-container'
+      });
     });
   </script>
   <body>
@@ -60,6 +64,10 @@
                 <% end %>
               </ul> <!-- stories section ends -->
 
+              <a class="more-stories" href="#">
+                Load More Stories
+                <img class="more-stories-loader hide" src="/assets/indicator.gif" />
+              </a>
             </div> <!-- center-container ends -->
           </div> <!-- col-two ends -->
         </div> <!-- span9 ends -->

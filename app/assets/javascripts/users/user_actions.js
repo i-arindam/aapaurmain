@@ -139,11 +139,13 @@ UserActions.prototype.setupFollowActions = function() {
 };
 
 UserActions.prototype.showPostFollowMessage = function() {
-  $.colorbox({
-    html: this.postMessage,
-    width: "50%",
-    title: "AapAurMain"
-  });
+  if(this.confirmFollow) {
+    $.colorbox({
+      html: this.postMessage,
+      width: "50%",
+      title: "AapAurMain"
+    });
+  }
 };
 
 UserActions.prototype.userFollowedOrNot = function(jqObj) {

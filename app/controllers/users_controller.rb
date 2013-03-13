@@ -354,11 +354,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def home
-    @user = current_user
-    render :dashboard
-  end
-
   def my_panels
     @user = current_user
     render_401 and return unless @user

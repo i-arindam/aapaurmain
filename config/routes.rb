@@ -64,7 +64,6 @@ Aapaurmain::Application.routes.draw do
   get 'panel/:name/get/more/:start/:num' => 'panel#show_more_stories'
 
   # New routes
-  match 'home' => 'users#home'
   get '/edit_profile' => 'users#edit_profile'
   post '/update' => 'users#update'
 

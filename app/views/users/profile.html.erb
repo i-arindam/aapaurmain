@@ -8,7 +8,7 @@
       <%= stylesheet_link_tag "users/profile", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/profile", "story", "jquery.colorbox-min", "users/jquery.raty.min" %>
+      <%= javascript_include_tag "users/profile", "story", "jquery.colorbox-min", "users/jquery.raty.min", "jquery.timeago" %>
     <% end %>
     <script type="text/javascript">
       $(function() {
@@ -19,7 +19,11 @@
           'userId': <%= @user.id %>,
           'userName': "<%= @user.name %>"
         });
-        var sh = new StoryHandler();
+        var sh = new StoryHandler({
+          'dashboard': false,
+          'forUserId': <%= @user.id %>,
+          'storiesContainer': 'ul.blog-container'          
+        });
         var profile = new UserProfile({
           'currentUserId': <%= @current_user.id %>,
           'forUserId' : <%= @user.id %>,
@@ -46,6 +50,12 @@
                 <%= render :partial => "/story", :locals => { :story => story } %>
                 <% end %>
               </ul>
+
+              <a class="more-stories" href="#">
+                Load More Stories
+                <img class="more-stories-loader hide" src="/assets/indicator.gif" />
+              </a>
+
             </div>
           </div>
         </div>

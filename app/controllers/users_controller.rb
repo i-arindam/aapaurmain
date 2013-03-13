@@ -170,7 +170,7 @@ class UsersController < ApplicationController
     @rated_score = (rated ? rated.score : 0)
 
     # Stories object
-    @stories = Story.get_n_stories_for(@user.id, 10, 0)
+    @stories = Story.get_n_stories_for(@user.id, 2, 0)
     @panels_lookup = $priorities_list['priorities'].to_json
 
     render :profile

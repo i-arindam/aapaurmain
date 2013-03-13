@@ -39,7 +39,7 @@ UserActions.prototype.bindClickForRequestActions = function() {
     });
   });
 
-  $('.request_outer input[type=button]').on('click', function(e) {
+  $('.request_outer.request_sorts input[type=button]').on('click', function(e) {
     e.preventDefault();
     that.confirm = $(this).hasClass("yes");
     $.colorbox.close();
@@ -93,10 +93,10 @@ UserActions.prototype.writeFollowingStatus = function() {
           var thisUsersName = targetLi.attr('data-user-name');
           targetLi.find('.link-follow-user').attr('data-user-id', uid);
           if(follows) {
-            targetLi.find('.link-follow-user').addClass('unfollow');
+            targetLi.find('.link-follow-user').addClass('unfollow').attr('href', '#unfollow_user');
             targetLi.find('.link-follow-user').children('span').text('Unfollow ' + thisUsersName);
           } else {
-            targetLi.find('.link-follow-user').addClass('follow');
+            targetLi.find('.link-follow-user').addClass('follow').attr('href', '#follow_user');
             targetLi.find('.link-follow-user').children('span').text('Follow ' + thisUsersName);
           }
         }
@@ -128,10 +128,11 @@ UserActions.prototype.setupFollowActions = function() {
     });
   });
 
-  $('.request_outer input[type=button]').on('click', function(e) {
+  $('.request_outer.following_sorts input[type=button]').on('click', function(e) {
     e.preventDefault();
     that.confirmFollow = $(this).hasClass("yes");
     var srcObject = $.colorbox.element();
+    $.colorbox.close();
 
     that.userFollowedOrNot(srcObject);
   });  

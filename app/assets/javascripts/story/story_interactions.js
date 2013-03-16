@@ -117,8 +117,32 @@ StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, comme
 
 StoryHandler.prototype.showInModal = function(data) {
   var personsToShow = JSON.parse(data.persons);
-  var deafultPic = '/images/users/user-small.jpg';
+  var defaultPic = '/assets/users/user-small.jpg';
+  var div = $('<div/>').append($('<a/>'));
+  var li = $('<li></li>').append(div);
 
+  $('div.people-list').remove();
+  var outerDiv = $('<div/>').addClass('people-list bpopup').append('<ul/>');
+
+  var ul = outerDiv.find('ul');
+  for(var i = 0, len = personsToShow.length; i < len; i++) {
+    var l = li.clone();
+    var p = personsToShow[i];
+    l.find('a').attr('href', '/users/' + p.id).text(p.name);
+    $('<img/>').attr('src', p.pic || defaultPic).prependTo(l.find('a'));
+    l.appendTo(ul);
+  }
+  outerDiv.appendTo($('body'));
+  outerDiv.bPopup({
+    opacity: 0.9,
+    followSpeed: 300,
+    fadeSpeed: 700,
+    position: [500, 'auto'],
+    positionStyle: 'absolute',
+    easing: 'easeOutBack',
+    speed: 450,
+    transition: 'slideDown'
+  });
 };
 
 StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, commentNumber) {

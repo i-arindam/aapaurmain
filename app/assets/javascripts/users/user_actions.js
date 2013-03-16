@@ -20,6 +20,10 @@ UserActions.prototype._init = function() {
 };
 
 UserActions.prototype.bindClickForRequestActions = function() {
+  // Many a hacks involved.
+  // On every popup open, all its input buttons are removed user-clicked class
+  // on user click, that class is added
+  // on close by any kind, if both user clicked and user clicked yes, only then carry out action
   var that = this, action, name, linkToFollow, uid;
   this.buttons.on('click', function(e) {
     e.preventDefault();
@@ -29,11 +33,21 @@ UserActions.prototype.bindClickForRequestActions = function() {
     uid = $(this).parents('li').attr('data-user-id');
     
     $(action).find('span.user-name').text(name);
-    $(this).colorbox({
-      inline: true,
-      width: "50%",
-      title: "AapAurMain",
-      onClosed: function() {
+    $(action).bPopup({
+      opacity: 0.9,
+      followSpeed: 300,
+      fadeSpeed: 700,
+      position: [500, 'auto'],
+      positionStyle: 'absolute',
+      easing: 'easeOutBack',
+      speed: 450,
+      transition: 'slideDown',
+      onOpen: function() {
+        that.popupElement = $(action);
+        $(action).find('input[type=button]').removeClass('user-clicked');
+      },
+      onClose: function() {
+        that.confirm = that.confirm && $(action).find('input[type=button]').hasClass('user-clicked');
         that.userSaidYesOrNoTo(linkToFollow, uid);
       }
     });
@@ -41,8 +55,9 @@ UserActions.prototype.bindClickForRequestActions = function() {
 
   $('.request_outer.request_sorts input[type=button]').on('click', function(e) {
     e.preventDefault();
+    $(this).addClass('user-clicked');
     that.confirm = $(this).hasClass("yes");
-    $.colorbox.close();
+    that.popupElement.bPopup().close();
   });  
 };
 
@@ -114,16 +129,27 @@ UserActions.prototype.setupFollowActions = function() {
     var uid = btn.attr('data-user-id');
     that.destUserName = btn.parents('li').attr('data-user-name') || that.config.userName;
     that.action = (btn.hasClass('follow') ? 'follow' : 'unfollow');
-    that.actionText = (btn.hasClass('follow') ? 'Follow' : 'Unfollow');
     that.linkToFollow = '/' + that.action + '/user/' + uid;
-
-    $($(this).attr('href')).find('span.user-name').text(that.destUserName);
-    btn.colorbox({
-      inline: true,
-      width: "50%",
-      title: "AapAurMain",
-      onClosed: function() {
-        that.showPostFollowMessage();
+    that.followTarget = $($(this).attr('href'));
+    that.followTarget.find('span.user-name').text(that.destUserName);
+    
+    that.followTarget.bPopup({
+      opacity: 0.9,
+      followSpeed: 300,
+      fadeSpeed: 700,
+      position: [500, 'auto'],
+      positionStyle: 'absolute',
+      easing: 'easeOutBack',
+      speed: 450,
+      transition: 'slideDown',
+      onOpen: function() {
+        that.popupElement = that.followTarget;
+        that.followButton = btn;
+        that.popupElement.find('input[type=button]').removeClass('user-clicked');
+      },
+      onClose: function() {
+        that.confirmFollow = that.confirmFollow && that.popupElement.find('input[type=button]').hasClass('user-clicked');
+        // that.showPostFollowMessage();
       }
     });
   });
@@ -131,21 +157,11 @@ UserActions.prototype.setupFollowActions = function() {
   $('.request_outer.following_sorts input[type=button]').on('click', function(e) {
     e.preventDefault();
     that.confirmFollow = $(this).hasClass("yes");
-    var srcObject = $.colorbox.element();
-    $.colorbox.close();
+    $(this).addClass('user-clicked');
+    that.popupElement.bPopup().close();
 
-    that.userFollowedOrNot(srcObject);
+    that.userFollowedOrNot(that.followButton);
   });  
-};
-
-UserActions.prototype.showPostFollowMessage = function() {
-  if(this.confirmFollow) {
-    $.colorbox({
-      html: this.postMessage,
-      width: "50%",
-      title: "AapAurMain"
-    });
-  }
 };
 
 UserActions.prototype.userFollowedOrNot = function(jqObj) {
@@ -157,10 +173,22 @@ UserActions.prototype.userFollowedOrNot = function(jqObj) {
       success: function(data) {
         var messageDialog = $('#' + that.action + '_post_message');
         messageDialog.find('span.user-name').text(that.destUserName);
-        that.postMessage = messageDialog.html();
         jqObj.toggleClass('follow unfollow');
         jqObj.find('span.follow-user').text(data.btn_text);
         jqObj.attr('href', data.btn_href);
+
+        // setTimeout(function() {
+          $(messageDialog).bPopup({
+            opacity: 0.9,
+            followSpeed: 300,
+            fadeSpeed: 700,
+            position: [500, 'auto'],
+            positionStyle: 'absolute',
+            easing: 'easeOutBack',
+            speed: 450,
+            transition: 'slideDown'          
+          });
+        // }, 500);
       }
     });
   }  

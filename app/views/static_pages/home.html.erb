@@ -4,11 +4,10 @@
     <% content_for :head do %>
       <title>Aap Aur Main: Destination for perfect matches</title>
       <% content_for :js_footer do %>
-        <%= javascript_include_tag "application-homepage" %>
         <%= javascript_include_tag "jquery.validate.min" %>
       <% end %>
       <% content_for :stylesheet do %>
-        <%= stylesheet_link_tag "application-homepage" %>
+        <%= stylesheet_link_tag "homepage" %>
       <% end %>
 
       <meta property="og:title" content="Aap Aur Main: Destination for perfect matches" />
@@ -83,11 +82,6 @@
     });
 
     var gaActions = [
-      { sel: '.b-arrow-next div', label : 'bookletNext' },
-      { sel: '.b-arrow-prev div', label : 'bookletPrev' },
-      { sel: 'header form button', label : 'loginClick' },
-      { sel: '.signup button.signupBtn', label : 'signupClick'},
-      /* header actions */
       { sel: '#logo', label : 'logoclick' },
       { sel: '.j-about_us', label: 'headerAboutUs' },
       { sel: '.j-how_it_works', label: 'headerHowItWorks' },
@@ -96,9 +90,6 @@
       { sel: '.j-messages', label: 'headerMessages' },
       { sel: '.j-my_profile', label: 'headerMyProfile' },
       { sel: '.j-log_out', label: 'headerLogOut' },
-      { sel: '.advSearch', label: 'headerAdvSearch' },
-      { sel: '.j-show_discussion', label: 'showDiscussionCTA' },
-      { sel: '.j-show_signup', label: 'showSignupCTA' }
     ];
 
     $.each(gaActions, function(i, obj) {
@@ -110,7 +101,7 @@
   </script>
   <body>
     <div id="fb-root"></div>
-    
+
     <%= render :partial => 'static_pages/alerts' %>
     <!-- sign up-->
     <% if @user && @user.errors.any? %>
@@ -125,258 +116,119 @@
       </div>
     <% end %>
 
-    <%= render :partial => 'qod/qod', :locals => {
-      :qod => QotdQuestion.last, 
-      :user_id => (current_user ? current_user.id : 0)
-    } if QotdQuestion.last %>
-
-    <% unless current_user %>
-    <div class="signup <%= QotdQuestion.last ? 'hide' : '' %>">
-      <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
-        <div class="control-group">
-          <div class="joinus">Join Us</div>
-          <div class="controls">
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-user"></i></span>
-              <input class="span3" type="text" name="name" placeholder="Name" />
-            </div>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-envelope"></i></span>
-              <input class="span3" type="text" name="email" placeholder="Email" />
-            </div>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-lock"></i></span>
-              <input class="span3" type="password" name="password" placeholder="Password" />
-            </div>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-refresh"></i></span>
-              <input type="password" class="span3" name="password_confirmation" placeholder="Password Confirm" />
-            </div>
-            <div class="conditions">
-              <label>
-                <input name="conditions" type="checkbox" />I agree to the <a href="/tnc">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.
-              </label>
-            </div>
-            <button type="submit" class="signupBtn"></button>
-          </div>
-        </div>
-        <div class="qodSignup j-qod_cta alert alert-error">
-          <strong>Want to see the discussions again?</strong>
-          <a class="showDiscussion j-show_discussion btn btn-large btn-success">See discussions</a>
-        </div>
-      <% end %>
-    </div><!--signup ends-->
-    <%end%>
-    
     <!-- Main talking area -->
-    <div class="container">
-      <ul class="socialActions public-only hide">
-        <li class="social-fb">
-         <div class="fb-like" data-href="http://www.facebook.com/aapaurmain" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="light"></div>                           
-        </li>
-         <li class="social-tw">
-              <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text=""  data-via="aapaurmain" rel="nofollow" data-count="vertical">Tweet</a>
-          </li>
-          <li class="social-li">
-             <script type="IN/Share" data-counter="top" data-onSuccess="linkedInShareSuccess"></script>
-           </li>
-        <li class="social-go">
-          <div class="g-plusone" data-size="tall" data-annotation="none" data-callback="plusone_success"></div>
-        </li>
-      </ul>
-      
-      <div class="book_wrapper">
-                <div id="mybook">
-                  
-                <!--page 0-->
-                	<div> 
-                		<h3></h3>
-                		<img class="patta" src="assets/booklet/book logo.png" />
-                		<span class="logoText">
-                      <p class="tagLine">Your Life, Your Choice</p>
-                    </span>
-                	</div>
-                	
-                	<!--page 1-->
-                	<div> 
-                	  <div class="headerText">What is AapAurMain?</div>
-                		<span class="bookletText aamText">
-                		  <p>The place where every “Main” chooses their “Aap” and together decide their destination.</p>
-                    </span>
-                	</div>
-                	
-                	<!--page 2-->
-                	<div> 
-                    <img src="assets/booklet/Phd.jpg" class="phdImage"/>
-                	</div>
-                	
-                	<!--page 3-->                	
-                	<div> 
-                	  <div class="headerText">What AapAurMain Believes</div>
-                		<span class="bookletText aamText">
-                		  <p>You can find here people who can share your aspirations, not only "The Salary".</p>
-                    </span>
-                	</div>
-                	
-                	
-                <!--page 4-->
-                	<div> 
-                	   <img src="assets/booklet/caste.jpg" class="phdImage"/>
-                	</div>
-                	
-                  <div> 
-                    <div class="headerText">What AapAurMain Believes</div>
-                		<span class="bookletText aamText">
-                		  <p>There are no mention of religion, horoscope and the other irrelevant stuff.</p>
-                      <p class="aamTagLine">We have got them away so you can focus on the important things.</p>
-                    </span>
-                	</div>
-                	
-                	
-                	<div> 
-                	   <img src="assets/booklet/flower.png" class="phdImage"/>
-                	</div>
-                	
-                	<div>
-                	  <div class="headerText">What AapAurMain Believes</div>
-                		<span class="bookletText aamText">
-                      <p>Choose someone you can understand as a person. No more, no less.</p>
-                    </span>
-                	</div>
-                	
-                	<div> 
-              	    <img src="assets/booklet/parents.jpg" class="phdImage"/>
-                  </div>
+    <div class="container clearfix">
+      <div class="bg-image"></div>
+      <div class="row-fluid">
+        <div class="span2">
+          <ul class="socialActions public-only hide">
+            <li class="social-fb">
+             <div class="fb-like" data-href="http://www.facebook.com/aapaurmain" data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-colorscheme="light"></div>                           
+            </li>
+             <li class="social-tw">
+                  <a href="https://twitter.com/share" class="twitter-share-button" data-url="" data-text=""  data-via="aapaurmain" rel="nofollow" data-count="vertical">Tweet</a>
+              </li>
+              <li class="social-li">
+                 <script type="IN/Share" data-counter="top" data-onSuccess="linkedInShareSuccess"></script>
+               </li>
+            <li class="social-go">
+              <div class="g-plusone" data-size="tall" data-annotation="none" data-callback="plusone_success"></div>
+            </li>
+          </ul>
+        </div> <!-- span3 -->
 
-                  <div>
-                  	  <div class="headerText">What AapAurMain Believes</div>
-                  		<span class="bookletText aamText">
-                        <p>We totally understand if you need someone who can take care of your parents as well.</p>
-                      </span>
-                  </div>
-                  	
-                  	<!--Last page-->
-                  <div> 
-                    <img src="assets/booklet/together.jpg" class="phdImage"/>
-                    
-                    <span class="bookletText">
-                      <p style="padding:40px">Your Life,Your Choice! </p>
-                    </span>
-                  </div>
-                      	
-                  <div>
-                		<span class="bookletText aamText lastpageText">
-                		  <p><h2 style="color:brown">The Beginning...</h2></p>
-                		  <span class="bookletText aamText"><p>Write your amazing chapter here.</p></span>       
-                    </span>
-                  </div>
-                	
-                	
-                </div> <!--mybook-->
-      </div><!--book_wrapper-->
-      </div><!-- Main talking area container ends -->
-      <div class="faqs">
-        <h2 class="faqHeader">
-          <div class="faqText">
-            Something you must know about us &hellip;
+        <div class="span7">
+          <div class="text-container">
+            <ul class="text-dialog">
+              <li>Opine.</li>
+              <li>Believe.</li>
+              <li>Express.</li>
+            </ul>
+            <div class="tag-line"><b class="highlight">Interactive</b> platform to <b class="highlight">discover</b> people you may like to <b class="highlight">bond with</b></div>
           </div>
-        </h2>
-        <div class="faqWrapper">
-          <div class="leftCol">
-            
-            <div class="q">
-              <div class="question">What We Are ?</div>
-                <ul class="whatWeAre">
-                  <li>Our members believe marriage is a union.Transaction in any form is unacceptable.</li>
-                  <li>We ask for crisp details on things related to your preferences, opinions and aspirations only. Integrity and honesty are the aspects to look out for!.</li>
-                  <li>The people you trust may make your profile; but we encourage you to create, discuss and choose for yourself as you understand your priorities best</li>
-                  <li>We handpick matches through our extremely sophisticated and detailed understanding of you and your profile. Quality is the determining criterion</li>
-                  
-                </ul>
+        </div> <!-- span6 -->
+
+        <% unless current_user %>
+        <div class="span3">
+          <div class="signup">
+            <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
+              <div class="control-group">
+                <div class="joinus">Join Us</div>
+                <div class="controls">
+                  <div class="input-prepend">
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" name="name" placeholder="Name" />
+                  </div>
+                  <div class="input-prepend">
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="text" name="email" placeholder="Email" />
+                  </div>
+                  <div class="input-prepend">
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" name="password" placeholder="Password" />
+                  </div>
+                  <div class="input-prepend">
+                    <span class="add-on"><i class="icon-refresh"></i></span>
+                    <input type="text" name="password_confirmation" placeholder="Password Confirm" />
+                  </div>
+                  <div class="conditions">
+                    <label>
+                      <input name="conditions" type="checkbox" />I agree to the <a href="/tnc">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.
+                    </label>
+                  </div>
+                  <button type="submit" class="signupBtn"></button>
                 </div>
-          </div> <!-- div.leftCol -->
-        
-          <div class="rightCol">
-            
-            <div class="q">
-              <div class="question">What we are not?</div>
-              <ul class="whatWeAre">
-                <li>We do not call ourselves a ‘serious’ dating site.. In fact, we are not even a dating site. </li>
-                <li>We do not provide matches based on caste / race / religion / skin color / height and weight. We do not enquire about these details either.</li>
-                <li>We do not flood our users with countless matches. We give you only a select few matches per week.</li>
-                <li>We do not stand for multiple courtships. Loyalty in whatever we do is what defines our community. We do not provide further matches to a couple when they are getting to know each other</li>
-              </ul>
-            </div>
-   
-            
-          </div> <!-- div.rightCol -->
-      </div>
+              </div>
+            <% end %>
+          </div><!--signup ends-->
+        </div> <!-- span5-->
+        <%end%>
+      </div> <!-- row-fluid-->            
     </div> <!-- div.container -->
   </body>
 </html>
  <script type="text/javascript">
- $(function() {
- 	//single book
- 	$('#mybook').booklet({
- 	  width: 800,
- 	  height: 500,
-    pagePadding: 20,
-    pageNumbers: false ,
-    arrows: true,
-    easing: null,
-    speed: 500
- 	});
-  
-
- });
- 	
  	(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
- 	  
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk')); 	  
 
-e = document.createElement('script'); 
-e.type = 'text/javascript'; 
-e.async = true;
-e.src = document.location.protocol + '//apis.google.com/js/plusone.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+  e = document.createElement('script'); 
+  e.type = 'text/javascript'; 
+  e.async = true;
+  e.src = document.location.protocol + '//apis.google.com/js/plusone.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
 
-window.twttr = (function (d,s,id) {
-  var t, js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)){return;} js=d.createElement(s); js.id=id;
-  js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-  return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f); } });
-}(document, "script", "twitter-wjs"));
+  window.twttr = (function (d,s,id) {
+    var t, js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)){return;} js=d.createElement(s); js.id=id;
+    js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+    return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f); } });
+  }(document, "script", "twitter-wjs"));
 
-e = document.createElement('script'); 
-e.type = 'text/javascript'; 
-e.async = true;
-e.src = document.location.protocol + '//platform.linkedin.com/in.js';
-s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+  e = document.createElement('script'); 
+  e.type = 'text/javascript'; 
+  e.async = true;
+  e.src = document.location.protocol + '//platform.linkedin.com/in.js';
+  s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
 
-
-twttr.ready(function(twttr){
-  twttr.events.bind('tweet', function(event) {
-    if (event) {
-      var targetUrl;
-      if (event.target && event.target.nodeName == 'IFRAME') {
-        targetUrl = '';
+  twttr.ready(function(twttr){
+    twttr.events.bind('tweet', function(event) {
+      if (event) {
+        var targetUrl;
+        if (event.target && event.target.nodeName == 'IFRAME') {
+          targetUrl = '';
+        }
+        // GA stuff!
       }
-      // GA stuff!
-    }
-  });
-  twttr.events.bind('click', function(event) {
-   //GA stuff
-  });   
+    });
+    twttr.events.bind('click', function(event) {
+     //GA stuff
+    });   
 
-   $('.socialActions').delay(3500).fadeToggle(500, 'swing');   
-
-});
-  
- 	
- 	
+    $('.socialActions').delay(3500).fadeToggle(500, 'swing');   
+  }); 	
 </script>

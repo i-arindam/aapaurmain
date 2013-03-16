@@ -1,0 +1,208 @@
+body {
+}
+.bg-image {
+  content: "";
+  margin: 0;
+  padding: 0;
+  background-image: url('<%= image_path "/assets/homepage.jpg" %>');
+  background-repeat: none;
+  background-color: #222;
+  background-size: cover;
+  background-position: center center;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  height: 100%;
+  width: 100%;
+  background-attachment: fixed;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  background-repeat: none;  
+}
+.container {
+}
+.row-fluid {
+  margin-top: 70px;
+}
+
+/* center text */
+ul.text-dialog {
+  position: relative;
+  margin-top: 100px;
+}
+.text-dialog li {
+  text-transform: uppercase;
+  padding: 20px;
+  float: left;
+  margin-right: 20px;
+  font-size: 48px;
+  line-height: 49px;
+}
+.tag-line {
+  clear: both;
+  padding: 20px;
+  font-size: 18px;
+  line-height: 19px;
+}
+b.highlight {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+/* text section ends */
+
+/*Social Actions*/
+.socialActions {
+  background: rgba(245, 245, 220, 0.44);
+  border: 1px solid #555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  left: 55px;
+  list-style: none;
+  margin: 0;
+  padding: 15px 10px;
+  position: relative;
+  width: 60px;
+  top: 0px;
+  overflow: hidden;
+}
+
+.socialActions li {
+  color: #333;
+  float: right;
+  line-height: 1;
+  margin: 0 0 15px;
+  vertical-align: top;
+}
+
+.socialActions .social-fb {
+  margin-right: 6px;
+}
+
+.socialActions .social-fb .fb-like > span {
+  width: 48px !important;
+}
+
+.socialActions .social-tw {
+  margin-right: 2px;
+}
+
+.socialActions .social-li {
+  margin-top: -11px;
+}
+
+.socialActions .social-go {
+  margin-right: 4px;
+}
+
+.socialActions .social-go > div {
+  height: 20px !important;
+}
+
+.socialActions .social-pi {
+  margin-bottom: 0;
+  margin-right: 8px;
+}
+
+.socialActions li div,
+.socialActions li iframe {
+  vertical-align: top !important;
+}
+
+.socialActions .fb-like {
+  float: left !important;
+}
+
+.IN-widget span,
+span.IN-widget span:first-child {
+  vertical-align: top !important;
+}
+/* Social Actions End*/
+
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Dancing Script'), local('DancingScript'), url("<%= asset_path '/assets/fonts/dancing script.woff' %>") format('woff');
+}
+
+
+/* login - signup */
+.info-right {
+  margin: 0;
+}
+.login label.checkbox {
+  position: relative;
+  top: 5px;
+}
+.login button.btn {
+  position: relative;
+  left: 170px;
+}
+.signup img{
+  margin-top: 78px;
+  margin-left: 17px;
+}
+.signupBtn {
+  background:url('<%= image_path "arrow.png" %>') no-repeat;
+  width: 30px;
+  height: 30px;
+  margin-left: 40%;
+  background-color: #F5F5F5;
+}
+.input-prepend span.add-on {
+  margin-right: -5px;
+}
+.signupError {
+  float: right;
+  position: relative;
+  right: 60px;
+  width: 310px;
+  top: 30px;
+  list-style: none;
+  list-style-type: none;
+}
+.signupError ul {
+  list-style-type: none;
+  padding-top: 10px;
+}
+.signupError h2 {
+  margin-bottom: 2px;
+}
+input.span3{
+  border-radius: 0 10px 10px 0;
+}
+.control-group{
+  padding: 30px 17px 20px 30px;
+  border-radius: 10px;
+  color: #000;
+}
+.control-group .joinus{
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 26px;
+}
+.controls div.input-prepend span.add-on{
+  border-radius: 10px 0 0 10px;
+}
+.controls .input-prepend{
+  margin-bottom: 12px;
+}
+.conditions label {
+  cursor: pointer;
+}
+.conditions input {
+  margin-right: 10px;
+}
+/* Validations */
+
+form label.error {
+  color: red;
+  font-style: italic;
+  padding-top: 3px;
+}
+/* login ends */
+

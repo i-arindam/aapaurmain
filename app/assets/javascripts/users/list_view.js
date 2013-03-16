@@ -259,7 +259,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
       storyDom.attr('data-story-id', s.id);
       storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
       storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
-      storyDom.find('.story-creator').text(s.by);
+      storyDom.find('.story-creator a').attr('href', '/users/' + s.by_id).text(s.by);
       storyDom.find('p.story-text').html(s.text);
       storyDom.find('.story-claps').text(s.claps);
       storyDom.find('.story-boos').text(s.boos);

@@ -201,7 +201,7 @@ class UsersController < ApplicationController
       
       send_confirmation_link user
       flash[:success] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
-      redirect_to "/update", :post
+      redirect_to "/edit_profile"
     else
       render "#{failure_render_path}"
     end

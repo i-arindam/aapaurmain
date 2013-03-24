@@ -77,7 +77,8 @@
             equalTo: "Passwords must match"
           },
           conditions: "Accept policies please"
-        }
+        },
+        errorLabelContainer: "#validation-errors"
       });
     });
 
@@ -151,6 +152,7 @@
             <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
               <div class="signup-form">
                 <h3><span>Join Us</span></h3>
+                <div id="validation-errors"></div>
                 <div class="controls">
                     <input type="text" name="name" placeholder="Name" />
                     <input type="text" name="email" placeholder="Email" />

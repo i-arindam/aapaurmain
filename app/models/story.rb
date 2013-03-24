@@ -124,6 +124,7 @@ class Story < ActiveRecord::Base
       story.merge!({'id' => sid})
       story.delete("core")
       story['text'].gsub!("\n", "<br/>")
+      story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
       stories.push(story)
     end
     stories

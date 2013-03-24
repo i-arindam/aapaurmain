@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "list", "right_bar", "stories" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list", "users/list_view", "story/story_interactions", "users/user_actions", "users/jquery.raty.min", "jquery.colorbox-min", "jquery.timeago" %>
+      <%= javascript_include_tag "application-list", "users/list_view", "story", "users/user_actions", "users/jquery.raty.min", "jquery.bpopup-min", "jquery.easing", "jquery.timeago" %>
     <% end %>
     <title><%= @title %></title>
     <script type="text/javascript">
@@ -32,7 +32,7 @@
             'userIds': <%= @user_ids %>,
             'sliderElement': '.allinone_carousel_list'
           });
-        }
+        }        
       });
     </script>
   </head>
@@ -104,10 +104,3 @@
     <%= render :partial => "users/follow_messages" %>
   </body>
 </html>
-
-<li>
-  <div>
-    <img>
-    <a></a>
-  </div>
-</li>

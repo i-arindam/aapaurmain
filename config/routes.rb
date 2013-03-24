@@ -1,4 +1,8 @@
 Aapaurmain::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   get "log_out" => "sessions#destroy", :as => "logout"
   get "log_in" => "sessions#new", :as => "login"
   get "sign_up" => "users#new", :as => "signup"
@@ -44,7 +48,7 @@ Aapaurmain::Application.routes.draw do
   post 'conversations/:id/new_message' => 'conversation#new_message'
 
   # Admin actions
-  match 'admin/:action' => 'admin'
+  # match 'admin/:action' => 'admin'
 
   # Qod actions
   get '/qod/:id' => 'qod#show'

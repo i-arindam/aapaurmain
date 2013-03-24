@@ -274,7 +274,7 @@ class UsersController < ApplicationController
     @user.update_attributes(uhash)
 
     @user.save
-    redirect_to "/home"
+    redirect_to "/dashboard"
   end
   
   def more_info

@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       else
         cookies[:auth_token] = user.auth_token
       end
-      route_to = (user.sex ? "/users/showme" : "/users/#{user.id}/create_profile")
+      route_to = (user.sex ? "/dashboard" : "/users/#{user.id}/create_profile")
       redirect_to route_to
     else
       redirect_to root_url, :alert => "Invalid email or password"
@@ -21,6 +21,6 @@ class SessionsController < ApplicationController
 
   def destroy
     cookies.delete(:auth_token)
-    redirect_to root_url, :notice => "Logged out!"
+    redirect_to root_url
   end
 end

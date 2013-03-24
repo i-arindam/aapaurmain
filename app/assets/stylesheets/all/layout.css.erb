@@ -62,12 +62,18 @@ a {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'voltaireregular';
+  src: url("<%= asset_path '/assets/fonts/voltaire-regular-webfont.eot' %>");
+  src: url("<%= asset_path '/assets/fonts/voltaire-regular-webfont.eot?#iefix' %>") format('embedded-opentype'),
+       url("<%= asset_path '/assets/fonts/voltaire-regular-webfont.woff' %>") format('woff'),
+       url("<%= asset_path '/assets/fonts/voltaire-regular-webfont.ttf' %>") format('truetype'),
+       url("<%= asset_path '/assets/fonts/voltaire-regular-webfont.svg#voltaireregular' %>") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* layout */
-.container {
-  margin: 0;
-  width: 100%;
-}
 .row-fluid .span9 {
   width: 78.4%;
 }
@@ -145,60 +151,128 @@ a {
 }
 /* tags */
 /* Header */
-.page {
-
-}
 .header {
-  background: url("<%= image_path 'header-bg.png' %>") repeat-x;
+  background: rgba(0, 0, 0, 0.7);
+  margin: 0 0 100px;
+  position: relative;
+}
+.log-in {
+  margin-top: -12px;
+  position: relative;
+}
+.log-in a.btn {
+  padding: 10px 32px;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  transition: none !important;
+}
+.log-in:hover .login-form-container {
+  -webkit-animation: translate-in 0.5s; /* Safari 4+ */
+  animation: translate-in 0.5s;
+  display: block;
+  opacity: 1;
+}
+@-webkit-keyframes translate-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px);
+  }
+  100% {
+   opacity: 1;
+    -webkit-transform: translateX(0);;
+    transform: translateX(0);
+  }
+}
+@keyframes translate-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px);
+  }
+  100% {
+   opacity: 1;
+    -webkit-transform: translateX(0);;
+    transform: translateX(0);
+  }
+}
+
+.login-form-container .inputFields {
+  width: 190px;
+  background: white;
+  border-color: #B1B1B1;
+  height: 30px;
+  margin: 0 0 15px;
+}
+.login-form-container {
+  background: #fff;
+  border-radius: 4px 0 4px 4px;
+  -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.53);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.53);
+  display: none;
+  opacity: 0;
+  padding: 20px 20px 15px;
+  position: absolute;
+  right: 0;
+  top: 37px;
+  width: 200px;
+  z-index: 2;
+}
+.signin {
+  float: left;
+  margin-right: 19px;
+  padding: 8px 19px;
+}
+.rememberSection {
+  float: left;
+  margin: 8px 0 0;
+}
+.rememberSection input[type=checkbox] {
+  margin: 0;
+}
+.rememberSection .checkbox {
+  line-height: 17px;
+  padding: 4px 0 0 4px;
+}
+.forgotPasswordSection {  
+  clear: both;
+  float: left;
+  margin: 16px 0 0;
+}
+.log-in:hover a.btn {
+  background: white;
+  color: #6D6D6D;
+  text-shadow: none;
 }
 .header .nav a {
   text-decoration: none;
 }
-.header .nav li {
+.header .nav li a {
   -webkit-transition: all 0.3s ease-in;
   -moz-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
 }
-.header .nav li:hover {
-  background: #333;
-  border-left: 5px solid #000;
-}
-.header .nav li:hover a {
-  -webkit-transform: scale(1.25);
-  -moz-transform: scale(1.25);
-  -o-transform: scale(1.25);
+.header .nav li a:hover {
+  text-shadow: 0 0 12px #fff;
 }
 .logo {
-  left: 0;
-  margin: 4px 0 0 87px;
-  position: absolute;
-  top: -24px;
+  float: left;
+  padding-left: 50px;
   width: 100px;
 }
-.nav {
-  float: left;
-  margin:0 0 3px 203px;
-  border-left: 1px solid #676766;
-}
-.nav ul li {
-  float: left;
-  border-left: 2px groove #c0c0bf;
-  border-right: 1px solid #676766;
-  padding: 17px 26px;
-}
-.nav ul li.last {
-  border-right: none;
-}
-.nav ul li a {
+.nav ul li > a {
   color: #fff;
+  display: block;
   font-family: 'trebuchet ms';
   font-size: 16px;
   text-transform: uppercase;
-  display: block;
+  margin-left: 50px;
+  text-rendering: optimizeLegibility;
 }
 .info-right {
-  float: right;
-  margin: 0 30px 0 0;
+  position: absolute;
+  right: 50px;
+  top: 23px;
 }
 .info-right li {
   float: left;
@@ -214,14 +288,13 @@ a {
   margin: 9px 50px 0 0;
 }
 .link-setting {
-  margin: 12px;
+  margin: -6px 0 0;
   width: 26px;
   height: 26px;
   text-indent: -9999px;
   background-position: 0 -80px;
 }
 .message {
-  margin: 15px 20px;
   width: 26px;
   height: 20px;
   background-position: 0 -37px;
@@ -241,7 +314,7 @@ a {
   line-height: 13px;
 }
 .link-profile {
-  margin: 11px 14px 0 0;
+  margin: -7px 0 0 0;
   display: block;
   overflow: hidden;
 }
@@ -249,11 +322,12 @@ a {
   float: left;
 }
 .link-profile span {
-  padding: 9px 0 0 16px;
-  color: #4e4b4a;
-  font-size: 13px;
+  padding: 9px 0 0px;
+  color: white;
+  font-size: 11px;
   display: block;
   float: left;
+  margin: 0 36px 0 5px;
 }
 .separator {
   border-left: 1px solid #c0c0bf;
@@ -263,12 +337,12 @@ a {
 }
 /* footer */
 .footer {
-  background: #9f9c9c;
+  background: #000;
 }
 .footer-content {
   max-width: 712px;
   margin: 0 auto;
-  padding: 10px 15px 57px;
+  padding: 40px 15px 57px 0;
 }
 .footer-content ul {
   margin: 0
@@ -375,8 +449,14 @@ h1 {
 
 /* header */
 
-header {
+.header {
   height: 60px;
+}
+
+.header-container {
+  margin: 0 auto;
+  width: 1340px;
+  position: relative;
 }
 
 .navbar-inner {
@@ -388,40 +468,6 @@ header {
 header .navbar-inner .container {
   width: 1110px;
 }
-
-.login-form {
-  top: 4px;
-}
-
-.rememberSection {
-  display: inline-block;
-  left: 160px;
-  position: relative;
-}
-
-.forgotPasswordSection {
-  display: inline-block;
-  left: 240px;
-  position: relative;
-}
-
-.inputFields {
-  background: #cfcfcf; /* Old browsers */
-  background: -moz-linear-gradient(top, #cfcfcf 0%, #c3c3c3 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cfcfcf), color-stop(100%,#c3c3c3)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #cfcfcf 0%,#c3c3c3 100%); /* IE10+ */
-  background: linear-gradient(to bottom, #cfcfcf 0%,#c3c3c3 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfcfcf', endColorstr='#c3c3c3',GradientType=0 ); /* IE6-9 */
-  width: 170px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-}
-
 
 /* footer */
 

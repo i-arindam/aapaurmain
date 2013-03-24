@@ -56,6 +56,7 @@ StoryHandler.prototype._init = function() {
   });
   this.setupShowComments();
   this.setupMoreStories();
+  this.bindEmbedly();
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -264,9 +265,23 @@ StoryHandler.prototype.setupMoreStories = function() {
             s.slideDown('slow');
           }, 100);
         });
+        that.bindEmbedly();
       }, error: function(data) {
         moreClicker.find('img').hide();
       }
     });
   });
-}
+};
+
+StoryHandler.prototype.bindEmbedly = function() {
+  $('li.story p.story-text').livequery(function() {
+    $('li.story p.story-text:not(.embedded)').embedly({
+      maxWidth: 450,
+      wmode: 'transparent',
+      method: 'after',
+      chars: 90,
+      key:'1c33c83e4cf34598a4dc7f96d77b5b06'    
+    }).addClass('embedded');
+  });
+};
+

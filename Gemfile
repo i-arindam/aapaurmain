@@ -19,9 +19,10 @@ gem "rmagick", '2.13.1'
 gem 'rvm-capistrano'
 gem 'hiredis', '0.4.5'
 gem 'redis', '3.0.2'
- gem 'activeadmin'
-  gem 'sass-rails', '3.2.3'
-  gem "meta_search",    '>= 1.1.0.pre'
+gem 'activeadmin'
+gem 'sass-rails', '3.2.3'
+gem "meta_search",    '>= 1.1.0.pre'
+gem "rails_autolink", "1.0.9"
 
 group :development, :test do
   gem "rspec"
@@ -36,26 +37,7 @@ group :production do
   gem "ZenTest", '4.8.2'
 end
 
-# Bundle edge Rails instead:
- # gem 'rails', :git => 'git://github.com/rails/rails.git'
- # gem 'active_record_deprecated_finders', git: 'git://github.com/rails/active_record_deprecated_finders.git'
-
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',   '3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-# 
-#   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-#   # gem 'therubyracer', :platforms => :ruby
-# 
-#   gem 'uglifier', '>= 1.0.3'
 end
-
-#gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'

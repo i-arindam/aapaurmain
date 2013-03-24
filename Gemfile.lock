@@ -177,6 +177,8 @@ GEM
       activesupport (= 3.2.6)
       bundler (~> 1.0)
       railties (= 3.2.6)
+    rails_autolink (1.0.9)
+      rails (~> 3.1)
     railties (3.2.6)
       actionpack (= 3.2.6)
       activesupport (= 3.2.6)
@@ -269,6 +271,7 @@ DEPENDENCIES
   parallel
   pusher (= 0.10.0)
   rails (= 3.2.6)
+  rails_autolink (= 1.0.9)
   rake
   redis (= 3.0.2)
   right_aws (= 3.0.5)

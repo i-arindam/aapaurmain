@@ -30,7 +30,8 @@
           'forUserName': "<%= @user.name %>",
           'commonPanelSelector': '.board-wrap .datas.common-panels',
           'remainingPanelSelector': '.board-wrap .datas.other-panels',
-          'nameSelector': '.shared-by span.other-user'
+          'nameSelector': '.shared-by span.other-user',
+          'myProfile': <%= @user == @current_user %>
         });
       });
     </script>

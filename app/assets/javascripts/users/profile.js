@@ -4,6 +4,7 @@ function UserProfile(config) {
 
 UserProfile.prototype._init = function(config) {
   var that = this;
+  this.config = config;
   this.currentUserId = config.currentUserId, this.forUserId = config.forUserId, this.userName = config.forUserName;
   this.commonPanelsContainer = $(config.commonPanelSelector);
   this.remainingPanelsContainer = $(config.remainingPanelSelector);
@@ -33,15 +34,20 @@ UserProfile.prototype.populatePanels = function() {
   });
   ul.appendTo(this.commonPanelsContainer);
 
-  ul = $('<ul>').addClass('story-tags');
-  $.each(this.remainingPanels, function(i, rp) {
-    var li = $('<li><a></a></li>');
-    li.children('a').attr('href', rp);
-    li.children('a').text(that.panelsDictionary[rp]);
-    li.appendTo(ul);
-  });
-  ul.appendTo(this.remainingPanelsContainer);
-  this.userNameDom.text(this.userName);
+  if(!this.config.myProfile) {
+    ul = $('<ul>').addClass('story-tags');
+    $.each(this.remainingPanels, function(i, rp) {
+      var li = $('<li><a></a></li>');
+      li.children('a').attr('href', rp);
+      li.children('a').text(that.panelsDictionary[rp]);
+      li.appendTo(ul);
+    });
+    ul.appendTo(this.remainingPanelsContainer);
+    this.userNameDom.text(this.userName);
+  } else {
+    this.remainingPanelsContainer.parent('li').remove();
+    this.commonPanelsContainer.parent('li').find('p.shared-by').text("Your panels:");
+  }
 };
 
 UserProfile.prototype.populateQuestions = function() {

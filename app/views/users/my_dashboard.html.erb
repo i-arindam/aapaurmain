@@ -23,7 +23,7 @@
   </script>
   <body>
     <div class="container clearfix">
-      <div class="row-fluid">
+      <div class="row">
         <div class="span9 clearfix">
           <div class="col-one">
             <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
@@ -63,11 +63,12 @@
                 <%= render :partial => "/story", :locals => { :story => story } %>
                 <% end %>
               </ul> <!-- stories section ends -->
-
-              <a class="more-stories" href="#">
-                Load More Stories
-                <img class="more-stories-loader hide" src="/assets/indicator.gif" />
-              </a>
+              <div class="more-stories-container">
+                <a class="more-stories btn btn-warning" >
+                  Load More Stories
+                  <img class="more-stories-loader hide" src="/assets/indicator.gif" />
+                </a>
+              </div>
             </div> <!-- center-container ends -->
           </div> <!-- col-two ends -->
         </div> <!-- span9 ends -->

@@ -172,7 +172,8 @@ class UsersController < ApplicationController
     # Stories object
     @stories = Story.get_n_stories_for(@user.id, 2, 0)
     @panels_lookup = $priorities_list['priorities'].to_json
-
+    @page_type = 'full_profile'
+    
     render :profile
   end
   
@@ -365,10 +366,10 @@ class UsersController < ApplicationController
     render_401 and return unless @user
     direction = params[:direction]
 
-    @title, base_method, user_id = if direction == 'in'
-      ["Requests for you", :requests_sent_to_me, 'from_id']
+    @title, base_method, user_id, @page_type = if direction == 'in'
+      ["Requests for you", :requests_sent_to_me, 'from_id', 'incoming_requests']
     else
-      ["Requests for you", :requests_sent_by_me, 'to_id']
+      ["Requests for you", :requests_sent_by_me, 'to_id', 'outgoing_requests']
     end
 
     reqs = Request.send(base_method, @user.id)
@@ -397,6 +398,7 @@ class UsersController < ApplicationController
     @has_data = users.length > 0
     @objects = get_display_for_list_page(users, @user)
     @next_steps = render_to_string(:partial => "users/next_steps_my_followings")
+    @page_type = 'my_followings'
 
     render :show_people
   end
@@ -410,6 +412,7 @@ class UsersController < ApplicationController
     @has_data = users.length > 0    
     @objects = get_display_for_list_page(users, @user)
     @next_steps = render_to_string(:partial => "users/next_steps_my_followers")
+    @page_type = 'my_followers'
 
     render :show_people
   end
@@ -628,7 +631,7 @@ class UsersController < ApplicationController
   def my_dashboard
     @user = current_user
     render_401 and return unless @user
-
+    @page_type = 'dashboard'
     @stories = Newsfeed.get_initial_feed_for(@user.id)
     @questions = ShortQuestion.get_latest_question_for(@user.id)
   end

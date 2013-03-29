@@ -8,12 +8,27 @@
       <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago" %>
+      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler" %>
     <% end %>
   </head>
   <script type="text/javascript">
+    window._gaq = window._gaq || [];
+    _gaq.push(['_setAccount', 'UA-35891488-1']);
+
+    (function(d) {
+      var ga = d.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })(document);
+
     $(document).ready(function() {
       window.dashboard = new Dashboard();
+      window.ga = new GAHandler({
+        'page': '<%= @page_type %>',
+        'pageType': 'dashboard',
+        'pre': 'dashboard_',
+        'q': window._gaq
+      });
       window.sh = new StoryHandler({
         'dashboard': true,
         'forUserId': <%= @user.id %>,

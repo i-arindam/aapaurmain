@@ -5,13 +5,13 @@
       <%= stylesheet_link_tag "list", "right_bar", "stories" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "application-list", "users/list_view", "story", "users/user_actions", "users/jquery.raty.min", "jquery.bpopup-min", "jquery.easing", "jquery.timeago" %>
+      <%= javascript_include_tag "application-list", "users/list_view", "story", "users/user_actions", "users/jquery.raty.min", 
+          "jquery.bpopup-min", "jquery.easing", "jquery.timeago", "ga_handler" %>
     <% end %>
     <title><%= @title %></title>
     <script type="text/javascript">
-      var _gaq = _gaq || [];
+      window._gaq = window._gaq || [];
       _gaq.push(['_setAccount', 'UA-35891488-1']);
-      _gaq.push(['_trackPageview', '<%= @direction %>Requests']);
 
       (function(d) {
         var ga = d.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -25,6 +25,12 @@
             'userIds': <%= @user_ids %>,
             'sessionUserId': <%= @user.id %>,
             'sliderElement': '.allinone_carousel_list'
+          });
+          window.ga = new GAHandler({
+            'page': '<%= @page_type %>',
+            'pageType': 'list',
+            'pre': 'list_',
+            'q': window._gaq
           });
           var sh = new StoryHandler();
           var userActions = new UserActions({

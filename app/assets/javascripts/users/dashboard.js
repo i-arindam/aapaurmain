@@ -82,6 +82,7 @@ Dashboard.prototype.setupPostAction = function() {
 
           $('div.panels-holder').slideUp('fast');
           $(data.story).prependTo($('ul.blog-container')).slideDown(1000);
+          window._gaq.push(['_trackEvent', 'dashboard', 'story_created', undefined, panels.length]);
         }, error: function(data) {
           var x = 10;
         }

@@ -6,6 +6,8 @@ class PanelController < ApplicationController
     @panel = params[:name]
     sids = $r.lrange("panel:#{@panel}:stories", 0, 9)
     @stories = Story.get_stories(sids)
+    @page_type = 'panels'
+    
     render 'panel/feed_from_panel'
   end
 

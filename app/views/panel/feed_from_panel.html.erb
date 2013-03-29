@@ -8,12 +8,27 @@
       <%= stylesheet_link_tag "users/dashboard", "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "story" %>
+      <%= javascript_include_tag "story", "ga_handler" %>
     <% end %>
   </head>
   <script type="text/javascript">
+    window._gaq = window._gaq || [];
+    _gaq.push(['_setAccount', 'UA-35891488-1']);
+
+    (function(d) {
+      var ga = d.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })(document);
+
     $(document).ready(function() {
       window.si = new StoryHandler();
+      window.ga = new GAHandler({
+        'page': '<%= @page_type %>',
+        'pageType': 'panel',
+        'pre': 'panel_',
+        'q': window._gaq
+      });       
     });
   </script>
   <body>

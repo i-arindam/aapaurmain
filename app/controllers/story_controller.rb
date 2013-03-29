@@ -90,6 +90,8 @@ class StoryController < ApplicationController
     render_404 and return unless params[:id]
     @story = Story.get_stories([params[:id]])[0]
     @user = current_user
+    @page_type = "one_story"
+    
     render 'one_story'  
   end
 

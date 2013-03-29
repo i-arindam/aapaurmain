@@ -6,12 +6,7 @@
     <%= image_tag profile_pic_url(@user.id.to_s), :style=>"height:150px,width:150px" , :id=>"preview" %>
   </div>
   <div class="upload">
-    <p>Select an image file.</p>
-    <% if @user.photo_exists %>
-      <div class="btn btn-info" id="deletePhoto">Delete</div>
-    <% else %>
-      <div class="btn btn-info hide" id="deletePhoto">Delete</div>
-    <% end %>
+    <div class="btn btn-info <%= @user.photo_exists ? "" : "hide" %>" id="deletePhoto">Delete</div>
     <div class="btn btn-danger" id="upload_placeholder"></div>
     <%=image_tag "indicator.gif",:id=>"indicator",:style=>"display:none;",:class=>"indicator"%>
   </div>

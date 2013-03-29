@@ -41,55 +41,60 @@
     });
   </script>
   <body>
-    
-    <div class="span11 mainContainer basicProfile">
-      <div class="span2 photoContainer">
-        <%= render :partial => 'upload_photo' %>
-      </div>
-      <div class="span8 basicDetails">
-        <%= form_for @user, :url => "/update", :html => { :method => :post, :class => "form-inline"} do %>
-        <fieldset>
-        <h2 class="span5 detailsHeader">Basic Details</h2>
-        <table>
-          <tr>
-            <td>
-              <label for="user[name]">Name</label>
-              <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
-            </td>
-          
-            <td>
-              <label for="user[dob]">Date of Birth</label>
-              <input type="text" class="normalInput datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
-            </td>
-          </tr>
-          
-          <tr>
-            <td>
-              <label for="sex">Sex</label>
-              <span class="controls" id="sex">
-                <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
-                <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
-              </span>
-            </td>
-            <td>
-              <label for="user[location]">Location</label>
-              <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
-            </td>
-          </tr>
-          
-          <tr>
-            <td colspan="2">
-              <label for="user[short_bio]">Short Bio</label>
-              <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
-            </td>
-          </tr>
-        </table>
+    <div class="container">
+      <div class="row">
+        <div class="span12 mainContainer basicProfile">
+          <div class="row">
+            <div class="span2 photoContainer">
+              <%= render :partial => 'upload_photo' %>
+            </div>
+            <div class="span10 basicDetails">
+              <%= form_for @user, :url => "/update", :html => { :method => :post, :class => "form-inline"} do %>
+              <fieldset>
+              <h2 class="span5 detailsHeader">Basic Details</h2>
+              <table>
+                <tr>
+                  <td>
+                    <label for="user[name]">Name</label>
+                    <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
+                  </td>
+                
+                  <td>
+                    <label for="user[dob]">Date of Birth</label>
+                    <input type="text" class="normalInput datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td>
+                    <label for="sex">Sex</label>
+                    <span class="controls" id="sex">
+                      <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
+                      <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
+                    </span>
+                  </td>
+                  <td>
+                    <label for="user[location]">Location</label>
+                    <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td colspan="2">
+                    <label for="user[short_bio]">Short Bio</label>
+                    <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
+                  </td>
+                </tr>
+              </table>
 
-        <button type="submit" class="btn btn-large saveBasicDetails">Update</button>
-        </fieldset>
-        <% end %>
-      </div>
-    </div>
+              <button type="submit" class="btn btn-large saveBasicDetails">Update</button>
+              </fieldset>
+              <% end %>
+            </div>
+          </div>
+        </div><!-- mainContainer ends -->
+      </div><!-- row ends -->
+    </div><!-- container ends -->
 
   </body>
   <script type="text/javascript">

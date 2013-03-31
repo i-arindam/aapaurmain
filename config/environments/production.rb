@@ -86,7 +86,8 @@ Aapaurmain::Application.configure do
   $search_conf = YAML.load(File.read("#{Rails.root}/config/search.yml"))
   $user_prefs = YAML.load(File.read("#{Rails.root}/config/user_prefs.yml"))
   $user_tips = YAML.load(File.read("#{Rails.root}/config/user_tips.yml"))
-  
+  $priorities_list = YAML.load(File.read("#{Rails.root}/config/priorities_list.yml"))
+    
   require "pusher"
   Pusher.app_id = $aapaurmain_conf['pusher']['app_id']
   Pusher.key    = $aapaurmain_conf['pusher']['key']

@@ -279,7 +279,7 @@ StoryHandler.prototype.bindEmbedly = function() {
       maxWidth: 450,
       wmode: 'transparent',
       method: 'after',
-      chars: 90,
+      chars: 150,
       key:'1c33c83e4cf34598a4dc7f96d77b5b06'    
     }).addClass('embedded');
   });

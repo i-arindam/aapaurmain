@@ -9,7 +9,7 @@ li.story {
   margin-bottom: 10px;
 }
 li.story:hover {
-  background: #333;
+  background: rgba(0, 0, 0, 0.7);
   box-shadow: 9px 9px 12px #777;
   border-radius: 5px;
 }
@@ -79,7 +79,7 @@ li.story:hover {
   border-radius: 0 0 8px 8px;
 }
 .story {
-  padding: 12px 25px;
+  padding: 12px 0 25px 0;
   overflow: hidden;
   list-style-type: none;
 }
@@ -95,7 +95,8 @@ li.story:hover {
   color: #000;
   float: left;
   font-size: 14px;
-  width: 100%;
+  padding: 0 12px 0 12px;
+  /*width: 100%;*/
 }
 .like-area {
   background: #e4e4e3;
@@ -326,11 +327,24 @@ ul.story-tags{
   margin-top: 110px;
 }
 div.embed {
-  border: 2px solid;
+  border: 2px outset;
   border-radius: 10px;
   padding: 15px;
-  background: #022;
-  color: white;
+  background: #DFDFDC;
   width: 95%;
   margin: 10px 0 10px 0;
+  overflow: hidden;
+}
+div.embed img {
+  float: left;
+  padding-right: 30px;
+}
+div.embed .provider {
+  display: none;
+}
+div.embed a {
+  display: block;
+}
+div.embed .description {
+  padding-top: 16px;
 }

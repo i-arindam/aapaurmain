@@ -5,9 +5,11 @@
     </div>
     <div class="nav info-right">
       <ul class="clearfix">
+        <% if current_user %>
         <li>
           <a href="/dashboard">Dashboard</a>
         </li>
+        <% else %>
         <li>
           <a href="/about">About us</a>
         </li>
@@ -20,18 +22,20 @@
         <li>
           <a href="/contact">Talk to us</a>
         </li>
+        <% end %>
         <% unless show_login? %>
         <li>
           <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="/assets/user-xsmall.png" /><span><%= current_user.name %></span></a>
         </li>
         <li>
-          <div class="message">
+          <a href="/log_out">Log Out</a> 
+          <!--<div class="message">
             <span class="msg-count">2</span>
-          </div>
+          </div> -->
         </li>
-        <li>
+        <!--<li>
           <a href="#" class="link-setting">Settings</a>
-        </li>
+        </li> -->
         <% else %>
         <li class="log-in">
           <a class="btn btn-success btn-large">Log in</a>

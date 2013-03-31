@@ -196,7 +196,6 @@ class UsersController < ApplicationController
   end
   
   def try_and_create(failure_render_path)
-    debugger
     old_user = User.find_by_email(params[:email])
     if old_user
       message = "That email is already registered. If you don't remember your password, try #{view_context.link_to('Forgot Password?', new_password_reset_path)}"

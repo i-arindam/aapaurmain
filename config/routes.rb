@@ -3,7 +3,7 @@ Aapaurmain::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
-  get "log_out" => "sessions#destroy", :as => "logout"
+  match "/log_out" => "sessions#destroy", :as => "logout"
   get "log_in" => "sessions#new", :as => "login"
   get "sign_up" => "users#new", :as => "signup"
 

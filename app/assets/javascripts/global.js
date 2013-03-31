@@ -4,6 +4,12 @@
     $(this).parent().toggle('slow');
   });
 
+  $('.basicDetails input.smallInput').bind('keyup', function(e) {
+    var nthInput = $('form tr.shortBios input').index(this);
+    $('tr.shortBios .help-inline:nth(' + nthInput + ')').css('display', 'inline');
+    $('tr.shortBios input:nth(' + (nthInput + 1) + ')').removeAttr('disabled').css('display', 'inline');
+  });
+
   $.fn.extend({
     setupHorizontalScroll : function() {
       var lis = $(this).children('li');

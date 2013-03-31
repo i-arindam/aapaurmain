@@ -277,9 +277,10 @@ class UsersController < ApplicationController
     dob = uhash[:dob]
     sex = uhash[:sex]
     valid_age = verify_age(dob, sex)
+    uhash[:short_bio] = uhash[:short_bio].values.join(",")
     
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
-    
+    debugger
     @user.update_attributes(uhash)
 
     @user.save

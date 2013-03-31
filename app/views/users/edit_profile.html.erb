@@ -79,10 +79,16 @@
                   </td>
                 </tr>
                 
-                <tr>
+                <tr class="shortBios">
                   <td colspan="2">
                     <label for="user[short_bio]">Short Bio</label>
-                    <input type="text" class="largeInput" name="user[short_bio]" placeholder="Few words about you?" value="<%= @user.short_bio %>" />
+                    <% sb = @user.short_bio && @user.short_bio.split(",")[0...5] %>
+                    <% 5.times do |i| %>
+                    <% bio = (sb && sb.size > i && sb[i]) || "" %>
+                    <input type="text" class="smallInput <%= i == 0 ? '' : 'blockInput' %>" name="user[short_bio][<%= i %>]" placeholder="Words for yourself" 
+                    value="<%= bio %>" <%= bio.blank? && i > 0 ? 'disabled' : '' %>/>
+                    <span class="help-inline hide">Upto 5 handles are considered good</span>
+                    <% end %>
                   </td>
                 </tr>
               </table>

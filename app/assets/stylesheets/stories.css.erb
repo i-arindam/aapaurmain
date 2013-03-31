@@ -148,7 +148,6 @@ li.story:hover {
   padding: 17px 25px;
 }
 .link-like-comment, .link-dislike-comment {
-  float: left;
   background-image: url("<%= image_path 'sprite_layout.png' %>");
   display: block;
 }
@@ -248,7 +247,12 @@ li.story:hover {
 }
 .comment-like-area {
   float: right;
-  width: 15%;
+}
+.comment-like-area a {
+  float: left;
+}
+.comment-like-area a[class*=j-] {
+  margin: 4px 12px 0 5px;
 }
 .panels-area{
   padding-top: 10px;

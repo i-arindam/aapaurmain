@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: requests
+#
+#  id            :integer          not null, primary key
+#  from_id       :integer          not null
+#  to_id         :integer          not null
+#  status        :integer          default(0)
+#  approved_date :datetime
+#  rejected_date :datetime
+#  asked_date    :datetime
+#  withdraw_date :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 ##############################################################################
 # @attr [Fixnum(11)] id             
 # @attr [Fixnum(11)] from_id        

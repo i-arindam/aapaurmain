@@ -29,6 +29,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "parallel"
   gem "capybara"
+  gem "annotate", '2.5.0'
 end
 
 group :production do

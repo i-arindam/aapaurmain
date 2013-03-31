@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: short_questions
+#
+#  id               :integer          not null, primary key
+#  text             :string(1000)     not null
+#  by_id            :integer
+#  by               :string(255)      default("admin"), not null
+#  belongs_to_topic :string(50)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
 class ShortQuestion < ActiveRecord::Base
   has_many :short_answers
 

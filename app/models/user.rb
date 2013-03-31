@@ -1,3 +1,47 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  email                  :string(255)      not null
+#  name                   :string(150)      not null
+#  dob                    :date
+#  location               :string(255)
+#  password_reset_token   :string(255)
+#  password_reset_sent_at :date
+#  password_digest        :string(255)      not null
+#  auth_token             :string(255)
+#  sex                    :integer
+#  relocation             :string(140)
+#  joint_family           :string(140)
+#  inlaws_interference    :string(140)
+#  further_education      :string(140)
+#  kids                   :string(140)
+#  opinion_on_sex         :string(140)
+#  gender_expectations    :string(140)
+#  primary_bread_winner   :string(140)
+#  independence           :string(140)
+#  career_priority        :string(140)
+#  financial_stability    :string(140)
+#  romance                :string(140)
+#  interests              :string(140)
+#  virginity              :string(140)
+#  chivalry               :string(140)
+#  decisiveness           :string(140)
+#  family_background      :string(140)
+#  short_bio              :string(500)
+#  photo_url              :string(255)
+#  photo_exists           :boolean
+#  email_verified         :boolean
+#  locked_since           :date
+#  locked_with            :integer
+#  status                 :boolean
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  num_ratings            :integer          default(0)
+#  avg_rating             :decimal(4, 2)    default(0.0)
+#
+
 class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name, :sex, :dob, :location, :short_bio
   has_secure_password

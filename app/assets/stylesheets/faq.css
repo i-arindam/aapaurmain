@@ -10,7 +10,7 @@ body {
   background:#fff;
   color:white;
   font:76%/1.6 verdana,geneva,lucida,'lucida grande',arial,helvetica,sans-serif;
-  text-align:center
+  text-align:center;
   padding-top: 90px;
   background-image: url('web-texture-blue.jpg');
   
@@ -57,7 +57,7 @@ body {
 
 .post .main {
   margin-bottom: .3em;
-  padding-bottom: 0
+  padding-bottom: 0;
 }
 
 /* --- Headings  --- */

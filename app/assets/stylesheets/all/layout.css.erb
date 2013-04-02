@@ -257,6 +257,30 @@ a {
   padding-left: 50px;
   width: 100px;
 }
+.beta-text {
+  position: absolute;
+  font-size: 19px;
+  color: #F00;
+  top: 30px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  /* IE8+ - must be on one line, unfortunately */ 
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865483, M12=0.7071067811865467, M21=-0.7071067811865467, M22=0.7071067811865483, SizingMethod='auto expand')";
+  /* IE6 and 7 */ 
+  filter: progid:DXImageTransform.Microsoft.Matrix(
+            M11=0.7071067811865483,
+            M12=0.7071067811865467,
+            M21=-0.7071067811865467,
+            M22=0.7071067811865483,
+            SizingMethod='auto expand');
+  left: 0px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: 'voltaireregular', helvetica neue, arial, sans-serif;
+  letter-spacing: 2px;  
+}
 .nav ul li > a {
   color: #fff;
   display: block;

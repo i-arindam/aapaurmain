@@ -28,7 +28,7 @@ UserProfile.prototype.populatePanels = function() {
   var ul = $('<ul>').addClass('story-tags'), that = this;
   $.each(this.commonPanels, function(i, cp) {
     var li = $('<li><a></a></li>');
-    li.children('a').attr('href', cp);
+    li.children('a').attr('href', '/panels/' + cp);
     li.children('a').text(that.panelsDictionary[cp]);
     li.appendTo(ul);
   });
@@ -38,7 +38,7 @@ UserProfile.prototype.populatePanels = function() {
     ul = $('<ul>').addClass('story-tags');
     $.each(this.remainingPanels, function(i, rp) {
       var li = $('<li><a></a></li>');
-      li.children('a').attr('href', rp);
+      li.children('a').attr('href', '/panels/' + rp);
       li.children('a').text(that.panelsDictionary[rp]);
       li.appendTo(ul);
     });

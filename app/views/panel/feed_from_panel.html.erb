@@ -5,7 +5,7 @@
       <title>Stories for panel <%= priorities_list[@panel] %></title>
     <% end %>
     <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/dashboard", "users/left_nav", "stories" %>
+      <%= stylesheet_link_tag "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "story", "ga_handler" %>
@@ -40,6 +40,7 @@
           </div>
           <div class="col-two">
             <div class="center-container">
+              <h2 class="page-header-text">Feed from the panel <span class="panel-name"><%= @panel %></h2></span>
               <ul class="blog-container">
                 <% @stories.each do |story| %>
                 <%= render :partial => "/story", :locals => { :story => story, :panels => story['panels'] } %>

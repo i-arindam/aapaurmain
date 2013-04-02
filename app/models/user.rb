@@ -647,6 +647,12 @@ class User < ActiveRecord::Base
     end
   
   end
+
+  # Return the url for the image
+  # @return [String] url for image, default if none exists
+  def image(size = 'large')
+    self.photo_url || "/assets/users/image_placeholder.jpg"
+  end
   
   # Queries Solr on new user create and finds out top 5 recommendations
   # Returns the user_ids from that list. 

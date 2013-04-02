@@ -19,6 +19,7 @@
         </div>
       </div>
       <div class="clear"></div>
+      <% unless my %>
       <div class="btn-wraper clearfix">
         <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
           <span class="send-req"><%= request['text'] %></span>
@@ -36,6 +37,7 @@
         <div class="star hide" data-score="<%= @rated_score %>"></div>
         <span class="rate-hint hide">&nbsp;</span>        
       </div>
+      <% end %>
     </div>
     <div class="box-rt blog-lt">
       <h3>Basic details</h3>

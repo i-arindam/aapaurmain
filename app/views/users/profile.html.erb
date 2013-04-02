@@ -60,7 +60,7 @@
           </div>
           <div class="col-two">
             <div class="center-container">
-              <%= render :partial => "users/top_section_individual", :locals => { :user => @user, :request => @request } %>
+              <%= render :partial => "users/top_section_individual", :locals => { :user => @user, :request => @request, :my => @my_profile } %>
               <ul class="blog-container">
                 <% @stories.each do |story| %>
                 <%= render :partial => "/story", :locals => { :story => story } %>

@@ -147,6 +147,7 @@ class UsersController < ApplicationController
     render_404 and return unless params[:id]
     @user = User.find_by_id(params[:id]) 
     render_404 and return unless @user
+    @my_profile = @user == @current_user
     
     #Check if the logged in user has sent request to this user. Show buttons accordingly
     @request = Request.get_request_values(@current_user.id, @user.id)

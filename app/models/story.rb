@@ -110,22 +110,24 @@ class Story < ActiveRecord::Base
     stories = []
     sids.each do |sid|
       story = {}
-      $r.multi do
-        story['core'] = $r.hgetall("story:#{sid}")
-        story['claps'] = $r.scard("story:#{sid}:claps")
-        story['boos'] = $r.scard("story:#{sid}:boos")
-        story['comments'] = $r.llen("story:#{sid}:comments")
-        story['panels'] = $r.smembers("story:#{sid}:panels")
+      story['core'] = $r.hgetall("story:#{sid}")
+      unless story['core'].blank?
+        $r.multi do
+          story['claps'] = $r.scard("story:#{sid}:claps")
+          story['boos'] = $r.scard("story:#{sid}:boos")
+          story['comments'] = $r.llen("story:#{sid}:comments")
+          story['panels'] = $r.smembers("story:#{sid}:panels")
+        end
+        story.each do |k,v|
+          story[k] = v.value unless k == 'core'
+        end
+        story.merge!(story['core'])
+        story.merge!({'id' => sid})
+        story.delete("core")
+        story['text'].gsub!("\n", "<br/>")
+        story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
+        stories.push(story)
       end
-      story.each do |k,v|
-        story[k] = v.value
-      end
-      story.merge!(story['core'])
-      story.merge!({'id' => sid})
-      story.delete("core")
-      story['text'].gsub!("\n", "<br/>")
-      story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
-      stories.push(story)
     end
     stories
   end

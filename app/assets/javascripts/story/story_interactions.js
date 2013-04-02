@@ -57,6 +57,7 @@ StoryHandler.prototype._init = function() {
   this.setupShowComments();
   this.setupMoreStories();
   this.bindEmbedly();
+  this.setupDelete();
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -285,3 +286,22 @@ StoryHandler.prototype.bindEmbedly = function() {
   });
 };
 
+StoryHandler.prototype.setupDelete = function() {
+  var that = this;
+  $('li.story a.del-story').livequery('click', function(e) {
+    e.preventDefault();
+    var ok = confirm("Are you sure you want to delete this story?");
+    if(ok) {
+      var clickedStory = $(this).parents('li.story');
+      var delUrl = "/story/" + $(this).attr('data-story-id') + "/delete";
+      $.ajax({
+        url: delUrl,
+        type: "POST",
+        success: function(data) {
+          clickedStory.slideUp('slow');
+          clickedStory.remove();
+        }
+      });
+    }
+  });
+};

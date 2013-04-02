@@ -58,6 +58,7 @@ Aapaurmain::Application.routes.draw do
   post 'story/:story_id/comment/:number/do' => 'story#like_dislike_a_comment'
   post 'story/create' => 'story#create_new_story'
   match 'story/:id' => 'story#show'
+  post '/story/:id/delete' => 'story#delete'
 
   get 'story/:story_id/get' => 'story#get_persons_on_story_actions'
 

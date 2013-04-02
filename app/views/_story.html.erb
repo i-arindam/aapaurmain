@@ -16,7 +16,12 @@
   <div class="story-content">
     <div class="story-tit clearfix">
       <h3 class="story-creator"><a href="/users/<%= story['by_id'] %>"><%= story['by'] %></a></h3>
-      <p class="story-time"><a href="/story/<%= story['id'] %>" class="story-link" alt="View story"><%= distance_of_time_in_words_to_now(story['time']) %> ago</a></p>
+      <p class="story-time">
+        <a href="/story/<%= story['id'] %>" class="story-link" alt="View story"><%= distance_of_time_in_words_to_now(story['time']) %> ago</a>
+        <% if story['by_id'].to_i == current_user.id %>
+        <a href="#" class="del-story close" alt="Delete Story" data-story-id="<%= story['id'] %>">&times;</a>
+        <% end %>
+      </p>
       <div class="paper-roll">&nbsp;</div>
       <div class="arrow-left">&nbsp;</div>
     </div>

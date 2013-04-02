@@ -95,4 +95,15 @@ class StoryController < ApplicationController
     render 'one_story'  
   end
 
+  def delete
+    render_401 and return unless current_user
+    sid = params[:id]
+    comment_count = $r.llen("story:#{sid}:comments").to_i
+    for i in 0..comment_count
+      $r.del("story:#{sid}:comments:#{i}:claps", "story:#{sid}:comments:#{i}:boos")
+    end
+    $r.del("story:#{sid}", "story:#{sid}:panels", "story:#{sid}:claps", "story:#{sid}:boos", "story:#{sid}:comments")
+    render :json => { :success => true }
+  end
+
 end

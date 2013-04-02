@@ -14,7 +14,6 @@ Aapaurmain::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
   match '/faq', to: 'static_pages#faq'
   match '/howitworks', to: 'static_pages#how_it_works'
-  match '/pricing', to: 'payment#pricing'
   match '/privacy', to: 'static_pages#privacy'
   
   get 'users/:id/more_info' => 'users#more_info'

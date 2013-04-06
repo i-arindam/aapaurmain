@@ -5,11 +5,10 @@ class StoryController < ApplicationController
     res = {}
     if params[:work] == "comment"
       comment = Story.add_comment(params, user)
-      comment['when'] = decorate_redis_time(comment['when'])
-      comment['text'].gsub!("\n", "<br/>")
       res['template'] = render_to_string(:partial => '/story_comment')
       res['success'] = true
       res['comment'] = comment
+      res['comment']['text'] = ActionController::Base.helpers.auto_link(comment.text, :html => { :target => '_blank' })
     else
       res = { :success => Story.update_action_on_story(params, user.id) }
     end
@@ -59,9 +58,6 @@ class StoryController < ApplicationController
     if params[:t] == "comments"
       res['template'] = render_to_string(:partial => '/story_comment')
       comments = Story.get_comments(params[:story_id], params[:start].to_i, params[:end].to_i)
-      comments.each do |c|
-        c['when'] = decorate_redis_time(c['when'])
-      end
       res['comments'] = comments
     else
       user_ids = Story.send(base_action, params[:story_id])

@@ -16,19 +16,17 @@ class Story < ActiveRecord::Base
   end
 
   def self.add_comment(params, user)
-    story_id, text, time = params[:story_id], params[:text], Time.new
-    comment_object = {
+    story_id, text = params[:story_id], params[:text].gsub("\n", "<br/>")
+    comment_object = StoryComment.create({
       :by => user.name,
       :by_id => user.id,
       :text => text,
-      :when => time
-    }
+      :story_id => story_id,
+      :photo_url => user.image('small')
+    })
 
-    $r.multi do
-      $r.rpush("story:#{story_id}:comments", comment_object.to_json)
-      comment_object = $r.lindex("story:#{story_id}:comments", -1)
-    end
-    JSON.parse(comment_object.value)
+    $r.rpush("story:#{story_id}:comments", comment_object.id)
+    comment_object
   end
 
   # Update the like, dislike, comment action on story
@@ -67,18 +65,16 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_comments(sid, start, stop)
-    comments = $r.lrange("story:#{sid}:comments", start, stop)
-    comments.collect! do |c|
-      com = JSON.parse(c)
-      com['text'].gsub!("\n", "<br/>")
-      com
-    end
-    final_comments, i = [], 0
-    comments.each do |h|
-      h['claps'] = $r.scard("story:#{sid}:comments:#{i}:claps") || 0
-      h['boos'] = $r.scard("story:#{sid}:comments:#{i}:boos") || 0
-      final_comments.push(h)
-      i += 1
+    comment_ids = $r.lrange("story:#{sid}:comments", start, stop)
+    comments = StoryComment.find_all_by_id(comment_ids)
+    final_comments, i = {}, 0
+    comments.each do |com|
+      final_comments[com.id] = {
+        :comment => com,
+        :claps => $r.scard("story:#{sid}:comments:#{com.id}:claps") || 0,
+        :boos => $r.scard("story:#{sid}:comments:#{com.id}:boos") || 0
+      }
+      final_comments[com.id][:comment][:text] = ActionController::Base.helpers.auto_link(com.text, :html => { :target => '_blank' })
     end
     final_comments
   end
@@ -131,5 +127,10 @@ class Story < ActiveRecord::Base
     end
     stories
   end
+
+  def self.decorate_time(time)
+    view_context.distance_of_time_in_words_to_now(time)
+  end
+
 
 end

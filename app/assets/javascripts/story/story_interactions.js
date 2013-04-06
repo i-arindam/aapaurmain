@@ -202,16 +202,19 @@ StoryHandler.prototype.showReceivedComments = function(data, sid) {
   ul.slideDown('fast');
   ul.children('li').remove();
   $.each(commentsToShow, function(i, obj) {
-    that.addCommentToDisplay(ul, commentTemplate, obj);
+    obj.comment.claps = obj.claps;
+    obj.comment.boos = obj.boos;
+    that.addCommentToDisplay(ul, commentTemplate, obj.comment);
   });
 };
 
 StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   var newComment = $(template);
 
-  newComment.find('.comment-user-img').attr('alt', comment.by);
+  newComment.find('div.comment-container').attr('data-comment-id', comment.id);
+  newComment.find('.comment-user-img').attr('alt', comment.by).attr('src', comment.photo_url);
   newComment.find('.comment-creator').text(comment.by);
-  newComment.find('.comment-time').text(comment.when + ' ago');
+  newComment.find('.comment-time').text($.timeago(comment.created_at));
   newComment.find('.comment-text').html(comment.text);
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
@@ -298,8 +301,10 @@ StoryHandler.prototype.setupDelete = function() {
         url: delUrl,
         type: "POST",
         success: function(data) {
-          clickedStory.slideUp('slow');
-          clickedStory.remove();
+          clickedStory.fadeOut('slow');
+          setTimeout(function() {
+            clickedStory.remove();
+          }, 500);
         }
       });
     }

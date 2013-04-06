@@ -651,7 +651,16 @@ class User < ActiveRecord::Base
   # Return the url for the image
   # @return [String] url for image, default if none exists
   def image(size = 'large')
-    self.photo_url || "/assets/users/image_placeholder.jpg"
+    return self.photo_url if self.photo_url
+    def_url = case size
+    when 'large'
+      "/assets/users/user-medium.jpg"
+    when 'medium'
+      "/assets/users/user-slide.jpg"
+    when 'small'
+      "/assets/users/user-small.jpg"
+    end
+    def_url
   end
   
   # Queries Solr on new user create and finds out top 5 recommendations

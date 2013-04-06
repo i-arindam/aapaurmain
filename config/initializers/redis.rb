@@ -21,7 +21,7 @@ $r = Redis.new(:host => 'localhost', :port => 6379)
 # user ids of actors
 
 # 7) story:story_id:comments - list
-# List of comments for each story_id
+# List of comment ids from MySql.
 
 # 8) story:story_id:comments:comment_id:claps - set
 # user ids of actors

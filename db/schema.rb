@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320123501) do
+ActiveRecord::Schema.define(:version => 20130405070555) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -196,6 +196,19 @@ ActiveRecord::Schema.define(:version => 20130320123501) do
     t.datetime "created_at",                                            :null => false
     t.datetime "updated_at",                                            :null => false
   end
+
+  create_table "story_comments", :force => true do |t|
+    t.string   "text",       :limit => 2000
+    t.string   "by"
+    t.integer  "by_id",                      :null => false
+    t.integer  "story_id",                   :null => false
+    t.string   "photo_url"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "story_comments", ["by_id"], :name => "index_story_comments_on_by_id"
+  add_index "story_comments", ["story_id", "by_id"], :name => "index_story_comments_on_story_id_and_by_id"
 
   create_table "user_follows", :force => true do |t|
     t.integer  "user_id"

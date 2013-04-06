@@ -38,9 +38,16 @@ class Story < ActiveRecord::Base
     story_id, action, comment_number = params[:story_id], params[:work].pluralize, params[:number]
     already_acted = $r.sismember("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
 
-    return false if already_acted
-    $r.sadd("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
-    return true
+    if action == "deletes"
+      $r.lrem("story:#{story_id}:comments", 0, comment_number)
+      $r.del("story:#{story_id}:comments:#{comment_number}:claps", "story:#{story_id}:comments:#{comment_number}:boos")
+      StoryComment.find_by_id(comment_number).destroy
+      return true
+    else
+      return false if already_acted
+      $r.sadd("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
+      return true
+    end
   end
 
   # Add new story. Increment story count

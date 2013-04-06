@@ -309,4 +309,24 @@ StoryHandler.prototype.setupDelete = function() {
       });
     }
   });
+
+  $('.del-comment').livequery('click', function(e) {
+    e.preventDefault();
+    var comment = $(this).parents('div.comment-container');
+    var delUrl = "/story/" + $(this).parents('li.story').attr('data-story-id') + "/comment/" 
+      + comment.attr('data-comment-id') + "/do";
+    $.ajax({
+      url: delUrl,
+      type: "POST",
+      data: { "work": "delete"},
+      success: function(data) {
+        comment_count_dom = comment.parents('.comment-area').siblings('.like-area').find('.story-comments');
+        comment_count_dom.text(parseInt(comment_count_dom.text(), 10) - 1);
+        comment.parent('li').slideUp('slow');
+        setTimeout(function() {
+          comment.parent('li').remove();
+        }, 500);
+      }
+    });
+  });
 };

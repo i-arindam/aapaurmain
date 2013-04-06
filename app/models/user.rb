@@ -553,12 +553,10 @@ class User < ActiveRecord::Base
     profile_pic_fullpath =  profile_pic_location + "/profile-#{self.id.to_s}" 
     profile_pic_original = '/tmp/' + File.basename(profile_pic_fullpath)
 
-    
     file.rewind
     File.open(profile_pic_original, "wb") do |f|
      f.write(file.read)
     end
-
 
     #Get the extension and mime type
     img = Magick::Image::read(profile_pic_original).first
@@ -568,9 +566,7 @@ class User < ActiveRecord::Base
 
     #delete existing photo
     $s3.delete_file(profile_pic_fullpath) if self.photo_exists
-
     $s3.put_file(profile_pic_original, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
-
     
     delay.generate_photo_sizes(self.id)
     self.photo_exists = true
@@ -578,7 +574,6 @@ class User < ActiveRecord::Base
   end
 
   def generate_photo_sizes(user_id)
-    
     require "aws_helper"
     require 'RMagick'
     begin
@@ -591,8 +586,6 @@ class User < ActiveRecord::Base
       thumbnail = '/tmp/' + "profile-#{user_id.to_s}-thumbnail"
       $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
 
-        
-      
       img = Magick::Image::read(profile_pic_original).first
       headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
 
@@ -606,8 +599,6 @@ class User < ActiveRecord::Base
       img_thumbnail.strip!
       img_thumbnail.write(thumbnail)
 
-      
-       
       thumbnail_fullpath = profile_pic_location + "/profile-#{user_id.to_s}-thumbnail" 
       headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
       $s3.delete_file(thumbnail_fullpath) if user.photo_exists
@@ -616,7 +607,6 @@ class User < ActiveRecord::Base
       FileUtils.rm(thumbnail)
       FileUtils.rm(profile_pic)
       FileUtils.rm(profile_pic_original)
-     
     rescue Exception => e
       logger.error "resizing failed for User #{user_id} : #{e.inspect}"
       logger.error e.backtrace.join("\n")
@@ -635,8 +625,6 @@ class User < ActiveRecord::Base
       profile_pic = "profile-#{self.id.to_s}-150"
        
       $s3.delete_file(profile_pic)
-
-
       thumbnail_name = "profile-#{self.id.to_s}-thumbnail"
       $s3.delete_file(thumbnail_name)
 

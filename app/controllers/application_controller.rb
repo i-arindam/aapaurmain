@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
   def gimme_random_value(size)
     Time.now.to_i % size
   end
+  helper_method :gimme_random_value
 
   def thumbnail_pic_url(user_id)
     user = User.find user_id

@@ -1,4 +1,7 @@
 source :rubygems
+source 'http://rubygems.org'
+source 'http://gems.github.com'
+
 
 gem 'rails', '3.2.6'
 gem 'rake'
@@ -30,6 +33,9 @@ group :development, :test do
   gem "parallel"
   gem "capybara"
   gem "annotate", '2.5.0'
+  gem "quiet_assets", '1.0.2'
+  gem "better_errors", '0.8.0'
+  gem "thin"
 end
 
 group :production do

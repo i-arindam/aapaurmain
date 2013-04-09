@@ -51,6 +51,9 @@ ProfilePicUpload.prototype.initAjaxUpload = function(){
           that.indicator.hide();
         });
       }
+    },
+    onError: function(id, name, reason, xhr) {
+      alert('failed. Try again in some time please');
     }
   });
 };
@@ -59,24 +62,28 @@ ProfilePicUpload.prototype.deletePhoto = function(){
   var that = this;
   this.deleteButton.click(function() {
     that.showIndicator();
-    $.post('/users/'+ that.user_id + '/delete_photo', {}, function(response) {
-      that.indicator.hide();
-      if(response.success ===  true) {
-        that.preview.attr('src',response.url);
-        that.preview.removeAttr("style");
-        that.successMsg.children(":first").text("Your profile picture has been deleted!");
-        that.successMsg.show();
-        that.uploadButton.show();
-            that.indicator.hide();
-      } else {
-        that.successMsg.children(":first").text(response.message);
-        that.successMsg.show();
+    $.ajax({
+      url: '/users/' + that.user_id + '/delete_photo',
+      type: "POST",
+      dataType: "json",
+      success: function(response) {
         that.indicator.hide();
-        that.uploadButton.show();
-
-        that.deleteButton.show();
+        if(response.success ===  true) {
+          that.preview.attr('src',response.url);
+          that.preview.removeAttr("style");
+          that.successMsg.children(":first").text("Your profile picture has been deleted!");
+          that.successMsg.show();
+          that.uploadButton.show();
+          that.indicator.hide();
+        } else {
+          that.successMsg.children(":first").text(response.message);
+          that.successMsg.show();
+          that.indicator.hide();
+          that.uploadButton.show();
+          that.deleteButton.show();
+        }        
       }
-    }, 'json');
+    });
   });
 };
 

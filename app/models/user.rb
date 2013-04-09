@@ -639,16 +639,25 @@ class User < ActiveRecord::Base
   # Return the url for the image
   # @return [String] url for image, default if none exists
   def image(size = 'large')
-    return self.photo_url if self.photo_url
-    def_url = case size
-    when 'large'
-      "/assets/users/user-medium.jpg"
-    when 'medium'
-      "/assets/users/user-slide.jpg"
-    when 'small'
-      "/assets/users/user-small.jpg"
+    self.original_pic_url(size)
+  end
+
+  def original_pic_url(size = 'large')
+    if self && self.photo_exists && Rails.env != "development"
+      key = $aapaurmain_conf['profile-pic-original']
+      profile_key = key.gsub('{{user_id}}' , self.id.to_s)
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '?' + (Time.now.to_i % 10).to_s
+    else
+      def_url = case size
+      when 'large'
+        "/assets/users/user-medium.jpg"
+      when 'medium'
+        "/assets/users/user-slide.jpg"
+      when 'small'
+        "/assets/users/user-small.jpg"
+      end
+      return def_url
     end
-    def_url
   end
   
   # Queries Solr on new user create and finds out top 5 recommendations

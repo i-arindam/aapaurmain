@@ -281,7 +281,6 @@ class UsersController < ApplicationController
     uhash[:short_bio] = uhash[:short_bio].values.join(",")
     
     redirect_to :back, :alert => "Invalid age for #{sex}s. Must be above " + (sex == "male" ? 21 : 18).to_s + " years" and return unless valid_age
-    debugger
     @user.update_attributes(uhash)
 
     @user.save
@@ -322,7 +321,6 @@ class UsersController < ApplicationController
   
   def upload_photo
     session_user = current_user
-
     img = params[:qqfile].is_a?(String) ? request.body : params[:qqfile]
     img.rewind
     errors = {
@@ -337,7 +335,9 @@ class UsersController < ApplicationController
       render :text => {:success => false, :message => errors[:size_limit_exceeded]}.to_json and return
     end
     session_user.photo_url = img
-    render :text => {:success => true , :url => original_pic_url(session_user.id) }.to_json
+    session_user.photo_exists = true
+    session_user.save
+    render :text => {:success => true , :url => session_user.original_pic_url }.to_json
   end
   
 

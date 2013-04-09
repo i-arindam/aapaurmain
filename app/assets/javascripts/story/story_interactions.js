@@ -216,8 +216,12 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   newComment.find('.comment-creator').text(comment.by);
   newComment.find('.comment-time').text($.timeago(comment.created_at));
   newComment.find('.comment-text').html(comment.text);
+  newComment.find('.comment-person-link').attr('href', '/users/' + comment.by_id);
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
+  if(this.config.forUserId !== comment.by_id) {
+    newComment.find('.del-comment').remove();
+  }
   
   newComment.hide().delay(500).appendTo(ul).fadeIn('slow'); // add animation
 };

@@ -144,7 +144,7 @@
               <li>Express.</li>
             </ul>
           </div>
-        </div> <!-- span6 -->
+        </div> <!-- span5 -->
 
         <% unless current_user %>
         <div class="span7">
@@ -168,10 +168,16 @@
               </div>
             <% end %>
           </div><!--signup ends-->
-        </div> <!-- span5-->
+        </div> <!-- span7-->
         <%end%>
-      </div> <!-- row-fluid-->            
+        
+        <div class="fb-like-box" data-href="http://www.facebook.com/aapaurmain" data-width="310" data-height="370" data-show-faces="true" data-colorscheme="dark" data-stream="false" data-header="false"></div>
+
+      </div> <!-- row-->
+        
     </div> <!-- div.container -->
+
+
     <div class="tag-line">
       <div class="container">
         <span class="highlight interact">Interactive</span> platform to <span class="highlight discover">Discover</span> people you will <span class="highlight bond">Bond</span> with
@@ -186,13 +192,15 @@
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
     fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk')); 	  
+  }(document, 'script', 'facebook-jssdk'));
+  // FB code for like button on left panel
 
   e = document.createElement('script'); 
   e.type = 'text/javascript'; 
   e.async = true;
   e.src = document.location.protocol + '//apis.google.com/js/plusone.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+  // G+ code for share button on left panel
 
   window.twttr = (function (d,s,id) {
     var t, js, fjs = d.getElementsByTagName(s)[0];
@@ -200,12 +208,14 @@
     js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
     return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f); } });
   }(document, "script", "twitter-wjs"));
+  // Tw Code for share button on left panel
 
   e = document.createElement('script'); 
   e.type = 'text/javascript'; 
   e.async = true;
   e.src = document.location.protocol + '//platform.linkedin.com/in.js';
   s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s);
+  // Li Code for share button on left panel
 
   twttr.ready(function(twttr){
     twttr.events.bind('tweet', function(event) {
@@ -221,6 +231,16 @@
      //GA stuff
     });   
 
-    $('.socialActions').delay(3500).fadeToggle(500, 'swing');   
+    $('.socialActions').delay(3500).fadeToggle(500, 'swing');
+    // End of left panel share
+
+    // Right panel for FB Like box
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=189243904452513";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }); 	
 </script>

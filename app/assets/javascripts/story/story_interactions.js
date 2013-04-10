@@ -17,11 +17,11 @@ function StoryHandler(config){
     },
     {
       "data": [
-        { "link": '.link-like',              "url": '/story/{{sid}}/do?action=clap',             "update": ".story-claps" },
-        { "link": '.link-dislike',           "url": '/story/{{sid}}/do?action=boo',              "update": ".story-boos" },
-        { "link": '.submit-comment',         "url": '/story/{{sid}}/do?action=comment',          "update": ".story-comments" },
-        { "link": '.link-like-comment',      "url": '/story/{{sid}}/comment/{{number}}/do?action=clap',    "update": ".comment-claps" },
-        { "link": '.link-dislike-comment',   "url": '/story/{{sid}}/comment/{{number}}/do?action=boo', "update": ".comment-boos" }
+        { "link": '.link-like',              "url": '/story/{{sid}}/do?action=clap',                    "update": ".story-claps",   "update_sibling": ".story-boos"     },
+        { "link": '.link-dislike',           "url": '/story/{{sid}}/do?action=boo',                     "update": ".story-boos",    "update_sibling": ".story-claps"    },
+        { "link": '.submit-comment',         "url": '/story/{{sid}}/do?action=comment',                 "update": ".story-comments"                                     },
+        { "link": '.link-like-comment',      "url": '/story/{{sid}}/comment/{{number}}/do?action=clap', "update": ".comment-claps", "update_sibling": ".comment-boos"   },
+        { "link": '.link-dislike-comment',   "url": '/story/{{sid}}/comment/{{number}}/do?action=boo',  "update": ".comment-boos",  "update_sibling": ".comment-claps"  }
       ],
       "handler": this.bindHandlerForAction
     }
@@ -72,14 +72,14 @@ StoryHandler.prototype.setupSelectors = function() {
         if(/comment/.test(thisClass)) {
           commentNumber = $(that.storyDivSelector + ' ' + obj.link).index($(this));
         }
-        object.handler.call(that, obj.url, storyId, obj.update, commentNumber);
+        object.handler.call(that, obj, storyId, commentNumber);
       });
     });
   });
 };
 
-StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
-  var getUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
+StoryHandler.prototype.bindHandlerForShow = function(obj, sid, commentNumber) {
+  var getUrl = obj.url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
   $.ajax({
     url: getUrl,
     type: "GET",
@@ -92,8 +92,8 @@ StoryHandler.prototype.bindHandlerForShow = function(url, sid, commentNumber) {
   });
 };
 
-StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, commentNumber) {
-  var postUrl = url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
+StoryHandler.prototype.bindHandlerForAction = function(obj, sid, commentNumber) {
+  var postUrl = obj.url.replace(/{{sid}}/, sid).replace(/{{number}}/, commentNumber), that = this;
   var action = postUrl.match(/do\?action=(\w+)/)[1];
   var postData = { 'work' : action };
   if(action === "comment") {
@@ -106,7 +106,7 @@ StoryHandler.prototype.bindHandlerForAction = function(url, sid, selector, comme
     dataType: "json",
     success: function(data) {
       if(data.success) { 
-        that.indicateInPlaceSuccess(sid, selector, commentNumber);
+        that.indicateInPlaceSuccess(sid, obj.update, obj.update_sibling, commentNumber, data.likes_reversed);
         action === "comment" && that.addNewComment(data, sid);
       } else {
         that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again" });
@@ -147,14 +147,26 @@ StoryHandler.prototype.showInModal = function(data) {
   });
 };
 
-StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, commentNumber) {
+StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, siblingSelector, commentNumber, likes_reversed) {
   var story = $(this.storySelector).filter('[data-story-id=' + sid + ']'), toUpdate;
-  if(selector.indexOf('comment-') !== -1) {
-    toUpdate = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
+  if(likes_reversed) {
+    var toAdd, toSub;
+    if(selector.indexOf('comment-') !== -1) {
+      toAdd = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
+      toSub = story.find('ul.comments li:nth(' + commentNumber + ') ' + siblingSelector);
+    } else {
+      toAdd = story.find(selector), toSub = story.find(siblingSelector);
+    }
+    toAdd.text(parseInt(toAdd.text(), 10) + 1);
+    toSub.text(parseInt(toSub.text(), 10) - 1);
   } else {
-    toUpdate = story.find(selector);
+    if(selector.indexOf('comment-') !== -1) {
+      toUpdate = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
+    } else {
+      toUpdate = story.find(selector);
+    }
+    toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
   }
-  toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
 };
 
 StoryHandler.prototype.showErrorInModal = function(data) {

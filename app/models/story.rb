@@ -11,8 +11,19 @@ class Story < ActiveRecord::Base
     already_acted = $r.sismember("story:#{story_id}:#{action}", acting_user_id)
 
     return false if already_acted
+    if action == "claps"
+      if $r.sismember("story:#{story_id}:boos", acting_user_id)
+        $r.srem("story:#{story_id}:boos", acting_user_id)
+        like_dislike_reversed = true
+      end
+    elsif action == "boos"
+      if $r.sismember("story:#{story_id}:claps", acting_user_id)
+        $r.srem("story:#{story_id}:claps", acting_user_id) 
+        like_dislike_reversed = true
+      end
+    end
     $r.sadd("story:#{story_id}:#{action}", acting_user_id)
-    return true
+    return [true, like_dislike_reversed]
   end
 
   def self.add_comment(params, user)
@@ -45,8 +56,22 @@ class Story < ActiveRecord::Base
       return true
     else
       return false if already_acted
+      if action == "claps"
+        key = "story:#{story_id}:comments:#{comment_number}:boos"
+        if $r.sismember(key, acting_user_id)
+          $r.srem(key, acting_user_id)
+          like_dislike_reversed = true
+        end
+      elsif action == "boos"
+        key = "story:#{story_id}:comments:#{comment_number}:claps"
+        if $r.sismember(key, acting_user_id)
+          $r.srem(key, acting_user_id)
+          like_dislike_reversed = true
+        end
+      end
+          
       $r.sadd("story:#{story_id}:comments:#{comment_number}:#{action}", acting_user_id)
-      return true
+      return [true, like_dislike_reversed]
     end
   end
 

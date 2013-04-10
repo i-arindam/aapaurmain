@@ -10,15 +10,16 @@ class StoryController < ApplicationController
       res['comment'] = comment
       res['comment']['text'] = ActionController::Base.helpers.auto_link(comment.text, :html => { :target => '_blank' })
     else
-      res = { :success => Story.update_action_on_story(params, user.id) }
+      success, likes_reversed = Story.update_action_on_story(params, user.id)
+      res = { :success => success, :likes_reversed => likes_reversed }
     end
     render :json => res.to_json
   end
 
   def like_dislike_a_comment
     render_404 and return unless user = current_user
-    res = Story.update_comment(params, user.id)
-    render :json => { :success => res }
+    success, likes_reversed = Story.update_comment(params, user.id)
+    render :json => { :success => success, :likes_reversed => likes_reversed }
   end
 
   def notify

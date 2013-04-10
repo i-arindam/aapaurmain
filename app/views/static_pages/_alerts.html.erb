@@ -1,4 +1,4 @@
-<% [:notice, :error, :success, :warning ,:info].each do |mes| %>
+<% [:notice, :error, :success, :warning ,:info, :alert].each do |mes| %>
   <% if flash[mes] %>
   <div class="alert alert-<%= (mes == :notice ? 'info' : mes.to_s) %>">
     <a class="close">&times;</a>

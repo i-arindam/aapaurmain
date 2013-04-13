@@ -97,8 +97,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_comments(sid, start, stop)
-    comment_ids = $r.lrange("story:#{sid}:comments", start, stop)
-    comments = StoryComment.find_all_by_id(comment_ids)
+    comments = StoryComment.find_all_by_story_id(sid)
     final_comments, i = {}, 0
     comments.each do |com|
       final_comments[com.id] = {
@@ -143,11 +142,11 @@ class Story < ActiveRecord::Base
         $r.multi do
           story['claps'] = $r.scard("story:#{sid}:claps")
           story['boos'] = $r.scard("story:#{sid}:boos")
-          story['comments'] = $r.llen("story:#{sid}:comments")
+          story['comments'] = StoryComment.count(:conditions => {:story_id => sid})
           story['panels'] = $r.smembers("story:#{sid}:panels")
         end
         story.each do |k,v|
-          story[k] = v.value unless k == 'core'
+          story[k] = v.value unless (k == 'core' || k == 'comments')
         end
         story.merge!(story['core'])
         story.merge!({'id' => sid})

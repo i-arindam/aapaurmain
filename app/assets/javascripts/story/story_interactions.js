@@ -70,9 +70,9 @@ StoryHandler.prototype.setupSelectors = function() {
         var commentNumber = '';
         var thisClass = $(this).attr('class');
         if(/comment/.test(thisClass)) {
-          commentNumber = $(that.storyDivSelector + ' ' + obj.link).index($(this));
+          commentId = $(this).parents('.comment-container').attr('data-comment-id');
         }
-        object.handler.call(that, obj, storyId, commentNumber);
+        object.handler.call(that, obj, storyId, commentId);
       });
     });
   });
@@ -152,8 +152,8 @@ StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, siblingS
   if(likes_reversed) {
     var toAdd, toSub;
     if(selector.indexOf('comment-') !== -1) {
-      toAdd = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
-      toSub = story.find('ul.comments li:nth(' + commentNumber + ') ' + siblingSelector);
+      toAdd = story.find('.comment-container[data-comment-id=' + commentNumber + ']').find(selector);
+      toSub = story.find('.comment-container[data-comment-id=' + commentNumber + ']').find(siblingSelector);
     } else {
       toAdd = story.find(selector), toSub = story.find(siblingSelector);
     }
@@ -161,7 +161,7 @@ StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, siblingS
     toSub.text(parseInt(toSub.text(), 10) - 1);
   } else {
     if(selector.indexOf('comment-') !== -1) {
-      toUpdate = story.find('ul.comments li:nth(' + commentNumber + ') ' + selector);
+      toUpdate = story.find('.comment-container[data-comment-id=' + commentNumber + ']').find(selector);
     } else {
       toUpdate = story.find(selector);
     }

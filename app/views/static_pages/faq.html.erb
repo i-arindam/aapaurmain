@@ -1,13 +1,68 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About Us</title>
+    <% content_for :stylesheet do %>
+    <%= stylesheet_link_tag "static_pages" %>
+    <% end %>
+    <% content_for :js_footer do %>
+    <%= javascript_include_tag "static_pages", "bootstrap.min" %>
+    <% end %>
+  </head>
+  <body>
+    <div class="container clearfix">
+      <div class="row">
+        <div class="center-container">
+          <div class="accordion" id="accordion">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseOne">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseTwo">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseThree">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
+          </div> <!-- accordion -->
+        </div> <!-- div.center-container -->
+      </div> <!-- div.row -->
+    </div> <!-- div.container -->    
+  </body>
+</html>
+
+
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
-<% content_for :stylesheet do %>
-  <%= stylesheet_link_tag "faq" %>
-<% end %>
-<% content_for :javascript do %>
-  <%= javascript_include_tag 'expand' %>
-  <%= javascript_include_tag 'faq' %>
-<% end %>
 
 <title>Aap Aur Main-FAQs</title>
 </head>
@@ -26,8 +81,6 @@
       
       <div class="mainContent">
       <div id="demo2" class="demo signup">
-        <!--start from here-->
-        <!-- <h2>Sign Up related queries</h2> -->
         <div class="expand">How to sign up ?</div>
         <div class="faq-collapse">
            <p>Signining up for www.aapaurmain.com is quite easy as you do not have to look for plans & pricing page as an early bird. You need to provide basic information like Name, Age, Gender, Location,etc. & other more important stuff like your preferences and aspirations and then you are good to go.
@@ -86,11 +139,9 @@
 
 
 
-      </div> <!-- .demo2.signup -->
+      </div> 
       
       <div id="demo2" class="demo actions hide">
-        <!--start from here-->
-        <!-- <h2>Actions related queries</h2> -->
         <div class="expand">What do I do if I like someone's profile?</div>
         <div class="faq-collapse">
             <p>If you come across a person whom you find interesting, just click on Send Request button & your request will be sent to the person.As per our membership plans, you need to be a paid member to send requests to members. However, for our early birds, we are gifting these features to you for a limited period. We urge you to send requests to people you find interesting and want to know better</p>
@@ -151,11 +202,9 @@
         </div>
         
         
-      </div> <!-- .demo2.actions -->
+      </div> 
       
       <div id="demo2" class="demo profile hide">
-        <!--start from here-->
-        <!-- <h2>Profile related queries</h2> -->
         <div class="expand">How can I edit my profile?</div>
         <div class="faq-collapse">
             <p>For editing your profile:
@@ -184,8 +233,8 @@
         </div>
       
       </div>
-    </div> <!-- .content -->
+    </div> 
   </div>
-</div> <!-- .wrapper -->
+</div> 
 </body>
 </html>

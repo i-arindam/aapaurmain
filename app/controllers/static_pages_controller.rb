@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   
   def home
+    redirect_to '/dashboard' and return if current_user
   end
   
   def tnc

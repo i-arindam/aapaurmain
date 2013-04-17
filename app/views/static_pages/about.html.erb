@@ -3,57 +3,59 @@
 <html>
   <head>
     <title>About Us</title>
-    <%= stylesheet_link_tag "about" %>
-
+    <% content_for :stylesheet do %>
+    <%= stylesheet_link_tag "static_pages" %>
+    <% end %>
+    <% content_for :js_footer do %>
+    <%= javascript_include_tag "static_pages", "bootstrap.min" %>
+    <% end %>
   </head>
   <body>
-    
-    <div class="container aboutusContainer">  
+    <div class="container clearfix">
+      <div class="row">
+        <div class="center-container">
+          <div class="accordion" id="accordion">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseOne">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
 
-    <img src="assets/fb_pics.png" class="aboutus" /> 
-    <div class="aboutusHeading"> 
-      <span>AapAurMain - Behind the Scenes</span>
-    </div>
-      
-        <div class="question">
-        Who are we?
-        </div>
-        
-        <div class="answer">
-        aapaurmain.com is India's state-of-art matrimonial site which caters to the 'HUMANISTIC' approach towards marriage as compared to the 'MATERIALISTIC' & 'SUPERFICIAL' approach.
-        </div>
-        <div class="question">
-        What are our most differentiating key values?
-        </div>
-        
-      <div class="answer">
-        <ol>
-          Our difference speaks from the values we strongly advocate &amp; expect from our 'RATIONAL-THINKING' users:
-         <li>Mutual respect for each others' religion, culture, tradition &amp; responsibilities.</li>
-         <li>Not judging ones' life-partner on the basis of skin-color, caste, family structure, etc.</li>
-         <li>Acceptance of each others' responsibilities towards each others' parents.</li>
-         <li>Strongly opposing in-laws or relatives interference in matters between the couple.</li>
-         <li>Freedom to choose ones' career after marriage with support from the partner in every possible way.</li>
-         <li>We firmly believe BEST MATCH IS ONE WHO ACCEPTS YOU THE WAY YOU ARE.</li>
-        </ol>
-    
-      </div>
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseTwo">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
 
-    
-      <div class="question">
-      Why should you trust &amp; join us?
-      </div>
-      <div class="answer">
-      We bring to you matches that 'suit' your 'individuality'. It is easy to 'generalize' matches under the section Religion, caste, skin-color, salary, etc. but we give you a platform to find your soul-mate on the basis of what you would really want to find in your 'special-one'. And trust us our highly specialized uses an awesome mixture of PSYCHOLOGY &amp; TECHNOLOGY to ‘handpick’ matches for you. You see, we really believe in running with time!
-    </div>
-   
-      <div class="question">
-     Who is the person talking to me?
-     </div>
-      <div class="answer">
-      Well, this is tough one to answer as we are a family of individuals who have taken out best from their expertise &amp; experience to present this whole platform before you. A research consisting of more than 10,000 man-hours serves you for what you have been looking for till now. Want to talk and know us further, feel free to write to us at talktous@aapaurmain.com. You will always get a human,&amp; not a machine talking to you.
-    </div>
-    
-  </div>
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  Heading 1
+                </a>
+              </div>
+              <div class="collapse" id="collapseThree">
+                <div class="accordion-inner">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod adipiscing magna at posuere. Duis aliquet sapien enim, et facilisis sapien. Cras turpis elit, facilisis et ultrices id, tincidunt sit amet mi. Pellentesque at justo augue, vel semper dolor. Nulla facilisi.
+                </div>
+              </div>
+            </div>
+          </div> <!-- accordion -->
+        </div> <!-- div.center-container -->
+      </div> <!-- div.row -->
+    </div> <!-- div.container -->    
   </body>
 </html>

@@ -71,7 +71,7 @@ Aapaurmain::Application.configure do
     :port                 => 587,
     :domain               => 'aapaurmain.com',
     :user_name            => 'aapaurmain',
-    :password             => 'Bollywood',
+    :password             => '1lovem4w0rk',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
 

@@ -115,4 +115,6 @@ Aapaurmain::Application.routes.draw do
 
   # Ajax endpoints for dom content
   get '/get/dom/all' => 'users#get_all_dom_partials'
+  post '/tour/done/:user_id' => 'users#update_tour_taken'
+
 end

@@ -38,7 +38,9 @@
         'storiesContainer': 'ul.blog-container'
       });
       window.intro = new IntroHandler({
-        'page': 'dashboard'
+        'page': 'dashboard',
+        'show': <%= @show_tour %>,
+        'userId': <%= @user.id %>
       });
     });
   </script>

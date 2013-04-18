@@ -642,6 +642,7 @@ class UsersController < ApplicationController
     @user = current_user
     render_401 and return unless @user
     @page_type = 'dashboard'
+    @show_tour = @user.user_tour.blank?
     @stories = Newsfeed.get_initial_feed_for(@user.id)
     @questions = ShortQuestion.get_latest_question_for(@user.id)
   end
@@ -650,4 +651,13 @@ class UsersController < ApplicationController
     render :json => $priorities_list['priorities']
   end
 
+  def update_tour_taken
+    for_user = User.find_by_id(params[:user_id])
+    render_401 and return unless for_user == current_user
+    tour = UserTour.find_or_create_by_user_id(for_user.id)
+    tour.tour_count += 1
+    tour.updated_at = Time.now
+    tour.save
+    render :nothing => true and return
+  end
 end

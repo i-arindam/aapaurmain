@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405070555) do
+ActiveRecord::Schema.define(:version => 20130418174438) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -220,6 +220,15 @@ ActiveRecord::Schema.define(:version => 20130405070555) do
 
   add_index "user_follows", ["following_user_id", "user_id"], :name => "index_user_follows_on_following_user_id_and_user_id", :unique => true
   add_index "user_follows", ["user_id", "following_user_id"], :name => "index_user_follows_on_user_id_and_following_user_id", :unique => true
+
+  create_table "user_tours", :force => true do |t|
+    t.integer  "user_id",                   :null => false
+    t.integer  "tour_count", :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "user_tours", ["user_id"], :name => "index_user_tours_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                                                                :null => false

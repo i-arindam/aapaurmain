@@ -139,6 +139,7 @@ class User < ActiveRecord::Base
 
   has_many :user_follows, :dependent => :destroy
   has_many :profile_ratings, :dependent => :destroy
+  has_one :user_tour
 
   def add_to_search_index
     if self.changed.include?(SEARCH_INDEX_FIELDS)

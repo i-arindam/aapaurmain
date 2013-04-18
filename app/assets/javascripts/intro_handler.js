@@ -1,7 +1,12 @@
 function IntroHandler(config) {
   this.config = config;
-  this._initStepMarkings();
-  this.startTour();
+  if(this.config.show) {
+    this._initStepMarkings();
+    var that = this;
+    setTimeout(function() {
+      that.startTour();
+    }, 3000);
+  }
   this.enableAnytimeTour();
 }
 
@@ -36,6 +41,7 @@ IntroHandler.prototype._initStepMarkings = function() {
 };
 
 IntroHandler.prototype.startTour = function() {
+  var that = this;
   introJs().onchange(function(elem) {
     var obj = $(elem);
     if(obj.attr('data-step') === '5') {
@@ -44,6 +50,10 @@ IntroHandler.prototype.startTour = function() {
   }).
   onexit(function() {
     alert("End of introduction. You can restart it from the link on the header");
+    $.ajax({
+      url: "/tour/done/" + that.config.userId,
+      type: "POST",
+    });
   }).
   start();  
 };

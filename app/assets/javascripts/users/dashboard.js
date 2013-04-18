@@ -21,9 +21,6 @@ Dashboard.prototype.initNewStatus = function() {
     that.tagsSection.slideDown('fast');
     $('.go-or-not').show();
   });
-  $('textarea.feeds-box').bind('focusout', function() {
-    $(this).animate({'height': '30px'}, 'fast');
-  });
   $('.cancel-update').click(function(e) {
     e.preventDefault();
     that.tagsSection.slideUp('fast');

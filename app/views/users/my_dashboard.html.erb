@@ -5,10 +5,13 @@
       <title>Your homepage <%= @user.name%></title>
     <% end %>
     <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav", "stories" %>
+      <%= stylesheet_link_tag "users/dashboard", "right_bar", "users/left_nav", "stories", "introjs.min" %>
     <% end %>
+    <!--[if lte IE 8]>
+      <link href="../introjs-ie.css" rel="stylesheet">
+    <!-- <![endif]-->    
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler" %>
+      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler", "intro.min", "intro_handler" %>
     <% end %>
   </head>
   <script type="text/javascript">
@@ -34,6 +37,9 @@
         'forUserId': <%= @user.id %>,
         'storiesContainer': 'ul.blog-container'
       });
+      window.intro = new IntroHandler({
+        'page': 'dashboard'
+      });
     });
   </script>
   <body>
@@ -47,6 +53,7 @@
             <div class="center-container">
               <div class="feeds-container">
                 <div class="feeds-wrap">
+                  <h2 class="share-text">Share a story</h2>
                   <div class="panels-holder hide">
                     <div class="info-cum-cancel">
                       <span class="panels-warning label label-warning">

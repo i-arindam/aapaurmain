@@ -13,19 +13,10 @@
         <li>
           <a href="/edit_profile">Edit Profile</a>
         </li>
-<!--        <li>
-          <a href="/about">About us</a>
-        </li>
-        <li>
-          <a href="/howitworks">How it works</a>
-        </li>
-        <li>
-          <a href="/faq">Faq</a>
-        </li>
-        <li>
-          <a href="/contact">Talk to us</a>
-        </li> -->
         <% end %>
+        <li class="tour-only hide">
+          <a href="#">Start Tour</a>
+        </li>
         <% unless show_login? %>
         <li>
           <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="/assets/user-xsmall.png" /><span><%= current_user.name %></span></a>

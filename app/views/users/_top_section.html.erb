@@ -5,9 +5,7 @@
   <div class="clearfix">
     <div class="box-contents">
       <div class="user-box clearfix">
-        <div class="profile-bg">
-          <img src="/assets/users/user-slide.jpg" alt="<%= user.name %>" />
-        </div>
+        <img src="/assets/users/user-slide.jpg" alt="<%= user.name %>" />
         <div class="user-inform">
           <p><%= user.name %></p>
         </div>
@@ -18,29 +16,32 @@
     </div>
 
     <div class="blog-box">
+      <% if user.sex? or user.dob? or user.location? %>
       <h3>Basic Details</h3>
       <ul class="basic-details">
-        <% if user.dob %>
+        <% if user.dob? %>
         <li>
           <p class="blg-tit">Happy B&apos;day</p>
           <p class="blg-ct"><%= user.dob.strftime("%d %b %Y") %></p>
         </li>
         <% end %>
-        <% if user.sex %>
+        <% if user.sex? %>
         <li>
           <p class="blg-tit">Is a </p>
           <p class="blg-ct"><%= user.sex == 0 ? "Male": "Female" %></p>
         </li>
         <% end %>
-        <% if user.location %>
+        <% if user.location? %>
         <li class="last">
           <p class="blg-tit">Lives in</p>
           <p class="blg-ct"><%= user.location %></p>
         </li>
         <% end %>
       </ul>
+      <% end %>
     </div>
   </div>
+  
   <div class="btn-wraper clearfix">
     <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
       <span class="send-req"><%= request['text'] %></span>

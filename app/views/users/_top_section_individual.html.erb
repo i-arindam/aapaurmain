@@ -1,67 +1,66 @@
 <% content_for :stylesheet do %>
-<%= stylesheet_link_tag "users/top_section_individual" %>
+<%= stylesheet_link_tag "users/top_section_individual", "users/top_section" %>
 <% end %>
 <% content_for :js_footer do %>
 <%= javascript_include_tag "users/user_actions" %>
 <% end %>
 <div class="individual-pro">
   <div class="clearfix">
-    <div class="box-lt">
+    <div class="box-contents">
       <div class="user-box clearfix">
-        <div class="profile-bg-large">
-          <img src="<%= user.image %>" alt="<%= user.name %>" />
-        </div>
-        <div class="prof-name">
+        <img src="<%= user.image %>" alt="<%= user.name %>" />
+        <div class="user-inform">
           <p><%= user.name %></p>
         </div>
-        <div class="prof-txt">
-          <p><%= user.short_bio || "Just another user" %></p>
-        </div>
       </div>
-      <div class="clear"></div>
-      <% unless my %>
-      <div class="btn-wraper clearfix">
-        <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
-          <span class="send-req"><%= request['text'] %></span>
-        </a>
-        <a href="#<%= @follow_class %>_user" class="button link-follow-user <%= @follow_class %>" data-user-id="<%= @user.id %>">
-          <span class="follow-user"><%= @follow_class.capitalize %> <%= @user.name %></span>
-        </a>
-        <a href="#" class="button link-rate-profile">
-          <span class="rate-profile">Rate the profile</span>
-        </a>
-        <div class="ratings hide">
-          <span class="avg-rate"><%= user.avg_rating %></span>
-          (<span class="num-rate"><%= user.num_ratings %></span> ratings.)
-        </div>
-        <div class="star hide" data-score="<%= @rated_score %>"></div>
-        <span class="rate-hint hide">&nbsp;</span>        
-      </div>
-      <% end %>
     </div>
-    <div class="box-rt blog-lt">
+    <div class="text-blk">
+      <p><%= user.short_bio || "Just Another User" %></p>
+    </div>
+    <div class="blog-box blog-lt">
+      <% if user.sex? or user.dob? or user.location? %>
       <h3>Basic details</h3>
       <ul class="basic-details">
-        <% if user.dob %>
+        <% if user.dob? %>
         <li>
           <p class="blg-tit">Happy B&apos;day</p>
           <p class="blg-ct"><%= user.dob.strftime("%d %b %Y") %></p>
         </li>
         <% end %>
-        <% if user.sex %>
+        <% if user.sex? %>
         <li>
           <p class="blg-tit">Is a </p>
           <p class="blg-ct"><%= user.sex == 0 ? "Male": "Female" %></p>
         </li>
         <% end %>
-        <% if user.location %>
+        <% if user.location? %>
         <li class="last">
           <p class="blg-tit">Lives in</p>
           <p class="blg-ct"><%= user.location %></p>
         </li>
         <% end %>
       </ul>
+      <% end %>
     </div>
   </div>
 
+  <% unless my %>
+  <div class="btn-wraper clearfix">
+    <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
+      <span class="send-req"><%= request['text'] %></span>
+    </a>
+    <a href="#<%= @follow_class %>_user" class="button link-follow-user <%= @follow_class %>" data-user-id="<%= @user.id %>">
+      <span class="follow-user"><%= @follow_class.capitalize %> <%= @user.name %></span>
+    </a>
+    <a href="#" class="button link-rate-profile">
+      <span class="rate-profile">Rate the profile</span>
+    </a>
+    <div class="ratings hide">
+      <span class="avg-rate"><%= user.avg_rating %></span>
+      (<span class="num-rate"><%= user.num_ratings %></span> ratings.)
+    </div>
+    <div class="star hide" data-score="<%= @rated_score %>"></div>
+    <span class="rate-hint hide">&nbsp;</span>        
+  </div>
+  <% end %>
 </div>

@@ -6,7 +6,7 @@
   padding: 15px;
   background: #f0f0f0;
 }
-.user-box, .user-inform, .text-blk {
+.user-box, .text-blk {
   float: left;
 }
 .blg-tit {
@@ -29,12 +29,11 @@
 .user-box {
   background: #fff;
   border: 1px solid #c3c3c3;
-  padding: 10px 13px 20px;
+  padding: 15px;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   width: 73%;
-  height: 120px
 }
 .box-contents:after {
   content: ".";
@@ -45,9 +44,9 @@
   height: 0;
 }
 .user-inform {
-  width: 40%;
-  margin: 118px 0 0;
   text-align: center;
+  padding-top: 10px;
+  text-transform: uppercase;
 }
 .user-inform p {
   color: #262626;
@@ -56,20 +55,12 @@
 }
 .blog-box, .text-blk {
   padding:1em;
-  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
-  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-  min-height: 60%;
-  -moz-transition:-moz-transform .15s linear;
-  -o-transition:-o-transform .15s linear;
-  -webkit-transition:-webkit-transform .15s linear;  
 }
 .blog-box {
   width: 28%;
   float: right;
   position: relative;
   right: 20px;
-  background: #ccf;
   padding-left: 25px;
 }
 .text-blk {
@@ -77,16 +68,7 @@
   position: absolute;
   display: inline;
   left: 20%;
-  background: #cfc;
   width: 30%;
-}
-.profile-bg {
-  position: absolute;
-  top: -1px;
-  left: 26px;
-  width: 89px;
-  padding: 30px 16px 13px 8px;
-  background: url("<%= image_path 'users/profile-bg.png' %>") no-repeat;
 }
 .text-blk p {
   font-family: Georgia, serif;
@@ -202,5 +184,8 @@
   width: 28px;
   height: 28px;
   display: inline;
+}
+.ratings, .rate-hint {
+  color: #696A68;
 }
 /* slider ends */

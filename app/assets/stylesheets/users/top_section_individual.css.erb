@@ -9,10 +9,15 @@
   background: #F0F0F0;
   margin: 61px 0 55px;
 }
-.box-lt {
-  float: left;
-  margin: 0 3% 0 0;
-  width: 64%;
+.user-box img {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);  
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .5);  
 }
 .box-rt {
   width: 33%;
@@ -42,81 +47,6 @@
 }
 .blog-lt ul li.last {
   border: medium none;
-}
-.prof-txt {
-  margin: 0 0 0 166px;
-}
-.prof-txt p {
-  color: #4E4B4A;
-  font-size: 13px;
-  font-style: italic;
-}
-.prof-name {
-  margin: 170px 0 0;
-  text-align: center;
-  width: 136px;
-  float: left;
-}
-.prof-name p {
-  color: #262626;
-  font-family: 'lucida_sansdemibold_roman';
-  font-size: 15px;
-}
-.profile-bg-large {
-  background: url("<%= image_path 'users/profile-bg-large.png' %>") no-repeat;
-  height: 114px;
-  left: 26px;
-  padding: 62px 18px 13px 12px;
-  position: absolute;
-  top: -3px;
-  width: 114px;
-}
-.btn-wraper {
-  margin: 20px 0 0 0;
-}
-.button {
-  display: block;
-  border-right: 1px solid #edecec;
-  border-bottom: 1px solid #edecec;
-  color: #fff;
-  font-size: 12px;
-  font-family: 'lucida_sansdemibold_roman';
-  box-shadow: 1px 1px #b6b6b6;
-  border-radius: 1px;
-  -moz-border-radius: 1px;
-  -webkit-border-radius: 1px;
-  background: #8f8c89;
-}
-.button:hover {
-  color: #fff;
-}
-.btn-wraper a {
-  float: left;
-  margin: 0 13px 0 0;
-  width: auto;
-  padding-right: 10px;
-}
-.btn-wraper a.last {
-  margin: 0;
-}
-.btn-wraper a.btn {
-  float: left;
-  margin: 0 13px 0 0;
-  width: 136px;
-  min-width: 136px;
-}
-.send-req, .follow-user, .rate-profile {
-  background: url("<%= image_path 'sprite_layout.png' %>") no-repeat 9px -200px;
-  display: block;
-  padding: 8px 0 8px 28px;
-}
-.follow-user {
-  background-position: 9px -230px;
-  padding-left: 40px;
-}
-.rate-profile {
-  background-position: 4px -260px;
-  padding-left: 34px;
 }
 /* Profile individual ends */
 .star {

@@ -29,9 +29,10 @@ class Newsfeed < ActiveRecord::Base
     Story.get_stories(story_ids)
   end
 
-  def self.get_more_feed_for(user_id, start = 10)
-    story_ids = $r.lrange("feed:#{user_id}", start, 10)
-    Story.get_stories(story_ids)  
+  def self.get_more_feed_for(user_id, sids = [])
+    story_ids = $r.lrange("feed:#{user_id}", 0, -1)
+    final_story_ids = story_ids - sids
+    Story.get_stories(final_story_ids)
   end
 
 end

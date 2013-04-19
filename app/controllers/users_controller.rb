@@ -621,7 +621,7 @@ class UsersController < ApplicationController
     passed_user = User.find_by_id(params[:for_user_id])
     render_401 and return unless user == passed_user
 
-    stories = Newsfeed.get_more_feed_for(user.id, params[:start])
+    stories = Newsfeed.get_more_feed_for(user.id, params[:sids])
     render :json => {
       :success => true,
       :stories => stories,

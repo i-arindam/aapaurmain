@@ -243,14 +243,17 @@ StoryHandler.prototype.setupMoreStories = function() {
     e.preventDefault();
     var moreClicker = $(this);
     moreClicker.find('img').show();
-    
-    var storiesShown = $('li.story').length, linkForMoreStories;
-    linkForMoreStories = '/stories/more/' + that.config.forUserId + ( that.config.dashboard ? '/for_dashboard/' : '/' ) + storiesShown;
+    var sidsShown = [];
+    $('li.story').each(function(i, o) {
+      sidsShown.push($(o).attr('data-story-id'));
+    });
+    var linkForMoreStories = '/stories/more/' + that.config.forUserId + ( that.config.dashboard ? '/for_dashboard' : '/' );
     
     $.ajax({
       url: linkForMoreStories,
       type: "GET",
       dataType: "json",
+      data: { 'sids': sidsShown},
       success: function(data) {
         var sDoms = [];
         for(var i = 0, len = data.stories.length; i < len; i++ ) {

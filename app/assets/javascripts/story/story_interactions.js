@@ -302,6 +302,9 @@ StoryHandler.prototype.bindEmbedly = function() {
       key:'1c33c83e4cf34598a4dc7f96d77b5b06'    
     }).addClass('embedded');
   });
+  $('li.story div.embed a').livequery(function() {
+    $(this).attr('target', '_blank');
+  });
 };
 
 StoryHandler.prototype.setupDelete = function() {

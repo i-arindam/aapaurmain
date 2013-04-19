@@ -18,4 +18,13 @@ class Panel < ActiveRecord::Base
     [common_panels.value, remaining_panels.value]
   end
 
+  def self.get_showable_users(panel, current_user_id)
+    uids = $r.smembers("panel:#{panel}:members")[0...30]
+    uids = uids - [current_user_id.to_s]
+    users = User.find_all_by_id(uids)
+    users.reject { |u|
+      !u.photo_exists
+    }
+  end
+
 end

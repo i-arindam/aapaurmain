@@ -11,7 +11,7 @@
       <link href="../introjs-ie.css" rel="stylesheet">
     <!-- <![endif]-->    
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler", "intro.min", "intro_handler" %>
+      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler", "intro.min", "intro_handler", "jquery.pin.min" %>
     <% end %>
   </head>
   <script type="text/javascript">
@@ -23,6 +23,15 @@
       ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })(document);
+
+    // FB Like box for stories
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
     $(document).ready(function() {
       window.dashboard = new Dashboard();
@@ -42,6 +51,7 @@
         'show': <%= @show_tour %>,
         'userId': <%= @user.id %>
       });
+      $('.social-share').pin({ containerSelector: "li.story"});
     });
   </script>
   <body>

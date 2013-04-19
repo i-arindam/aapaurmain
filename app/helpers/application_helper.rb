@@ -143,4 +143,13 @@ module ApplicationHelper
     end
     image_path(default_path)
   end
+
+  def domain_name
+    case Rails.env
+    when 'production'
+      return "http://aapaurmain.com"
+    else
+      return "http://localhost:3000"
+    end
+  end
 end

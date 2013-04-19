@@ -264,6 +264,7 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
       storyDom.find('.story-claps').text(s.claps);
       storyDom.find('.story-boos').text(s.boos);
       storyDom.find('.story-comments').text(s.comments);
+      storyDom.find('.story-user img').attr('src', s.author_image);
 
       var panelsUl = storyDom.find('ul.story-tags');
 

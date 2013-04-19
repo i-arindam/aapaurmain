@@ -10,7 +10,7 @@
 <li class="story" data-story-id="<%= story['id'] %>">
   <div class="story-user-wrap">
     <div class="story-user">
-      <img src="/assets/users/user-small.jpg" alt="<%= story['by'] %>" href="/users/<%= story['by_id'] %>" />
+      <img src="<%= story['author_image'] %>" alt="<%= story['by'] %>" href="/users/<%= story['by_id'] %>" />
     </div>
   </div>
   <div class="story-content">

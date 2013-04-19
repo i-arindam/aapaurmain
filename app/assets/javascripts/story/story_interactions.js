@@ -66,8 +66,7 @@ StoryHandler.prototype.setupSelectors = function() {
     $.each(object.data, function(i, obj) {
       $(document).on("click", obj.link, function(e) {
         e.preventDefault();
-        var storyId = $(this).closest(that.storySelector).attr('data-story-id');
-        var commentNumber = '';
+        var storyId = $(this).closest(that.storySelector).attr('data-story-id'), commentId;
         var thisClass = $(this).attr('class');
         if(/comment/.test(thisClass)) {
           commentId = $(this).parents('.comment-container').attr('data-comment-id');

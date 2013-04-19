@@ -153,6 +153,8 @@ class Story < ActiveRecord::Base
         story.delete("core")
         story['text'].gsub!("\n", "<br/>")
         story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
+        author = User.find_by_id(story['by_id'])
+        story['author_image'] = author && author.image('small')
         stories.push(story)
       end
     end

@@ -25,7 +25,7 @@
           <p class="blg-ct"><%= user.dob.strftime("%d %b %Y") %></p>
         </li>
         <% end %>
-        <% if user.sex? %>
+        <% unless user.sex.blank? %>
         <li>
           <p class="blg-tit">Is a </p>
           <p class="blg-ct"><%= user.sex == 0 ? "Male": "Female" %></p>
@@ -41,7 +41,7 @@
       <% end %>
     </div>
   </div>
-  
+
   <div class="btn-wraper clearfix">
     <a href="<%= request['href'] %>" class="button req-button" data-special="<%= request['special'] %>" data-user-name="<%= user.name %>">
       <span class="send-req"><%= request['text'] %></span>

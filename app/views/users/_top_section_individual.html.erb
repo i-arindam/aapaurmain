@@ -27,7 +27,7 @@
           <p class="blg-ct"><%= user.dob.strftime("%d %b %Y") %></p>
         </li>
         <% end %>
-        <% if user.sex? %>
+        <% unless user.sex.blank? %>
         <li>
           <p class="blg-tit">Is a </p>
           <p class="blg-ct"><%= user.sex == 0 ? "Male": "Female" %></p>

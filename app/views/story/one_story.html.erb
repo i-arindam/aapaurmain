@@ -13,7 +13,7 @@
     <meta property="og:title" content="A story by <%= @author.name.capitalize %>" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="<%= domain_name %>/story/<%= @story['id'] %>" />
-    <meta property="og:image" content="<%= @author.image('large') %>" />
+    <meta property="og:image" content="<%= domain_name + @author.image('large') %>" />
     <meta property="og:description" content="<%= truncate(@story['text'], :length => 90, :omission => '...') %>" />
     <meta property="og:site_name" content="AapAurMain" />
   </head>

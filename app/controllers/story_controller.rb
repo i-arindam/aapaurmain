@@ -17,7 +17,7 @@ class StoryController < ApplicationController
   end
 
   def like_dislike_a_comment
-    render_404 and return unless user = current_user
+    render_401 and return unless user = current_user
     success, likes_reversed = Story.update_comment(params, user.id)
     render :json => { :success => success, :likes_reversed => likes_reversed }
   end
@@ -93,7 +93,7 @@ class StoryController < ApplicationController
     render 'one_story'  
   end
 
-  def delete
+  def delete_story
     render_401 and return unless current_user
     sid = params[:id]
     comment_count = $r.llen("story:#{sid}:comments").to_i

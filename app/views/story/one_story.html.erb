@@ -10,6 +10,12 @@
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "story", "ga_handler" %>
     <% end %>
+    <meta property="og:title" content="A story by <%= @author.name.capitalize %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= domain_name %>/story/<%= @story['id'] %>" />
+    <meta property="og:image" content="<%= @author.image('large') %>" />
+    <meta property="og:description" content="<%= truncate(@story['text'], :length => 90, :omission => '...') %>" />
+    <meta property="og:site_name" content="AapAurMain" />
   </head>
   <script type="text/javascript">
     window._gaq = window._gaq || [];

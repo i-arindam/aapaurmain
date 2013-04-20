@@ -647,7 +647,8 @@ class User < ActiveRecord::Base
     if self && self.photo_exists && Rails.env != "development"
       key = $aapaurmain_conf['profile-pic-original']
       profile_key = key.gsub('{{user_id}}' , self.id.to_s)
-      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + '-150?' + (Time.now.to_i % 10).to_s
+      size = (size == 'large' ? '?' : '-150?')
+      $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + size + (Time.now.to_i % 10).to_s
     else
       def_url = case size
       when 'large'

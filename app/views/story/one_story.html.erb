@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <% content_for :head do %>
-      <title>One fine story</title>
-    <% end %>
-    <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/left_nav", "stories" %>
-    <% end %>
-    <%= content_for :js_footer do %>
-      <%= javascript_include_tag "story", "ga_handler" %>
-    <% end %>
-    <meta property="og:title" content="A story by <%= @author.name.capitalize %>" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="<%= domain_name %>/story/<%= @story['id'] %>" />
-    <meta property="og:image" content="<%= domain_name + @author.image('large') %>" />
-    <meta property="og:description" content="<%= truncate(@story['text'], :length => 90, :omission => '...') %>" />
-    <meta property="og:site_name" content="AapAurMain" />
-  </head>
+<% content_for :head do %>
+  <title>A story by <%= @author.name.capitalize %></title>
+  <meta property="og:title" content="A story by <%= @author.name.capitalize %>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<%= domain_name %>/story/<%= @story['id'] %>" />
+  <meta property="og:image" content="<%= @author.image('large') %>" />
+  <meta property="og:description" content="<%= truncate(@story['text'], :length => 90, :omission => '...') %>" />
+  <meta property="og:site_name" content="AapAurMain" />
+<% end %>
+<% content_for :stylesheet do%>
+  <%= stylesheet_link_tag "users/left_nav", "stories" %>
+<% end %>
+<%= content_for :js_footer do %>
+  <%= javascript_include_tag "story", "ga_handler" %>
+<% end %>
   <script type="text/javascript">
     window._gaq = window._gaq || [];
     _gaq.push(['_setAccount', 'UA-35891488-1']);
@@ -37,24 +33,22 @@
       window.sh = new StoryHandler();
     });
   </script>
-  <body>
-    <div class="container clearfix one-story">
-      <div class="row-fluid">
-        <div class="span9 clearfix">
-          <div class="col-one">
-            <% if @user %>
-            <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
-            <% end %>
-          </div>
-          <div class="col-two">
-            <div class="center-container">
-              <%= render :partial => "/story", :locals => { :story => @story, :panels => @story['panels'] } %>
-            </div>
-          </div> <!-- col-two -->
 
-        </div> <!-- span9 -->
-      </div> <!-- row-fluid -->
-    </div> <!-- container -->
-  
-  </body>
-</html>
+  <div class="container clearfix one-story">
+    <div class="row-fluid">
+      <div class="span9 clearfix">
+        <div class="col-one">
+          <% if @user %>
+          <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
+          <% end %>
+        </div>
+        <div class="col-two">
+          <div class="center-container">
+            <%= render :partial => "/story", :locals => { :story => @story, :panels => @story['panels'] } %>
+          </div>
+        </div> <!-- col-two -->
+
+      </div> <!-- span9 -->
+    </div> <!-- row-fluid -->
+  </div> <!-- container -->
+

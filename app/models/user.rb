@@ -639,11 +639,11 @@ class User < ActiveRecord::Base
 
   # Return the url for the image
   # @return [String] url for image, default if none exists
-  def image(size = 'large')
+  def image(size = 'medium')
     self.original_pic_url(size)
   end
 
-  def original_pic_url(size = 'large')
+  def original_pic_url(size = 'medium')
     if self && self.photo_exists && Rails.env != "development"
       key = $aapaurmain_conf['profile-pic-original']
       profile_key = key.gsub('{{user_id}}' , self.id.to_s)

@@ -12,6 +12,20 @@ priorities:
   pre_nuptial_agreement: "Pre nuptial agreement"
   further_education: "Further education"
 
+panels_to_id:
+  relocation: 0
+  family_ties: 1
+  individuality: 2
+  romance: 3
+  wedding_planning: 4
+  domestic_chores: 5
+  financial_security: 6
+  career: 7
+  in_laws: 8
+  kids: 9
+  pre_nuptial_agreement: 10
+  further_education: 11
+
 helper:
   relocation: "Can you relocate"
   joint_family: "Joint Family or Nuclear Family"

@@ -1,4 +1,6 @@
 class Panel < ActiveRecord::Base
+  PANEL_NAME_TO_ID = $priorities_list['panels_to_id']
+  PANEL_ID_TO_NAME = PANEL_NAME_TO_ID.invert
 
   # Add new story to each panels story set
   def self.add_new_story_to(panels, sid)

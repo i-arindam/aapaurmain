@@ -47,6 +47,7 @@ class StoryController < ApplicationController
     @user.indicate_participation_in(params[:panels])
     Newsfeed.add_story_to_feeds(new_story_id, params[:panels])
     Panel.add_new_story_to(params[:panels], new_story_id)
+    StoryPointer.add_new_story_reference(new_story_id, @user.id, params[:panels])
     
     render :json => {
       :story => render_to_string(:partial => "/story", :locals => { :story => Story.get_stories([new_story_id])[0] } )
@@ -97,6 +98,8 @@ class StoryController < ApplicationController
   def delete_story
     render_401 and return unless current_user
     sid = params[:id]
+    StoryPointer.delete_story_references(sid, current_user.id, $r.smembers("story:#{sid}:panels"))
+
     comment_count = $r.llen("story:#{sid}:comments").to_i
     for i in 0..comment_count
       $r.del("story:#{sid}:comments:#{i}:claps", "story:#{sid}:comments:#{i}:boos")

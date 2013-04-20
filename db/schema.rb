@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130418174438) do
+ActiveRecord::Schema.define(:version => 20130420084630) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -209,6 +209,18 @@ ActiveRecord::Schema.define(:version => 20130418174438) do
 
   add_index "story_comments", ["by_id"], :name => "index_story_comments_on_by_id"
   add_index "story_comments", ["story_id", "by_id"], :name => "index_story_comments_on_story_id_and_by_id"
+
+  create_table "story_pointers", :force => true do |t|
+    t.integer  "panel_id",   :null => false
+    t.integer  "user_id",    :null => false
+    t.integer  "story_id",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "story_pointers", ["panel_id"], :name => "index_story_pointers_on_panel_id"
+  add_index "story_pointers", ["story_id"], :name => "index_story_pointers_on_story_id"
+  add_index "story_pointers", ["user_id", "panel_id"], :name => "index_story_pointers_on_user_id_and_panel_id"
 
   create_table "user_follows", :force => true do |t|
     t.integer  "user_id"

@@ -8,6 +8,7 @@ class StaticPagesController < ApplicationController
   end
   
   def about
+    render_404 and return
   end
   
   def contact
@@ -18,7 +19,7 @@ class StaticPagesController < ApplicationController
   end
   
   def faq
-    #render :layout => false
+    render_404 and return
   end
   
   def privacy

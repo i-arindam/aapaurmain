@@ -257,6 +257,7 @@ StoryHandler.prototype.setupMoreStories = function() {
           var storyDom = $(data.story_partial).clone();
           var s = data.stories[i];
 
+          storyDom.addClass('newlyAdded');
           storyDom.attr('data-story-id', s.id);
           storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
           storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
@@ -369,6 +370,11 @@ StoryHandler.prototype.setupSharing = function() {
     this.sharingInitHappened = true;
   }
 
+  $('li.story.newlyAdded').livequery(function() {
+    try {
+      FB.XFBML.parse();
+    } catch(ex){}        
+  });
   $('li.story').livequery(function() {
     $('.social-share', this).pin({ containerSelector: this});
   });

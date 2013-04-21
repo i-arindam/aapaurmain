@@ -259,7 +259,7 @@ StoryHandler.prototype.setupMoreStories = function() {
 
           storyDom.addClass('newlyAdded');
           storyDom.attr('data-story-id', s.id);
-          storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
+          storyDom.find('.story-user img').attr('alt', s.by).attr('src', s.author_image);
           storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
           storyDom.find('.story-creator a').text(s.by).attr('href', '/users/' + s.by_id);
           storyDom.find('p.story-text').html(s.text);

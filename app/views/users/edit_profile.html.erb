@@ -82,13 +82,7 @@
                 <tr class="shortBios">
                   <td colspan="2">
                     <label for="user[short_bio]">Short Bio</label>
-                    <% sb = @user.short_bio && @user.short_bio.split(",")[0...5] %>
-                    <% 5.times do |i| %>
-                    <% bio = (sb && sb.size > i && sb[i]) || "" %>
-                    <input type="text" class="smallInput <%= i == 0 ? '' : 'blockInput' %>" name="user[short_bio][<%= i %>]" placeholder="Words for yourself" 
-                    value="<%= bio %>" <%= bio.blank? && i > 0 ? 'disabled' : '' %> data-toggle="popover" data-html="true" data-placement="right" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="This is highlighted on your profile.<br/><br/> A good example has <strong>3-5 adjectives</strong> describing you: <br/><br/><strong>Foodie, musician, fb-addict</strong>"/>
-                    <span class="help-inline hide">Upto 5 handles are considered good</span>
-                    <% end %>
+                    <input type="text" class="largeInput" name="user[short_bio]" placeholder="About yourself" value="<%= @user.short_bio %>" data-toggle="popover" data-html="true" data-placement="right" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="This is highlighted on your profile.<br/><br/> A good example has <strong>3-5 adjectives</strong> describing you: <br/><br/><strong>Foodie, musician, fb-addict</strong>" />
                   </td>
                 </tr>
               </table>

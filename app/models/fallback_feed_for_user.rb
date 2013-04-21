@@ -13,7 +13,7 @@ class FallbackFeedForUser < ActiveRecord::Base
   end
 
   def self.get_pure_fallback_stories(user_id, start = 0)
-    StoryPointer.find(:all, :order => "id DESC", :limit => 10, :offset => start, :select => :story_id).collect(&:story_id)    
+    StoryPointer.find(:all, :conditions => [ "user_id != ?", user_id], :order => "id DESC", :limit => 10, :offset => start, :select => "DISTINCT(story_id)").collect(&:story_id)
   end
 
   def self.get_mixed_fallback_stories(user_id, available_sids, start = 0)

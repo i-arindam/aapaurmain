@@ -47,7 +47,6 @@ class Newsfeed < ActiveRecord::Base
         fallback_mode = PURE_ORGANIC
       end
     end
-    story_ids.sort!.reverse!
     [Story.get_stories(story_ids), fallback_mode]
   end
 
@@ -62,7 +61,8 @@ class Newsfeed < ActiveRecord::Base
     when FALLBACK # 1
       story_ids = FallbackFeedForUser.get_pure_fallback_stories(user_id, start)
     when ORGANIC_WITH_FALLBACK_FOR_FIRST_FEED # 2a
-      story_ids = FallbackFeedForUser.get_pure_fallback_stories(user_id, start)
+      fallback_stories_shown = 10 - self.get_organic_stories(user_id, 0).count
+      story_ids = FallbackFeedForUser.get_pure_fallback_stories(user_id, fallback_stories_shown)
     when PURE_ORGANIC # 2b
       story_ids = self.get_organic_stories(user_id, start)
       if story_ids.length < 10
@@ -70,7 +70,6 @@ class Newsfeed < ActiveRecord::Base
         user_feed_mode = ORGANIC_WITH_FALLBACK_FOR_FIRST_FEED
       end
     end
-    story_ids.sort!.reverse!
     [Story.get_stories(story_ids), user_feed_mode]
   end
 
@@ -80,7 +79,7 @@ class Newsfeed < ActiveRecord::Base
     panel_ids = panels.inject([]) do |arr, panel|
       arr.push(Panel::PANEL_NAME_TO_ID[panel])
     end
-    story_ids = StoryPointer.find(:all, :conditions => ["panel_id IN (?)", panel_ids], :order => "id DESC", :limit => 10, :offset => start, :select => "distinct(story_id)").collect(&:story_id)
+    story_ids = StoryPointer.find(:all, :conditions => ["panel_id IN (?)", panel_ids], :order => "id DESC", :limit => 10, :offset => start, :select => "DISTINCT(story_id)").collect(&:story_id)
   end
 
 end

@@ -5,7 +5,7 @@
       <%= stylesheet_link_tag "users/edit_profile", "users/jquery.datepick" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "global", "jquery.datepick.min.js" %>
+      <%= javascript_include_tag "global", "jquery.datepick.min.js", "bootstrap.min" %>
     <% end %>
     <title>Update your Profile</title>
 
@@ -37,7 +37,7 @@
         pickerClass: 'mypicker',
         defaultDate: '01/Jan/1987'
       });
-
+      $('.basicDetails input:visible').popover();
     });
   </script>
   <body>
@@ -56,12 +56,12 @@
                 <tr>
                   <td>
                     <label for="user[name]">Name</label>
-                    <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" />
+                    <input type="text" class="normalInput" name="user[name]" placeholder="Your Name" value="<%= @user.name %>" data-toggle="popover" data-placement="top" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="Your name please?"/>
                   </td>
                 
                   <td>
                     <label for="user[dob]">Date of Birth</label>
-                    <input type="text" class="normalInput datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" <%= @user.dob ? 'disabled' : '' %>/>
+                    <input type="text" class="normalInput datepicker" name="user[dob]" placeholder="Enter your b'day" value="<%= @user.dob and @user.dob.strftime("%d %b %Y") %>" data-toggle="popover" data-placement="top" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="Choose your date of birth"/>
                   </td>
                 </tr>
                 
@@ -69,13 +69,13 @@
                   <td>
                     <label for="sex">Sex</label>
                     <span class="controls" id="sex">
-                      <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Male
-                      <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> <%= @user.sex ? 'disabled' : '' %>/> Female
+                      <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> /> Male
+                      <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> /> Female
                     </span>
                   </td>
                   <td>
                     <label for="user[location]">Location</label>
-                    <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" />
+                    <input type="text" class="normalInput" name="user[location]" placeholder="Current city" value="<%= @user.location %>" data-toggle="popover" data-placement="right" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="Where do you live" />
                   </td>
                 </tr>
                 
@@ -86,7 +86,7 @@
                     <% 5.times do |i| %>
                     <% bio = (sb && sb.size > i && sb[i]) || "" %>
                     <input type="text" class="smallInput <%= i == 0 ? '' : 'blockInput' %>" name="user[short_bio][<%= i %>]" placeholder="Words for yourself" 
-                    value="<%= bio %>" <%= bio.blank? && i > 0 ? 'disabled' : '' %>/>
+                    value="<%= bio %>" <%= bio.blank? && i > 0 ? 'disabled' : '' %> data-toggle="popover" data-html="true" data-placement="right" data-original-title="I am Your dear helper" data-trigger="focus" data-delay="200" data-content="This is highlighted on your profile.<br/><br/> A good example has <strong>3-5 adjectives</strong> describing you: <br/><br/><strong>Foodie, musician, fb-addict</strong>"/>
                     <span class="help-inline hide">Upto 5 handles are considered good</span>
                     <% end %>
                   </td>

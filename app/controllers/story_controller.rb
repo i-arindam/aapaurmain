@@ -98,7 +98,7 @@ class StoryController < ApplicationController
   def delete_story
     render_401 and return unless current_user
     sid = params[:id]
-    StoryPointer.delete_story_references(sid, current_user.id, $r.smembers("story:#{sid}:panels"))
+    StoryPointer.delete_story_references(sid.to_i, current_user.id)
 
     comment_count = $r.llen("story:#{sid}:comments").to_i
     for i in 0..comment_count

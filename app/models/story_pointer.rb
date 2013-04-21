@@ -13,19 +13,16 @@ class StoryPointer < ActiveRecord::Base
     end
   end
 
-  def self.delete_story_references(sid, uid, panels = [])
-    panels.each do |panel|
-      panel_id = Panel::PANEL_NAME_TO_ID[panel]
-      story_pointers = StoryPointer.where("story_id = ?  AND user_id = ? AND panel_id = ?", sid, uid, panel_id)
-      story_pointers.delete_all
-    end
+  def self.delete_story_references(sid, uid)
+    story_pointers = StoryPointer.where("story_id = ? AND user_id = ?", sid, uid)
+    story_pointers.delete_all
     self.readjust_users_participation_in_panels(uid)
   end
 
   def self.readjust_users_participation_in_panels(uid)
-    remaining_panel_ids = StoryPointer.find(:all, :conditions => ["user_id = ?", uid], :select => "DISTINCT(panel_id)" )
+    remaining_panel_ids = StoryPointer.find(:all, :conditions => ["user_id = ?", uid], :select => "DISTINCT(panel_id)" ).collect(&:panel_id)
     remaining_panels = remaining_panel_ids.inject([]) do |arr, pid|
-      Panel::PANEL_ID_TO_NAME[pid]
+      arr.push(Panel::PANEL_ID_TO_NAME[pid])
     end
     $r.multi do
       $r.del("user:#{uid}:panels")

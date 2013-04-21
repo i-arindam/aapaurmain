@@ -243,17 +243,13 @@ StoryHandler.prototype.setupMoreStories = function() {
     e.preventDefault();
     var moreClicker = $(this);
     moreClicker.find('img').show();
-    var sidsShown = [];
-    $('li.story').each(function(i, o) {
-      sidsShown.push($(o).attr('data-story-id'));
-    });
-    var linkForMoreStories = '/stories/more/' + that.config.forUserId + ( that.config.dashboard ? '/for_dashboard' : '/' );
+    var storiesShown = $('li.story').length;
+    var linkForMoreStories = '/stories/more/' + that.config.forUserId + ( that.config.dashboard ? '/for_dashboard/' : '/' ) + storiesShown;
     
     $.ajax({
       url: linkForMoreStories,
       type: "GET",
       dataType: "json",
-      data: { 'sids': sidsShown},
       success: function(data) {
         var sDoms = [];
         for(var i = 0, len = data.stories.length; i < len; i++ ) {
@@ -263,11 +259,15 @@ StoryHandler.prototype.setupMoreStories = function() {
           storyDom.attr('data-story-id', s.id);
           storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
           storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
-          storyDom.find('.story-creator').text(s.by);
+          storyDom.find('.story-creator a').text(s.by).attr('href', '/users/' + s.by_id);
           storyDom.find('p.story-text').html(s.text);
           storyDom.find('.story-claps').text(s.claps);
           storyDom.find('.story-boos').text(s.boos);
           storyDom.find('.story-comments').text(s.comments);
+          if(s.by_id === that.config.forUserId + '') {
+            $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('alt', 'Delete Story')
+            .attr('data-story-id', s.id).text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));
+          }
 
           var panelsUl = storyDom.find('ul.story-tags');
 
@@ -288,6 +288,10 @@ StoryHandler.prototype.setupMoreStories = function() {
           }, 100);
         });
         that.bindEmbedly();
+        if(data.fallback_mode === 0 || data.fallback_mode === 1) {
+          $('a.more-stories').hide();
+          $('<span/>').addClass('usingFallback').text('No more stories to show').appendTo($('a.more-stories').parent());
+        }
       }, error: function(data) {
         moreClicker.find('img').hide();
       }

@@ -103,7 +103,7 @@ Aapaurmain::Application.routes.draw do
   get '/panels/all/:id/:for_user_id' => 'users#get_all_panels_info'
   get '/stories/top/:for_user_id' => 'users#get_top_stories'
   get '/stories/all/:for_user_id' => 'users#get_all_stories'
-  get '/stories/more/:for_user_id/for_dashboard' => 'users#get_more_stories_for_dashboard', :defaults => { :start => 10 }
+  get '/stories/more/:for_user_id/for_dashboard/:start' => 'users#get_more_stories_for_dashboard', :defaults => { :start => 10 }
   get '/stories/more/:for_user_id/:start' => 'users#get_more_stories', :defaults => {:start => 10}
 
   # Questions actions

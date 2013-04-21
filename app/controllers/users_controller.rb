@@ -621,9 +621,10 @@ class UsersController < ApplicationController
     passed_user = User.find_by_id(params[:for_user_id])
     render_401 and return unless user == passed_user
 
-    stories = Newsfeed.get_more_feed_for(user.id, params[:sids])
+    stories, fallback_mode = Newsfeed.get_more_feed_for(user.id, params[:start])
     render :json => {
       :success => true,
+      :fallback_mode => fallback_mode,
       :stories => stories,
       :story_partial => render_to_string(:partial => "/story")
     }
@@ -643,7 +644,7 @@ class UsersController < ApplicationController
     render_401 and return unless @user
     @page_type = 'dashboard'
     @show_tour = @user.user_tour.blank?
-    @stories = Newsfeed.get_initial_feed_for(@user.id)
+    @stories, @fallback_mode = Newsfeed.get_initial_feed_for(@user.id)
     @questions = ShortQuestion.get_latest_question_for(@user.id)
   end
 

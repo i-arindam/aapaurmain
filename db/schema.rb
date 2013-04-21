@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420084630) do
+ActiveRecord::Schema.define(:version => 20130420100804) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -93,6 +93,15 @@ ActiveRecord::Schema.define(:version => 20130420084630) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "fallback_feed_for_users", :force => true do |t|
+    t.integer  "user_id",                                :null => false
+    t.integer  "mode",       :limit => 2, :default => 0
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "fallback_feed_for_users", ["user_id"], :name => "index_fallback_feed_for_users_on_user_id", :unique => true
 
   create_table "messages", :force => true do |t|
     t.integer  "conversation_id",                 :null => false

@@ -57,44 +57,7 @@ module ApplicationHelper
       field_values.join(',')
     end
   end
-  
-  
-  def profession_list
-    list = $user_prefs['professions']
-  end
-  
-  def relocate_list
-    list = $user_prefs['relocate']
-  end
-  
-  def spouse_pref_list
-    list = $user_prefs['spouse_pref']
-  end
-  
-  def virginity_opinion_list
-    list = $user_prefs['virginity_opinion']
-  end
-  
-  def further_education_list
-    list = $user_prefs['further_education']
-  end
-  
-  def family_preference_list
-    list = $user_prefs['family_preference']
-  end
-
-  def sex_list
-    list = $user_prefs['sex']
-  end
-
-  def sexual_pref_list
-    list = $user_prefs['sexual_pref']
-  end
-
-  def salary_list
-    list = $user_prefs['salary']
-  end
-  
+    
   def show_login?
     (params[:controller] == "static_pages" and params[:action] == "home" and !current_user) or (params[:controller] == "users" and params[:action] == "signup") or !current_user
   end

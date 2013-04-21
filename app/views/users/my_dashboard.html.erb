@@ -11,7 +11,7 @@
       <link href="../introjs-ie.css" rel="stylesheet">
     <!-- <![endif]-->    
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story", "jquery.timeago", "jquery.bpopup-min", "jquery.easing", "ga_handler", "intro.min", "intro_handler", "jquery.pin.min" %>
+      <%= javascript_include_tag "users/dashboard", "story", "ga_handler", "intro.min", "intro_handler" %>
     <% end %>
   </head>
   <script type="text/javascript">
@@ -51,7 +51,6 @@
         'show': <%= @show_tour %>,
         'userId': <%= @user.id %>
       });
-      $('.social-share').pin({ containerSelector: "li.story"});
     });
   </script>
   <body>

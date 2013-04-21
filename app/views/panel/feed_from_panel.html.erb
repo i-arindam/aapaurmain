@@ -40,7 +40,7 @@
           </div>
           <div class="col-two">
             <div class="center-container">
-              <h2 class="page-header-text">Feed from the panel <span class="panel-name"><%= @panel %></h2></span>
+              <h2 class="page-header-text">Feed from the panel <span class="panel-name"><%= priorities_list[@panel] %></h2></span>
               <ul class="blog-container">
                 <% @stories.each do |story| %>
                 <%= render :partial => "/story", :locals => { :story => story, :panels => story['panels'] } %>

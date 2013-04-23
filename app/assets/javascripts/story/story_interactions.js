@@ -59,6 +59,10 @@ StoryHandler.prototype._init = function() {
   this.setupMoreStories();
   this.bindEmbedly();
   this.setupDelete();
+  $('a.close_popup').livequery('click', function(e) {
+    e.preventDefault();
+    $('.people-list').bPopup().close();
+  });
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -125,6 +129,7 @@ StoryHandler.prototype.showInModal = function(data) {
 
   $('div.people-list').remove();
   var outerDiv = $('<div/>').addClass('people-list bpopup').append('<ul/>');
+  $('<a/>').attr('href', '#').addClass('close_popup close').text('x').appendTo(outerDiv);
 
   var ul = outerDiv.find('ul');
   for(var i = 0, len = personsToShow.length; i < len; i++) {

@@ -45,10 +45,10 @@
         <% end %>
       </div>
       <div class="like-area clearfix">
-        <a href="#" class="link-like hover-scale"></a><a href="#" class="j-show-claps"><span class="story-claps"><%= story['claps'] %></span></a>
-        <a href="#" class="link-dislike hover-scale"></a><a href="#" class="j-show-boos"><span class="story-boos"><%= story['boos'] %></span></a>
+        <a href="#" class="link-like hover-scale"></a><a href="#" class="j-show-claps <%= story['claps'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-claps"><%= story['claps'] %></span></a>
+        <a href="#" class="link-dislike hover-scale"></a><a href="#" class="j-show-boos <%= story['boos'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-boos"><%= story['boos'] %></span></a>
         <div class="comment-count-wrap">
-          <a href="#" class="link-comment comment-count hover-scale"></a><a href="#" class="j-show-comments"><span class="story-comments"><%= story['comments'] %></span></a>
+          <a href="#" class="link-comment comment-count hover-scale <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>"></a><a href="#" class="j-show-comments <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-comments"><%= story['comments'] %></span></a>
         </div>
       </div>
       <div class="comment-area">

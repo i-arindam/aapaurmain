@@ -162,15 +162,28 @@ StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, siblingS
     } else {
       toAdd = story.find(selector), toSub = story.find(siblingSelector);
     }
-    toAdd.text(parseInt(toAdd.text(), 10) + 1);
+    var beforeAddText = parseInt(toAdd.text(), 10);
+    if(beforeAddText === 0) {
+      toAdd.parent().removeClass('disabled-link');
+    }
+    toAdd.text(beforeAddText + 1);
+
     toSub.text(parseInt(toSub.text(), 10) - 1);
+    var afterSubText = parseInt(toSub.text(), 10);
+    if(afterSubText === 0) {
+      toSub.parent().addClass('disabled-link');
+    }
   } else {
     if(selector.indexOf('comment-') !== -1) {
       toUpdate = story.find('.comment-container[data-comment-id=' + commentNumber + ']').find(selector);
     } else {
       toUpdate = story.find(selector);
     }
-    toUpdate.text(parseInt(toUpdate.text(), 10) + 1);
+    var beforeUpdateText = parseInt(toUpdate.text(), 10);
+    if(beforeUpdateText === 0) {
+      toUpdate.parent().removeClass('disabled-link');
+    }
+    toUpdate.text(beforeUpdateText + 1);
   }
 };
 
@@ -271,6 +284,15 @@ StoryHandler.prototype.setupMoreStories = function() {
           storyDom.find('.story-claps').text(s.claps);
           storyDom.find('.story-boos').text(s.boos);
           storyDom.find('.story-comments').text(s.comments);
+          if(s.claps === 0) {
+            storyDom.find('.j-show-claps').addClass('disabled-link');
+          }
+          if(s.boos === 0) {
+            storyDom.find('.j-show-boos').addClass('disabled-link');
+          }
+          if(s.comments === 0) {
+            storyDom.find('.j-show-comments, .link-comment').addClass('disabled-link');
+          }
           if(s.by_id === that.config.forUserId + '') {
             $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('alt', 'Delete Story')
             .attr('data-story-id', s.id).text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));

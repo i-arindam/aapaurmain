@@ -11,7 +11,7 @@
       <link href="../introjs-ie.css" rel="stylesheet">
     <!-- <![endif]-->    
     <%= content_for :js_footer do %>
-      <%= javascript_include_tag "users/dashboard", "story", "ga_handler", "intro.min", "intro_handler" %>
+      <%= javascript_include_tag "bootstrap.min", "users/dashboard", "story", "ga_handler", "intro.min", "intro_handler" %>
     <% end %>
   </head>
   <script type="text/javascript">
@@ -25,6 +25,14 @@
     })(document);
 
     $(document).ready(function() {
+      if($.browser.msie && $.browser.version <= 8) {
+        $('#ie-message-modal').modal({ keyboard: false });
+        $('.modal-header a.close').live('click', function(e) {
+          e.preventDefault();
+          $('#ie-message-modal').modal('hide');
+        });
+      }
+
       window.dashboard = new Dashboard();
       window.ga = new GAHandler({
         'page': '<%= @page_type %>',
@@ -114,5 +122,6 @@
         </div> <!-- span3 ends -->
       </div> <!-- row-fluid ends -->
     </div> <!-- container ends -->
+    <%= render :partial => '/ie_alert' %>
   </body>
 </html>

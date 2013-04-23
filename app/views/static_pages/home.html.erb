@@ -4,7 +4,7 @@
     <% content_for :head do %>
       <title>Aap Aur Main: Destination for perfect matches</title>
       <% content_for :js_footer do %>
-        <%= javascript_include_tag "jquery.validate.min" %>
+        <%= javascript_include_tag "bootstrap.min", "jquery.validate.min" %>
       <% end %>
       <% content_for :stylesheet do %>
         <%= stylesheet_link_tag "homepage" %>
@@ -33,6 +33,13 @@
   </head>
   <script type="text/javascript">
     $(document).ready(function() {
+      if($.browser.msie && $.browser.version <= 8) {
+        $('#ie-message-modal').modal({ keyboard: false });
+        $('.modal-header a.close').live('click', function(e) {
+          e.preventDefault();
+          $('#ie-message-modal').modal('hide');
+        });
+      }
       $('a.close').click(function(e) {
         e.preventDefault();
         $(this).parent().toggle('slow');
@@ -103,7 +110,6 @@
   </script>
   <body>
     <div id="fb-root"></div>
-
     <%= render :partial => 'static_pages/alerts' %>
     <!-- sign up-->
     <% if @user && @user.errors.any? %>
@@ -183,6 +189,7 @@
         <span class="highlight interact">Interactive</span> platform to <span class="highlight discover">Discover</span> people you will <span class="highlight bond">Bond</span> with
       </div>
     </div>
+    <%= render :partial => '/ie_alert' %>    
   </body>
 </html>
  <script type="text/javascript">

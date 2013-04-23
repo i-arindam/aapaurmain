@@ -7,7 +7,10 @@ UserActions.prototype._init = function() {
   this.buttons = $('.req-button');
 
   this.bindClickForRequestActions();
-  
+  var that = this;
+  $('.bpopup a.close').live('click', function(e) {
+    $(that.popupElement).bPopup().close();
+  });
   if(this.config.singleUser) {
     this.setupFollowActions();
     this.setupRaty();

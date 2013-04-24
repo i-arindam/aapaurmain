@@ -52,8 +52,67 @@
             <%= render :partial => "/story", :locals => { :story => @story, :panels => @story['panels'] } %>
           </div>
         </div> <!-- col-two -->
-
+        
+        <% unless @user %>
+        <div class="span7 signupDiv">
+          <p>Like the life around here? Why not</p>
+          <div class="signup">
+            <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
+              <div class="signup-form">
+                <h3><span>Join Us</span></h3>
+                <div class="controls">
+                    <input type="text" name="name" placeholder="Name" />
+                    <input type="text" name="email" placeholder="Email" />
+                    <input type="password" name="password" placeholder="Password" />
+                    <input type="password" name="password_confirmation" placeholder="Password Confirm" />
+                  <div class="conditions">
+                    <label>
+                      <input name="conditions" type="checkbox" />I agree to the <a href="/tnc">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.
+                    </label>
+                  </div>
+                  <button type="submit" class="signupBtn btn btn-primary btn-large">Get Started</button>
+                </div>
+              </div>
+            <% end %>
+          </div><!--signup ends-->
+        </div> <!-- span7-->
+        <%end%>
       </div> <!-- span9 -->
+
+      <% if @other_stories %>
+      <div class="span3 other-stories">
+        <div class="other-header">
+          <h3>Latest thoughts from <%= @story['by'] %></h3>
+        </div>
+        <ul class="other-stories">
+          <% @other_stories.each do |s| %>
+          <li class="other-story">
+            <a href="/story/<%= s['id'] %>" class="story-link pull-right" alt="View story"><%= distance_of_time_in_words_to_now(s['time']) %> ago</a>
+            <p class="story-text"><%= s['text'] %></p>
+            
+            <div class="panels-area">
+              <% unless s['panels'].nil? %>
+              <ul class="story-tags">
+              <% panel_lookup = priorities_list %>
+              <% s['panels'].each do |panel| %>
+                <li><a href="/panels/<%= panel %>" ><%= panel_lookup[panel] %></a></li>          
+              <% end %>
+              </ul>
+              <% end %>
+            </div>
+
+            <div class="like-area clearfix quiet">
+              <p>
+                <%= s['claps'] %> Likes, <%= s['boos'] %> Dislikes and <%= s['comments'] %> Comments
+              </p>
+            </div>
+            <a class="full-story btn btn-small" href="/story/<%= s['id'] %>">See the full story</a>
+          </li>
+          <% end %>
+        </ul>
+      </div> <!-- span3.other-stories -->
+      <% end %>
+
     </div> <!-- row-fluid -->
   </div> <!-- container -->
 

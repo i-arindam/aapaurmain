@@ -32,11 +32,14 @@
         'pre': 'one_story_',
         'q': window._gaq
       });
-      window.sh = new StoryHandler();
+      window.sh = new StoryHandler({
+        'forUserId': <%= @user.id rescue 0 %>,
+        'storiesContainer': 'ul.blog-container'
+      });
     });
   </script>
 
-  <div class="container clearfix one-story">
+  <div class="container clearfix one-story <%= @user ? 'logged-in' : 'logged-out' %>">
     <div class="row-fluid">
       <div class="span9 clearfix">
         <div class="col-one">

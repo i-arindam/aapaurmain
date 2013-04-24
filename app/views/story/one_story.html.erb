@@ -13,7 +13,7 @@
   <%= stylesheet_link_tag "users/left_nav", "stories" %>
 <% end %>
 <%= content_for :js_footer do %>
-  <%= javascript_include_tag "story", "ga_handler" %>
+  <%= javascript_include_tag "story", "ga_handler", "jquery.validate.min" %>
 <% end %>
   <script type="text/javascript">
     window._gaq = window._gaq || [];
@@ -36,6 +36,51 @@
         'forUserId': <%= @user.id rescue 0 %>,
         'storiesContainer': 'ul.blog-container'
       });
+      
+      $('.signup form').validate({
+        submitHandler: function(form) {
+          $(form).ajaxSubmit();
+        }, rules: {
+          name: {
+            required: true,
+            minlength: 4
+          },
+          email: {
+            required: true,
+            email: true
+          },
+          conditions: "required",
+          password: {
+            required: true,
+            minlength: 5
+          },
+          password_confirmation: {
+            required: true,
+            equalTo: '.signup form input[name=password]'
+          }
+        },
+        messages: {
+          name: {
+            required: "We need a name to know you",
+            minlength: "At least 4 characters is a normal name"
+          },
+          email: {
+            required: "This is where verification mail will be sent",
+            email: "This should be like name@domain.com"
+          },
+          password: {
+            required: "This is for your own safety",
+            minlength: "Give a strong password, at least 5 letters strong"
+          },
+          password_confirmation: {
+            required: "Confirm password please",
+            equalTo: "Passwords must match"
+          },
+          conditions: "Accept policies please"
+        },
+        errorLabelContainer: "#validation-errors"
+      });
+
     });
   </script>
 
@@ -60,6 +105,7 @@
             <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
               <div class="signup-form">
                 <h3><span>Join Us</span></h3>
+                <div id="validation-errors"></div>                
                 <div class="controls">
                     <input type="text" name="name" placeholder="Name" />
                     <input type="text" name="email" placeholder="Email" />

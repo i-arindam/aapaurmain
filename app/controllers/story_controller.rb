@@ -92,7 +92,7 @@ class StoryController < ApplicationController
     @user = current_user
     @page_type = "one_story"
 
-    other_story_ids = StoryPointer.find(:all, :conditions => ["user_id = ? AND story_id != ?", @story['by_id'].to_i, @story['id'].to_i], :order => "id DESC", :limit => 3, :select => :story_id).collect(&:story_id)
+    other_story_ids = StoryPointer.find(:all, :conditions => ["user_id = ? AND story_id != ?", @story['by_id'].to_i, @story['id'].to_i], :order => "id DESC", :limit => 3, :select => "DISTINCT(story_id)").collect(&:story_id)
     @other_stories = Story.get_stories(other_story_ids) unless other_story_ids.blank?
     
     render 'one_story'  

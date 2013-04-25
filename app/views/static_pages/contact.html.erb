@@ -1,28 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
+  <%= stylesheet_link_tag "static_pages" %>
+  <% content_for :js_footer do %>
+  <%= javascript_include_tag "static_pages", "bootstrap.min" %>
+  <% end %>
 
-<%= stylesheet_link_tag "contact" %>
-<title>Aap Aur Main - Contact Us</title>
-
+  <title>Aap Aur Main - Contact Us</title>
 </head>
 
 <body>
-  <div class="container aboutusContainer"> 
-    <img src="assets/contact.png">
-    <div class="aboutusHeading"><span>Talk To Us</span></div>
-    <div class="answer">
-      <p>
-        We put in every effort to make your experience at AapAurMain.com smooth and meaningful. We have ourselves felt the pains of going through a bad experience on portals and understand the importance of simplicity and support in ensuring the objectives are met. 
-      </p>
-      <p>
-        Just in case you feel there is something where we can do that tad bit better, shout out at <a href="mailto:talktous@aapaurmain.com">talktous</a> and we will make sure to reply to you at the earliest. Though we try to keep the response time as short as possible; however would request you to bear with us for 24 hours response window for resolution of queries.
-      </p>
-
-      <p>
-        Hope you have a great journey with us and write your amazing chapter here! :) 
-      </p>
-    </div> <!-- div.answer -->
-  </div> <!-- div.aboutUsContainer -->
+  <div class="container clearfix">
+    <div class="row">
+      <div class="center-container">
+        <div class="accordion" id="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <img src="/assets/minus-icon.png" class="close-box" />How to talk to us ?
+              </a>
+            </div>
+            <div class="collapse" id="collapseOne">
+              <div class="accordion-inner">
+                We put in every effort to make your experience at AapAurMain.com smooth and meaningful. We have ourselves felt the pains of going through a bad experience on portals and understand the importance of simplicity and support in ensuring the objectives are met. 
+                <br/><br/>
+                Just in case you feel there is something where we can do that tad bit better, shout out at <a href="mailto:talktous@aapaurmain.com">talktous</a> and we will make sure to reply to you at the earliest. Though we try to keep the response time as short as possible; however would request you to bear with us for 24 hours response window for resolution of queries.
+                <br/><br/>
+                Hope you have a great journey with us and write your amazing chapter here! :) 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
-</html>

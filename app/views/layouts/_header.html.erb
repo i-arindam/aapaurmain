@@ -10,24 +10,27 @@
         <li>
           <a href="/dashboard">Dashboard</a>
         </li>
-        <li>
-          <a href="/edit_profile">Edit Profile</a>
-        </li>
         <% end %>
         <li class="tour-only hide">
           <a href="#">Start Tour</a>
         </li>
         <% unless show_login? %>
-        <li>
-          <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown"><img src="/assets/user-xsmall.png" /><span><%= current_user.name %></span></a>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown" id="user-control">
+            <img src="/assets/user-xsmall.png" />
+            <span><%= current_user.name %></span>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="user-control">
+            <li><a href="/edit_profile">Edit Profile</a></li>
+            <li><a href="/users/<%= current_user.id %>">View your profile</a></li>
+            <li><a href="/log_out">Log Out</a></li>
+          </ul>
         </li>
-        <li>
-          <a href="/log_out">Log Out</a> 
-          <!--<div class="message">
+        <!--<div class="message">
             <span class="msg-count">2</span>
-          </div> -->
-        </li>
-        <!--<li>
+          </div>
+        <li>
           <a href="#" class="link-setting">Settings</a>
         </li> -->
         <% else %>

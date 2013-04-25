@@ -250,6 +250,13 @@ a {
   -moz-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
 }
+.header b.caret {
+  position: relative;
+  top: 6px;
+  margin-left: 6px;
+  border-top-color: #FFF !important;
+  border-bottom-color: #FFF !important;
+}
 .header .nav li a:hover {
   text-shadow: 0 0 12px #fff;
 }
@@ -331,12 +338,17 @@ a {
   float: left;
 }
 .link-profile span {
-  padding: 6px 0 0px 5px;
+  padding: 6px 0;
   color: white;
   font-size: 15px;
   display: block;
   float: left;
-  margin: 0 36px 0 5px;
+  margin: 0 0 0 5px;
+}
+.header ul.dropdown-menu li a {
+  color: #000;
+  padding-left: 0;
+  margin-left: 0;
 }
 .separator {
   border-left: 1px solid #c0c0bf;

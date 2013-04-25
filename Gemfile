@@ -26,6 +26,7 @@ gem 'activeadmin'
 gem 'sass-rails', '3.2.3'
 gem "meta_search",    '>= 1.1.0.pre'
 gem "rails_autolink", "1.0.9"
+gem 'newrelic_rpm', '3.6.1.87'
 
 group :development, :test do
   gem "rspec"

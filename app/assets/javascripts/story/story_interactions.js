@@ -204,7 +204,9 @@ StoryHandler.prototype.setupShowComments = function() {
   $('.j-show-comments, .link-comment').live('click', function(e) {
     e.preventDefault();
     var closestComments = $(this).parents('.like-area').siblings('.comment-area').children('ul.comments');
-    if(closestComments.is(':visible')) {
+    if(closestComments.children('li:visible').length === 3) {
+      closestComments.children('li').remove();
+    } else if(closestComments.is(':visible')) {
       closestComments.slideUp('fast');
       return;
     }
@@ -249,8 +251,10 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   newComment.find('.comment-person-link').attr('href', '/users/' + comment.by_id);
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
-  if(this.config.forUserId !== comment.by_id) {
-    newComment.find('.del-comment').remove();
+  if(this.config.forUserId === comment.by_id) {
+    newComment.find('.right-container').append(
+      $('<a/>').attr('href', '#').addClass('close del-comment').text('x')
+    );
   }
   
   newComment.hide().delay(500).appendTo(ul).fadeIn('slow'); // add animation

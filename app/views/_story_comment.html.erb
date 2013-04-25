@@ -1,20 +1,26 @@
+<%  comment ||= {}
+    com = comment[:comment]
+    claps = comment[:claps] || 0
+    boos = comment[:boos] || 0 %>
 <li>
   <div class="clearfix comment-container">
     <div class="comment-user">
-      <img src="" class="comment-user-img" alt="" />
+      <img src="<%= comment[:author_photo] %>" class="comment-user-img" alt="<%= com && com.by %>" />
     </div>
     <div class="comment">
       <div class="comment-prsn clearfix">
-        <a href="#" class="comment-person-link"><p class="comment-creator">&nbsp;</p></a>
+        <a href="/users/<%= com && com.by_id %>" class="comment-person-link"><p class="comment-creator"><%= com && com.by %></p></a>
         <div class="right-container pull-right">
-          <span class="comment-time">&nbsp;</span>
+          <span class="comment-time"><%= com && distance_of_time_in_words_to_now(com.created_at) %> ago</span>
+          <% if current_user && current_user.id == (com && com.by_id.to_i) %>
           <a href="#" class="close del-comment">&times;</a>
+          <% end %>
         </div>
       </div>
-      <p class="comment-text">&nbsp;</p>
+      <p class="comment-text"><%= com && com.text %></p>
       <div class="comment-like-area">
-        <a href="#" class="link-like-comment"></a><a href="#" class="j-show-comment-claps"><span class="comment-claps">&nbsp;</span></a>
-        <a href="#" class="link-dislike-comment"></a><a href="#" class="j-show-comment-boos"><span class="comment-boos">&nbsp;</span></a>
+        <a href="#" class="link-like-comment"></a><a href="#" class="j-show-comment-claps"><span class="comment-claps"><%= claps %></span></a>
+        <a href="#" class="link-dislike-comment"></a><a href="#" class="j-show-comment-boos"><span class="comment-boos"><%= boos %></span></a>
       </div>
     </div>
   </div>

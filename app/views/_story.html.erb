@@ -52,7 +52,12 @@
         </div>
       </div>
       <div class="comment-area">
-        <ul class="comments hide">
+        <ul class="comments <%= story['comments'] == 0 ? 'hide' : '' %>">
+          <% if story['comments'] > 0 %>
+          <% story['comment_bodies'].values.each do |com| %>
+          <%= render :partial => '/story_comment', :locals => { :comment => com } %>
+          <% end %>
+          <% end %>
         </ul>
         <div class="comment-wrap">
           <textarea class="comment-box" placeholder="Your views?" rows="2" cols="70"></textarea>

@@ -97,11 +97,12 @@ class Story < ActiveRecord::Base
   end
 
   def self.get_comments(sid, start, stop)
-    comments = StoryComment.find_all_by_story_id(sid)
+    comments = StoryComment.find(:all, :conditions => ["story_id = ?",sid], :order => "id ASC", :offset => start, :limit => stop)
     final_comments, i = {}, 0
     comments.each do |com|
       final_comments[com.id] = {
         :comment => com,
+        :author_photo => User.find_by_id(com.by_id).image,
         :claps => $r.scard("story:#{sid}:comments:#{com.id}:claps") || 0,
         :boos => $r.scard("story:#{sid}:comments:#{com.id}:boos") || 0
       }
@@ -155,6 +156,9 @@ class Story < ActiveRecord::Base
         story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
         author = User.find_by_id(story['by_id'])
         story['author_image'] = author && author.image('small')
+
+        comments = Story.get_comments(sid, 0, 3)
+        story['comment_bodies'] = comments
         stories.push(story)
       end
     end

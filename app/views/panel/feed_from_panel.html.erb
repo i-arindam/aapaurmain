@@ -36,9 +36,11 @@
     <div class="container clearfix">
       <div class="row-fluid">
         <div class="span9 clearfix">
+          <% if @user %>
           <div class="col-one">
             <%= render :partial => "users/left_nav", :locals => { :user => @user } %>
           </div>
+          <% end %>
           <div class="col-two">
             <div class="center-container">
               <h2 class="page-header-text">Feed from the panel <span class="panel-name"><%= priorities_list[@panel] %></h2></span>
@@ -62,7 +64,7 @@
             <li class="user-face">
               <a href="/users/<%= user.id %>">
                 <img src="<%= user.image('small') %>" alt="<%= user.name %>" />
-                <p><%= user.name %></p>
+                <p><%= user.name.split(" ")[0] %></p>
               </a>
             </li>
           <% end %>

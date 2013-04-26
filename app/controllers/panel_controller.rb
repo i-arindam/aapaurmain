@@ -2,12 +2,12 @@ class PanelController < ApplicationController
 
   def show
     @user = current_user
-    render_401 and return unless @user
+    # render_401 and return unless @user
     @panel = params[:name]
     sids = $r.lrange("panel:#{@panel}:stories", 0, 9)
     @stories = Story.get_stories(sids)
     @page_type = 'panels'
-    @users = Panel.get_showable_users(params[:name], @user.id)
+    @users = Panel.get_showable_users(params[:name], @user && @user.id)
 
     render 'panel/feed_from_panel'
   end

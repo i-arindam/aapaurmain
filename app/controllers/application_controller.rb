@@ -15,7 +15,15 @@ class ApplicationController < ActionController::Base
   def verify_dob(hash)
     return true
   end
-  
+
+  def get_login_signup
+    render :json => {
+      :success => false,
+      :ls_required => true,
+      :ls_template => render_to_string(:partial => "/login_signup")
+    }
+  end
+
   def verify_age(dob, sex)
     return true
   end

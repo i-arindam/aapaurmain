@@ -1,0 +1,58 @@
+<div class="modal hide" id="ls-modal">
+  <div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>Login or Signup to do this action</h3>
+  </div>
+  <div class="modal-body">
+    <div class="ls-container">
+      <div class="l-container">
+        <%= form_tag(sessions_path, :class => 'form-horizontal') do %>
+          <div class="signup-form">
+            <h3><span>Log In</span></h3>
+            <div class="control-group">
+              <label class="control-label" for="inputEmail">Email</label>
+              <div class="controls">
+                <input type="text" id="inputEmail" name="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="inputPassword">Password</label>
+              <div class="controls">
+                <input type="password" id="inputPassword" name="password" placeholder="Password">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <%= link_to "Forgot Password?", new_password_reset_path %>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success signin">Log in</button>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="s-container">
+        <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
+          <div class="signup-form">
+            <h3><span>Join Us</span></h3>
+            <div id="validation-errors"></div>
+            <div class="controls">
+                <input type="text" name="name" placeholder="Name" />
+                <input type="text" name="email" placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
+                <input type="password" name="password_confirmation" placeholder="Password Confirm" />
+              <div class="conditions">
+                <label>
+                  <input name="conditions" type="checkbox" />I agree to the <a href="/tnc">Terms &amp; Conditions</a> and <a href="/privacy">Privacy Policy</a>.
+                </label>
+              </div>
+              <button type="submit" class="signupBtn btn btn-primary btn-large">Get Started</button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    </div> <!-- ls-container -->
+  </div> <!-- modal-body -->
+</div>

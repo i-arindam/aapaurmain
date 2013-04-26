@@ -1,7 +1,7 @@
 class StoryController < ApplicationController
 
   def like_dislike_or_comment
-    render_404 and return unless user = current_user
+    get_login_signup and return unless user = current_user
     res = {}
     if params[:work] == "comment"
       comment = Story.add_comment(params, user)

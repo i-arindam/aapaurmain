@@ -113,7 +113,9 @@ StoryHandler.prototype.bindHandlerForAction = function(obj, sid, commentNumber) 
         that.indicateInPlaceSuccess(sid, obj.update, obj.update_sibling, commentNumber, data.likes_reversed);
         action === "comment" && that.addNewComment(data, sid);
       } else {
-        that.showErrorInModal({ "msg": "You have already expressed your opinion! Sorry can't do it again" });
+        if(data.ls_required && data.ls_template) {
+          that.setupLSFlow(data);
+        }
       }
     }, error: function(data) {
       that.showErrorInModal({ "msg": "There was some server error. Try again in some time?" });
@@ -150,6 +152,64 @@ StoryHandler.prototype.showInModal = function(data) {
     speed: 450,
     transition: 'slideDown'
   });
+};
+
+StoryHandler.prototype.setupLSFlow = function(data) {
+  var that = this;
+  $(data.ls_template).appendTo($('body'));
+  $('#ls-modal').modal({ keyboard: false });
+  $('.modal-header a.close').live('click', function(e) {
+    e.preventDefault();
+    $('#ls-modal').modal('hide');
+  });
+  this.bindLSValidations();
+};
+
+StoryHandler.prototype.bindLSValidations = function() {
+  $('.s-container form').validate({
+    submitHandler: function(form) {
+      $(form).ajaxSubmit();
+    }, rules: {
+      name: {
+        required: true,
+        minlength: 4
+      },
+      email: {
+        required: true,
+        email: true
+      },
+      conditions: "required",
+      password: {
+        required: true,
+        minlength: 5
+      },
+      password_confirmation: {
+        required: true,
+        equalTo: '.signup form input[name=password]'
+      }
+    },
+    messages: {
+      name: {
+        required: "We need a name to know you",
+        minlength: "At least 4 characters is a normal name"
+      },
+      email: {
+        required: "This is where verification mail will be sent",
+        email: "This should be like name@domain.com"
+      },
+      password: {
+        required: "This is for your own safety",
+        minlength: "Give a strong password, at least 5 letters strong"
+      },
+      password_confirmation: {
+        required: "Confirm password please",
+        equalTo: "Passwords must match"
+      },
+      conditions: "Accept policies please"
+    },
+    errorLabelContainer: "#validation-errors"
+  });
+
 };
 
 StoryHandler.prototype.indicateInPlaceSuccess = function(sid, selector, siblingSelector, commentNumber, likes_reversed) {

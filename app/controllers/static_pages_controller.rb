@@ -18,7 +18,6 @@ class StaticPagesController < ApplicationController
   end
   
   def faq
-    render_404 and return
   end
   
   def privacy

@@ -112,7 +112,16 @@ StoryHandler.prototype.bindHandlerForAction = function(obj, sid, commentNumber) 
       if(data.success) { 
         that.indicateInPlaceSuccess(sid, obj.update, obj.update_sibling, commentNumber, data.likes_reversed);
         action === "comment" && that.addNewComment(data, sid);
+        that.refreshOnUpdate && document.location.reload();
       } else {
+        that.redo = {
+          'action': that.bindHandlerForAction,
+          'args': {
+            'obj': obj,
+            'sid': sid,
+            'commentNumber': commentNumber
+          }
+        };
         if(data.ls_required && data.ls_template) {
           that.setupLSFlow(data);
         }
@@ -163,6 +172,52 @@ StoryHandler.prototype.setupLSFlow = function(data) {
     $('#ls-modal').modal('hide');
   });
   this.bindLSValidations();
+  this.bindLSActions();
+};
+
+StoryHandler.prototype.bindLSActions = function() {
+  var that = this;
+  $('#login_form')
+  .live("ajax:beforeSend", function(evt, xhr, settings) {
+    $('div.login-error', this).remove();
+  })
+  .live("ajax:success", function(evt, data, status, xhr) {
+    var form = $(this);
+    form.find('textarea,input[type="text"],input[type="password"]').val("");
+    if(data.success) {
+      that.refreshOnUpdate = true;
+      that.redoAction();
+    } else {
+      var error = $('<div/>').addClass('login-error')
+        .html("Invalid email or password. <br/>Use the 'Forgot Password?' link if you don't remember password");
+      error.insertAfter($(form).find('h3'));
+    }
+  })
+  .live("ajax:error", function(evt, xhr, settings, error) {
+    alert('error');
+  });
+
+
+  $('#signup_form')
+  .live("ajax:beforeSend", function(evt, xhr, settings) {
+    $('div.login-error', this).remove();
+  })
+  .live("ajax:success", function(evt, data, status, xhr) {
+    var form = $(this);
+    form.find('input[type="text"], input[type="password"], input[type="checkbox"]').val("");
+    if(data.success) {
+      that.refreshOnUpdate = true;
+      that.redoAction();
+    } else {
+      var error = $('<div/>').addClass('login-error').html(data.message).insertAfter($(form).find('h3'));
+    }
+  })
+};
+
+StoryHandler.prototype.redoAction = function() {
+  var handler = this.redo.action;
+  var args = this.redo.args;
+  handler.call(this, args.obj, args.sid, args.commentNumber);
 };
 
 StoryHandler.prototype.bindLSValidations = function() {
@@ -185,7 +240,7 @@ StoryHandler.prototype.bindLSValidations = function() {
       },
       password_confirmation: {
         required: true,
-        equalTo: '.signup form input[name=password]'
+        equalTo: '.s-container form input[name=password]'
       }
     },
     messages: {
@@ -207,7 +262,7 @@ StoryHandler.prototype.bindLSValidations = function() {
       },
       conditions: "Accept policies please"
     },
-    errorLabelContainer: "#validation-errors"
+    errorLabelContainer: ".s-container #validation-errors"
   });
 
 };

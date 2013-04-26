@@ -6,7 +6,7 @@
   <div class="modal-body">
     <div class="ls-container">
       <div class="l-container">
-        <%= form_tag(sessions_path, :class => 'form-horizontal') do %>
+        <%= form_tag(sessions_path, :class => 'form-horizontal', :id => 'login_form', :remote => true, :disable_with => "Logging in ...") do %>
           <div class="signup-form">
             <h3><span>Log In</span></h3>
             <div class="control-group">
@@ -33,7 +33,7 @@
       </div>
 
       <div class="s-container">
-        <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form') do %>
+        <%= form_tag({:controller => 'users', :action => 'signup'}, :class=> 'pull-right', :id => 'signup_form', :remote => true, :disable_with => "Trying to create account ...") do %>
           <div class="signup-form">
             <h3><span>Join Us</span></h3>
             <div id="validation-errors"></div>

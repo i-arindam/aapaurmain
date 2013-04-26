@@ -200,8 +200,13 @@ class UsersController < ApplicationController
     old_user = User.find_by_email(params[:email])
     if old_user
       message = "That email is already registered. If you don't remember your password, try #{view_context.link_to('Forgot Password?', new_password_reset_path)}"
-      flash[:error] = ActionController::Base.helpers.auto_link(message, :html => { :target => '_blank' })
-      render "#{failure_render_path}"
+      message = ActionController::Base.helpers.auto_link(message, :html => { :target => '_blank' })
+      flash[:error] = message
+      if request.xhr?
+        render :json => { :success => false, :message => message }
+      else
+        render "#{failure_render_path}"
+      end
     else
       user = User.new(params[:user])
       if user.save
@@ -209,10 +214,18 @@ class UsersController < ApplicationController
         
         send_confirmation_link user
         # flash[:success] = "A confirmation link has been sent to your email. Please check your email and click on the link to verify your account"
-        redirect_to "/edit_profile"
+        if request.xhr?
+          render :json => { :success => true }
+        else
+          redirect_to "/edit_profile"
+        end
       else
         flash[:error] = user.validation.errors
-        render "#{failure_render_path}"
+        if request.xhr?
+          render :json => { :success => false }
+        else 
+          render "#{failure_render_path}"
+        end
       end
     end
   end

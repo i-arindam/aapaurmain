@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
   end
   
   def create
-
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password]) 
       if params[:remember_me]
@@ -13,9 +12,17 @@ class SessionsController < ApplicationController
         cookies[:auth_token] = user.auth_token
       end
       route_to = (user.sex ? "/dashboard" : "/users/#{user.id}/create_profile")
-      redirect_to route_to
+      if request.xhr?
+        render :json => { :success => true }
+      else
+        redirect_to route_to
+      end
     else
-      redirect_to root_url, :alert => "Invalid email or password"
+      if request.xhr?
+        render :json => { :success => false, :message => "Invalid email or password" }
+      else
+        redirect_to root_url, :alert => "Invalid email or password"
+      end
     end
   end
 

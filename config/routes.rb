@@ -22,6 +22,10 @@ Aapaurmain::Application.routes.draw do
   resources :sessions
   resources :password_resets
 
+  # Inline login signup
+  post '/sessions/login_inline' => 'sessions#create_inline'
+  # post ''
+
   post 'users/signup' => 'users#signup'
   match '/signup/confirmation' => 'users#confirm_signup'
   match '/users/:id/create_profile' => 'users#edit_profile'  

@@ -109,21 +109,28 @@ StoryHandler.prototype.bindHandlerForAction = function(obj, sid, commentNumber) 
     data: postData,
     dataType: "json",
     success: function(data) {
-      if(data.success) { 
+      if(data.success) { // Means user is now logged in. 
         that.indicateInPlaceSuccess(sid, obj.update, obj.update_sibling, commentNumber, data.likes_reversed);
         action === "comment" && that.addNewComment(data, sid);
         that.refreshOnUpdate && document.location.reload();
-      } else {
-        that.redo = {
-          'action': that.bindHandlerForAction,
-          'args': {
-            'obj': obj,
-            'sid': sid,
-            'commentNumber': commentNumber
-          }
-        };
-        if(data.ls_required && data.ls_template) {
+      } else {        
+        if(data.ls_required && data.ls_template) { // means user has been asked to login
+          that.redo = {
+            'action': that.bindHandlerForAction,
+            'args': {
+              'obj': obj,
+              'sid': sid,
+              'commentNumber': commentNumber
+            }
+          };
           that.setupLSFlow(data);
+        } else {
+          // Means opinion already expressed. Just reload.
+          if($('#ls-modal').is(':visible')) {
+            document.location.reload();
+          } else {
+            alert("sorry you have already said that once.");
+          }
         }
       }
     }, error: function(data) {

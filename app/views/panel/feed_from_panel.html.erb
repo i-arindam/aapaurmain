@@ -23,7 +23,9 @@
     })(document);
 
     $(document).ready(function() {
-      window.si = new StoryHandler();
+      window.si = new StoryHandler({
+        'forUserId': <%= current_user.id rescue 0 %>
+      });
       window.ga = new GAHandler({
         'page': '<%= @page_type %>',
         'pageType': 'panel',

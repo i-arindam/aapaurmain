@@ -12,7 +12,7 @@ function IntroHandler(config) {
 
 IntroHandler.prototype._initStepMarkings = function() {
   if(this.config.page === 'dashboard') {
-    $('.header ul')
+    $('.header ul:not(.dropdown-menu)')
       .attr('data-step', '1')
       .attr('data-intro', 'Your profile settings place');
     $('.left-nav')

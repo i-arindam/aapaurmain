@@ -96,8 +96,9 @@ class Story < ActiveRecord::Base
     $r.smembers("story:#{sid}:boos")
   end
 
-  def self.get_comments(sid, start, stop)
-    comments = StoryComment.find(:all, :conditions => ["story_id = ?",sid], :order => "id ASC", :offset => start, :limit => stop)
+  def self.get_comments(sid, start, stop, descending = false)
+    comments = StoryComment.find(:all, :conditions => ["story_id = ?",sid], :order => "id #{descending ? 'DESC' : 'ASC'}", :offset => start, :limit => stop)
+    comments.reverse! if descending
     final_comments, i = {}, 0
     comments.each do |com|
       final_comments[com.id] = {
@@ -157,7 +158,7 @@ class Story < ActiveRecord::Base
         author = User.find_by_id(story['by_id'])
         story['author_image'] = author && author.image('small')
 
-        comments = Story.get_comments(sid, 0, 3)
+        comments = Story.get_comments(sid, 0, 3, true)
         story['comment_bodies'] = comments
         stories.push(story)
       end

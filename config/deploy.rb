@@ -2,6 +2,7 @@ require "rvm/capistrano"
 require "bundler/capistrano"
 require "bundler/setup"
 require "delayed/recipes"
+require "newrelic/recipes"
 
 # Server ruby gem and gemset name
 set :rvm_ruby_string, 'ruby-1.9.3-p194@rails326'
@@ -33,6 +34,7 @@ before 'deploy', 'deploy:check_revision'
 
 # Clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
+after "deploy:update", "newrelic:notice_deployment"
 
 namespace :deploy do
 

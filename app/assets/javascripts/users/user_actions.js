@@ -179,7 +179,7 @@ UserActions.prototype.userFollowedOrNot = function(jqObj) {
         jqObj.toggleClass('follow unfollow');
         jqObj.find('span.follow-user').text(data.btn_text);
         jqObj.attr('href', data.btn_href);
-
+        that.popupElement = messageDialog;
         // setTimeout(function() {
           $(messageDialog).bPopup({
             opacity: 0.9,

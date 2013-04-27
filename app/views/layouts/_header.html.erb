@@ -21,8 +21,8 @@
             <span><%= current_user.name %></span>
             <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="user-control">
-            <li><a href="/edit_profile">Edit Profile</a></li>
+          <ul class="dropdown-menu">
+            <li><a href="/edit_profile" data-target="#">Edit Profile</a></li>
             <li><a href="/users/<%= current_user.id %>">View your profile</a></li>
             <li><a href="/log_out">Log Out</a></li>
           </ul>

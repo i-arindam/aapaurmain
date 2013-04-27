@@ -2,6 +2,5 @@
 // All this logic will automatically be available in application.js.
 //= require ./jquery.livequery
 //= require ./jquery.embedly.min
-//= require ./bootstrap.min
 //= require ./jquery.validate.min
 //= require_tree ./story

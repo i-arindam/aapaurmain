@@ -34,6 +34,10 @@ function StoryHandler(config){
 
 StoryHandler.prototype._init = function() {
   this.setupSelectors();
+  $('.header .dropdown-menu').dropdown();
+  $('.header .dropdown-menu li a').on('click', function(e) {
+    e.stopPropagation();
+  });
   $('.comment-box').live('focusin', function() {
     $(this).animate({'height': '100px'}, 'fast');
     $(this).siblings('.comment-actions').slideDown('fast');

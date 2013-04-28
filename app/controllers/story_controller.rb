@@ -74,8 +74,8 @@ class StoryController < ApplicationController
   end
 
   def get_comment_faces
-    base_action = "get_#{params[:action]}_on_comment"
-    user_ids = Story.send(base_action, params[:story_id], params[:number])
+    base_action = "get_#{params[:name]}_on_comment"
+    user_ids = Story.send(base_action, params[:story_id], params[:id])
     persons = User.get_display_items_for_modal(user_ids)
 
     render :json => {

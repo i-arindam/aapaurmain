@@ -48,6 +48,7 @@ ListView.prototype._getDomPartials = function() {
       that.storyDom = $(data.story_partial);
       that.questionDom = $(data.question_partial);
       that.panelDom = $(data.panel_partial);
+      that.commentDom = $(data.comment_partial);
       that.panelsDictionary = data.panels;
     }, error: function(data) {
       var x = 10;
@@ -271,6 +272,29 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
       storyDom.find('.story-boos').text(s.boos);
       storyDom.find('.story-comments').text(s.comments);
       storyDom.find('.story-user img').attr('src', s.author_image);
+      s.claps > 0     && storyDom.find('.j-show-claps').removeClass('disabled-link');
+      s.boos > 0      && storyDom.find('.j-show-boos').removeClass('disabled-link');
+      s.comments > 0  && storyDom.find('.j-show-comments, .link-comment').removeClass('disabled-link');
+      if(s.comments > 0) {
+        $.each(s.comment_bodies, function(i, c) {
+          var commentDom = that.commentDom.clone();
+          commentDom.find('div.comment-container').attr('data-comment-id', c.comment.id);
+          commentDom.find('.comment-user img').attr('src', c.author_photo).attr('alt', c.comment.by);
+          commentDom.find('.comment-person-link').attr('href', '/users/' + c.comment.by_id);
+          commentDom.find('.comment-creator').text(c.comment.by);
+          commentDom.find('.comment-time').text($.timeago(c.comment.created_at));
+          if(that.config.sessionUserId === c.comment.by_id) {
+            $('<a/>').addClass('close del-comment').attr('href', '#').html('x').appendTo(commentDom.find('.right-container'));
+          }
+          commentDom.find('.comment-text').html(c.comment.text);
+          commentDom.find('.comment-claps').text(c.claps);
+          commentDom.find('.comment-boos').text(c.boos);
+          c.claps > 0 && commentDom.find('.j-show-comment-claps').removeClass('disabled-link');
+          c.boos > 0  && commentDom.find('.j-show-comment-boos').removeClass('disabled-link');
+          commentDom.appendTo(storyDom.find('ul.comments'));
+        });
+      }
+
 
       var panelsUl = storyDom.find('ul.story-tags');
 

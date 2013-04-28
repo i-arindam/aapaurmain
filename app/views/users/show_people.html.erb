@@ -32,7 +32,9 @@
             'pre': 'list_',
             'q': window._gaq
           });
-          var sh = new StoryHandler();
+          var sh = new StoryHandler({
+            'forUserId': <%= @user.id rescue 0 %>
+          });
           var userActions = new UserActions({
             'userSelector': '.rs-slider li',
             'userIds': <%= @user_ids %>,

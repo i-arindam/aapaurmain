@@ -647,6 +647,7 @@ class UsersController < ApplicationController
       :story_partial => render_to_string(:partial => "/story"),
       :question_partial => render_to_string(:partial => "/questions"),
       :panel_partial => render_to_string(:partial => "/panels"),
+      :comment_partial => render_to_string(:partial => "/story_comment"),
       :panels => $priorities_list['priorities']
     }
   end

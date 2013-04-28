@@ -66,7 +66,7 @@ Aapaurmain::Application.routes.draw do
 
   get 'story/:story_id/get' => 'story#get_persons_on_story_actions'
 
-  get 'story/:story_id/get/comment/:number/:action' => 'story#get_comment_faces'
+  get '/story/:story_id/get/comment/:id/:name' => 'story#get_comment_faces'
   
   match 'panel/:name' => 'panel#show'
   get 'panel/:name/get/more/:start/:num' => 'panel#show_more_stories'

@@ -780,7 +780,7 @@ class User < ActiveRecord::Base
       result.push({
         :name => u.name,
         :id => u.id,
-        :pic => u.photo_url
+        :pic => u.image('medium')
       })
     end
     result.to_json

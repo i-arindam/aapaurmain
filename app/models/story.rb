@@ -116,12 +116,12 @@ class Story < ActiveRecord::Base
     $r.lrange("story:#{sid}:comments", 10, -1)
   end
 
-  def self.get_claps_on_comment(sid, comment_number)
-    $r.smembers("story:#{sid}:comments:#{comment_number}:claps")
+  def self.get_claps_on_comment(sid, comment_id)
+    $r.smembers("story:#{sid}:comments:#{comment_id}:claps")
   end
 
-  def self.get_boos_on_comment(sid, comment_number)
-    $r.smembers("story:#{sid}:comments:#{comment_number}:boos")
+  def self.get_boos_on_comment(sid, comment_id)
+    $r.smembers("story:#{sid}:comments:#{comment_id}:boos")
   end
 
   # @param [Array] sids

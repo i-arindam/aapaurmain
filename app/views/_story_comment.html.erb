@@ -3,7 +3,7 @@
     claps = comment[:claps] || 0
     boos = comment[:boos] || 0 %>
 <li>
-  <div class="clearfix comment-container">
+  <div class="clearfix comment-container" data-comment-id="<%= com.id rescue 0 %>">
     <div class="comment-user">
       <img src="<%= comment[:author_photo] %>" class="comment-user-img" alt="<%= com && com.by %>" />
     </div>
@@ -19,8 +19,8 @@
       </div>
       <p class="comment-text"><%= com && com.text %></p>
       <div class="comment-like-area">
-        <a href="#" class="link-like-comment"></a><a href="#" class="j-show-comment-claps"><span class="comment-claps"><%= claps %></span></a>
-        <a href="#" class="link-dislike-comment"></a><a href="#" class="j-show-comment-boos"><span class="comment-boos"><%= boos %></span></a>
+        <a href="#" class="link-like-comment"></a><a href="#" class="j-show-comment-claps <%= claps == 0 ? 'disabled-link' : '' %>"><span class="comment-claps"><%= claps %></span></a>
+        <a href="#" class="link-dislike-comment"></a><a href="#" class="j-show-comment-boos <%= boos == 0 ? 'disabled-link' : '' %>"><span class="comment-boos"><%= boos %></span></a>
       </div>
     </div>
   </div>

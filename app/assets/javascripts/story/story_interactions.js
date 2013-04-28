@@ -10,8 +10,8 @@ function StoryHandler(config){
       "data": [
         { "link": '.j-show-claps',             "url": '/story/{{sid}}/get?t=claps' }, 
         { "link": '.j-show-boos',              "url": '/story/{{sid}}/get?t=boos' },
-        { "link": '.j-show-comment-claps',     "url": '/story/{{sid}}/get/comment/{{number}}?t=claps' },
-        { "link": '.j-show-comment-boos',      "url": '/story/{{sid}}/get/comment/{{number}}?t=boos' }
+        { "link": '.j-show-comment-claps',     "url": '/story/{{sid}}/get/comment/{{number}}/claps' },
+        { "link": '.j-show-comment-boos',      "url": '/story/{{sid}}/get/comment/{{number}}/boos' }
       ],
       "handler": this.bindHandlerForShow
     },

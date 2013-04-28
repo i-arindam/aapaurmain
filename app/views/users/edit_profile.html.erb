@@ -69,8 +69,8 @@
                   <td>
                     <label for="sex">Sex</label>
                     <span class="controls" id="sex">
-                      <input type="radio" name="user[sex]" value="male" <%= @user.sex == 0 ? 'checked' : '' %> /> Male
-                      <input type="radio" name="user[sex]" value="female" <%= @user.sex == 1 ? 'checked' : '' %> /> Female
+                      <input type="radio" name="user[sex]" value="<%= User::MALE %>" <%= @user.sex == 0 ? 'checked' : '' %> /> Male
+                      <input type="radio" name="user[sex]" value="<%= User::FEMALE %>" <%= @user.sex == 1 ? 'checked' : '' %> /> Female
                     </span>
                   </td>
                   <td>

@@ -9,18 +9,26 @@
     </div>
     <div class="comment">
       <div class="comment-prsn clearfix">
-        <a href="/users/<%= com && com.by_id %>" class="comment-person-link"><p class="comment-creator"><%= com && com.by %></p></a>
+        <a href="/users/<%= com && com.by_id %>" class="comment-person-link" data-toggle="tooltip" title="See full profile">
+          <p class="comment-creator"><%= com && com.by %></p>
+        </a>
         <div class="right-container pull-right">
           <span class="comment-time"><%= com && distance_of_time_in_words_to_now(com.created_at) %> ago</span>
           <% if current_user && current_user.id == (com && com.by_id.to_i) %>
-          <a href="#" class="close del-comment">&times;</a>
+          <a href="#" class="close del-comment" data-toggle="tooltip" title="Delete this comment">&times;</a>
           <% end %>
         </div>
       </div>
       <p class="comment-text"><%= com && com.text %></p>
       <div class="comment-like-area">
-        <a href="#" class="link-like-comment"></a><a href="#" class="j-show-comment-claps <%= claps == 0 ? 'disabled-link' : '' %>"><span class="comment-claps"><%= claps %></span></a>
-        <a href="#" class="link-dislike-comment"></a><a href="#" class="j-show-comment-boos <%= boos == 0 ? 'disabled-link' : '' %>"><span class="comment-boos"><%= boos %></span></a>
+        <a href="#" class="link-like-comment" data-toggle="tooltip" title="Like this comment"></a>
+        <a href="#" class="j-show-comment-claps <%= claps == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show who likes this">
+          <span class="comment-claps"><%= claps %></span>
+        </a>
+        <a href="#" class="link-dislike-comment" data-toggle="tooltip" title="Dislike this comment"></a>
+        <a href="#" class="j-show-comment-boos <%= boos == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show who dislikes this">
+          <span class="comment-boos"><%= boos %></span>
+        </a>
       </div>
     </div>
   </div>

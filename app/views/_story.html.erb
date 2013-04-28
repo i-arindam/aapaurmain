@@ -18,11 +18,11 @@
   </div>
   <div class="story-content">
     <div class="story-tit clearfix">
-      <h3 class="story-creator"><a href="/users/<%= story['by_id'] %>"><%= story['by'] %></a></h3>
+      <h3 class="story-creator"><a href="/users/<%= story['by_id'] %>" data-toggle="tooltip" data-placement="right" title="See full profile"><%= story['by'] %></a></h3>
       <p class="story-time">
-        <a href="/story/<%= story['id'] %>" class="story-link" alt="View story"><%= distance_of_time_in_words_to_now(story['time']) %> ago</a>
+        <a href="/story/<%= story['id'] %>" class="story-link"><%= distance_of_time_in_words_to_now(story['time']) %> ago</a>
         <% if current_user && story['by_id'].to_i == current_user.id %>
-        <a href="#" class="del-story close" alt="Delete Story" data-story-id="<%= story['id'] %>">&times;</a>
+        <a href="#" class="del-story close" alt="Delete Story" data-story-id="<%= story['id'] %>" data-toggle="tooltip" data-placement="bottom" title="Delete story">&times;</a>
         <% end %>
       </p>
       <div class="paper-roll">&nbsp;</div>
@@ -45,10 +45,19 @@
         <% end %>
       </div>
       <div class="like-area clearfix">
-        <a href="#" class="link-like hover-scale"></a><a href="#" class="j-show-claps <%= story['claps'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-claps"><%= story['claps'] %></span></a>
-        <a href="#" class="link-dislike hover-scale"></a><a href="#" class="j-show-boos <%= story['boos'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-boos"><%= story['boos'] %></span></a>
+        <a href="#" class="link-like hover-scale" data-toggle="tooltip" title="Like this story"></a>
+        <a href="#" class="j-show-claps <%= story['claps'].to_i == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show who like this">
+          <span class="story-claps"><%= story['claps'] %></span>
+        </a>
+        <a href="#" class="link-dislike hover-scale" data-toggle="tooltip" title="Dislike this story"></a>
+        <a href="#" class="j-show-boos <%= story['boos'].to_i == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show who dislike this">
+          <span class="story-boos"><%= story['boos'] %></span>
+        </a>
         <div class="comment-count-wrap">
-          <a href="#" class="link-comment comment-count hover-scale <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>"></a><a href="#" class="j-show-comments <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>"><span class="story-comments"><%= story['comments'] %></span></a>
+          <a href="#" class="link-comment comment-count hover-scale <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show the comments"></a>
+          <a href="#" class="j-show-comments <%= story['comments'].to_i == 0 ? 'disabled-link' : '' %>" data-toggle="tooltip" title="Show the comments">
+            <span class="story-comments"><%= story['comments'] %></span>
+          </a>
         </div>
       </div>
       <div class="comment-area">

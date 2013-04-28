@@ -35,6 +35,9 @@ function StoryHandler(config){
 StoryHandler.prototype._init = function() {
   this.setupSelectors();
   $('.header .dropdown-menu').dropdown();
+  $('a[data-toggle="tooltip"]').livequery(function() {
+    $(this).tooltip();
+  });
   $('.header .dropdown-menu li a').on('click', function(e) {
     e.stopPropagation();
   });
@@ -374,12 +377,14 @@ StoryHandler.prototype.addCommentToDisplay = function(ul, template, comment) {
   newComment.find('.comment-creator').text(comment.by);
   newComment.find('.comment-time').text($.timeago(comment.created_at));
   newComment.find('.comment-text').html(comment.text);
-  newComment.find('.comment-person-link').attr('href', '/users/' + comment.by_id);
+  newComment.find('.comment-person-link').attr('href', '/users/' + comment.by_id)
+  .attr('data-toggle', 'tooltip').attr('title', 'See full profile');
   newComment.find('.comment-claps').text(comment.claps || 0);
   newComment.find('.comment-boos').text(comment.boos || 0);
   if(this.config.forUserId === comment.by_id) {
     newComment.find('.right-container').append(
-      $('<a/>').attr('href', '#').addClass('close del-comment').text('x')
+      $('<a/>').attr('href', '#').addClass('close del-comment')
+      .attr('data-toggle', 'tooltip').attr('title', 'Delete comment').text('x')
     );
   }
   
@@ -414,18 +419,19 @@ StoryHandler.prototype.setupMoreStories = function() {
           storyDom.find('.story-claps').text(s.claps);
           storyDom.find('.story-boos').text(s.boos);
           storyDom.find('.story-comments').text(s.comments);
-          if(s.claps === 0) {
-            storyDom.find('.j-show-claps').addClass('disabled-link');
+          if(s.claps !== 0) {
+            storyDom.find('.j-show-claps').removeClass('disabled-link');
           }
-          if(s.boos === 0) {
-            storyDom.find('.j-show-boos').addClass('disabled-link');
+          if(s.boos !== 0) {
+            storyDom.find('.j-show-boos').removeClass('disabled-link');
           }
-          if(s.comments === 0) {
-            storyDom.find('.j-show-comments, .link-comment').addClass('disabled-link');
+          if(s.comments !== 0) {
+            storyDom.find('.j-show-comments, .link-comment').removeClass('disabled-link');
           }
           if(s.by_id === that.config.forUserId + '') {
-            $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('alt', 'Delete Story')
-            .attr('data-story-id', s.id).text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));
+            $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('title', 'Delete Story')
+            .attr('data-story-id', s.id).attr('data-toggle', 'tooltip').attr('data-placement', 'bottom')
+            .text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));
           }
 
           var panelsUl = storyDom.find('ul.story-tags');

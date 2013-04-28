@@ -8,6 +8,8 @@ function ListView(config) {
 
 ListView.prototype.initSlider = function() {
   var that = this;
+  var showArrows = ($(this.config.sliderElement).find('li.person').length === 1 ? '' : 
+    '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>');
 
   $(this.config.sliderElement).refineSlide({
     transition: 'custom',
@@ -15,7 +17,7 @@ ListView.prototype.initSlider = function() {
     autoPlay: false,
     keyNav: true,
     transitionDuration: 500,
-    arrowTemplate: '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>',
+    arrowTemplate: showArrows,
     controls: 'arrows',
     afterChange: function() {
       $('.rs-prev, .rs-next').addClass('disable-action');
@@ -180,7 +182,7 @@ ListView.prototype.paintPanelsSectionFor = function(uid) {
 
   domObj.find('.shared-by span.other-user').text(uname);
   
-  if(commonPanels) {
+  if(commonPanels.length > 0) {
     $.each(commonPanels, function(i, cp) {
       var li = $('<li><a></a></li>');
       li.children('a').attr('href', '/panels/' + cp);
@@ -188,8 +190,10 @@ ListView.prototype.paintPanelsSectionFor = function(uid) {
       li.appendTo(cLiUl);
     });
     cLiUl.appendTo(commonPanelDom);
+  } else {
+    commonPanelDom.append($('<span/>').addClass('no-panel').text("No common Panels"));
   }
-  if(otherPanels) {
+  if(otherPanels.length > 0) {
     $.each(otherPanels, function(i, rp) {
       var li = $('<li><a></a></li>');
       li.children('a').attr('href', '/panels/' + rp);
@@ -197,6 +201,8 @@ ListView.prototype.paintPanelsSectionFor = function(uid) {
       li.appendTo(oLiUl);
     });
     oLiUl.appendTo(otherPanelDom);
+  } else {
+    otherPanelDom.append($('<span/>').addClass('no-panel').text("No more Panels"));
   }
   this.panelsLoader.hide();
   if(!commonPanels && !remainingPanels) {

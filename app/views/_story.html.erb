@@ -53,7 +53,7 @@
       </div>
       <div class="comment-area">
         <ul class="comments <%= story['comments'] == 0 ? 'hide' : '' %>">
-          <% if story['comments'] > 0 %>
+          <% if story['comments'].to_i > 0 %>
           <% story['comment_bodies'].values.each do |com| %>
           <%= render :partial => '/story_comment', :locals => { :comment => com } %>
           <% end %>

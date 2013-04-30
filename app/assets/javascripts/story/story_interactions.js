@@ -225,7 +225,7 @@ StoryHandler.prototype.bindLSActions = function() {
     } else {
       var error = $('<div/>').addClass('login-error').html(data.message).insertAfter($(form).find('h3'));
     }
-  })
+  });
 };
 
 StoryHandler.prototype.redoAction = function() {

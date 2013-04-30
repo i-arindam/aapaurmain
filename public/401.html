@@ -2,14 +2,98 @@
 <html>
 <head>
   <title>Authorization needed(401)</title>
-  
+  <%= stylesheet_link_tag "40x" %>
+  <%= javascript_include_tag "jquery.validate.min" %>
 </head>
 
 <body>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.s-container form').validate({
+        submitHandler: function(form) {
+          $(form).ajaxSubmit();
+        }, rules: {
+          name: {
+            required: true,
+            minlength: 4
+          },
+          email: {
+            required: true,
+            email: true
+          },
+          conditions: "required",
+          password: {
+            required: true,
+            minlength: 5
+          },
+          password_confirmation: {
+            required: true,
+            equalTo: '.s-container form input[name=password]'
+          }
+        },
+        messages: {
+          name: {
+            required: "We need a name to know you",
+            minlength: "At least 4 characters is a normal name"
+          },
+          email: {
+            required: "This is where verification mail will be sent",
+            email: "This should be like name@domain.com"
+          },
+          password: {
+            required: "This is for your own safety",
+            minlength: "Give a strong password, at least 5 letters strong"
+          },
+          password_confirmation: {
+            required: "Confirm password please",
+            equalTo: "Passwords must match"
+          },
+          conditions: "Accept policies please"
+        },
+        errorLabelContainer: ".s-container #validation-errors"
+      });
+    });
+
+    $('#login_form')
+    .live("ajax:beforeSend", function(evt, xhr, settings) {
+      $('div.login-error', this).remove();
+    })
+    .live("ajax:success", function(evt, data, status, xhr) {
+      var form = $(this);
+      form.find('textarea,input[type="text"],input[type="password"]').val("");
+      if(data.success) {
+        document.location.reload();
+      } else {
+        var error = $('<div/>').addClass('login-error')
+          .html("Invalid email or password. <br/>Use the 'Forgot Password?' link if you don't remember password");
+        error.insertAfter($(form).find('h3'));
+      }
+    })
+    .live("ajax:error", function(evt, xhr, settings, error) {
+      alert('error');
+    });
+
+
+    $('#signup_form')
+    .live("ajax:beforeSend", function(evt, xhr, settings) {
+      $('div.login-error', this).remove();
+    })
+    .live("ajax:success", function(evt, data, status, xhr) {
+      var form = $(this);
+      form.find('input[type="text"], input[type="password"], input[type="checkbox"]').val("");
+      if(data.success) {
+        document.location.reload();
+      } else {
+        var error = $('<div/>').addClass('login-error').html(data.message).insertAfter($(form).find('h3'));
+      }
+    });
+
+  </script>
   <!-- This file lives in public/404.html -->
   <div class="hero-unit error-page" style="text-align: center">
     <h2>Oops! Authorization Needed.</h2>
     <p>Please login to see this page.</p>
   </div>
+  <%= render :partial => "/login_signup" %>
 </body>
 </html>

@@ -536,9 +536,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  
-  
-  
   # Upload the original picture to S3.
   # @param [IOStream] Image data to be saved
   def photo_url=(file)
@@ -625,48 +622,6 @@ class User < ActiveRecord::Base
       logger.error e.backtrace.join("\n")
     end
   end
-
-  def generate_photo_sizes
-    require "aws_helper"
-    require 'RMagick'
-    begin
-      user = self
-      profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
-      profile_pic_fullpath = profile_pic_location + "/profile-#{user_id.to_s}" 
-      profile_pic_original = '/tmp/' + File.basename(profile_pic_fullpath)
-
-      profile_pic = '/tmp/' + "/profile-#{user_id.to_s}-150" 
-      thumbnail = '/tmp/' + "profile-#{user_id.to_s}-thumbnail"
-      $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
-
-      img = Magick::Image::read(profile_pic_original).first
-      headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
-
-      img_profile = img.resize(150,150)
-      img_profile.write(profile_pic)
-
-      $s3.delete_file(File.basename(profile_pic)) if self.photo_exists
-      $s3.put_file(profile_pic, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
-
-      # img_thumbnail = img.resize(96,96)
-      # img_thumbnail.strip!
-      # img_thumbnail.write(thumbnail)
-
-      # thumbnail_fullpath = profile_pic_location + "/profile-#{user_id.to_s}-thumbnail" 
-      # headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
-      # $s3.delete_file(thumbnail_fullpath) if user.photo_exists
-      # $s3.put_file(thumbnail, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
-
-      FileUtils.rm(thumbnail)
-      FileUtils.rm(profile_pic)
-      FileUtils.rm(profile_pic_original)
-    rescue Exception => e
-      logger.error "resizing failed for User #{user_id} : #{e.inspect}"
-      logger.error e.backtrace.join("\n")
-    end
-  end
-
-
    
   def delete_photo
     return if Rails.env == 'development'

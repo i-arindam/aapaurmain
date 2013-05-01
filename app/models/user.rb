@@ -612,6 +612,8 @@ class User < ActiveRecord::Base
       $s3.put_file("/tmp/profile-#{self.id.to_s}-dp", $aapaurmain_conf['aws']['photo-bucket'], headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
       $s3.put_file("/tmp/profile-#{self.id.to_s}-thumb", $aapaurmain_conf['aws']['photo-bucket'], headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
 
+      self.thumbnail_exists = true
+      self.save!
 
       FileUtils.rm("/tmp/profile-#{self.id.to_s}")
       FileUtils.rm("/tmp/profile-#{self.id.to_s}-dp")
@@ -646,24 +648,29 @@ class User < ActiveRecord::Base
 
   # Return the url for the image
   # @return [String] url for image, default if none exists
-  def image(size = 'medium')
-    self.original_pic_url(size)
+  def image(type = 'thumb')
+    self.original_pic_url(type)
   end
 
-  def original_pic_url(size = 'medium')
-    if self && self.photo_exists# && Rails.env != "development"
-      key = $aapaurmain_conf['profile-pic-original']
-      profile_key = key.gsub('{{user_id}}' , self.id.to_s)
-      size = (size == 'large' ? '?' : '-150?')
-      "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + profile_key + size + (Time.now.to_i % 10).to_s
+  def original_pic_url(type = 'thumb', show_main = false)
+    if show_main or (self and self.thumbnail_exists)
+      key = case type 
+      when 'thumb' 
+        "profile-#{self.id.to_s}-thumb"
+      when 'dp'
+        "profile-#{self.id.to_s}-dp"
+      when 'main'
+        "profile-#{self.id.to_s}"
+      end
+      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 10).to_s
     else
-      def_url = case size
-      when 'large'
-        "/assets/users/user-medium.jpg"
-      when 'medium'
-        "/assets/users/user-slide.jpg"
-      when 'small'
+      def_url = case type
+      when 'thumb'
         "/assets/users/user-small.jpg"
+      when 'dp'
+        "/assets/users/user-slide.jpg"
+      when 'main'
+        "/assets/users/user-medium.jpg"
       end
       return def_url
     end

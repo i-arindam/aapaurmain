@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130420100804) do
+ActiveRecord::Schema.define(:version => 20130501104106) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20130420100804) do
     t.datetime "updated_at",                                                                           :null => false
     t.integer  "num_ratings",                                                         :default => 0
     t.decimal  "avg_rating",                            :precision => 4, :scale => 2, :default => 0.0
+    t.boolean  "thumbnail_exists"
   end
 
   add_index "users", ["auth_token"], :name => "index_users_on_auth_token"

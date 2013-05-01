@@ -17,7 +17,7 @@
         <% unless show_login? %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown" id="user-control">
-            <img src="/assets/user-xsmall.png" />
+            <img src="<%= current_user.image('thumb') %>" />
             <span><%= current_user.name %></span>
             <b class="caret"></b>
           </a>

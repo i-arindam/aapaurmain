@@ -103,7 +103,7 @@ class Story < ActiveRecord::Base
     comments.each do |com|
       final_comments[com.id] = {
         :comment => com,
-        :author_photo => User.find_by_id(com.by_id).image,
+        :author_photo => User.find_by_id(com.by_id).image('thumb'),
         :claps => $r.scard("story:#{sid}:comments:#{com.id}:claps") || 0,
         :boos => $r.scard("story:#{sid}:comments:#{com.id}:boos") || 0
       }
@@ -156,7 +156,7 @@ class Story < ActiveRecord::Base
         story['text'].gsub!("\n", "<br/>")
         story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
         author = User.find_by_id(story['by_id'])
-        story['author_image'] = author && author.image('small')
+        story['author_image'] = author && author.image('dp')
 
         comments = Story.get_comments(sid, 0, 3, true)
         story['comment_bodies'] = comments

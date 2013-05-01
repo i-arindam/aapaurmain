@@ -349,7 +349,7 @@ class UsersController < ApplicationController
     session_user.photo_url = img
     session_user.photo_exists = true
     session_user.save
-    render :text => {:success => true , :url => session_user.original_pic_url }.to_json
+    render :text => {:success => true , :url => session_user.original_pic_url('main', true) }.to_json
   end
   
 

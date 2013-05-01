@@ -42,7 +42,7 @@ ProfilePicUpload.prototype.initAjaxUpload = function(){
         that.indicator.hide();
         that.uploadButton.show();
       } else {
-        var toRemove = response.url.match(/.*profile\-\d+(\-\d+\?\d+).*/)[1];
+        var toRemove = response.url.match(/.*profile\-\d+(\?\d+).*/)[1];
         var photoUrl = response.url.replace(toRemove, "");
 
         that.preview.attr('src', photoUrl);
@@ -74,32 +74,34 @@ ProfilePicUpload.prototype.askForThumbnail = function(url) {
 
   var ar = "" + this.origImgW + ":" + this.origImgH;
 
-  !this.imgCreated && img.load(function() {
-    that.ias = $('.main-img').imgAreaSelect({
-      handles: true,
-      keys: true,
-      maxWidth: 500, 
-      maxHeight: 500,
-      minHeight: 90,
-      minWidth: 90,
-      persistent: true,
-      x1: 100,
-      y1: 100,
-      x2: 250,
-      y2: 250,
-      instance: true,
-      onSelectEnd: function (img, sel) {
-        $('input[name=x1]').val(sel.x1);
-        $('input[name=y1]').val(sel.y1);
-        $('input[name=width]').val(sel.width);
-        $('input[name=height]').val(sel.height);
-      },
-      onInit: function() {
-        that.ias.setSelection(100, 100, 250, 250);
-        that.ias.setOptions({ show: true });
-        that.ias.update();
-      },
-    });
+  img.load(function() {
+    if(!that.imgCreated) {
+      that.ias = $('.main-img').imgAreaSelect({
+        handles: true,
+        keys: true,
+        maxWidth: 500, 
+        maxHeight: 500,
+        minHeight: 90,
+        minWidth: 90,
+        persistent: true,
+        x1: 100,
+        y1: 100,
+        x2: 250,
+        y2: 250,
+        instance: true,
+        onSelectEnd: function (img, sel) {
+          $('input[name=x1]').val(sel.x1);
+          $('input[name=y1]').val(sel.y1);
+          $('input[name=width]').val(sel.width);
+          $('input[name=height]').val(sel.height);
+        },
+        onInit: function() {
+          that.ias.setSelection(100, 100, 250, 250);
+          that.ias.setOptions({ show: true });
+          that.ias.update();
+        },
+      });
+    }
   });
 };
 
@@ -120,13 +122,12 @@ ProfilePicUpload.prototype.listenForThumbnailChosen = function() {
       dataType: "json",
       success: function(data) {
         $('#choose-thumb-modal').modal('hide');
-        that.ias.setOptions({ show: false});
+        that.ias.remove();
         that.imgCreated = true;
         $('#preview').attr('src', data.display_url + "?" + (new Date()).getMilliseconds());
       }, error: function(data) {
         $('#choose-thumb-modal').modal('hide');
-        that.ias.setOptions({ show: false});
-        that.ias.update();
+        that.ias.remove();
         that.imgCreated = false;
         alert("Something went wrong. Try again in some time");
       }

@@ -21,7 +21,7 @@ module ApplicationHelper
   end
 
   def profile_pic_url(user_id)
-    user = User.find user_id
+    user = User.find_by_id(user_id)
     if user && user.photo_exists #&&  Rails.env != 'development'
       key = $aapaurmain_conf['profile-pic']
       profile_key = key.gsub('{{user_id}}' , user_id.to_s)

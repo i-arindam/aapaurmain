@@ -279,6 +279,7 @@ class UsersController < ApplicationController
   
   def edit_profile
     @user = current_user
+    @invoke_thumbnail = true if (params[:make_thumbnail] == "true" && @user.photo_exists)
     render_404 and return unless @user
   end
   
@@ -358,7 +359,8 @@ class UsersController < ApplicationController
   def delete_photo
     session_user = current_user
     begin
-     session_user.photo_exists =false
+     session_user.photo_exists = false
+     session_user.thumbnail_exists = false
      session_user.save!
      session_user.delete_photo      
      render :json => { :success => true , :url => original_pic_url(session_user.id) }
@@ -670,6 +672,7 @@ class UsersController < ApplicationController
     @page_type = 'dashboard'
     @show_tour = @user.user_tour.blank?
     @stories, @fallback_mode = Newsfeed.get_initial_feed_for(@user.id)
+    flash[:notice] = ActionController::Base.helpers.auto_link("Please create a thumbnail for your picture. Go <a href='/edit_profile?make_thumbnail=true'>here</a>", :html => { :target => '_blank' }) unless @user.thumbnail_exists
     @questions = ShortQuestion.get_latest_question_for(@user.id)
   end
 

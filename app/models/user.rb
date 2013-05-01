@@ -663,6 +663,16 @@ class User < ActiveRecord::Base
         "profile-#{self.id.to_s}"
       end
       return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 10).to_s
+    elsif self and self.photo_exists
+      key = case type
+      when 'thumb' 
+        "profile-#{self.id.to_s}-150"
+      when 'dp'
+        "profile-#{self.id.to_s}-150"
+      when 'main'
+        "profile-#{self.id.to_s}"
+      end
+      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 10).to_s
     else
       def_url = case type
       when 'thumb'

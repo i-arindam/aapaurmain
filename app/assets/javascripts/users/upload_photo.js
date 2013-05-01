@@ -1,4 +1,4 @@
-function ProfilePicUpload(){  
+function ProfilePicUpload(auto_thumbnail){  
   this.user_id = user_object.session_user_id;
   this.thumbnail = $('#user_thumbnail');
 
@@ -13,6 +13,9 @@ function ProfilePicUpload(){
 
   this.initAjaxUpload();
   this.deletePhoto();
+  if(auto_thumbnail) {
+    this.askForThumbnail($('#preview').attr('src'));
+  }
 };
 
 ProfilePicUpload.prototype.showIndicator = function() {
@@ -66,7 +69,7 @@ ProfilePicUpload.prototype.askForThumbnail = function(url) {
   var mod = $('#choose-thumb-modal');
   mod.modal('show');
   var random = (new Date()).getMilliseconds();
-  mod.find('.main-img, .thumb-img').attr('src', url + "?" + random);
+  mod.find('.main-img').attr('src', url + "?" + random);
   var that = this;
   img = $('.main-img');
   this.origImgW = img[0].naturalWidth;

@@ -156,7 +156,7 @@ class Story < ActiveRecord::Base
         story['text'].gsub!("\n", "<br/>")
         story['text'] = ActionController::Base.helpers.auto_link(story['text'], :html => { :target => '_blank' })
         author = User.find_by_id(story['by_id'])
-        story['author_image'] = author && author.image('dp')
+        story['author_image'] = author && author.image('thumb')
 
         comments = Story.get_comments(sid, 0, 3, true)
         story['comment_bodies'] = comments

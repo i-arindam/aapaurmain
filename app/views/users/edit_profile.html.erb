@@ -2,10 +2,10 @@
 <html>
   <head>
     <% content_for :stylesheet do %>
-      <%= stylesheet_link_tag "users/edit_profile", "users/jquery.datepick" %>
+      <%= stylesheet_link_tag "users/edit_profile", "users/jquery.datepick", "users/imgareaselect-default", "users/imgareaselect-animated" %>
     <% end %>
     <% content_for :js_footer do %>
-      <%= javascript_include_tag "jquery.datepick.min.js" %>
+      <%= javascript_include_tag "jquery.datepick.min.js", "users/jquery.imgareaselect.min" %>
     <% end %>
     <title>Update your Profile</title>
 
@@ -51,6 +51,10 @@
             <div class="span10 basicDetails">
               <%= form_for @user, :url => "/update", :html => { :method => :post, :class => "form-inline"} do %>
               <fieldset>
+                <input type="hidden" name="x1" value="20" />
+                <input type="hidden" name="y1" value="20" />
+                <input type="hidden" name="width" value="120" />
+                <input type="hidden" name="height" value="120" />
               <h2 class="span5 detailsHeader">Basic Details</h2>
               <table>
                 <tr>
@@ -95,7 +99,7 @@
         </div><!-- mainContainer ends -->
       </div><!-- row ends -->
     </div><!-- container ends -->
-
+    <%= render :partial => "choose_thumbnail" %>
   </body>
   <script type="text/javascript">
     $(function(){

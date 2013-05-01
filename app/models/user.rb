@@ -544,7 +544,7 @@ class User < ActiveRecord::Base
   def photo_url=(file)
     if Rails.env == 'development'
       write_attribute('photo_exists', true)
-      return
+      # return
     end
     require "aws_helper"
     require 'RMagick'
@@ -561,6 +561,20 @@ class User < ActiveRecord::Base
 
     #Get the extension and mime type
     img = Magick::Image::read(profile_pic_original).first
+
+    # I want 900x600 images as converted size
+    if img.columns > img.rows
+      main_image = img.resize_to_fit(900)
+    else
+      aspect_ratio = img.columns / img.rows.to_f
+      new_width = 600 * aspect_ratio
+      main_image = img.resize_to_fit(new_width)
+    end
+
+    File.open(profile_pic_original, "wb") do |f|
+      f.write(main_image.to_blob)
+    end
+
     headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
 
     $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
@@ -569,18 +583,56 @@ class User < ActiveRecord::Base
     $s3.delete_file(profile_pic_fullpath) if self.photo_exists
     $s3.put_file(profile_pic_original, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
     
-    delay.generate_photo_sizes(self.id)
+    # delay.generate_photo_sizes
     self.photo_exists = true
     self.save!
   end
 
-  def generate_photo_sizes(user_id)
+  def generate_display_and_thumbnail(x1, y1, width, height)
+    require "aws_helper"
+    require "RMagick"
+    begin
+      main_image_prefix = "#{$aapaurmain_conf['aws-origin-server']}#{$aapaurmain_conf['aws']['photo-bucket']}/profile-#{self.id.to_s}"
+      $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
+
+      main_image_path = '/tmp/' + File.basename(main_image_prefix)
+      file = File.open(main_image_path, "rb")
+      main_image_string = file.read
+      file.close
+
+      main_image = Magick::Image.from_blob(main_image_string).first
+      display_image = main_image.crop(x1, y1, width, height)
+      thumb_image = display_image.resize_to_fit(50)
+      headers = {"Content-Type" => "image/#{main_image.format.downcase}", 'x-amz-acl' => 'public-read'}
+
+      File.open("/tmp/profile-#{self.id.to_s}-dp", "wb") do |f|
+        f.write(display_image.to_blob)
+      end
+      File.open("/tmp/profile-#{self.id.to_s}-thumb", "wb") do |f|
+        f.write(thumb_image.to_blob)
+      end
+
+      $s3.put_file("/tmp/profile-#{self.id.to_s}-dp", $aapaurmain_conf['aws']['photo-bucket'], headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+      $s3.put_file("/tmp/profile-#{self.id.to_s}-thumb", $aapaurmain_conf['aws']['photo-bucket'], headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+
+
+      FileUtils.rm("/tmp/profile-#{self.id.to_s}")
+      FileUtils.rm("/tmp/profile-#{self.id.to_s}-dp")
+      FileUtils.rm("/tmp/profile-#{self.id.to_s}-thumb")
+      return main_image_prefix
+    rescue Exception => e
+      logger.error "generate thumb and display for user #{self.id} failed with #{e.inspect}"
+      logger.error e.backtrace.join("\n")
+    end
+  end
+
+  def generate_photo_sizes
     require "aws_helper"
     require 'RMagick'
     begin
-      user = User.find(user_id)
+      user = self
       profile_pic_location = $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] 
-      profile_pic_fullpath =  profile_pic_location + "/profile-#{user_id.to_s}" 
+      profile_pic_fullpath = profile_pic_location + "/profile-#{user_id.to_s}" 
       profile_pic_original = '/tmp/' + File.basename(profile_pic_fullpath)
 
       profile_pic = '/tmp/' + "/profile-#{user_id.to_s}-150" 
@@ -596,14 +648,14 @@ class User < ActiveRecord::Base
       $s3.delete_file(File.basename(profile_pic)) if self.photo_exists
       $s3.put_file(profile_pic, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
 
-      img_thumbnail = img.resize(96,96)
-      img_thumbnail.strip!
-      img_thumbnail.write(thumbnail)
+      # img_thumbnail = img.resize(96,96)
+      # img_thumbnail.strip!
+      # img_thumbnail.write(thumbnail)
 
-      thumbnail_fullpath = profile_pic_location + "/profile-#{user_id.to_s}-thumbnail" 
-      headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
-      $s3.delete_file(thumbnail_fullpath) if user.photo_exists
-      $s3.put_file(thumbnail, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
+      # thumbnail_fullpath = profile_pic_location + "/profile-#{user_id.to_s}-thumbnail" 
+      # headers = {"Content-Type" => "image/#{img.format.downcase}", 'x-amz-acl' => 'public-read'}
+      # $s3.delete_file(thumbnail_fullpath) if user.photo_exists
+      # $s3.put_file(thumbnail, $aapaurmain_conf['aws']['photo-bucket'],headers = $aapaurmain_conf['user-photo-headers'].merge(headers))
 
       FileUtils.rm(thumbnail)
       FileUtils.rm(profile_pic)
@@ -644,7 +696,7 @@ class User < ActiveRecord::Base
   end
 
   def original_pic_url(size = 'medium')
-    if self && self.photo_exists && Rails.env != "development"
+    if self && self.photo_exists# && Rails.env != "development"
       key = $aapaurmain_conf['profile-pic-original']
       profile_key = key.gsub('{{user_id}}' , self.id.to_s)
       size = (size == 'large' ? '?' : '-150?')

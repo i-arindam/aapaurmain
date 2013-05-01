@@ -33,6 +33,7 @@ Aapaurmain::Application.routes.draw do
   # Request actions
   post 'users/:id/upload_photo' => 'users#upload_photo'
   post 'users/:id/delete_photo' => 'users#delete_photo'
+  post 'users/:id/generate_thumbnail' => 'users#generate_thumbnail'
   post 'users/:id/show_viewers' => 'users#show_viewers'
   
   

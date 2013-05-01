@@ -340,12 +340,12 @@ class UsersController < ApplicationController
       :size_limit_exceeded => 'Image upload failed. Maximum allowed size is 4MB.'
     }
 
-    unless is_file_object(img) and is_image?(img)
+    unless (is_file_object(img) and is_image?(img))
       render :text => {:success => false, :message => errors[:invalid_format]}.to_json and return
     end
-    unless img.size <= 4194304
-      render :text => {:success => false, :message => errors[:size_limit_exceeded]}.to_json and return
-    end
+    # unless img.size <= 4194304
+    #   render :text => {:success => false, :message => errors[:size_limit_exceeded]}.to_json and return
+    # end
     session_user.photo_url = img
     session_user.photo_exists = true
     session_user.save
@@ -354,19 +354,31 @@ class UsersController < ApplicationController
   
 
 
-   # Handles the ajax 'delete' request from 'My Photo' page
-   def delete_photo
-     session_user = current_user
-     begin
-      session_user.photo_exists =false
-      session_user.save!
-      session_user.delete_photo      
-      render :json => { :success => true , :url => original_pic_url(session_user.id) }
-     rescue Exception => e
-       logger.error e.backtrace.join("\n")
-       render :json => { :success => false, :message => 'Deleting failed. Please try again.' }
-     end
-   end
+  # Handles the ajax 'delete' request from 'My Photo' page
+  def delete_photo
+    session_user = current_user
+    begin
+     session_user.photo_exists =false
+     session_user.save!
+     session_user.delete_photo      
+     render :json => { :success => true , :url => original_pic_url(session_user.id) }
+    rescue Exception => e
+      logger.error e.backtrace.join("\n")
+      render :json => { :success => false, :message => 'Deleting failed. Please try again.' }
+    end
+  end
+
+  def generate_thumbnail
+    render_404 and return unless user = current_user
+    req_user = User.find_by_id(params[:id])
+    render_401 and return unless user == req_user
+    prefix = req_user.generate_display_and_thumbnail(params[:x1].to_i, params[:x2].to_i, params[:width].to_i, params[:height].to_i)
+    render :json => {
+      :success => true,
+      :display_url => "#{prefix}-dp",
+      :thumbnail_url => "#{prefix}-thumb"
+    }
+  end
 
   # Living off with default recos to begin with
   def get_default_recos

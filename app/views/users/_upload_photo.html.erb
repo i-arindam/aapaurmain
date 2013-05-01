@@ -5,7 +5,7 @@
  
 <div class="profilePicUpload">
   <div class="imageThumbContainer">
-    <%= image_tag profile_pic_url(@user.id.to_s), :style=>"height:150px,width:150px" , :id=>"preview" %>
+    <%= image_tag @user.image('dp'), :style=>"height:150px,width:150px" , :id=>"preview" %>
   </div>
   <div class="upload">
     <div class="btn btn-info <%= @user.photo_exists ? "" : "hide" %>" id="deletePhoto">Delete</div>

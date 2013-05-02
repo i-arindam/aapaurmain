@@ -823,18 +823,25 @@ span.orText {
 .modal-body strong {
   font-weight: bold;
 }
-
 .modal.image-displayer {
-  width: 850px;
+  width: auto;
   left: 38%;
   max-height: 700px;
   padding: 40px;
   top: 35%;
 }
 .modal.image-displayer img {
-  width: 850px;
-  height: 600px;
+  max-width: 850px;
+  max-height: 600px;
 }
 .modal.image-displayer a.close {
-  margin-bottom: 7px;
+  position: relative;
+  top: -30px;
+  right: -20px;
+  color: #FFF;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0.7;
+  padding: 2px;
 }

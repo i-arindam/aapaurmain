@@ -9,7 +9,7 @@
   <div class="users-container">
     <% panel_users.each do |panel, users| %>
     <div class="panel-users">
-      <h4 class="panel-name">Users talking about <span class="panel"><%= $priorities_list['priorities'][panel] %></span></h4>
+      <h4 class="panel-name"><span class="panel"><%= $priorities_list['priorities'][panel] %></span></h4>
       <ul class="user-faces">
       <% users.each do |user| %>
         <li class="user-face">

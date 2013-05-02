@@ -376,7 +376,6 @@ class UsersController < ApplicationController
     req_user = User.find_by_id(params[:id])
     render_401 and return unless user == req_user
     prefix = req_user.generate_display_and_thumbnail(params[:x1].to_i, params[:x2].to_i, params[:width].to_i, params[:height].to_i)
-    debugger
     render :json => {
       :success => true,
       :display_url => "#{prefix}-dp",

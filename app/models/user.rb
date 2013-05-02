@@ -660,7 +660,7 @@ class User < ActiveRecord::Base
       when 'main'
         "profile-#{self.id.to_s}"
       end
-      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 10).to_s
+      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 1000).to_s
     elsif self and self.photo_exists
       key = case type
       when 'thumb' 
@@ -670,7 +670,7 @@ class User < ActiveRecord::Base
       when 'main'
         "profile-#{self.id.to_s}"
       end
-      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 10).to_s
+      return "http:" + $aapaurmain_conf['aws-origin-server'] + $aapaurmain_conf['aws']['photo-bucket'] + '/' + key + "?" + (Time.now.to_i % 1000).to_s
     else
       def_url = case type
       when 'thumb'

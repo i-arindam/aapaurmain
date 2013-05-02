@@ -592,10 +592,8 @@ class User < ActiveRecord::Base
       main_image_prefix = "#{$aapaurmain_conf['aws-origin-server']}#{$aapaurmain_conf['aws']['photo-bucket']}/profile-#{self.id.to_s}"
       $s3  = AWSHelper.new($aapaurmain_conf['aws']['s3-key'], $aapaurmain_conf['aws']['s3-secret'])
 
-      main_image_path = '/tmp/' + File.basename(main_image_prefix)
-      file = File.open(main_image_path, "rb")
-      main_image_string = file.read
-      file.close
+      main_image_object = $s3.get_file($aapaurmain_conf['aws']['photo-bucket'], "profile-#{self.id.to_s}")
+      main_image_string = main_image_object[:object]
 
       main_image = Magick::Image.from_blob(main_image_string).first
       display_image = main_image.crop(x1, y1, width, height)
@@ -618,11 +616,11 @@ class User < ActiveRecord::Base
       FileUtils.rm("/tmp/profile-#{self.id.to_s}")
       FileUtils.rm("/tmp/profile-#{self.id.to_s}-dp")
       FileUtils.rm("/tmp/profile-#{self.id.to_s}-thumb")
-      return main_image_prefix
     rescue Exception => e
       logger.error "generate thumb and display for user #{self.id} failed with #{e.inspect}"
       logger.error e.backtrace.join("\n")
     end
+    main_image_prefix
   end
    
   def delete_photo

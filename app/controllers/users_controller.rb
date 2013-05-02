@@ -280,6 +280,7 @@ class UsersController < ApplicationController
   def edit_profile
     @user = current_user
     @invoke_thumbnail = true if (params[:make_thumbnail] == "true" && @user.photo_exists)
+    flash[:notice] = "Please upload a photo" if (params[:make_thumbnail] == 'true' && !@user.photo_exists)
     render_404 and return unless @user
   end
   
@@ -375,6 +376,7 @@ class UsersController < ApplicationController
     req_user = User.find_by_id(params[:id])
     render_401 and return unless user == req_user
     prefix = req_user.generate_display_and_thumbnail(params[:x1].to_i, params[:x2].to_i, params[:width].to_i, params[:height].to_i)
+    debugger
     render :json => {
       :success => true,
       :display_url => "#{prefix}-dp",
@@ -672,7 +674,7 @@ class UsersController < ApplicationController
     @page_type = 'dashboard'
     @show_tour = @user.user_tour.blank?
     @stories, @fallback_mode = Newsfeed.get_initial_feed_for(@user.id)
-    flash[:notice] = ActionController::Base.helpers.auto_link("Please create a thumbnail for your picture. Go <a href='/edit_profile?make_thumbnail=true'>here</a>", :html => { :target => '_blank' }) unless @user.thumbnail_exists
+    flash[:error] = ActionController::Base.helpers.auto_link("Please create a thumbnail for your picture. Go <a href='/edit_profile?make_thumbnail=true'>here</a>", :html => { :target => '_blank' }) unless @user.thumbnail_exists
     @questions = ShortQuestion.get_latest_question_for(@user.id)
   end
 

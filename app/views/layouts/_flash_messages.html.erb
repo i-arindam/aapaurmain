@@ -1,0 +1,9 @@
+<% [:alert, :error, :success, :notice, :info].each do |f| %>
+<% if (flash && !flash[f].blank?) %>
+<div class="flash-message alert alert-<%= f %>">
+  <%= flash[f] %>
+  <a class="close" href="#">&times;</a>
+</div>
+
+<% end %>
+<% end %>

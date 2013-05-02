@@ -65,7 +65,7 @@
           <% @users.each do |user| %>
             <li class="user-face">
               <a href="/users/<%= user.id %>">
-                <img src="<%= user.image('medium') %>" alt="<%= user.name %>" />
+                <img src="<%= user.image('thumb') %>" alt="<%= user.name %>" />
               </a>
             </li>
           <% end %>

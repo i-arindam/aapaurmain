@@ -55,7 +55,6 @@ ProfilePicUpload.prototype.initAjaxUpload = function(){
           that.deleteButton.show();
           that.indicator.hide();
           that.askForThumbnail(photoUrl);
-          that.listenForThumbnailChosen();
         });
       }
     },
@@ -106,6 +105,7 @@ ProfilePicUpload.prototype.askForThumbnail = function(url) {
       });
     }
   });
+  that.listenForThumbnailChosen();  
 };
 
 ProfilePicUpload.prototype.listenForThumbnailChosen = function() {

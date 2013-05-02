@@ -550,13 +550,15 @@ StoryHandler.prototype.setupShowImage = function() {
     var src = this.src;
     if (src.indexOf("-thumb") !== -1 || src.indexOf("-dp") !== -1) {
       var toRemove = src.match(/.*profile\-\d+((-thumb|-dp)\?\d+)/)[1];
-      src = src.replace(toRemove, "");
-      $('div.image-displayer').remove();
-      $('<div/>').addClass('image-displayer modal').appendTo($('body'));
-      $('<a/>').addClass('close').text('x').appendTo($('div.image-displayer'));
-      $('<img/>').addClass('full-image').attr('src', src).appendTo($('div.image-displayer'));
-      $('div.image-displayer').modal('show');
+    } else if(src.indexOf("-150") !== -1) {
+      var toRemove = "-150";
     }
+    src = src.replace(toRemove, "");
+    $('div.image-displayer').remove();
+    $('<div/>').addClass('image-displayer modal').appendTo($('body'));
+    $('<a/>').addClass('close').text('x').appendTo($('div.image-displayer'));
+    $('<img/>').addClass('full-image').attr('src', src).appendTo($('div.image-displayer'));
+    $('div.image-displayer').modal('show');
   });
   $('.modal.image-displayer a.close').livequery('click', function(e) {
     e.preventDefault();

@@ -33,9 +33,6 @@
           $('#ie-message-modal').modal('hide');
         });
       }
-      $('.flash-message a.close').on('click', function(e) {
-        $(this).parent().fadeOut();
-      })
 
       window.dashboard = new Dashboard();
       window.ga = new GAHandler({
@@ -59,10 +56,6 @@
   <body>
     <div class="container clearfix">
       <div class="row">
-        <p class="flash-message alert alert-error">
-          <%= flash[:notice] %>
-          <a class="close" href="#">&times;</a>
-        </p>
         <div class="span9 clearfix">
           <div class="col-one">
             <%= render :partial => "users/left_nav", :locals => { :user => @user } %>

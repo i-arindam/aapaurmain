@@ -5,7 +5,7 @@
       <title>Stories for panel <%= priorities_list[@panel] %></title>
     <% end %>
     <% content_for :stylesheet do%>
-      <%= stylesheet_link_tag "users/left_nav", "stories", "one_panel" %>
+      <%= stylesheet_link_tag "users/left_nav", "stories" %>
     <% end %>
     <%= content_for :js_footer do %>
       <%= javascript_include_tag "story", "ga_handler" %>
@@ -56,23 +56,7 @@
           </div> <!-- col-two ends -->
         </div> <!-- span9 ends -->
 
-        <% unless @users.blank? %>
-        <div class="span3 facepile">
-          <div class="header-wrap">
-            <h3 class="facepile-header">Other popular users in this panel</h3>
-          </div>
-          <ul class="user-faces">
-          <% @users.each do |user| %>
-            <li class="user-face">
-              <a href="/users/<%= user.id %>">
-                <img src="<%= user.image('thumb') %>" alt="<%= user.name %>" />
-              </a>
-            </li>
-          <% end %>
-          </ul>
-        </div> <!-- facepile ends -->
-        <% end %>
-
+        <%= render :partial => "/users_facepile", :locals => { :panel_users => @users, :title => "Other popular users in this panel"  } %>
       </div> <!-- row-fluid ends -->
     </div> <!-- container ends -->
   </body>

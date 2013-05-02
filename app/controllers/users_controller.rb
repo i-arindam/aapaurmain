@@ -675,6 +675,7 @@ class UsersController < ApplicationController
     @stories, @fallback_mode = Newsfeed.get_initial_feed_for(@user.id)
     flash[:error] = ActionController::Base.helpers.auto_link("Please create a thumbnail for your picture. Go <a href='/edit_profile?make_thumbnail=true'>here</a>", :html => { :target => '_blank' }) unless @user.thumbnail_exists
     @questions = ShortQuestion.get_latest_question_for(@user.id)
+    @popular_user_from_panels = Panel.get_popular_users_from_panels_of(@user.id)
   end
 
   def panel_lookup

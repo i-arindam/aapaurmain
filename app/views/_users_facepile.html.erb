@@ -1,0 +1,26 @@
+<% unless panel_users.blank? %>
+<% content_for :stylesheet do %>
+<%= stylesheet_link_tag "facepile" %>
+<% end %>
+<div class="span3 facepile">
+  <div class="header-wrap">
+    <h3 class="facepile-header"><%= title %></h3>
+  </div>
+  <div class="users-container">
+    <% panel_users.each do |panel, users| %>
+    <div class="panel-users">
+      <h4 class="panel-name">Users talking about <span class="panel"><%= $priorities_list['priorities'][panel] %></span></h4>
+      <ul class="user-faces">
+      <% users.each do |user| %>
+        <li class="user-face">
+          <a href="/users/<%= user.id %>" title="<%= user.name %>" rel="tooltip" data-placement="bottom">
+            <img src="<%= user.image('thumb') %>" alt="<%= user.name %>"/>
+          </a>
+        </li>
+      <% end %>
+      </ul>
+    </div> <!-- panel-users ends -->
+    <% end %>
+  </div>
+</div>
+<% end %>

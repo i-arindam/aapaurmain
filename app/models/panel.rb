@@ -24,6 +24,16 @@ class Panel < ActiveRecord::Base
     uids = $r.smembers("panel:#{panel}:members")[0...30]
     uids = uids - [current_user_id.to_s]
     users = User.find_all_by_id(uids)
+    { panel => users }
   end
 
+  def self.get_popular_users_from_panels_of(user_id)
+    panels = $r.smembers("user:#{user_id}:panels")
+    panel_users_hash = {}
+    popular_users = panels.each do |panel|
+      panel_uids = $r.smembers("panel:#{panel}:members")
+      panel_users_hash[panel] = User.find_all_by_id(panel_uids)[0...6]
+    end
+    panel_users_hash
+  end
 end

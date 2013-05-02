@@ -3,7 +3,7 @@
   <meta property="og:title" content="A story by <%= @author.name.capitalize %>" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<%= domain_name %>/story/<%= @story['id'] %>" />
-  <meta property="og:image" content="<%= @author.image('large') %>" />
+  <meta property="og:image" content="<%= @author.image('main') %>" />
   <meta property="og:description" content="<%= truncate(sanitize(@story['text'], :tags => []), :length => 120, :omission => '...') %>" />
   <meta property="og:site_name" content="AapAurMain" />
   <meta property="fb:admins" content="100000895084212" />

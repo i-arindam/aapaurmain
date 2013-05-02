@@ -802,7 +802,7 @@ class User < ActiveRecord::Base
       result.push({
         :name => u.name,
         :id => u.id,
-        :pic => u.image('medium')
+        :pic => u.image('thumb')
       })
     end
     result.to_json

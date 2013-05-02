@@ -33,7 +33,7 @@ class Story < ActiveRecord::Base
       :by_id => user.id,
       :text => text,
       :story_id => story_id,
-      :photo_url => user.image('small')
+      :photo_url => user.image('thumb')
     })
 
     $r.rpush("story:#{story_id}:comments", comment_object.id)

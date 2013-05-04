@@ -6,7 +6,7 @@
     <img src="<%= current_user.image('dp') %>" class="img-dp" alt="user" />
   </div>
   <p class="user-name">
-    <%= user.name %>
+    <%= user.name.split(" ")[0].capitalize %>
   </p>
   <div class="left-nav">
     <ul>

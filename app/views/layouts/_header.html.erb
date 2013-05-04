@@ -18,7 +18,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle link-profile" data-toggle="dropdown" id="user-control">
             <img src="<%= current_user.image('thumb') %>" class="img-thumb" />
-            <span><%= current_user.name %></span>
+            <span><%= current_user.name.split(" ")[0] %></span>
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">

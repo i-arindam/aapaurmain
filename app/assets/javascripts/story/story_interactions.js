@@ -71,6 +71,11 @@ StoryHandler.prototype._init = function() {
     e.preventDefault();
     $('.people-list').bPopup().close();
   });
+
+  this.shownStories = [];
+  $.each($('li.story'), function(i, o) {
+    that.shownStories.push($(o).attr('data-story-id'));
+  });
 };
 
 StoryHandler.prototype.setupSelectors = function() {
@@ -411,38 +416,42 @@ StoryHandler.prototype.setupMoreStories = function() {
           var storyDom = $(data.story_partial).clone();
           var s = data.stories[i];
 
-          storyDom.addClass('newlyAdded');
-          storyDom.attr('data-story-id', s.id);
-          storyDom.find('.story-user img').attr('alt', s.by).attr('src', s.author_image);
-          storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
-          storyDom.find('.story-creator a').text(s.by).attr('href', '/users/' + s.by_id);
-          storyDom.find('p.story-text').html(s.text);
-          storyDom.find('.story-claps').text(s.claps);
-          storyDom.find('.story-boos').text(s.boos);
-          storyDom.find('.story-comments').text(s.comments);
-          if(s.claps !== 0) {
-            storyDom.find('.j-show-claps').removeClass('disabled-link');
-          }
-          if(s.boos !== 0) {
-            storyDom.find('.j-show-boos').removeClass('disabled-link');
-          }
-          if(s.comments !== 0) {
-            storyDom.find('.j-show-comments, .link-comment').removeClass('disabled-link');
-          }
-          if(s.by_id === that.config.forUserId + '') {
-            $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('title', 'Delete Story')
-            .attr('data-story-id', s.id).attr('data-toggle', 'tooltip').attr('data-placement', 'bottom')
-            .text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));
-          }
+          // Hack to avoid duplicate stories till something is done at the back end
+          if($.inArray('' + s.id, that.shownStories) !== -1) {
+            that.shownStories.push(s.id);
+            storyDom.addClass('newlyAdded');
+            storyDom.attr('data-story-id', s.id);
+            storyDom.find('.story-user img').attr('alt', s.by).attr('src', s.author_image);
+            storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
+            storyDom.find('.story-creator a').text(s.by).attr('href', '/users/' + s.by_id);
+            storyDom.find('p.story-text').html(s.text);
+            storyDom.find('.story-claps').text(s.claps);
+            storyDom.find('.story-boos').text(s.boos);
+            storyDom.find('.story-comments').text(s.comments);
+            if(s.claps !== 0) {
+              storyDom.find('.j-show-claps').removeClass('disabled-link');
+            }
+            if(s.boos !== 0) {
+              storyDom.find('.j-show-boos').removeClass('disabled-link');
+            }
+            if(s.comments !== 0) {
+              storyDom.find('.j-show-comments, .link-comment').removeClass('disabled-link');
+            }
+            if(s.by_id === that.config.forUserId + '') {
+              $('<a/>').attr('href', '#').attr('class', 'del-story close').attr('title', 'Delete Story')
+              .attr('data-story-id', s.id).attr('data-toggle', 'tooltip').attr('data-placement', 'bottom')
+              .text($('<div/>').html('&#215;').text()).appendTo(storyDom.find('.story-time'));
+            }
 
-          var panelsUl = storyDom.find('ul.story-tags');
+            var panelsUl = storyDom.find('ul.story-tags');
 
-          $.each(s.panels, function(i, p) {
-            var li = $('<li/>');
-            $('<a>').attr('href', '/panels/' + p).text(that.panelsDictionary[p]).appendTo(li);
-            li.appendTo(panelsUl);
-          });
-          sDoms.push(storyDom);
+            $.each(s.panels, function(i, p) {
+              var li = $('<li/>');
+              $('<a>').attr('href', '/panels/' + p).text(that.panelsDictionary[p]).appendTo(li);
+              li.appendTo(panelsUl);
+            });
+            sDoms.push(storyDom);
+          }
         } // for
         
         moreClicker.find('img').hide();

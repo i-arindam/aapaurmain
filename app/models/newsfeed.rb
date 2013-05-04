@@ -47,7 +47,7 @@ class Newsfeed < ActiveRecord::Base
         fallback_mode = PURE_ORGANIC
       end
     end
-    [Story.get_stories(story_ids), fallback_mode]
+    [Story.get_stories(story_ids.sort.reverse), fallback_mode]
   end
 
   # Depending on user's fallback mode, return stories
@@ -70,7 +70,7 @@ class Newsfeed < ActiveRecord::Base
         user_feed_mode = ORGANIC_WITH_FALLBACK_FOR_FIRST_FEED
       end
     end
-    [Story.get_stories(story_ids), user_feed_mode]
+    [Story.get_stories(story_ids.sort.reverse), user_feed_mode]
   end
 
   def self.get_organic_stories(user_id, start)

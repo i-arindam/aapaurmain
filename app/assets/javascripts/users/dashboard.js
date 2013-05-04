@@ -12,6 +12,7 @@ Dashboard.prototype._init = function() {
   this.initNewStatus();
   this.setupPanelsSelection();
   this.setupPostAction();
+  $('.container .row > .span3').pin({ containerSelector: '.container .row'});
 };
 
 Dashboard.prototype.initNewStatus = function() {

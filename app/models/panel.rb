@@ -29,11 +29,16 @@ class Panel < ActiveRecord::Base
 
   def self.get_popular_users_from_panels_of(user_id)
     panels = $r.smembers("user:#{user_id}:panels")
-    panel_users_hash = {}
-    popular_users = panels.each do |panel|
+    panel_users_hash = panels.inject({}) do |hash, panel|
       panel_uids = $r.smembers("panel:#{panel}:members")
-      panel_users_hash[panel] = User.find_all_by_id(panel_uids)[0...6]
+      next if panel_uids.blank?
+      uids = panel_uids.inject([]) do |arr, u|
+        arr.push(u.to_i)
+      end - [user_id]
+      uids = uids.sort.reverse[0...6]
+      users = User.find_all_by_id(uids)
+      hash[panel] = users
+      hash
     end
-    panel_users_hash
   end
 end

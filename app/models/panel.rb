@@ -29,6 +29,12 @@ class Panel < ActiveRecord::Base
 
   def self.get_popular_users_from_panels_of(user_id)
     panels = $r.smembers("user:#{user_id}:panels")
+    if panels.blank?
+      fallback_panel_ids = StoryPointer.find(:all, :select => "DISTINCT(panel_id)", :order => "id DESC", :limit => 3).collect(&:panel_id)
+      panels = fallback_panel_ids.inject([]) do |arr, fb_pid|
+        arr.push(PANEL_ID_TO_NAME[fb_pid])
+      end
+    end
     panel_users_hash = panels.inject({}) do |hash, panel|
       panel_uids = $r.smembers("panel:#{panel}:members")
       next if panel_uids.blank?

@@ -5,14 +5,14 @@
   <div class="clearfix">
     <div class="box-contents">
       <div class="user-box clearfix">
-        <img src="<%= user.image('dp') %>" alt="<%= user.name %>" />
+        <img src="<%= user.image('dp') %>" class="img-dp" alt="<%= user.name %>" />
         <div class="user-inform">
           <a href="/users/<%= user.id %>"><p><%= user.name %></p></a>
         </div>
       </div>
     </div>
     <div class="text-blk">
-      <p><%= user.short_bio || "Just Another User" %></p>
+      <p><%= user.short_bio.blank? ? "Just Another User" : user.short_bio %></p>
     </div>
 
     <div class="blog-box">

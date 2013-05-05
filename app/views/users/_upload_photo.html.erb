@@ -5,11 +5,12 @@
  
 <div class="profilePicUpload">
   <div class="imageThumbContainer">
-    <%= image_tag @user.image('main'), :style=>"height:150px,width:150px" , :id=>"preview" %>
+    <%= image_tag @user.image('dp'), :style=>"height:150px,width:150px" , :id=>"preview" %>
   </div>
   <div class="upload">
-    <div class="btn btn-info <%= @user.photo_exists ? "" : "hide" %>" id="deletePhoto">Delete</div>
-    <div class="btn btn-danger" id="upload_placeholder"></div>
+    <a class="btn btn-info <%= @user.photo_exists ? "" : "hide" %>" id="deletePhoto">Delete</a>
+    <a class="btn btn-danger" id="upload_placeholder"></a>
+    <a class="btn btn-success <%= @user.photo_exists ? '' : 'hide' %>" id="change-thumbnail">Change thumbnail</a>
     <%=image_tag "indicator.gif",:id=>"indicator",:style=>"display:none;",:class=>"indicator"%>
   </div>
 </div>

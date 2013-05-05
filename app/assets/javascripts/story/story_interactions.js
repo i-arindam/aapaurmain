@@ -66,7 +66,6 @@ StoryHandler.prototype._init = function() {
   this.setupMoreStories();
   this.bindEmbedly();
   this.setupDelete();
-  this.setupShowImage();
   $('a.close_popup').livequery('click', function(e) {
     e.preventDefault();
     $('.people-list').bPopup().close();
@@ -553,5 +552,3 @@ StoryHandler.prototype.setupSharing = function() {
   });
 };
 
-StoryHandler.prototype.setupShowImage = function() {
-};

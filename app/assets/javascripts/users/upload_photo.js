@@ -13,6 +13,7 @@ function ProfilePicUpload(auto_thumbnail){
 
   this.initAjaxUpload();
   this.deletePhoto();
+  this.setupInitThumbnail();
   if(auto_thumbnail) {
     this.askForThumbnail($('#preview').attr('src'));
   }
@@ -164,5 +165,20 @@ ProfilePicUpload.prototype.deletePhoto = function(){
         }        
       }
     });
+  });
+};
+
+ProfilePicUpload.prototype.setupInitThumbnail = function() {
+  var that = this;
+  $('a#change-thumbnail').on('click', function(e) {
+    e.preventDefault();
+    var src = $('#preview').attr('src');
+    if (src.indexOf("-thumb") !== -1 || src.indexOf("-dp") !== -1) {
+      var toRemove = src.match(/.*profile\-\d+((-thumb|-dp)\?\d+)/)[1];
+    } else if(src.indexOf("-150") !== -1) {
+      var toRemove = "-150";
+    }
+    src = src.replace(toRemove, "");
+    that.askForThumbnail(src);
   });
 };

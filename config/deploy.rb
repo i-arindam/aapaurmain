@@ -74,7 +74,7 @@ namespace :daemons do
   namespace :delayed_jobs do
 
     desc "Stop old delayed jobs"
-    task :kill, roles: :web do
+    task :kill, :roles => :web do
       run "cd #{current_path} && RAILS_ENV=production script/delayed_job stop"
     end
 

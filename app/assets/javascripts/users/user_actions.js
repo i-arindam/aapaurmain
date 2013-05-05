@@ -6,7 +6,7 @@ function UserActions(config) {
 UserActions.prototype._init = function() {
   this.buttons = $('.req-button');
 
-  $('.text-blk p').fitText();
+  $('.text-blk p').fitText(1.2);
   this.bindClickForRequestActions();
   var that = this;
   $('.bpopup a.close').live('click', function(e) {

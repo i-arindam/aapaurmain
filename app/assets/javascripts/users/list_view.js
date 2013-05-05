@@ -264,6 +264,9 @@ ListView.prototype.paintTopStoriesSectionFor = function(uid) {
     $.each(data.stories, function(i, s) {
       var storyDom = that.storyDom.clone();
       storyDom.attr('data-story-id', s.id);
+      var dhref = storyDom.find('.fb-like').attr('data-href');
+      storyDom.find('.fb-like').attr('data-href', dhref + s.id);
+      storyDom.addClass('newlyAdded');
       storyDom.find('.story-user img').attr('alt', s.by).attr('href', '/users/' + s.by_id);
       storyDom.find('.story-time a').attr('href', '/story/' + s.id).text($.timeago(s.time));
       storyDom.find('.story-creator a').attr('href', '/users/' + s.by_id).text(s.by);

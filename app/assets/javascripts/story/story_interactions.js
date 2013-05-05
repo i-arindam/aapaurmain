@@ -476,10 +476,10 @@ StoryHandler.prototype.setupMoreStories = function() {
 StoryHandler.prototype.bindEmbedly = function() {
   $('li.story p.story-text').livequery(function() {
     $('li.story p.story-text:not(.embedded)').embedly({
-      maxWidth: 450,
+      maxWidth: 400,
       wmode: 'transparent',
       method: 'after',
-      chars: 150,
+      chars: 250,
       key:'1c33c83e4cf34598a4dc7f96d77b5b06'    
     }).addClass('embedded');
   });
